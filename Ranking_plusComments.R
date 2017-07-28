@@ -237,3 +237,25 @@ EdgeInfo <- GraphEdgesHitNumber
 NodeInfo <- GraphNodesHit
 
 
+#######################################                                            # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
+#Get Matrix of genes for each pathway in KEGG
+TLRpathway.genes.matrix <- matrix(toupper(Ian.tlr.canon$Human.Symbol[1:128]))
+
+PROTpathway.genes.matrix <- matrix(PROTpathway.genes$GeneSymbol)
+
+SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$GeneSymbol)
+
+
+#Add GeneSymbols to Edge dataframe                                              # Using the NodeInfo File to get the genesybols for the EdgeInfo file
+Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
+names(Edge.source)[names(Edge.source)=="GeneSymbol"] <- "source.ID"
+
+Edge.target <- merge(Edge.source, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
+names(Edge.target)[names(Edge.target)=="GeneSymbol"] <- "target.ID"
+
+#Set column for pathway groupings
+NodeInfo$Group <- "Novel"
+NodeInfo$Group[NodeInfo$GeneSymbol %in% PROTpathway.genes.matrix] <- "Proteasome"        #Includes Proteasome
+NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- "Splicesome"
+NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- "TLRpathway"
+
