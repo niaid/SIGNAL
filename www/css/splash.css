@@ -1,0 +1,155 @@
+body {
+    width: 960px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:grey;
+}
+
+header{
+    background-color: rgb(1, 81, 154);
+    color: white;
+    height: 140px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border: 1px solid rgb(1, 81, 154);
+    border-radius: 25px;
+}
+
+.header__links {
+    padding-left:33px;
+    padding-top:25px;
+}
+
+.header__link {
+    color: white;
+    text-decoration: none;
+}
+
+.header__link:visited {
+    color: white;
+}
+
+.header__link:hover {
+    text-decoration: underline;
+}
+
+.header__image {
+    padding-left: 20px;
+}
+
+
+
+section {
+    margin-top: 10px;
+    padding-top: 40px;
+    padding-left: 20px;
+    background-color:white;
+    padding-bottom: 40px;
+
+    border: 1px solid black;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+.section__intro {
+    text-align: center;
+
+}
+
+.section__title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.section__subTitle {
+
+}
+
+.options {
+    width: 840px;
+    height: 200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.option {
+    width:300px;
+    margin-top:10px;
+    border: 2px dashed rgb(52, 152, 219);
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    padding:5px;
+}
+
+.option__title_div {
+    text-align:center;
+}
+
+.option__title {
+    font-size: 17px;
+    color:rgb(52, 152, 219);
+    text-decoration: none;
+}
+
+.option__title:visited {
+    color:rgb(52, 152, 219);
+}
+
+.option__title:hover {
+    text-decoration: underline;
+}
+
+.option__description {
+    height:60px;
+    text-align: justify;
+}
+
+
+footer {
+    margin-top: 10px;
+
+    height: 80px;
+    background-color: rgb(27, 80, 160);
+
+    border: 1px solid rgb(27, 80, 160);
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+.footer__images {
+    width:401px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.footer__image {
+    padding-top:5px;
+    height: 70px;
+    padding-left:20px;
+
+}
+
+
+/* Utilities */
+
+.utility__left {
+    float: left;
+}
+
+.utility__right {
+    float:right;
+}
+
+.button{
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: -3px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: rgb(52, 152, 219);
+    background-color:white;
+}

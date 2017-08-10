@@ -1,0 +1,150 @@
+body {
+    width: 1100px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: white;
+}
+
+header{
+    background-color: rgb(1, 81, 154);
+    color: white;
+    width: 1100px;
+    height: 140px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 25px;
+    border: 1px solid rgb(1, 81, 154);
+    border-radius: 25px;
+}
+
+.header__title {
+    color: White;
+    padding-left:135px;
+    padding-top:2px;
+    font-size: 90%
+}
+
+.header__image {
+    padding-left: 20px;
+}
+
+
+
+section {
+    margin-top: 10px;
+    padding-top: 40px;
+    padding-left: 20px;
+    background-color:white;
+    padding-bottom: 40px;
+
+    border: 1px solid black;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+}
+
+select:-moz-focusring {
+color: transparent;
+text-shadow: 0 0 0 #000;
+}
+
+.section__intro {
+    text-align: center;
+
+}
+
+.section__title {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.section__subTitle {
+
+}
+
+.options {
+    width: 840px;
+    height: 200px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.option {
+    width:300px;
+    margin-top:10px;
+    border: 2px dashed rgb(52, 152, 219);
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px;
+    border-radius:10px;
+    padding:5px;
+}
+
+.option__title_div {
+    text-align:center;
+}
+
+.option__title {
+    font-size: 17px;
+    color:rgb(52, 152, 219);
+    text-decoration: none;
+}
+
+.option__title:visited {
+    color:rgb(52, 152, 219);
+}
+
+.option__title:hover {
+    text-decoration: underline;
+}
+
+.option__description {
+    height:60px;
+    text-align: justify;
+}
+
+footer{
+    background-color: rgb(27, 80, 160);
+    color: white;
+    width: 1100px;
+    height: 80px;
+    -webkit-border-radius: 1px;
+    -moz-border-radius: 25px;
+    border: 1px solid rgb(27, 80, 160);
+    border-radius: 25px;
+}
+
+.footer__images {
+    margin-left:20px;
+    margin-right:auto;
+}
+
+.footer__image {
+    padding-top:5px;
+    height: 70px;
+    padding-left:200px;
+}
+
+.shiny-text-output {
+	color: red;
+	font-size: 25px;
+}
+
+/* Utilities */
+
+.utility__left {
+    float: left;
+}
+
+.utility__right {
+    float:right;
+}
+
+.button{
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: -3px;
+    cursor: pointer;
+    margin-top: 10px;
+    color: rgb(52, 152, 219);
+    background-color:white;
+}
