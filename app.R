@@ -9,7 +9,8 @@
 
 library(shiny)
 library(readr)
-source("./Rscripts/*.R")
+source("~/TRIAGE/Rscripts/PathNet-iteration_V2.R")
+source("~/TRIAGE/Rscripts/Network_iteration_V2.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage( 
@@ -62,8 +63,9 @@ ui <- fluidPage(
       ),
       # Show a plot of the generated distribution
       mainPanel(
-         textOutput("title"),
-         tableOutput("contents")
+        textOutput("message"),
+        textOutput("title"),
+        tableOutput("contents")
       )
    ),
    # Show a footer using the header style
@@ -72,6 +74,7 @@ ui <- fluidPage(
 
 # Define server logic required to draw a histogram
 server <- function(input, output) {
+
   output$contents <- renderTable({
     inFile <- input$file1
     
@@ -79,7 +82,7 @@ server <- function(input, output) {
       return(NULL)
     data <- read.csv(inFile$datapath)
     
-    # display the 
+    # display the input file dimension
     inputDataSummary <- c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns!")
     output$title <- renderText(inputDataSummary)
     
