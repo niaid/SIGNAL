@@ -9,7 +9,7 @@
 
 library(shiny)
 library(readr)
-#source("./Rscripts/Network_iteration_V2.R")
+source("./Rscripts/*.R")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage( 

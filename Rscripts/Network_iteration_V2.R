@@ -36,28 +36,28 @@ if(tolower(organism) == "human")
 {  
   if("hSTRINGhi" %in% networkType)
   {
-    load("./Rscripts/Resources/Network/igraph.string.hu.hiConf.Rdata")
+    load("~/data/Networks/igraph.string.hu.hiConf.Rdata")
     if(exists("G")) {
       G <- graph.union(igraph.string.hu.hiConf,G)
     } else {G <- igraph.string.hu.hiConf}
   }
   if("hSTRINGmed" %in% networkType)
   {
-    load("./Rscripts/Resources/Network/igraph.string.hu.medConf.Rdata")
+    load("~/data/Networks/igraph.string.hu.medConf.Rdata")
     if(exists("G")) {
       G <- graph.union(G,igraph.string.hu.medConf)
     } else {G <- igraph.string.hu.medConf}
   }
   if("hSTRINGppi.hi" %in% networkType)
   {
-    load("./Rscripts/Resources/Network/igraph.stringPPI.hu.hiConf.Rdata")
+    load("~/data/Networks/igraph.stringPPI.hu.hiConf.Rdata")
     if(exists("G")) {
       G <- graph.union(igraph.stringPPI.hu.hiConf,G)
     } else {G <- igraph.stringPPI.hu.hiConf}
   }
   if("hSTRINGppi.med" %in% networkType)
   {
-    load("./Rscripts/Resources/Network/igraph.stringPPI.hu.medConf.Rdata")
+    load("~/data/Networks/igraph.stringPPI.hu.medConf.Rdata")
     if(exists("G")) {
       G <- graph.union(G,igraph.stringPPI.hu.medConf)
     } else {G <- igraph.stringPPI.hu.medConf}
@@ -69,28 +69,28 @@ if(tolower(organism) == "human")
   if("mSTRINGhi" %in% networkType)
   {
     cat('4')
-    load("./Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
+    load("~/data/Networks/igraph.string.mo.hiConf.Rdata")
     if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
     else {G <- igraph.string.mo.hiConf}
   }
   if("mSTRINGmed" %in% networkType)
   {
     cat('2')
-    load("./Rscripts/Resources/Network/igraph.string.mo.medConf.Rdata")
+    load("~/data/Networks/igraph.string.mo.medConf.Rdata")
     if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
     else {G <- igraph.string.med.medConf}
   }
   if("mSTRINGppi.hi" %in% networkType)
   {
     cat('4')
-    load("./Rscripts/Resources/Network/igraph.stringPPI.mo.hiConf.Rdata")
+    load("~/data/Networks/igraph.stringPPI.mo.hiConf.Rdata")
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
     else {G <- igraph.stringPPI.mo.hiConf}
   }
   if("mSTRINGppi.med" %in% networkType)
   {
     cat('2')
-    load("./Rscripts/Resources/Network/igraph.stringPPI.mo.medConf.Rdata")
+    load("~/data/Networks/igraph.stringPPI.mo.medConf.Rdata")
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.medConf,G)}
     else {G <- igraph.stringPPI.mo.medConf}
   }

@@ -16,22 +16,22 @@
 ## INSTITUTION: NIAID/NIH
 ## DATE LAST MODIFIED: 02/09/2016
 #################################################################################################
-scriptDir <- "~/Desktop/Sam_TRIAGE/Test_TRIAGErCode/scripts/"
-inputDir <-"~/Desktop/Sam_TRIAGE/Test_TRIAGErCode/TRIAGEinputFiles"
-outputDir <- "~/Desktop/Rscript_output/"
-dataDir <- "~/Desktop/Sam_TRIAGE/"
-source(paste0(scriptDir, "Pathway_iteration.R"))
+scriptDir <- "~/TRIAGE/Rscripts/"
+inputDir <-"~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
+outputDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/"
+dataDir <- "~/data/"
+source(paste0(scriptDir, "pathway_iteration.R"))
 Organism <- "Human"
 network.type <- "hSTRINGppi.hi"
 
-outDir <- "~/Desktop/Sam_TRIAGE/Test_TRIAGErCode/TRIAGEoutputFiles"
+outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
 outputFileName <- paste0("TRIAGEoutput_HuTNF_CSAfdr_top5percCUTOFF_KEGG_", network.type, ".csv")
 
 # 1) Seed Pathway Analysis
 setwd(dataDir)
 pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
 pathway.type <- pathway.types[1]
-pathwayData <- read.csv(file = paste0(dataDir, "Rscripts/Resources/Pathways/", pathway.type, Organism, ".csv"))
+pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, Organism, ".csv"))
 
 #seedName <- "IAMinput_HuTNF_manual.csv"
 seedName <- "TRIAGEinput_HuTNF_CSAfdr_5percCO.csv"
