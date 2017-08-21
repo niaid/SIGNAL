@@ -16,31 +16,7 @@
 ## INSTITUTION: NIAID/NIH
 ## DATE LAST MODIFIED: 02/09/2016
 #################################################################################################
-scriptDir <- "~/TRIAGE/Rscripts/"
-inputDir <-"~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
-outputDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/"
-dataDir <- "~/data/"
-source(paste0(scriptDir, "pathway_iteration.R"))
-Organism <- "Human"
-network.type <- "hSTRINGppi.hi"
 
-outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
-outputFileName <- paste0("TRIAGEoutput_HuTNF_CSAfdr_top5percCUTOFF_KEGG_", network.type, ".csv")
-
-# 1) Seed Pathway Analysis
-setwd(dataDir)
-pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
-pathway.type <- pathway.types[1]
-pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, Organism, ".csv"))
-
-#seedName <- "IAMinput_HuTNF_manual.csv"
-seedName <- "TRIAGEinput_HuTNF_CSAfdr_5percCO.csv"
-
-setwd(inputDir)
-siRNA.Score <- read.csv(seedName, stringsAsFactors = F)
-proxyScore <- "Replicate1" 
-iteration <- 1
-counter <- TRUE
 
 while (counter == TRUE) {
 
