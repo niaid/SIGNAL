@@ -140,17 +140,16 @@ library(readr)
           shinyjs::html("status", "")
         
 ########        
-                 
-        source("~/TRIAGE/Rscripts/pathway_iteration.R")
-        source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
-
+                
         # Global variables
         scriptDir <- "~/TRIAGE/Rscripts/"
         inputDir <- "~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
         outputDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/"
         dataDir <- "~/data/"
-        source(paste0(scriptDir, "pathway_iteration.R"))
-        Organism <- input$organism
+
+        organism <- input$organism
+        source("~/TRIAGE/Rscripts/pathway_iteration.R")
+        source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
         network.type <- "hSTRINGppi.hi"
         
         outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
