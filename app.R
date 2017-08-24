@@ -45,10 +45,12 @@ if (interactive()) {
           fileInput(inputId= "file1", 
                     label = 'Choose an inputfile to upload'
           ),
-          selectInput("cutoff_type", "Cutoff type", c("P value", "FDR", "Z score")
-          ),
+          # selectInput("cutoff_type", "Cutoff type", c("P value", "FDR", "Z score")
+          # ),
           # cutoff values depending the cutoff method chosen
-          uiOutput("cutoffValues"),
+          uiOutput("cutoffTypes"),
+          textInput("cutoffValueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          textInput("cutoffValueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           actionButton("goButton", "Analyze my data !", icon("angle-double-right"), 
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
@@ -82,26 +84,26 @@ if (interactive()) {
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-    
-      output$cutoffValues <- renderUI({
-        if (is.null(input$cutoff_type))
-          return()
       
-        switch(input$cutoff_type,
-               "Z score" = selectInput("cutoff_value", "Cutoff value",
-                                       choices = c("+/-1.96", "+/-2.58"),
-                                       selected = c("+/-1.96")
-               ),
-               "P value" = selectInput("cutoff_value", "Cutoff value",
-                                       choices = c("0.05", "0.01"),
-                                       selected = "0.05"
-               ),
-               "FDR" = selectInput("cutoff_value", "Cutoff value",
-                                   choices = c("<5%", "<1%"),
-                                   selected = c("<5%")
-               )
-          )
-      })
+      # output$cutoffValues <- renderUI({
+      #   if (is.null(input$cutoff_type))
+      #     return()
+      # 
+        # switch(input$cutoff_type,
+        #        "Z score" = selectInput("cutoff_value", "Cutoff value",
+        #                                choices = c("+/-1.96", "+/-2.58"),
+        #                                selected = c("+/-1.96")
+        #        ),
+        #        "P value" = selectInput("cutoff_value", "Cutoff value",
+        #                                choices = c("0.05", "0.01"),
+        #                                selected = "0.05"
+        #        ),
+        #        "FDR" = selectInput("cutoff_value", "Cutoff value",
+        #                            choices = c("<5%", "<1%"),
+        #                            selected = c("<5%")
+        #        )
+        #   )
+      #})
       
       # Read in the input fie  
       output$contents <- renderTable({
@@ -118,6 +120,17 @@ if (interactive()) {
         # display the input data in a table
         output$dataHead <- renderText("Here are the first 10 rows:")
         head(data, 10)
+      })
+      
+      output$cutoffTypes <- renderUI({
+        inFile2 <- input$file1
+        if (is.null(inFile2))
+          return()
+        
+        data <- read.csv(inFile2$datapath)
+        pulldown_types <- colnames(data)
+      
+        selectInput("cutoffTypes", "Cutoff Types", pulldown_types)
       })
       
       # parameters
@@ -155,9 +168,9 @@ if (interactive()) {
       
         # 1) Seed Pathway Analysis
         setwd(outDir)
-        #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
-        #pathway.type <- pathway.types[1]
-        pathway.type <- input$pathway
+        pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
+        pathway.type <- pathway.types[1]
+        #pathway.type <- input$pathway
         
         pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
@@ -215,8 +228,8 @@ if (interactive()) {
         }
         
         ### Append Enrichment Info --------------------------------------------
-        #pval_threshold <- 0.05
-        pval_threshold <- input$cutoff_value
+        pval_threshold <- 0.05
+        #pval_threshold <- input$cutoff_value
         
         iterationNum = iteration - 1
         enrichFileName <- paste0(outPrefix,".Enrichment_", iterationNum, ".csv")
