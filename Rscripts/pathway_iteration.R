@@ -22,7 +22,7 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
   length(unique.pathways)
   p.val.FDR <- p.adjust(p.val,method = "BH")
   p.val.FWER <- p.adjust(p.val,method = "bonferroni")
-  print('unique')
+  message('unique')
   results <- data.frame(Pathway = unique.pathways, 
                         pVal = round(p.val, digits = 3), 
                         pValFDR = round(p.val.FDR, digits = 3), 
@@ -31,7 +31,7 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
                         HitGenes = hit.genes, 
                         HitGeneNames = hit.gene.names)
   results <- results[with(results, order(results$pValBonferroni,results$pValFDR,results$pVal)),]
-  write.csv(results,file = paste0(file.name,".Enrichment_", iteration, ".csv"), row.names = FALSE)
+  #write.csv(results,file = paste0(file.name,".Enrichment_", iteration, ".csv"), row.names = FALSE)
   
   
   sigPathways <- results$Pathway[which(results$pVal < 0.055)]
@@ -43,9 +43,9 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
   }
   
   tempPathwayGenes <- matrix("Missing",nrow(siRNA.Score))
-  print("sigPathways")
-  print(sigPathways)  
-  print(file.name)
+  message("sigPathways")
+  message(sigPathways, "\n")  
+  message(file.name)
   tempPathwayGenes[siRNA.Score$EntrezID %in% sigPathwaysGenes] <- "Yes"	
   tempPathwayGenes[siRNA.Score$EntrezID %in% nonSigPathwaysGenes] <- "No"
   if(length(grep("KEGG", file.name))>0){
