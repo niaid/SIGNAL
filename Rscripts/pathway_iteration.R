@@ -31,7 +31,7 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
                         HitGenes = hit.genes, 
                         HitGeneNames = hit.gene.names)
   results <- results[with(results, order(results$pValBonferroni,results$pValFDR,results$pVal)),]
-  #write.csv(results,file = paste0(file.name,".Enrichment_", iteration, ".csv"), row.names = FALSE)
+  write.csv(results,file = paste0(file.name,".Enrichment_", iteration, ".csv"), row.names = FALSE)
   
   
   sigPathways <- results$Pathway[which(results$pVal < 0.055)]

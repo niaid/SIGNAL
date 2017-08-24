@@ -81,7 +81,7 @@ library(readr)
     
     ##################################################
     # Define server logic required to draw a histogram
-    server <- function(input, output, session) {
+    server <- function(session, input, output) {
     
       output$cutoffValues <- renderUI({
         if (is.null(input$cutoff_type))
@@ -135,7 +135,7 @@ library(readr)
       # Perfrom enrichment
       observeEvent(input$goButton, {
         updateTabsetPanel(session, "inTabset", selected = "status")
-
+        
         withCallingHandlers({
           shinyjs::html("status", "")
         
@@ -148,20 +148,22 @@ library(readr)
         dataDir <- "~/data/"
 
         organism <- input$organism
-        source("~/TRIAGE/Rscripts/pathway_iteration.R")
-        source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
-        network.type <- "hSTRINGppi.hi"
+        print(organism)
+        source("~/TRIAGE/Rscripts/pathway_iteration.R", local = TRUE)
+        #source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
+        networkType <- "hSTRINGppi.hi"
+        use.only.commnected.components <- c('Yes')
         
         outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
-        outputFileName <- paste0("TRIAGEoutput_HuTNF_CSAfdr_top5percCUTOFF_KEGG_", network.type, ".csv")
+        outputFileName <- paste0("TRIAGEoutput_HuTNF_CSAfdr_top5percCUTOFF_KEGG_", networkType, ".csv")
       
         # 1) Seed Pathway Analysis
-        setwd(dataDir)
+        setwd(outDir)
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         #pathway.type <- pathway.types[1]
         pathway.type <- input$pathway
         
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, Organism, ".csv"))
+        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
         #seedName <- "IAMinput_HuTNF_manual.csv"
         #seedName <- "TRIAGEinput_HuTNF_CSAfdr_5percCO.csv"
@@ -194,7 +196,7 @@ library(readr)
           
           # 2) Expansion - [Network Analysis]
           system.time(
-            source(paste0(scriptDir, "Network_iteration_V3.R"))
+            source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
           )
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
@@ -245,7 +247,7 @@ library(readr)
         
         ## Save the results into utput files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
-        setwd(outDir)
+        #setwd(outDir)
         write.csv(out, file = outputFileName, row.names = F)
         write.csv(pathEnrich, file = enrichFileName, row.names = F)
         completed <- TRUE
