@@ -11,7 +11,7 @@ library(shiny)
 library(shinyjs)
 library(readr)
 
-#if (interactive()) {
+if (interactive()) {
   
     ##################################################
     # Define UI for application that draws a histogram
@@ -127,8 +127,6 @@ library(readr)
       output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
       output$cutoff_value <- eventReactive(input$goButton, paste("Cutoff Value:", input$cutoff_value))
   
-########   
-          
       # Upon job submission, switch to 'status' tab
       output$status <- eventReactive(input$goButton, 'Analysis started!')
 
@@ -139,8 +137,6 @@ library(readr)
         withCallingHandlers({
           shinyjs::html("status", "")
         
-########        
-                
         # Global variables
         scriptDir <- "~/TRIAGE/Rscripts/"
         inputDir <- "~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
@@ -280,4 +276,4 @@ library(readr)
   #####################
   # Run the application 
   shinyApp(ui = ui, server = server)
-#}
+}
