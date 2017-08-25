@@ -14,8 +14,8 @@ library('dplyr')
 #############################################################
 #Set directories
 
-LSBshare_TRIAGE.input <- "/Volumes/lsb-share/SSU/TRIAGE/RankingDrafts/InputFiles"
-LSBshare_TRIAGE.output <- "/Volumes/lsb-share/SSU/TRIAGE/RankingDrafts/OutputFiles"
+LSBshare_TRIAGE.input <- "/Volumes/lsb-share/SSU/TRIAGE/InputFiles"
+LSBshare_TRIAGE.output <- "/Volumes/lsb-share/SSU/TRIAGE/OutputFiles"
 
 # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
 # PlotDir <- "~/Documents/Analysis/Simulating_Collar_Plot/"        # Where to place the plot you are going to create
@@ -27,6 +27,10 @@ LSBshare_TRIAGE.output <- "/Volumes/lsb-share/SSU/TRIAGE/RankingDrafts/OutputFil
 # I create matrices of the three pathways I want to look at. Currently this first step -choosing the pathways- is done manually. 
 # I chose TLR pathway because of the screen being a TLR screen, the spliceosome, and the proteasome because they were the highest scoring pathways
 # pathways that stood out to us.
+# Set working Directory
+
+setwd(LSBshare_TRIAGE.input)
+
 ##Getting Gene Hit Lists
 
 #KEGG and pathwyay files
