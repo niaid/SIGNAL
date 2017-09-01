@@ -10,6 +10,7 @@
 library(shiny)
 library(shinyjs)
 library(readr)
+Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 if (interactive()) {
   
@@ -49,8 +50,8 @@ if (interactive()) {
           # ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
-          textInput("cutoffValueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
-          textInput("cutoffValueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           actionButton("goButton", "Analyze my data !", icon("angle-double-right"), 
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
@@ -60,19 +61,26 @@ if (interactive()) {
           tabsetPanel(id = "inTabset",
             tabPanel(title = "Input", value = "contents", 
                      textOutput("dataSummary"), 
-                     textOutput("dataHead"), 
-                     tableOutput("contents"), 
+                     dataTableOutput("contents"), 
                      textOutput("organism"),
                      textOutput("pathway"),
                      textOutput("network"),
                      textOutput("cutoff_type"),
-                     textOutput("cutoff_value")
+                     textOutput("cutoff_valueH"),
+                     textOutput("cutoff_valueM")
             ),
             tabPanel(title = "Status", value = "status", tags$pre(id = "status")
             ),
-            tabPanel(title = "Result", value = "results", tableOutput("results")
+            tabPanel(title = "Enriched Pathways", value = "enrichedPathways", dataTableOutput("enrichedPathways")
             ),
-            tabPanel(title = "Download", value = "downloads",tableOutput("download"))
+            tabPanel(title = "Ranked Genes", value = "rankedGenes", dataTableOutput("rankedGenes")
+            ),
+            tabPanel(title = "Network Graph", value = "networkGraph", plotOutput("networkGraph")
+            ),
+            tabPanel(title = "Download", value = "downloads",
+                     htmlOutput("downloadFiles"),
+                     downloadButton('downloadButton', 'Download all files')
+            )
           )    
         )
       ),
@@ -84,7 +92,7 @@ if (interactive()) {
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-      
+      completed4 <- FALSE
       # output$cutoffValues <- renderUI({
       #   if (is.null(input$cutoff_type))
       #     return()
@@ -106,7 +114,7 @@ if (interactive()) {
       #})
       
       # Read in the input fie  
-      output$contents <- renderTable({
+      output$contents <- renderDataTable({
         inFile <- input$file1
         
         if (is.null(inFile))
@@ -116,10 +124,8 @@ if (interactive()) {
         
         # display the input file dimension
         output$dataSummary <- renderText(c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns."))
-      
-        # display the input data in a table
-        output$dataHead <- renderText("Here are the first 10 rows:")
-        head(data, 10)
+   
+        return(data)
       })
       
       output$cutoffTypes <- renderUI({
@@ -130,7 +136,7 @@ if (interactive()) {
         data <- read.csv(inFile2$datapath)
         pulldown_types <- colnames(data)
       
-        selectInput("cutoffTypes", "Cutoff Types", pulldown_types)
+        selectInput("cutoff_type", "Cutoff Types", pulldown_types)
       })
       
       # parameters
@@ -138,15 +144,15 @@ if (interactive()) {
       output$pathway  <- eventReactive(input$goButton, paste("Pathway:", input$pathway))
       output$network  <- eventReactive(input$goButton, paste("Network:", input$network))
       output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
-      output$cutoff_value <- eventReactive(input$goButton, paste("Cutoff Value:", input$cutoff_value))
-  
+      output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
+      output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
+      
       # Upon job submission, switch to 'status' tab
       output$status <- eventReactive(input$goButton, 'Analysis started!')
 
       # Perfrom enrichment
       observeEvent(input$goButton, {
         updateTabsetPanel(session, "inTabset", selected = "status")
-        
         withCallingHandlers({
           shinyjs::html("status", "")
         
@@ -163,9 +169,13 @@ if (interactive()) {
         networkType <- "hSTRINGppi.hi"
         use.only.commnected.components <- c('Yes')
         
+        # Set the output file name
         outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
-        outputFileName <- paste0("TRIAGEoutput_HuTNF_CSAfdr_top5percCUTOFF_KEGG_", networkType, ".csv")
-      
+        inputFile <- input$file1
+        inputFileName <- inputFile$name
+        inputFilePrefix = unlist(strsplit(inputFileName, split='.csv', fixed=TRUE))[1]
+        outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
+        
         # 1) Seed Pathway Analysis
         setwd(outDir)
         pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
@@ -225,13 +235,14 @@ if (interactive()) {
           message(paste("iteration: ", iteration, "\n"))
           proxyScore <- nName2
           iteration <- iteration + 1
-        }
+        } # end of while loop
         
         ### Append Enrichment Info --------------------------------------------
         pval_threshold <- 0.05
         #pval_threshold <- input$cutoff_value
         
         iterationNum = iteration - 1
+        #enrichFileName <- paste0(outPrefix,".Enrichment_", iterationNum, ".csv")
         enrichFileName <- paste0(outPrefix,".Enrichment_", iterationNum, ".csv")
         pathEnrich <- read.csv(enrichFileName, stringsAsFactors = FALSE)
         
@@ -254,35 +265,85 @@ if (interactive()) {
         
         pathDF <- data.frame(GeneSymbol = tempDF$GeneSymbol, Pathway = pathVector, stringsAsFactors = F)
         
+        ## 
+        
+        
         ## Save the results into utput files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
         #setwd(outDir)
         write.csv(out, file = outputFileName, row.names = F)
-        write.csv(pathEnrich, file = enrichFileName, row.names = F)
+        final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv") 
+        write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
         completed <- TRUE
-  
       },
       message = function(m) {
         shinyjs::html(id = "status", html = m$message, add = TRUE)
       })
         
-      ## Switch to 'Results' tab adn display partial results
+      ## Switch to 'Enriched Pathways' tab adn display partial results
       observe({
         if(completed) {
-          updateTabsetPanel(session, "inTabset", selected = "results")
+          updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
           
           # Display the complete table
-          #output$results <- renderTable({out[100:115,]})
+          #output$results <- renderDataTable({out[100:115,]})
           # Display the pathway table
-          output$results <- renderTable({pathEnrich})
+          
+          output$enrichedPathways <- renderDataTable({
+            options = list(autoWidth = TRUE, scrollX = TRUE,
+                           columnDefs = list(list(width = '200px', targets = c(4,5))))
+            return(pathEnrich)
+            completed4 <- TRUE
+          })
         }
       })
-      # Create download buttons in the 'Download' tab
-      output$download <- renderUI({
-        if(completed) {
-          downloadButton('OutputFile1', 'Download')
+      
+      # Create the 'Ranked Genes' tab
+      completed2 <- TRUE
+      output$rankedGenes <- renderUI({
+        if(completed2) {
+          updateTabsetPanel(session, "inTabset", selected = "rankedGenes")
+
+          output$rankedGenes <- renderDataTable({siRNA.Score})
         }
       })
+      # 
+      # # Create the 'Network Graph' tab
+      # completed3 <- TRUE
+      # output$networkGraph <- renderUI({
+      #   if(completed3) {
+      #     updateTabsetPanel(session, "inTabset", selected = "networkGraph")
+      #     
+      #     output$networkGraph <- renderPlot({networkGraph})
+      #   }
+      # })
+      # 
+      #Create the 'Download' tab
+      #completed4 <- TRUE
+      #observe({
+      #if(completed4) {
+        updateTabsetPanel(session, "inTabset", selected = "downloads")
+        
+        output$downloadFiles <- renderUI({
+          outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
+          out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+          for(i in 1:length(outputFiles)){
+            out <- paste(out, outputFiles[i], sep = "<br>")
+          }
+          out <- paste0(out, "<br><br>")
+          HTML(out)
+        })
+        output$downloadButton <- downloadHandler(
+
+          filename = function(){
+            paste("TRIAGE_analysis_output","zip",sep=".")
+          },
+          content = function(filename){
+            outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
+            zip(zipfile=filename, files = outputFiles)
+          },
+          contentType = "application/zip"
+        )
     })
   }
     
