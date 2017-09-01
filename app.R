@@ -73,7 +73,7 @@ if (interactive()) {
             ),
             tabPanel(title = "Enriched Pathways", value = "enrichedPathways", dataTableOutput("enrichedPathways")
             ),
-            tabPanel(title = "Ranked Genes", value = "rankedGenes", dataTableOutput("rankedGenes")
+            tabPanel(title = "Gene List", value = "geneList", dataTableOutput("geneList")
             ),
             tabPanel(title = "Network Graph", value = "networkGraph", plotOutput("networkGraph")
             ),
@@ -169,6 +169,9 @@ if (interactive()) {
         networkType <- "hSTRINGppi.hi"
         use.only.commnected.components <- c('Yes')
         
+        # Clear any file in the output directory
+        do.call(file.remove, list(list.files(outputDir, full.names = TRUE)))
+        
         # Set the output file name
         outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
         inputFile <- input$file1
@@ -190,13 +193,13 @@ if (interactive()) {
         
         #siRNA.Score <- read.csv(seedName, stringsAsFactors = F)
         siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
-        proxyScore <- "Replicate1" 
+        proxyScore <- input$cutoff_type 
         iteration <- 1
         counter <- TRUE
         
         while (counter == TRUE) {
           
-          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] == 1]
+          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
           
           outPrefix <- paste(pathway.type, iteration, sep = "_")  
@@ -207,8 +210,8 @@ if (interactive()) {
           kName1 <- paste0("KEGG.class.iteration", iteration)
           kName2 <- paste0("KEGG.", iteration)
           names(siRNA.Score)[names(siRNA.Score) == "temp"] <- kName1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & siRNA.Score[[proxyScore]] > 0] <- 1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & siRNA.Score[[proxyScore]] > 0] <- 0.5
+          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] > input$cutoff_valueM)] <- 1
+          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] > input$cutoff_valueM)] <- 0.5
           names(siRNA.Score)[names(siRNA.Score) == "KEGG"] <- kName2
           
           hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == 1]
@@ -300,11 +303,11 @@ if (interactive()) {
       
       # Create the 'Ranked Genes' tab
       completed2 <- TRUE
-      output$rankedGenes <- renderUI({
+      output$geneList <- renderUI({
         if(completed2) {
-          updateTabsetPanel(session, "inTabset", selected = "rankedGenes")
+          updateTabsetPanel(session, "inTabset", selected = "geneList")
 
-          output$rankedGenes <- renderDataTable({siRNA.Score})
+          output$geneList <- renderDataTable({siRNA.Score})
         }
       })
       # 
