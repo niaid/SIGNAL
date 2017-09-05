@@ -10,7 +10,12 @@
 library(shiny)
 library(shinyjs)
 library(readr)
+library(dplyr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
+
+# global variables
+organismAbbr <- NULL
+originalHits <- NULL
 
 if (interactive()) {
   
@@ -163,6 +168,8 @@ if (interactive()) {
         dataDir <- "~/data/"
 
         organism <- input$organism
+        organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
+        
         print(organism)
         source("~/TRIAGE/Rscripts/pathway_iteration.R", local = TRUE)
         #source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
@@ -200,6 +207,8 @@ if (interactive()) {
         while (counter == TRUE) {
           
           Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
+          originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
+            
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
           
           outPrefix <- paste(pathway.type, iteration, sep = "_")  
@@ -215,6 +224,7 @@ if (interactive()) {
           names(siRNA.Score)[names(siRNA.Score) == "KEGG"] <- kName2
           
           hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == 1]
+          myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == 1]
           
           # 2) Expansion - [Network Analysis]
           system.time(
@@ -295,9 +305,48 @@ if (interactive()) {
           output$enrichedPathways <- renderDataTable({
             options = list(autoWidth = TRUE, scrollX = TRUE,
                            columnDefs = list(list(width = '200px', targets = c(4,5))))
+
+            # Used to add hyperlink to KEGG pathway
+            fontBlue <- function(val) {
+              sprintf('<font color=blue>%s</font>',val)
+            }
+            
+            fontRed <- function(val) {
+              sprintf('<font color=red>%s</font>',val)
+            }
+            
+            # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
+            createLink <- function(val1, val2, val3) {
+              sprintf('<a href="http://www.genome.jp/kegg-bin/show_pathway?%s0%s" target="_blank" class="btn btn-primary">%s</a>', val1, val2, val3)
+            }
+
+            for (i in 1:nrow(pathEnrich))
+            {
+              # Add hyperlink to KEGG pathway database
+              pathwayName <- pathEnrich[i,][1] 
+              pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
+              pathEnrich[i,][1] <- createLink(organismAbbr, pathwayID, pathwayName)
+              
+              # Add color to indicate whether a gene is in the original hit gene set
+              myGeneSet <- pathEnrich[i,7]
+              myGenes <- unlist(strsplit(as.character(myGeneSet), ','))
+              myOriginalHits <- paste(unlist(originalHits), collapse=', ')
+              myGene <- NULL
+
+              for(j in 1:length(myGenes))
+              {
+                if(grepl(myGenes[j], myOriginalHits)){
+                  myGene <- paste(myGene, fontBlue(myGenes[j]), sep = ",")
+                }else{
+                  myGene <- paste(myGene, fontRed(myGenes[j]), sep = ",")
+                }
+              }
+              myGene <- substring(myGene, 2)
+              pathEnrich[i,7] <- myGene
+            }
             return(pathEnrich)
             completed4 <- TRUE
-          })
+          }, escape = FALSE)
         }
       })
       
@@ -330,6 +379,7 @@ if (interactive()) {
         output$downloadFiles <- renderUI({
           outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
           out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+          
           for(i in 1:length(outputFiles)){
             out <- paste(out, outputFiles[i], sep = "<br>")
           }
