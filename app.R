@@ -359,7 +359,10 @@ if (interactive()) {
         if(completed2) {
           updateTabsetPanel(session, "inTabset", selected = "geneList")
 
-          output$geneList <- renderDataTable({siRNA.Score})
+          output$geneList <- renderDataTable({
+            # Select only the hit genes in any iteration
+            newSet <- subset(siRNA.Score, siRNA.Score$'KEGG.class.iteration1' == 1| siRNA.Score$'KEGG.class.iteration2'  == 1 | siRNA.Score$'KEGG.class.iteration3'  == 1| siRNA.Score$'KEGG.class.iteration4' == 1| siRNA.Score$'KEGG.class.iteration5' == 1)
+          })
         }
       })
       # 
