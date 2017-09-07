@@ -9,6 +9,7 @@
 
 library(shiny)
 library(shinyjs)
+library(shinyBS)
 library(readr)
 library(dplyr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
@@ -56,7 +57,9 @@ if (interactive()) {
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
           textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           actionButton("goButton", "Analyze my data !", icon("angle-double-right"), 
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
