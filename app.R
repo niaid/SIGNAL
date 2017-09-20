@@ -206,11 +206,11 @@ if (interactive()) {
         proxyScore <- input$cutoff_type 
         iteration <- 1
         counter <- TRUE
+        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
         
         while (counter == TRUE) {
           
           Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
-          originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
             
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
           
@@ -358,10 +358,32 @@ if (interactive()) {
       output$geneList <- renderUI({
         if(completed2) {
           updateTabsetPanel(session, "inTabset", selected = "geneList")
-
+          
           output$geneList <- renderDataTable({
             # Select only the hit genes in any iteration
-            newSet <- subset(siRNA.Score, siRNA.Score$'KEGG.class.iteration1' == 1| siRNA.Score$'KEGG.class.iteration2'  == 1 | siRNA.Score$'KEGG.class.iteration3'  == 1| siRNA.Score$'KEGG.class.iteration4' == 1| siRNA.Score$'KEGG.class.iteration5' == 1)
+            # number of columns to check based on the number of iterations
+            numConditions <- NULL
+            
+            for (i in 1:(iteration - 1))
+            {
+              ifelse ((i == (iteration - 1)),
+                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1.0", sep=""),
+                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1.0 | ", sep="")
+              )
+            }
+            
+            subSet <- subset(siRNA.Score, eval(parse(text = numConditions)))
+            
+            # Add a new row of "Total"
+            # totalRow <- matrix(c(rep.int(NA,length(subSet))),nrow=1,ncol=length(subSet))
+            # colnames(totalRow) <- colnames(subSet)
+            # totalRow[1,"GeneSymbol"] <- "Total"
+            # totalRow[1,"KEGG.class.iteration1"] <- sum(subSet$'KEGG.class.iteration1'[subSet$'KEGG.class.iteration1' == 1.0])
+            # totalRow[1,"KEGG.class.iteration2"] <- sum(subSet$'KEGG.class.iteration2'[subSet$'KEGG.class.iteration2' == 1.0])
+            # totalRow[1,"KEGG.class.iteration3"] <- sum(subSet$'KEGG.class.iteration3'[subSet$'KEGG.class.iteration3' == 1.0])
+            # totalRow[1,"KEGG.class.iteration4"] <- sum(subSet$'KEGG.class.iteration4'[subSet$'KEGG.class.iteration4' == 1.0])
+            # totalRow[1,"KEGG.class.iteration5"] <- sum(subSet$'KEGG.class.iteration5'[subSet$'KEGG.class.iteration5' == 1.0])
+            # newSubset <- rbind(totalRow, subSet)
           })
         }
       })
