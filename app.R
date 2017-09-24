@@ -12,6 +12,7 @@ library(shinyjs)
 library(shinyBS)
 library(readr)
 library(dplyr)
+library(DT)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
@@ -334,16 +335,19 @@ if (interactive()) {
               myGeneSet <- pathEnrich[i,7]
               myGenes <- unlist(strsplit(as.character(myGeneSet), ','))
               myOriginalHits <- paste(unlist(originalHits), collapse=', ')
-              myGene <- NULL
-
+              myBlueGene <- NULL
+              myRedGene <- NULL
+              
               for(j in 1:length(myGenes))
               {
                 if(grepl(myGenes[j], myOriginalHits)){
-                  myGene <- paste(myGene, fontBlue(myGenes[j]), sep = ",")
+                  myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
                 }else{
-                  myGene <- paste(myGene, fontRed(myGenes[j]), sep = ",")
+                  myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
                 }
               }
+              # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
+              myGene <- paste(myBlueGene, myRedGene, sep = "")
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
@@ -367,23 +371,33 @@ if (interactive()) {
             for (i in 1:(iteration - 1))
             {
               ifelse ((i == (iteration - 1)),
-                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1.0", sep=""),
-                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1.0 | ", sep="")
+                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1", sep=""),
+                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1 | ", sep="")
               )
             }
             
             subSet <- subset(siRNA.Score, eval(parse(text = numConditions)))
+
+            # Add a new row of "Total" of hit genes
+            totalRow <- subSet[1,]
             
-            # Add a new row of "Total"
-            # totalRow <- matrix(c(rep.int(NA,length(subSet))),nrow=1,ncol=length(subSet))
-            # colnames(totalRow) <- colnames(subSet)
-            # totalRow[1,"GeneSymbol"] <- "Total"
-            # totalRow[1,"KEGG.class.iteration1"] <- sum(subSet$'KEGG.class.iteration1'[subSet$'KEGG.class.iteration1' == 1.0])
-            # totalRow[1,"KEGG.class.iteration2"] <- sum(subSet$'KEGG.class.iteration2'[subSet$'KEGG.class.iteration2' == 1.0])
-            # totalRow[1,"KEGG.class.iteration3"] <- sum(subSet$'KEGG.class.iteration3'[subSet$'KEGG.class.iteration3' == 1.0])
-            # totalRow[1,"KEGG.class.iteration4"] <- sum(subSet$'KEGG.class.iteration4'[subSet$'KEGG.class.iteration4' == 1.0])
-            # totalRow[1,"KEGG.class.iteration5"] <- sum(subSet$'KEGG.class.iteration5'[subSet$'KEGG.class.iteration5' == 1.0])
-            # newSubset <- rbind(totalRow, subSet)
+            for (k in 1:length(totalRow)) {
+              
+              if(grepl("KEGG.class.iteration", colnames(totalRow)[k])) {
+                subSet1 <- subset(subSet, subSet[[colnames(totalRow)[k]]] == 1)
+                totalRow[1,colnames(totalRow)[k]] <- sum(subSet1[[colnames(totalRow)[k]]])
+              }
+              else{
+                totalRow[1,k] <- NA
+              }
+            }
+            totalRow[1,"GeneSymbol"] <- "Total"
+            newSubset <- rbind(totalRow, subSet)
+            
+            # Highlight the 'Total' row
+            dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
+              formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
+            return(dat)
           })
         }
       })
