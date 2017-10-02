@@ -12,6 +12,7 @@ library(shinyjs)
 library(shinyBS)
 library(readr)
 library(dplyr)
+library(stringi)
 library(DT)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
@@ -133,7 +134,7 @@ if (interactive()) {
         
         # display the input file dimension
         output$dataSummary <- renderText(c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns."))
-   
+        data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
         return(data)
       })
       
@@ -176,7 +177,6 @@ if (interactive()) {
         
         print(organism)
         source("~/TRIAGE/Rscripts/pathway_iteration.R", local = TRUE)
-        #source("~/TRIAGE/Rscripts/Network_iteration_V3.R")
         networkType <- "hSTRINGppi.hi"
         use.only.commnected.components <- c('Yes')
         
@@ -194,21 +194,18 @@ if (interactive()) {
         setwd(outDir)
         pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         pathway.type <- pathway.types[1]
-        #pathway.type <- input$pathway
-        
         pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
-        #seedName <- "IAMinput_HuTNF_manual.csv"
-        #seedName <- "TRIAGEinput_HuTNF_CSAfdr_5percCO.csv"
-        #setwd(inputDir)
-        
-        #siRNA.Score <- read.csv(seedName, stringsAsFactors = F)
+        # Get input file 
         siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
         proxyScore <- input$cutoff_type 
         iteration <- 1
         counter <- TRUE
+        
+        # Get a copy of the original list of high-confidence genes
         originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
         
+        # Perform iterative TRIAGE analysis
         while (counter == TRUE) {
           
           Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
@@ -282,9 +279,6 @@ if (interactive()) {
         
         pathDF <- data.frame(GeneSymbol = tempDF$GeneSymbol, Pathway = pathVector, stringsAsFactors = F)
         
-        ## 
-        
-        
         ## Save the results into utput files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
         #setwd(outDir)
@@ -319,33 +313,74 @@ if (interactive()) {
               sprintf('<font color=red>%s</font>',val)
             }
             
-            # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
+            # Add a hyperlink to KEGG pathway
             createLink <- function(val1, val2, val3) {
               sprintf('<a href="http://www.genome.jp/kegg-bin/show_pathway?%s0%s" target="_blank" class="btn btn-primary">%s</a>', val1, val2, val3)
             }
-
+            
+            # Add a hyperlink to KEGG mapper
+            link2KEGGmapper <- function(organismAbbr, pathwayID,  myGeneLabels, pathwayName) {
+              # Check the data submitted by the form using http post method
+              #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
+              # Create a form for each datatable row
+              sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://www.genome.jp/kegg-bin/mcolor_pathway">
+                        <input type="hidden" name="map" value="%s0%s">
+                       <input type="hidden" name="unclassified" value="%s">
+                       <input type="hidden" name="s_sample" value="color">
+                       <input type="hidden" name="mode" value="color">
+                       <input type="hidden" name="reference" value="white">
+                       <input type="submit" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
+            }
+            
+            # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
             for (i in 1:nrow(pathEnrich))
             {
               # Add hyperlink to KEGG pathway database
-              pathwayName <- pathEnrich[i,][1] 
-              pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
-              pathEnrich[i,][1] <- createLink(organismAbbr, pathwayID, pathwayName)
+              #pathwayName <- pathEnrich[i,][1] 
+              #pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
+              #pathEnrich[i,][1] <- createLink(organismAbbr, pathwayID, pathwayName)
               
               # Add color to indicate whether a gene is in the original hit gene set
+              # Also create a hyperlink to KEGG mapper for each pathways
               myGeneSet <- pathEnrich[i,7]
-              myGenes <- unlist(strsplit(as.character(myGeneSet), ','))
+              myGenes <- unlist(strsplit(as.character(myGeneSet), ', '))
               myOriginalHits <- paste(unlist(originalHits), collapse=', ')
               myBlueGene <- NULL
+              myBlueGeneID <- NULL
+              myBlueGeneLabels <- NULL
+              myBlueGeneIDs <- NULL
               myRedGene <- NULL
+              myRedGeneID <- NULL
+              myRedGeneLabels <- NULL
+              myRedGeneIDs <- NULL
+              
               
               for(j in 1:length(myGenes))
               {
                 if(grepl(myGenes[j], myOriginalHits)){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
+                  myBlueGeneID <- siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])]
+                  myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
+                  myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
+                  myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))
+                  #print(paste(myBlueGeneID, myGenes[j], sep =  " "))
                 }else{
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
+                  myRedGeneID <- siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])]
+                  myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red\n"))
+                  myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
+                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))
+                  #print(paste(myRedGeneID, myGenes[j], sep = " "))
                 }
               }
+              
+              # Add hyperlink to KEGG pathway database
+              pathwayName <- pathEnrich[i,][1] 
+              pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
+              mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
+              myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
+              pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
+
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
               myGene <- paste(myBlueGene, myRedGene, sep = "")
               myGene <- substring(myGene, 2)
@@ -357,7 +392,7 @@ if (interactive()) {
         }
       })
       
-      # Create the 'Ranked Genes' tab
+      # Create the 'Gene List' tab
       completed2 <- TRUE
       output$geneList <- renderUI({
         if(completed2) {
@@ -370,20 +405,25 @@ if (interactive()) {
             
             for (i in 1:(iteration - 1))
             {
-              ifelse ((i == (iteration - 1)),
-                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1", sep=""),
+              if (i == (iteration - 1)){
+                numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1 ", sep="")
+              }
+              else{
                 numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1 | ", sep="")
-              )
+              }
             }
             
+            print(numConditions)
             subSet <- subset(siRNA.Score, eval(parse(text = numConditions)))
-
-            # Add a new row of "Total" of hit genes
+            
+            # Add a new row of "Total" of hit genes in each iteration
             totalRow <- subSet[1,]
             
             for (k in 1:length(totalRow)) {
               
               if(grepl("KEGG.class.iteration", colnames(totalRow)[k])) {
+                
+                # Get the subset of the dataframe with column value equal to 1
                 subSet1 <- subset(subSet, subSet[[colnames(totalRow)[k]]] == 1)
                 totalRow[1,colnames(totalRow)[k]] <- sum(subSet1[[colnames(totalRow)[k]]])
               }
@@ -397,7 +437,7 @@ if (interactive()) {
             # Highlight the 'Total' row
             dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
-            return(dat)
+              return(dat)
           })
         }
       })
