@@ -14,6 +14,8 @@ library(readr)
 library(dplyr)
 library(stringi)
 library(DT)
+library(data.table)
+
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
@@ -85,7 +87,10 @@ if (interactive()) {
             ),
             tabPanel(title = "Gene List", value = "geneList", dataTableOutput("geneList")
             ),
-            tabPanel(title = "Network Graph", value = "networkGraph", plotOutput("networkGraph")
+            tabPanel(title = "Network Graph", value = "networkGraph", 
+                     h4('Please select your (1-5) pathways for network graph analysis'), hr(),
+                     verbatimTextOutput('Header'),                    
+                     dataTableOutput("networkGraph")
             ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
@@ -133,7 +138,7 @@ if (interactive()) {
         data <- read.csv(inFile$datapath)
         
         # display the input file dimension
-        output$dataSummary <- renderText(c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns."))
+        #output$dataSummary <- renderText(c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns."))
         data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
         return(data)
       })
@@ -143,8 +148,8 @@ if (interactive()) {
         if (is.null(inFile2))
           return()
         
-        data <- read.csv(inFile2$datapath)
-        pulldown_types <- colnames(data)
+        data2 <- read.csv(inFile2$datapath)
+        pulldown_types <- colnames(data2)
       
         selectInput("cutoff_type", "Cutoff Types", pulldown_types)
       })
@@ -203,12 +208,12 @@ if (interactive()) {
         counter <- TRUE
         
         # Get a copy of the original list of high-confidence genes
-        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
+        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] >= input$cutoff_valueH]
         
         # Perform iterative TRIAGE analysis
         while (counter == TRUE) {
           
-          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] > input$cutoff_valueH]
+          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] >= input$cutoff_valueH]
             
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
           
@@ -220,8 +225,8 @@ if (interactive()) {
           kName1 <- paste0("KEGG.class.iteration", iteration)
           kName2 <- paste0("KEGG.", iteration)
           names(siRNA.Score)[names(siRNA.Score) == "temp"] <- kName1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] > input$cutoff_valueM)] <- 1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] > input$cutoff_valueM)] <- 0.5
+          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- 1
+          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- 0.5
           names(siRNA.Score)[names(siRNA.Score) == "KEGG"] <- kName2
           
           hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == 1]
@@ -261,7 +266,7 @@ if (interactive()) {
         pathEnrich <- read.csv(enrichFileName, stringsAsFactors = FALSE)
         
         pathEnrich <- pathEnrich[pathEnrich$pVal < pval_threshold, ]
-        
+    
         tempL <- strsplit(pathEnrich$HitGeneNames, split = ", ")
         names(tempL) <- pathEnrich$Pathway
         
@@ -285,6 +290,10 @@ if (interactive()) {
         write.csv(out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv") 
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
+
+        # Pass the pathway list to build networkGraph
+        sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
+        
         completed <- TRUE
       },
       message = function(m) {
@@ -324,7 +333,7 @@ if (interactive()) {
               #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
               # Create a form for each datatable row
               sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://www.genome.jp/kegg-bin/mcolor_pathway">
-                        <input type="hidden" name="map" value="%s0%s">
+                       <input type="hidden" name="map" value="%s0%s">
                        <input type="hidden" name="unclassified" value="%s">
                        <input type="hidden" name="s_sample" value="color">
                        <input type="hidden" name="mode" value="color">
@@ -434,8 +443,8 @@ if (interactive()) {
             totalRow[1,"GeneSymbol"] <- "Total"
             newSubset <- rbind(totalRow, subSet)
             
-            # Highlight the 'Total' row
-            dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
+            # Highlight the 'Total' row using formatStyle()
+             dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
               return(dat)
           })
@@ -443,15 +452,36 @@ if (interactive()) {
       })
       # 
       # # Create the 'Network Graph' tab
-      # completed3 <- TRUE
-      # output$networkGraph <- renderUI({
-      #   if(completed3) {
-      #     updateTabsetPanel(session, "inTabset", selected = "networkGraph")
-      #     
-      #     output$networkGraph <- renderPlot({networkGraph})
-      #   }
-      # })
-      # 
+      completed3 <- TRUE
+      output$networkGraph <- renderUI({
+        if(completed3) {
+          updateTabsetPanel(session, "inTabset", selected = "networkGraph")
+
+          #output$networkGraph <- renderPlot({networkGraph})
+          output$networkGraph <- renderDataTable({
+            
+            # Convert rownames into first column
+            setDT(sigPathways, keep.rownames = TRUE)[]
+            colnames(sigPathways) <- c("Rank", "Pathways", "TotalGenes", "HitGenes")
+            
+            # for(m in 1:nrow(sigPathways)){
+            #   if(m == 1){
+            #     sigPathways[m,1] <- sprintf('<html><form><input id="%s" type="checkbox" name="pathwayID" value="%s">%s', m, m, m)
+            #   }
+            #   else if(m == nrow(sigPathways)){
+            #     sigPathways[m,1] <- sprintf('<form><input id="%s" type="checkbox" name="pathwayID" value="%s">%s</form></html>', m, m, m)
+            #   }
+            #   else{
+            #     sigPathways[m,1] <- sprintf('<input id="%s" type="checkbox" name="pathwayID" value="%s">%s', m, m, m)
+            #   }
+            # }
+            
+            # Create a form for the datatable to allow row selection for generating network graph
+            datatable(sigPathways, rownames = FALSE, options = list(dom = 't', paging=FALSE))
+          }, escape = FALSE)
+        }
+      })
+
       #Create the 'Download' tab
       #completed4 <- TRUE
       #observe({
