@@ -1,0 +1,577 @@
+###################################################
+## Setting up Network Analysis
+## And ranking draft
+###################################################
+# Samuel Katz
+# July 27, 2017
+###################################################
+
+require(edgebundleR)                        #Load Libraries
+library('igraph')
+library('data.table')
+library('dplyr')
+
+#selectedPathways <- c(1,2,3)  
+#Generate_NetworGraph(selectedPathways)
+
+Generate_NetworGraph <- function(selectedRows){
+  #############################################################
+  #Set directories
+  
+  TRIAGE.input <- "~/data"
+  TRIAGE.output <- "~/TRIAGE/InputOutputs/TRIAGEoutputFiles"
+  
+  # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
+  # PlotDir <- "~/Documents/Analysis/Simulating_Collar_Plot/"        # Where to place the plot you are going to create
+  # Database.dir <- "~/Documents/Analysis/GeneListsDB/"              # Where to place additional membership lists, in this case this is where I placed  my own list of "TLR" genes
+  # HitsDir <- "~/Documents/Analysis/April_MoTNFtests/ImprovedAnnotationPlusNonKEGGaddition/Testing/STRINGdb/" #Where to place the output of your TRIAGE analysis
+  # CARDdirectory <- "~/Desktop/CARDcode/"                           # Where you placed your download from CARD (as well as the igraphs from STRING, in this case they are in a folder within it "./Rscripts/Resources/Network/")
+  
+  #############################################################
+  # I create matrices of the three pathways I want to look at. Currently this first step -choosing the pathways- is done manually. 
+  # I chose TLR pathway because of the screen being a TLR screen, the spliceosome, and the proteasome because they were the highest scoring pathways
+  # pathways that stood out to us.
+  # Set working Directory
+  
+  setwd(TRIAGE.input)
+  
+  ##Getting Gene Hit Lists
+  
+  #KEGG and pathwyay files
+  # setwd(Database.dir)                                              #This was a list of "canonical" TLR genes that was provided to me (By Iain Fraser)
+  Ian.tlr.canon <- read.csv("TLR128.csv", stringsAsFactors = F)
+  
+  # setwd(KEGGdir)
+  KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
+  
+  #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
+  #Get TLR Canonical Genes
+  TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
+  # path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
+  # TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
+  # TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
+  
+  #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
+  path2_name <- sigPathways$Pathway[as.numeric(selectedRows[2])]
+  message("path2_name"=path2_name)
+  PROTpathway.genes <- filter(KEGGhuman, PathwayName == path2_name)
+  PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
+
+  #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
+  path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
+  message("path1_name"=path1_name)
+  SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
+  SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
+  
+  #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
+  # setwd(HitsDir)
+  HuTNFanno <- read.csv("~/TRIAGE/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
+  
+  #IAM hits and definging last iteration column name &  inflection point
+  IAM_final_iteration <- colnames(HuTNFanno)[(ncol(HuTNFanno))-3] # This column corresponds to the last network analysis step (expnasion) of the TRIAGE analysis.
+  InflectionPoint <- -4.5                                         # THis is the cutoff I used to "save" gene that aren't annotated in the pathway database (KEGG), the lowest score - since we were looking 
+  # at things with negative scores the "highest" was the one with the lowest zscore - was ~-6.5 so I used -4.5 as a cutoff.
+  #Get filtered IAMhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
+  # and any gene that is in top two standard deviations that isn't annotated in KEGG
+  IAMhits <- filter(HuTNFanno, get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1)
+  
+  IAMhits.matrix <- matrix(IAMhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
+  
+  
+  #Get filtered IAM file + Pathway genes                          # To do the complete networks, cerating a matrix of hit genes + plus genes that are in the pathways of interest
+  IAM <- filter(HuTNFanno, (Zscore < InflectionPoint & KEGGdb == "Absent" & CSAdes == "HitbyCSA" & get(IAM_final_iteration, envir = as.environment(HuTNFanno)) != 1) | 
+                  get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1 | 
+                  EntrezID %in% TLRpathway.genes.matrix 
+                | EntrezID %in% PROTpathway.genes.matrix        # I commented out the protein pathway here and below but it can be commented back in.            
+                | EntrezID %in% SPLICEpathway.genes.matrix)
+  
+  #Get matrices for Pathways (Hits and non hits seperately)      # Now creating seperate matrices for each pathway containing only the genes of that pathway that are ALSO hits in the screen
+  #Hits
+  TLRhits <- filter(IAMhits, EntrezID %in% TLRpathway.genes.matrix)
+  TLRhits.matrix <- matrix(TLRhits$EntrezID)
+  
+  PROThits <- filter(IAMhits, EntrezID %in% PROTpathway.genes.matrix)
+  PROThits.matrix <- matrix(PROThits$EntrezID)
+  
+  SPLICEhits <- filter(IAMhits, EntrezID %in% SPLICEpathway.genes.matrix)
+  SPLICEhits.matrix <- matrix(SPLICEhits$EntrezID)
+  
+  #Non hits                                                     # Now creating matrices of each pathways genes thate are not hits.
+  TLRnonhits.matrix <-  matrix(setdiff(TLRpathway.genes.matrix, IAMhits$EntrezID))
+  
+  PROTnonhits.matrix <- matrix(setdiff(PROTpathway.genes.matrix, IAMhits$EntrezID))
+  
+  SPLICEnonhits.matrix <- matrix(setdiff(SPLICEpathway.genes.matrix, IAMhits$EntrezID))
+  
+  #############################################################
+  #           Setting up Network Databases and input
+  #############################################################
+  
+  organism <- "Human"
+  
+  #setwd(CARDdirectory)                                # Selecting which network to use, h/m human/mouse, hi/med hi confidence/medium confidence, ppi = Protein-Protein 
+  # interactions (as opposed to the others that combine other interaciton sources) 
+  if (tolower(organism) == "human") {
+    networkTypes <- c("hSTRINGhi", "hSTRINGmed", "hSTRINGppi.hi", "hSTRINGppi.med")               
+  } else if (tolower(organism) == "mouse") {
+    networkTypes <- c("mSTRINGhi", "mSTRINGmed", "mSTRINGppi.hi", "mSTRINGppi.med")
+  }
+  networkType <- networkTypes[c(3)] #**                          # Setting which network file to use.
+  
+  use.only.commnected.components = "yes"
+  show.dendogram <- TRUE
+  
+  
+  siRNA.Score.Original <- IAM                                   #The gene input list, in this case all the genes (TRIAGE hits + pathways) that were put together earlier
+  #############################################################
+  #                   Load Library
+  #############################################################
+  library("igraph")
+  set.seed(123)
+  #############################################################  #Graphs loaded from ./Rscripts/Resources/Network/ it's written so that graphs can be added together cumilatively though this isn't used here
+  #                   Load the Graphs
+  #############################################################
+  if(tolower(organism) == "human") 
+  {  
+    if("hSTRINGhi" %in% networkType)
+    {
+      load("./Networks/igraph.string.hu.hiConf.Rdata")
+      if(exists("G")) {
+        G <- graph.union(igraph.string.hu.hiConf,G)
+      } else {G <- igraph.string.hu.hiConf}
+    }
+    if("hSTRINGmed" %in% networkType)
+    {
+      load("./Networks/igraph.string.hu.medConf.Rdata")
+      if(exists("G")) {
+        G <- graph.union(G,igraph.string.hu.medConf)
+      } else {G <- igraph.string.hu.medConf}
+    }
+    if("hSTRINGppi.hi" %in% networkType)
+    {
+      load("./Networks/igraph.stringPPI.hu.hiConf.Rdata")
+      if(exists("G")) {
+        G <- graph.union(igraph.stringPPI.hu.hiConf,G)
+      } else {G <- igraph.stringPPI.hu.hiConf}
+    }
+    if("hSTRINGppi.med" %in% networkType)
+    {
+      load("./Networks/igraph.stringPPI.hu.medConf.Rdata")
+      if(exists("G")) {
+        G <- graph.union(G,igraph.stringPPI.hu.medConf)
+      } else {G <- igraph.stringPPI.hu.medConf}
+    }
+    
+  } else if(tolower(organism) == "mouse")
+  {
+    cat('1')
+    if("mSTRINGhi" %in% networkType)
+    {
+      cat('4')
+      load("./Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
+      if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
+      else {G <- igraph.string.mo.hiConf}
+    }
+    if("mSTRINGmed" %in% networkType)
+    {
+      cat('2')
+      load("./Networks/igraph.string.mo.medConf.Rdata")
+      if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
+      else {G <- igraph.string.med.medConf}
+    }
+    if("mSTRINGppi.hi" %in% networkType)
+    {
+      cat('4')
+      load("./Networks/igraph.stringPPI.mo.hiConf.Rdata")
+      if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
+      else {G <- igraph.stringPPI.mo.hiConf}
+    }
+    if("mSTRINGppi.med" %in% networkType)
+    {
+      cat('2')
+      load("./Networks/igraph.stringPPI.mo.medConf.Rdata")
+      if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.medConf,G)}
+      else {G <- igraph.stringPPI.mo.medConf}
+    }
+    
+  }
+  print("Networks Loaded")
+  
+  #############################################################     # Using the methods from CARD (only swithced to EntrezID over GeneSymbol)
+  #            PageRank Algorithm to All Genes
+  #############################################################               
+  # AVERAGE DUPLICATED ROWS
+  siRNA.Score <- siRNA.Score.Original[which(!is.na(siRNA.Score.Original$EntrezID)),]    
+  OverallDegree <- degree(G)
+  Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
+  Graph <- induced.subgraph(G,Screen_Genes.for.network.analysis)
+  
+  #############################################################
+  #            Select sub-graphs from hit genes
+  #############################################################
+  Subset_Genes.for.network.analysis <- Screen_Genes.for.network.analysis
+  
+  SubGraph <- induced.subgraph(Graph,Subset_Genes.for.network.analysis)
+  
+  if(tolower(use.only.commnected.components) == "yes"){
+    SubGraph <- induced.subgraph(SubGraph,names(which(degree(SubGraph) > 0)))
+  }
+  
+  #############################################################
+  #            Calculation of Node properties
+  #############################################################
+  Temp.Articulation <- V(SubGraph)$name[articulation.points(SubGraph)]
+  Articulation <- rep(0, length(V(SubGraph)$name))
+  Articulation[match(Temp.Articulation, (V(SubGraph)$name))] <- 1
+  
+  siRNA.Score.Formatted <- siRNA.Score
+  
+  gNames <- V(SubGraph)$name
+  ###############################################################################
+  #                 Create Network for D3 Rendering for Hit Genes
+  ###############################################################################
+  GraphEdgesHitNames <- get.data.frame(SubGraph, what = "edges")
+  GraphEdgesHitNames <- GraphEdgesHitNames[!duplicated(GraphEdgesHitNames), ]
+  source <- target <- rep(NA, nrow(GraphEdgesHitNames))
+  tempGenes <- union(GraphEdgesHitNames$from,GraphEdgesHitNames$to)
+  for(i in 1:length(tempGenes)){
+    source[which(GraphEdgesHitNames$from == tempGenes[i])] <- i-1
+    target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
+  }
+  
+  GraphEdgesHitNumber <- data.frame(source,target)
+  
+  GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
+  
+  ###############################################################################
+  #                 Add back GeneSymbol and Hit Designation to output
+  ###############################################################################
+  GraphNodesHit <- merge(GraphNodesHit, IAM[, c("EntrezID", "GeneSymbol", "ZSdes", IAM_final_iteration)], #Here my input file had a column "ZSdes" which indicated wether the gene made the zscore cutoff independently of TRIAGE, you can skip that part
+                         by.x = "EntrezID", by.y = "EntrezID", all.x = T)
+  
+  #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
+  
+  EdgeInfo <- GraphEdgesHitNumber
+  NodeInfo <- GraphNodesHit
+  
+  
+  #######################################                                            # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
+  #Get Matrix of genes for each pathway in KEGG
+  TLRpathway.genes.matrix <- matrix(toupper(Ian.tlr.canon$Human.Symbol[1:128]))
+  
+  PROTpathway.genes.matrix <- matrix(PROTpathway.genes$GeneSymbol)
+  
+  SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$GeneSymbol)
+  
+  
+  #Add GeneSymbols to Edge dataframe                                              # Using the NodeInfo File to get the genesymbols for the EdgeInfo file. Done twice, one 
+  Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
+  names(Edge.source)[names(Edge.source)=="GeneSymbol"] <- "source.ID"
+  
+  Edge.target <- merge(Edge.source, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
+  names(Edge.target)[names(Edge.target)=="GeneSymbol"] <- "target.ID"
+  
+  #Set column for pathway groupings
+  NodeInfo$Group <- "Novel"
+  #NodeInfo$Group[NodeInfo$GeneSymbol %in% PROTpathway.genes.matrix] <- "Proteasome"        
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% PROTpathway.genes.matrix] <- path2_name        
+  #NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- "Splicesome"
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- path1_name
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- "TLRpathway"
+  #NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- path1_name
+  
+  
+  
+  #Merge Zscore, Pathway, and Hit_IAM to NodeInfo
+  Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
+                            siRNA.Score.Original[, c("GeneSymbol", "EntrezID", "Zscore", "Pathway")], 
+                            by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
+  
+  
+  #Aggregate the edges to be summarised to each genemap ID                                            #pulling together all genes that interactect with a specifc gene and putting them in one row seprated by comma
+  Edge_source_summary <- aggregate(target.ID ~ source.ID, data = Edge.target, paste, collapse = ", ")
+  Edge_target_summary <- aggregate(source.ID ~ target.ID, data = Edge.target, paste, collapse = ", ")
+  
+  
+  #Align column names and stack data frames                                                         #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
+  colnames(Edge_target_summary) <- c("source.ID", "target.ID")
+  Edge_summary_stacked <- rbind(Edge_source_summary, Edge_target_summary)
+  
+  #Aggregate stacked data to get unique values
+  Edge_summary <- aggregate(target.ID ~ source.ID, data = Edge_summary_stacked, paste, collapse = ", ")
+  
+  #Update Names                                                                                     #Now a dataframe is being created where each gene selected by TRIAGE (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
+  colnames(Edge_summary) <- c("GeneSymbol", "Ntwrk.all")
+  
+  #Merge with scores 
+  Scores_nodes_and_edges <- merge(Scores_and_nodes, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
+  
+  #Create column with counts for interacting genes                                               #Here a counter is added, this counts for each gene how many genes (within the TRIAGE set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.all)) {
+    Scores_nodes_and_edges$Allnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.all[i]) == T, 0, 
+                                                     length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.all[i], ", "))))
+  }
+  #Like the "counter" for all the network genes, now setting up seperate counter for each pahway of interest. Within pathways you want to seperate wther the gene it is interacting with is also a "hit" in TRIAGE or is it just a gene in that pathway that is not a hit.
+  ########################################### Create Matrices of the genes within each group that are also hits in the screen
+  #TLR Hit Genes 
+  TLRhits.genes <- filter(Scores_nodes_and_edges, Group == "TLRpathway", EntrezID %in% IAMhits.matrix)
+  #TLRhits.genes <- filter(Scores_nodes_and_edges, Group == path1_name, EntrezID %in% IAMhits.matrix)
+  TLRhits.genes.matrix <- matrix(TLRhits.genes$GeneSymbol)
+  
+  #Splicesome Hit Genes 
+  #SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == "Splicesome", EntrezID %in% IAMhits.matrix)
+  SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == path1_name, EntrezID %in% IAMhits.matrix)
+  SPLICEhits.genes.matrix <- matrix(SPLICEhits.genes$GeneSymbol)
+  
+  #TLR Hit Genes 
+  #PROThits.genes <- filter(Scores_nodes_and_edges, Group == "Proteasome", EntrezID %in% IAMhits.matrix)
+  PROThits.genes <- filter(Scores_nodes_and_edges, Group == path2_name, EntrezID %in% IAMhits.matrix)
+  PROThits.genes.matrix <- matrix(PROThits.genes$GeneSymbol)
+  #Now for each "pathway" or group you do a seperate count, first pulling out the genes from the network column related to it, then counting how many of it it is.          
+  ########################################### Create Lists and Rankings by group------TLRpathway
+  #TLR Genes
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.TLR <- NA                                                         #First creating a blank column where to place these values
+  group.list <- TLRpathway.genes.matrix                                                          #Defining the group of genes (in matrix form) from which the network list should be comprised of.
+  
+  #Extract genes from network interaction associted with genes from group                        #Here the formula looks for what genes in the "group" are in the list of genes of "Ntwrk.all" and formats it in a comma seperated way.
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.TLR[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.TLR[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.TLR <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.TLR)
+  
+  #Create column with counts for interacting genes                                            #adding a count for how many interactions each gene has with gene in the "group"
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.TLR)) {
+    Scores_nodes_and_edges$TLRnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.TLR[i]) == T, 0, 
+                                                     length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.TLR[i], ", "))))
+  }
+  
+  ########################################### Create Lists and Rankings by group----Proteasome          #Same process is repeated for genes in another group (there'e probably a less clunky way to do this, but I just copied over and over.)
+  #PROT Genes
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.PROT <- NA
+  group.list <- PROTpathway.genes.matrix
+  
+  #Extract genes from network interaction associted with genes from group
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.PROT[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.PROT[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.PROT <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.PROT)
+  
+  #Create column with counts for interacting genes
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.PROT)) {
+    Scores_nodes_and_edges$PROTnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.PROT[i]) == T, 0, 
+                                                      length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.PROT[i], ", "))))
+  }
+  
+  ########################################### Create Lists and Rankings by group----Spliceseome
+  #SPLICE Genes
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.SPLICE <- NA
+  group.list <- SPLICEpathway.genes.matrix
+  
+  #Extract genes from network interaction associted with genes from group
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.SPLICE[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.SPLICE[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.SPLICE <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.SPLICE)
+  
+  #Create column with counts for interacting genes
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.SPLICE)) {
+    Scores_nodes_and_edges$SPLICEnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.SPLICE[i]) == T, 0, 
+                                                        length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.SPLICE[i], ", "))))
+  }
+  
+  ##################################### Create list and rankings by group hits ##############################             #This is the same process as above only instead of looking for the number of genes in the group it looks at genes in the group that are also "hits"
+  
+  
+  ############################# TLR Hits Genes
+  
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.TLR.hits <- NA
+  group.list <- TLRhits.genes.matrix
+  
+  #Extract genes from network interaction associted with genes from group
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.TLR.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.TLR.hits[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.TLR.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.TLR)
+  
+  #Create column with counts for interacting genes
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.TLR.hits)) {
+    Scores_nodes_and_edges$TLRhits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.TLR.hits[i]) == T, 0, 
+                                                          length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.TLR[i], ", "))))
+  }
+  
+  ############################# Proteasome Hits Genes
+  
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.PROT.hits <- NA
+  group.list <- PROThits.genes.matrix
+  
+  #Extract genes from network interaction associted with genes from group
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.PROT.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.PROT.hits[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.PROT.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.PROT.hits)
+  
+  #Create column with counts for interacting genes
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.PROT.hits)) {
+    Scores_nodes_and_edges$PROThits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.PROT.hits[i]) == T, 0, 
+                                                           length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.PROT.hits[i], ", "))))
+  }
+  
+  ############################# Splicesome Hits Genes
+  
+  #Create Blank
+  Scores_nodes_and_edges$Ntwrk.SPLICE.hits <- NA
+  group.list <- SPLICEhits.genes.matrix
+  
+  #Extract genes from network interaction associted with genes from group
+  for (i in 1:length(group.list)) {
+    temp.name <- group.list[i]
+    out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+    Scores_nodes_and_edges$Ntwrk.SPLICE.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.SPLICE.hits[out], sep = ", ")
+  }
+  
+  #remove "NA" from rows with genes in them
+  Scores_nodes_and_edges$Ntwrk.SPLICE.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.SPLICE.hits)
+  
+  #Create column with counts for interacting genes
+  for (i in 1:length(Scores_nodes_and_edges$Ntwrk.SPLICE.hits)) {
+    Scores_nodes_and_edges$SPLICEhits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.SPLICE.hits[i]) == T, 0, 
+                                                             length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.SPLICE.hits[i], ", "))))
+  }
+  
+  
+  ############################## Network Hits Total                                                 #here a counter is added for how many "hits" that are in the selected groups it's predicted to interact with.
+  Scores_nodes_and_edges <- Scores_nodes_and_edges %>%
+    mutate(Total_Path_Hits.net.count = TLRhits.net.count + SPLICEhits.net.count + PROThits.net.count)
+  
+  
+  ###write file                                                                                   #Final File is created
+  # setwd(AnalysisDir)                                                                              #Directory for final file
+  setwd(TRIAGE.output)
+  write.csv(Scores_nodes_and_edges, "Ranking_HumanTNFScreen.csv")
+  
+  ############################################################################### Add visualization ##############################################################################
+  
+  #############**************************************************################
+  ###############################################################################
+  #                 Hirachical Edge Bundling
+  ###############################################################################
+  
+  
+  
+  #Set up dataframe for groupings (Loc)                                          #Assigning a number to each group (this will enable the grouping later)
+  NodeInfo$Loc <- 4
+  NodeInfo$Loc[NodeInfo$EntrezID %in% PROTnonhits.matrix] <-7
+  NodeInfo$Loc[NodeInfo$EntrezID %in% PROThits.matrix] <-3
+  NodeInfo$Loc[NodeInfo$EntrezID %in% SPLICEnonhits.matrix] <-6
+  NodeInfo$Loc[NodeInfo$EntrezID %in% SPLICEhits.matrix] <-2
+  NodeInfo$Loc[NodeInfo$EntrezID %in% TLRnonhits.matrix] <-5
+  NodeInfo$Loc[NodeInfo$EntrezID %in% TLRhits.matrix] <-1
+  
+  #Set up dataframe for IDs                                                      #now creating a name in the format of groupNumber.geneSymbol
+  NodeInfo$ID <- paste(NodeInfo$Loc, NodeInfo$GeneSymbol, sep = ".")
+  names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
+  
+  #Move ID column first
+  NodeInfo = NodeInfo %>% select(ID, GeneMappingID, key, Loc)
+  
+  
+  #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
+  rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
+  names(rel.source)[names(rel.source)=="ID"] <- "source.ID"
+  names(rel.source)[names(rel.source)=="Loc"] <- "Loc.source"
+  
+  rel.target <- merge(rel.source, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
+  names(rel.target)[names(rel.target)=="ID"] <- "target.ID"
+  names(rel.target)[names(rel.target)=="Loc"] <- "Loc.target"
+  
+  #Remove non hits                                                   #There are more connections than we want to visualize so here some connections are being removed to simplify
+  rel.target.filter <- filter(rel.target, Loc.source !=  Loc.target) #Here connections within the same group are ignored (assuming that we are only interested in intergroup connections)
+  rel.7 <- filter(rel.target, Loc.source == 4 &  Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
+  rel.target <- filter(rel.target,                                   #Connections to "non-hits" are removed
+                       Loc.source != 7 &
+                         Loc.target != 7 &
+                         Loc.source != 5 &
+                         Loc.target != 5 &
+                         Loc.source != 6 &
+                         Loc.target != 6)
+  #Filter Node info                                                 #"Non hits" are removed from the NodeInfo list as well.
+  NodeInfo <- filter(NodeInfo, Loc != 7 &
+                       Loc != 5 &
+                       Loc != 6)
+  
+  #Fix directionality of connection for members of group seven    #Hirarchical edge bundling colors the interactions based on the source so here the columns are switched to get the result wanted (shoudl Novel-group interactions be the color of the group or the color of the "novel" gene category)
+  rel.target.filter <- filter(rel.target, Loc.target != 4)
+  rel.7 <- filter(rel.target, Loc.target == 4)
+  #Switchnames
+  names(rel.7)[names(rel.7)=="target.ID"] <- "target.ID2"
+  names(rel.7)[names(rel.7)=="source.ID"] <- "source.ID2"
+  names(rel.7)[names(rel.7)=="target"] <- "target2"
+  names(rel.7)[names(rel.7)=="source"] <- "source2"
+  names(rel.7)[names(rel.7)=="target.ID2"] <- "source.ID"
+  names(rel.7)[names(rel.7)=="source.ID2"] <- "target.ID"
+  names(rel.7)[names(rel.7)=="target2"] <- "source"
+  names(rel.7)[names(rel.7)=="source2"] <- "target"
+  
+  rel.target <- rbind(rel.target.filter, rel.7)
+  
+  #Flip columns to get pathway colors as links
+  names(rel.target)[names(rel.target)=="target.ID"] <- "target.ID2"
+  names(rel.target)[names(rel.target)=="source.ID"] <- "source.ID2"
+  names(rel.target)[names(rel.target)=="target"] <- "target2"
+  names(rel.target)[names(rel.target)=="source"] <- "source2"
+  names(rel.target)[names(rel.target)=="target.ID2"] <- "source.ID"
+  names(rel.target)[names(rel.target)=="source.ID2"] <- "target.ID"
+  names(rel.target)[names(rel.target)=="target2"] <- "source"
+  names(rel.target)[names(rel.target)=="source2"] <- "target"
+  
+  
+  rel <- rel.target[, c("source.ID", "target.ID")]
+  names(rel)[names(rel)=="source.ID"] <- "V1"
+  names(rel)[names(rel)=="target.ID"] <- "V2"
+  
+  #Generate the graph
+  g <- graph.data.frame(rel, directed=T, vertices=NodeInfo)
+  
+  clr <- as.factor(V(g)$Loc)
+  levels(clr) <- c("red", "saddlebrown", "darkblue", "green")  #Four colors are chosen since there are four groups
+  V(g)$color <- as.character(clr)
+  V(g)$size = degree(g)*5
+  
+  # igraph static plot
+  #plot(g, layout = layout.circle, vertex.label=NA)
+  
+  Chimera <- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 3)       
+  print(Chimera)
+  
+  setwd(TRIAGE.output)                                                      #Place where plot will be saved to.
+  saveEdgebundle(Chimera,file = "Chimera_STRINGHi_MoTNF.hits.html")
+  saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  
+  return(TRUE)
+}

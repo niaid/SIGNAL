@@ -15,7 +15,7 @@ library('dplyr')
 #Set directories
 
 LSBshare_TRIAGE.input <- "/Volumes/lsb-share/SSU/TRIAGE/InputFiles"
-LSBshare_TRIAGE.output <- "/Volumes/lsb-share/SSU/TRIAGE/OutputFiles"
+LSBshare_TRIAGE.output <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
 
 # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
 # PlotDir <- "~/Documents/Analysis/Simulating_Collar_Plot/"        # Where to place the plot you are going to create
@@ -53,7 +53,7 @@ SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
 
 #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
 # setwd(HitsDir)
-HuTNFanno <- read.csv("IAMoutput_HuTNF_CSAincl_hSTRINGppi.hi.csv", stringsAsFactors = F)
+HuTNFanno <- read.csv("/Users/songj11/TRIAGE/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
 
 #IAM hits and definging last iteration column name &  inflection point
 IAM_final_iteration <- colnames(HuTNFanno)[(ncol(HuTNFanno))-3] # This column corresponds to the last network analysis step (expnasion) of the TRIAGE analysis.
@@ -61,8 +61,7 @@ InflectionPoint <- -4.5                                         # THis is the cu
 # at things with negative scores the "highest" was the one with the lowest zscore - was ~-6.5 so I used -4.5 as a cutoff.
 #Get filtered IAMhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
 # and any gene that is in top two standard deviations that isn't annotated in KEGG
-IAMhits <- filter(HuTNFanno, (Zscore < InflectionPoint & KEGGdb == "Absent" & CSAdes == "HitbyCSA" & get(IAM_final_iteration, envir = as.environment(HuTNFanno)) != 1) | 
-                    get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1)
+IAMhits <- filter(HuTNFanno, get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1)
 
 IAMhits.matrix <- matrix(IAMhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
 

@@ -14,13 +14,13 @@ library(readr)
 library(dplyr)
 library(stringi)
 library(DT)
-library(data.table)
 
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
 organismAbbr <- NULL
 originalHits <- NULL
+completed2 <- FALSE
 
 if (interactive()) {
   
@@ -56,8 +56,6 @@ if (interactive()) {
           fileInput(inputId= "file1", 
                     label = 'Choose an inputfile to upload'
           ),
-          # selectInput("cutoff_type", "Cutoff type", c("P value", "FDR", "Z score")
-          # ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
           textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
@@ -83,14 +81,20 @@ if (interactive()) {
             ),
             tabPanel(title = "Status", value = "status", tags$pre(id = "status")
             ),
-            tabPanel(title = "Enriched Pathways", value = "enrichedPathways", dataTableOutput("enrichedPathways")
+            tabPanel(title = "Enriched Pathways", value = "enrichedPathways", 
+                     dataTableOutput("enrichedPathways")
             ),
-            tabPanel(title = "Gene List", value = "geneList", dataTableOutput("geneList")
+            tabPanel(title = "Gene List", value = "geneList", 
+                     dataTableOutput("geneList")
             ),
-            tabPanel(title = "Network Graph", value = "networkGraph", 
-                     h4('Please select your (1-5) pathways for network graph analysis'), hr(),
-                     verbatimTextOutput('Header'),                    
-                     dataTableOutput("networkGraph")
+            tabPanel(title = "Network Graph", value = "myNetworkGraph", 
+                     h4('Please select your (1-3) pathways for network graph analysis'), hr(),
+                     #textInput("mySelection", label="Your selected pathway IDs:"),
+                     #uiOutput("submitGraph"),
+                     div(style="display:inline-block",textInput(inputId="mySelection", label="Your selected pathway IDs", value = 0.0)),
+                     div(style="display:inline-block",uiOutput("submitGraph")),
+                     div(style="display:inline-block",uiOutput("link2Graph")),
+                     dataTableOutput("myNetworkGraph")
             ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
@@ -108,26 +112,7 @@ if (interactive()) {
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
       completed4 <- FALSE
-      # output$cutoffValues <- renderUI({
-      #   if (is.null(input$cutoff_type))
-      #     return()
-      # 
-        # switch(input$cutoff_type,
-        #        "Z score" = selectInput("cutoff_value", "Cutoff value",
-        #                                choices = c("+/-1.96", "+/-2.58"),
-        #                                selected = c("+/-1.96")
-        #        ),
-        #        "P value" = selectInput("cutoff_value", "Cutoff value",
-        #                                choices = c("0.05", "0.01"),
-        #                                selected = "0.05"
-        #        ),
-        #        "FDR" = selectInput("cutoff_value", "Cutoff value",
-        #                            choices = c("<5%", "<1%"),
-        #                            selected = c("<5%")
-        #        )
-        #   )
-      #})
-      
+
       # Read in the input fie  
       output$contents <- renderDataTable({
         inFile <- input$file1
@@ -155,12 +140,12 @@ if (interactive()) {
       })
       
       # parameters
-      output$organism <- eventReactive(input$goButton, paste("Organism:", input$organism))
-      output$pathway  <- eventReactive(input$goButton, paste("Pathway:", input$pathway))
-      output$network  <- eventReactive(input$goButton, paste("Network:", input$network))
-      output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
-      output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
-      output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
+      # output$organism <- eventReactive(input$goButton, paste("Organism:", input$organism))
+      # output$pathway  <- eventReactive(input$goButton, paste("Pathway:", input$pathway))
+      # output$network  <- eventReactive(input$goButton, paste("Network:", input$network))
+      # output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
+      # output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
+      # output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
       
       # Upon job submission, switch to 'status' tab
       output$status <- eventReactive(input$goButton, 'Analysis started!')
@@ -292,6 +277,7 @@ if (interactive()) {
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
 
         # Pass the pathway list to build networkGraph
+        #View(pathEnrich)
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
         
         completed <- TRUE
@@ -396,22 +382,20 @@ if (interactive()) {
               pathEnrich[i,7] <- myGene
             }
             return(pathEnrich)
-            completed4 <- TRUE
+            completed2 <- TRUE
           }, escape = FALSE)
         }
       })
       
       # Create the 'Gene List' tab
-      completed2 <- TRUE
       output$geneList <- renderUI({
-        if(completed2) {
           updateTabsetPanel(session, "inTabset", selected = "geneList")
-          
+
           output$geneList <- renderDataTable({
             # Select only the hit genes in any iteration
             # number of columns to check based on the number of iterations
             numConditions <- NULL
-            
+
             for (i in 1:(iteration - 1))
             {
               if (i == (iteration - 1)){
@@ -421,17 +405,17 @@ if (interactive()) {
                 numConditions <- paste(numConditions, "siRNA.Score$\'KEGG.class.iteration", i, "\' == 1 | ", sep="")
               }
             }
-            
-            print(numConditions)
+
+            #print(numConditions)
             subSet <- subset(siRNA.Score, eval(parse(text = numConditions)))
-            
+
             # Add a new row of "Total" of hit genes in each iteration
             totalRow <- subSet[1,]
-            
+
             for (k in 1:length(totalRow)) {
-              
+
               if(grepl("KEGG.class.iteration", colnames(totalRow)[k])) {
-                
+
                 # Get the subset of the dataframe with column value equal to 1
                 subSet1 <- subset(subSet, subSet[[colnames(totalRow)[k]]] == 1)
                 totalRow[1,colnames(totalRow)[k]] <- sum(subSet1[[colnames(totalRow)[k]]])
@@ -442,73 +426,116 @@ if (interactive()) {
             }
             totalRow[1,"GeneSymbol"] <- "Total"
             newSubset <- rbind(totalRow, subSet)
-            
+
             # Highlight the 'Total' row using formatStyle()
              dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
               return(dat)
           })
-        }
+          message("completed geneList tab")
       })
-      # 
-      # # Create the 'Network Graph' tab
-      completed3 <- TRUE
-      output$networkGraph <- renderUI({
-        if(completed3) {
-          updateTabsetPanel(session, "inTabset", selected = "networkGraph")
-
-          #output$networkGraph <- renderPlot({networkGraph})
-          output$networkGraph <- renderDataTable({
-            
-            # Convert rownames into first column
-            setDT(sigPathways, keep.rownames = TRUE)[]
-            colnames(sigPathways) <- c("Rank", "Pathways", "TotalGenes", "HitGenes")
-            
-            # for(m in 1:nrow(sigPathways)){
-            #   if(m == 1){
-            #     sigPathways[m,1] <- sprintf('<html><form><input id="%s" type="checkbox" name="pathwayID" value="%s">%s', m, m, m)
-            #   }
-            #   else if(m == nrow(sigPathways)){
-            #     sigPathways[m,1] <- sprintf('<form><input id="%s" type="checkbox" name="pathwayID" value="%s">%s</form></html>', m, m, m)
-            #   }
-            #   else{
-            #     sigPathways[m,1] <- sprintf('<input id="%s" type="checkbox" name="pathwayID" value="%s">%s', m, m, m)
-            #   }
-            # }
-            
-            # Create a form for the datatable to allow row selection for generating network graph
-            datatable(sigPathways, rownames = FALSE, options = list(dom = 't', paging=FALSE))
-          }, escape = FALSE)
+      
+      # Create the 'Network Graph' tab
+      output$myNetworkGraph <- renderUI({
+        message("Inside NetworkGraph")
+        updateTabsetPanel(session, "inTabset", selected = "myNetworkGraph")
+        
+        colnames(sigPathways) <- c("Pathways", "TotalGenes", "HitGenes")
+        #View(sigPathways)
+          
+        shinyInput <- function(FUN,id,num,...) {
+          inputs <- character(num)
+          for (i in seq_len(num)) {
+            inputs[i] <- as.character(FUN(paste0(id,i),label=NULL,...))
+          }
+          inputs
         }
-      })
+        
+        rowSelect <- reactive({
+          
+          rows=names(input)[grepl(pattern = "srows_",names(input))]
+          paste(unlist(lapply(rows,function(i){
+            if(input[[i]]==T){
+              return(substr(i,gregexpr(pattern = "_",i)[[1]]+1,nchar(i)))
+            }
+          })))
+        })
+        
+        observe({
+          updateTextInput(session, "mySelection", value = rowSelect() ,label = "Your selected pathway IDs:" )
+          selectedRows <<- rowSelect()
+        })   
+        
+        output$myNetworkGraph = renderDataTable({
+          datatable(cbind(Pick=shinyInput(checkboxInput,"srows_",nrow(sigPathways),value=NULL,width=1), sigPathways[, colnames(sigPathways), drop=FALSE]),
+                  options = list(orderClasses = TRUE,
+                                 lengthMenu = c(2, 12, 18),
+                                 paging = FALSE,
+                                 
+                                 drawCallback= JS(
+                                   'function(settings) {
+                                   Shiny.bindAll(this.api().table().node());}')
+                                 ),selection='none',escape=F)
+        })
+        
+        output$submitGraph <- renderUI({
+          actionButton("submitButton", "Create Network Graph!", icon("angle-double-right"), 
+                       style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4")
+        })  
 
-      #Create the 'Download' tab
-      #completed4 <- TRUE
-      #observe({
-      #if(completed4) {
+        observeEvent(input$submitButton, {
+          if(length(selectedRows) == 0){
+            showNotification("You must select at least ONE pathway!", duration = 5,  type=c("error"))
+          }
+          if(length(selectedRows) > 3){
+            showNotification("You selected more than 3 pathways! Please remove the extra pathways before your re-submission", duration = 10, type=c("error"))
+          }
+          message(selectedRows)
+          
+          source("~/TRIAGE/Rscripts/Ranking_plusComments_v2.R", local = TRUE)
+          
+          Generate_NetworGraph(selectedRows)
+          
+        })
+        
+        observeEvent(input$submitButton, {
+          if(length(selectedRows) >= 1 & length(selectedRows) <= 3) {
+            output$link2Graph <- renderUI({
+              #a(href="file:///Users/songj11/TRIAGE/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph") 
+              a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
+            })
+          }
+        })
+      })
+      message("Outside NetworkGraph")
+      
+      # Create the 'Download' tab
+      output$downloadFiles <- renderUI({
         updateTabsetPanel(session, "inTabset", selected = "downloads")
         
-        output$downloadFiles <- renderUI({
+        outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
+        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+        
+        for(i in 1:length(outputFiles)){
+          out <- paste(out, outputFiles[i], sep = "<br>")
+        }
+        out <- paste0(out, "<br><br>")
+        HTML(out)
+      })
+      
+      output$downloadButton <- downloadHandler(
+        
+        filename = function(){
+          paste("TRIAGE_analysis_output","zip",sep=".")
+        },
+        content = function(filename){
           outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
-          out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
-          
-          for(i in 1:length(outputFiles)){
-            out <- paste(out, outputFiles[i], sep = "<br>")
-          }
-          out <- paste0(out, "<br><br>")
-          HTML(out)
-        })
-        output$downloadButton <- downloadHandler(
-
-          filename = function(){
-            paste("TRIAGE_analysis_output","zip",sep=".")
-          },
-          content = function(filename){
-            outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
-            zip(zipfile=filename, files = outputFiles)
-          },
-          contentType = "application/zip"
-        )
+          zip(zipfile=filename, files = outputFiles)
+        },
+        contentType = "application/zip"
+      )
+      
+      message("Download content completed")      
     })
   }
     
