@@ -4,6 +4,7 @@
 ###################################################
 # Samuel Katz
 # July 27, 2017
+# modified by Jian Song
 ###################################################
 
 require(edgebundleR)                        #Load Libraries
@@ -11,10 +12,10 @@ library('igraph')
 library('data.table')
 library('dplyr')
 
-#selectedPathways <- c(1,2,3)  
-#Generate_NetworGraph(selectedPathways)
+#selectedRows <- c(1,2,3)  
+#Generate_NetworkGraph(selectedRows)
 
-Generate_NetworGraph <- function(selectedRows){
+Generate_NetworkGraph <- function(selectedRows){
   #############################################################
   #Set directories
   
@@ -39,28 +40,29 @@ Generate_NetworGraph <- function(selectedRows){
   
   #KEGG and pathwyay files
   # setwd(Database.dir)                                              #This was a list of "canonical" TLR genes that was provided to me (By Iain Fraser)
-  Ian.tlr.canon <- read.csv("TLR128.csv", stringsAsFactors = F)
+  #Ian.tlr.canon <- read.csv("TLR128.csv", stringsAsFactors = F)
   
   # setwd(KEGGdir)
   KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
   
   #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
   #Get TLR Canonical Genes
-  TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
-  # path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
-  # TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
-  # TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
+  #TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
+  path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
+  message(path1_name)
+  TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
+  TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
   
   #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
   path2_name <- sigPathways$Pathway[as.numeric(selectedRows[2])]
-  message("path2_name"=path2_name)
+  message(path2_name)
   PROTpathway.genes <- filter(KEGGhuman, PathwayName == path2_name)
   PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
 
   #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
-  path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
-  message("path1_name"=path1_name)
-  SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
+  path3_name <- sigPathways$Pathway[as.numeric(selectedRows[3])]
+  message(path3_name)
+  SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path3_name)
   SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
   
   #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
@@ -257,7 +259,8 @@ Generate_NetworGraph <- function(selectedRows){
   
   #######################################                                            # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
   #Get Matrix of genes for each pathway in KEGG
-  TLRpathway.genes.matrix <- matrix(toupper(Ian.tlr.canon$Human.Symbol[1:128]))
+  #TLRpathway.genes.matrix <- matrix(toupper(Ian.tlr.canon$Human.Symbol[1:128]))
+  TLRpathway.genes.matrix <- matrix(TLRpathway.genes$GeneSymbol)
   
   PROTpathway.genes.matrix <- matrix(PROTpathway.genes$GeneSymbol)
   
@@ -273,15 +276,13 @@ Generate_NetworGraph <- function(selectedRows){
   
   #Set column for pathway groupings
   NodeInfo$Group <- "Novel"
+  #NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- path1_name
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- path1_name
   #NodeInfo$Group[NodeInfo$GeneSymbol %in% PROTpathway.genes.matrix] <- "Proteasome"        
   NodeInfo$Group[NodeInfo$GeneSymbol %in% PROTpathway.genes.matrix] <- path2_name        
   #NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- "Splicesome"
-  NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- path1_name
-  NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- "TLRpathway"
-  #NodeInfo$Group[NodeInfo$GeneSymbol %in% TLRpathway.genes.matrix] <- path1_name
-  
-  
-  
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% SPLICEpathway.genes.matrix] <- path3_name
+
   #Merge Zscore, Pathway, and Hit_IAM to NodeInfo
   Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
                             siRNA.Score.Original[, c("GeneSymbol", "EntrezID", "Zscore", "Pathway")], 
@@ -313,20 +314,21 @@ Generate_NetworGraph <- function(selectedRows){
   }
   #Like the "counter" for all the network genes, now setting up seperate counter for each pahway of interest. Within pathways you want to seperate wther the gene it is interacting with is also a "hit" in TRIAGE or is it just a gene in that pathway that is not a hit.
   ########################################### Create Matrices of the genes within each group that are also hits in the screen
-  #TLR Hit Genes 
-  TLRhits.genes <- filter(Scores_nodes_and_edges, Group == "TLRpathway", EntrezID %in% IAMhits.matrix)
+  #Pathway#1 Hit Genes 
+  TLRhits.genes <- filter(Scores_nodes_and_edges, Group == path1_name, EntrezID %in% IAMhits.matrix)
   #TLRhits.genes <- filter(Scores_nodes_and_edges, Group == path1_name, EntrezID %in% IAMhits.matrix)
   TLRhits.genes.matrix <- matrix(TLRhits.genes$GeneSymbol)
   
-  #Splicesome Hit Genes 
-  #SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == "Splicesome", EntrezID %in% IAMhits.matrix)
-  SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == path1_name, EntrezID %in% IAMhits.matrix)
-  SPLICEhits.genes.matrix <- matrix(SPLICEhits.genes$GeneSymbol)
-  
-  #TLR Hit Genes 
+  #Pathway#2 Hit Genes 
   #PROThits.genes <- filter(Scores_nodes_and_edges, Group == "Proteasome", EntrezID %in% IAMhits.matrix)
   PROThits.genes <- filter(Scores_nodes_and_edges, Group == path2_name, EntrezID %in% IAMhits.matrix)
   PROThits.genes.matrix <- matrix(PROThits.genes$GeneSymbol)
+  
+  #Pathway#3 Hit Genes 
+  #SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == "Splicesome", EntrezID %in% IAMhits.matrix)
+  SPLICEhits.genes <- filter(Scores_nodes_and_edges, Group == path3_name, EntrezID %in% IAMhits.matrix)
+  SPLICEhits.genes.matrix <- matrix(SPLICEhits.genes$GeneSymbol)
+  
   #Now for each "pathway" or group you do a seperate count, first pulling out the genes from the network column related to it, then counting how many of it it is.          
   ########################################### Create Lists and Rankings by group------TLRpathway
   #TLR Genes
@@ -559,7 +561,17 @@ Generate_NetworGraph <- function(selectedRows){
   g <- graph.data.frame(rel, directed=T, vertices=NodeInfo)
   
   clr <- as.factor(V(g)$Loc)
-  levels(clr) <- c("red", "saddlebrown", "darkblue", "green")  #Four colors are chosen since there are four groups
+  
+  if(length(selectedRows) == 3){
+    levels(clr) <- c("red", "saddlebrown", "darkblue", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
+  }
+  if(length(selectedRows) == 2){
+    levels(clr) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
+  }
+  if(length(selectedRows) == 1){
+    levels(clr) <- c("red", "green")  #Two colors are chosen since there are two groups
+  }
+  
   V(g)$color <- as.character(clr)
   V(g)$size = degree(g)*5
   
@@ -568,6 +580,23 @@ Generate_NetworGraph <- function(selectedRows){
   
   Chimera <- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 3)       
   print(Chimera)
+
+  # Add a legend box on the html page
+  # figureLegend <- sprintf('
+  # <div id="htmlwidget_container">
+  #   <form style="width: 200px; margin: 0 auto;">
+  #   <fieldset>
+  #   <legend>Color Legend:</legend>
+  #   <font color="red"><b>Red: %s</b></font>
+  #   <font color="saddlebrown"><b>Brown: %s</b></font><br>
+  #   <font color="darkblue"><b>Blue: %s</b></font><br>
+  #   <font color="green"><b>Green: %s</b></font><br>
+  #   </fieldset>
+  #   </form>',
+  # path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+  # 
+  # # Insert the legend into the html file (Chimera)
+  # gsub(figureLegend, '<div id="htmlwidget_container">', Chimera)
   
   setwd(TRIAGE.output)                                                      #Place where plot will be saved to.
   saveEdgebundle(Chimera,file = "Chimera_STRINGHi_MoTNF.hits.html")

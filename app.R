@@ -494,7 +494,7 @@ if (interactive()) {
           
           source("~/TRIAGE/Rscripts/Ranking_plusComments_v2.R", local = TRUE)
           
-          Generate_NetworGraph(selectedRows)
+          Generate_NetworkGraph(selectedRows)
           
         })
         
