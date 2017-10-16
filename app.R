@@ -160,7 +160,7 @@ if (interactive()) {
         scriptDir <- "~/TRIAGE/Rscripts/"
         inputDir <- "~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
         outputDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/"
-        dataDir <- "~/data/"
+        dataDir <- "~/TRIAGE/data/"
 
         organism <- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')

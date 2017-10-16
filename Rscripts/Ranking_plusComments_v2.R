@@ -19,7 +19,7 @@ Generate_NetworkGraph <- function(selectedRows){
   #############################################################
   #Set directories
   
-  TRIAGE.input <- "~/data"
+  TRIAGE.input <- "~/TRIAGE/data"
   TRIAGE.output <- "~/TRIAGE/InputOutputs/TRIAGEoutputFiles"
   
   # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
