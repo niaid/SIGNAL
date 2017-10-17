@@ -1,4 +1,4 @@
-ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iteration)
+ComputeEnrichment <- function(pathway, hits, non.hits, file.name, siRNA.Score, iteration)
 {
  
   hits <- intersect(hits,pathway$EntrezID)
@@ -23,6 +23,7 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
   p.val.FDR <- p.adjust(p.val,method = "BH")
   p.val.FWER <- p.adjust(p.val,method = "bonferroni")
   message('unique')
+
   results <- data.frame(Pathway = unique.pathways, 
                         pVal = round(p.val, digits = 3), 
                         pValFDR = round(p.val.FDR, digits = 3), 
@@ -30,6 +31,7 @@ ComputeEnrichment <- function(pathway,hits, non.hits,file.name,siRNA.Score, iter
                         Genes = pathway.genes.number, 
                         HitGenes = hit.genes, 
                         HitGeneNames = hit.gene.names)
+  
   results <- results[with(results, order(results$pValBonferroni,results$pValFDR,results$pVal)),]
   write.csv(results,file = paste0(file.name,".Enrichment_", iteration, ".csv"), row.names = FALSE)
   

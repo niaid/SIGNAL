@@ -15,7 +15,7 @@ library('dplyr')
 #selectedRows <- c(1,2,3)  
 #Generate_NetworkGraph(selectedRows)
 
-Generate_NetworkGraph <- function(selectedRows){
+Generate_NetworkGraph <- function(selectedRows, organism){
   #############################################################
   #Set directories
   
@@ -109,7 +109,7 @@ Generate_NetworkGraph <- function(selectedRows){
   #           Setting up Network Databases and input
   #############################################################
   
-  organism <- "Human"
+  #organism <- "Human"
   
   #setwd(CARDdirectory)                                # Selecting which network to use, h/m human/mouse, hi/med hi confidence/medium confidence, ppi = Protein-Protein 
   # interactions (as opposed to the others that combine other interaciton sources) 
@@ -582,25 +582,32 @@ Generate_NetworkGraph <- function(selectedRows){
   print(Chimera)
 
   # Add a legend box on the html page
-  # figureLegend <- sprintf('
-  # <div id="htmlwidget_container">
-  #   <form style="width: 200px; margin: 0 auto;">
-  #   <fieldset>
-  #   <legend>Color Legend:</legend>
-  #   <font color="red"><b>Red: %s</b></font>
-  #   <font color="saddlebrown"><b>Brown: %s</b></font><br>
-  #   <font color="darkblue"><b>Blue: %s</b></font><br>
-  #   <font color="green"><b>Green: %s</b></font><br>
-  #   </fieldset>
-  #   </form>',
-  # path1_name, path2_name, path3_name, "other TRIAGE hit genes")
-  # 
-  # # Insert the legend into the html file (Chimera)
-  # gsub(figureLegend, '<div id="htmlwidget_container">', Chimera)
-  
-  setwd(TRIAGE.output)                                                      #Place where plot will be saved to.
+  figureLegend <- sprintf('
+  <div id="htmlwidget_container">
+    <form style="width: 360px; margin: 0 auto;">
+    <fieldset>
+    <legend>Netwowk Graph Colors:</legend>
+    <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+    <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
+    <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+    <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+    </fieldset>
+    </form>',
+  path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+
+  #Place where plot will be saved to
+  setwd(TRIAGE.output)                                                      
   saveEdgebundle(Chimera,file = "Chimera_STRINGHi_MoTNF.hits.html")
-  saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
   
+  # Put a legend in the HTML file
+  inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
+  outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML)
+  writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
+  
+  saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  # Put a legend in the HTML file
+  inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML2)
+  writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
   return(TRUE)
 }

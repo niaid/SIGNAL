@@ -18,8 +18,10 @@ library(DT)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
+organism <- NULL
 organismAbbr <- NULL
 originalHits <- NULL
+networkType <- NULL
 completed2 <- FALSE
 
 if (interactive()) {
@@ -167,7 +169,28 @@ if (interactive()) {
         
         print(organism)
         source("~/TRIAGE/Rscripts/pathway_iteration.R", local = TRUE)
-        networkType <- "hSTRINGppi.hi"
+        
+        networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
+        # # Set the network to be used
+        # network <- input$network
+        # 
+        # if(tolower(organism) == 'human'){
+        #   if("hSTRINGhi" %in% network){
+        #     networkType <- 'hSTRINGppi.hi'
+        #   }
+        #   if("hSTRINGmed" %in% network){
+        #     networkType <- 'hSTRINGppi.med'
+        #   }
+        # }
+        # else if(tolower(organism) == 'mouse'){
+        #   if("mSTRINGhi" %in% network){
+        #     networkType <- 'mSTRINGppi.hi'
+        #   }
+        #   if("mSTRINGmed" %in% network){
+        #     networkType <- 'mSTRINGppi.med'
+        #   }        
+        # }
+        
         use.only.commnected.components <- c('Yes')
         
         # Clear any file in the output directory
@@ -494,7 +517,7 @@ if (interactive()) {
           
           source("~/TRIAGE/Rscripts/Ranking_plusComments_v2.R", local = TRUE)
           
-          Generate_NetworkGraph(selectedRows)
+          Generate_NetworkGraph(selectedRows, organism)
           
         })
         

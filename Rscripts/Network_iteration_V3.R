@@ -14,6 +14,7 @@ set.seed(123)
 #                   Load the Graphs
 #############################################################
 #rm(G,Graph)
+
 if(tolower(organism) == "human") 
 {  
   if("hSTRINGhi" %in% networkType)
