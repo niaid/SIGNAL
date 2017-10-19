@@ -404,6 +404,8 @@ if (interactive()) {
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
+            # Chang column name from 'Genes' to 'TotalGenes'
+            colnames(pathEnrich)[which(names(pathEnrich) == "Genes")] <- "TotalGenes"
             return(pathEnrich)
             completed2 <- TRUE
           }, escape = FALSE)
