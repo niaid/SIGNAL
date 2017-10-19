@@ -548,6 +548,7 @@ if (interactive()) {
         HTML(out)
       })
       
+      # Download all output data
       output$downloadButton <- downloadHandler(
         
         filename = function(){
