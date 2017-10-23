@@ -624,19 +624,23 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
 
 
-  #Place where plot will be saved to
+  #Places (2) where plot will be saved to
   setwd(TRIAGE.output)                                                      
   saveEdgebundle(Chimera,file = "Chimera_STRINGHi_MoTNF.hits.html")
-  
-  # Put a legend in the HTML file
-  inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
-  outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML)
-  writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
-  
   saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
-  # Put a legend in the HTML file
-  inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
-  outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML2)
-  writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  
+  # Add figure legend only if created when 1-3 pathways were selected
+  if(exists("figureLegend")){ 
+    
+    # Put a legend in the HTML file (inputOutput directory)
+    inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
+    outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML)
+    writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
+
+    # Put a legend in the HTML file (localhost)
+    inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML2)
+    writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  }
   return(TRUE)
 }
