@@ -188,7 +188,7 @@ if (interactive()) {
         #   }
         #   if("mSTRINGmed" %in% network){
         #     networkType <- 'mSTRINGppi.med'
-        #   }        
+        #   }
         # }
         
         use.only.commnected.components <- c('Yes')

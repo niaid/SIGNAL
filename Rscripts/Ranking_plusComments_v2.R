@@ -563,7 +563,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   clr <- as.factor(V(g)$Loc)
   
   if(length(selectedRows) == 3){
-    levels(clr) <- c("red", "saddlebrown", "darkblue", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
+    levels(clr) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
   }
   if(length(selectedRows) == 2){
     levels(clr) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
@@ -582,18 +582,47 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   print(Chimera)
 
   # Add a legend box on the html page
-  figureLegend <- sprintf('
+  if(length(selectedRows) == 3){
+    figureLegend <- sprintf('
   <div id="htmlwidget_container">
-    <form style="width: 360px; margin: 0 auto;">
-    <fieldset>
-    <legend>Netwowk Graph Colors:</legend>
-    <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-    <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
-    <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-    <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-    </fieldset>
-    </form>',
-  path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+                            <form style="width: 360px; margin: 0 auto;">
+                            <fieldset>
+                            <legend>Netwowk Graph Colors:</legend>
+                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+                            <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
+                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+                            </fieldset>
+                            </form>',
+                            path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+  }
+  if(length(selectedRows) == 2){
+    figureLegend <- sprintf('
+  <div id="htmlwidget_container">
+                            <form style="width: 360px; margin: 0 auto;">
+                            <fieldset>
+                            <legend>Netwowk Graph Colors:</legend>
+                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+                            </fieldset>
+                            </form>',
+                            path1_name, path2_name, "other TRIAGE hit genes")
+  }
+  if(length(selectedRows) == 1){
+    figureLegend <- sprintf('
+  <div id="htmlwidget_container">
+                            <form style="width: 360px; margin: 0 auto;">
+                            <fieldset>
+                            <legend>Netwowk Graph Colors:</legend>
+                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+                            </fieldset>
+                            </form>',
+                            path1_name, "other TRIAGE hit genes")
+  }
+  
+
 
   #Place where plot will be saved to
   setwd(TRIAGE.output)                                                      
