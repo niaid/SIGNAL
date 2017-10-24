@@ -587,7 +587,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   <div id="htmlwidget_container">
                             <form style="width: 360px; margin: 0 auto;">
                             <fieldset>
-                            <legend>Netwowk Graph Colors:</legend>
+                            <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
                             <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
                             <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
@@ -601,7 +601,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   <div id="htmlwidget_container">
                             <form style="width: 360px; margin: 0 auto;">
                             <fieldset>
-                            <legend>Netwowk Graph Colors:</legend>
+                            <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
                             <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
                             <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
@@ -614,7 +614,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   <div id="htmlwidget_container">
                             <form style="width: 360px; margin: 0 auto;">
                             <fieldset>
-                            <legend>Netwowk Graph Colors:</legend>
+                            <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
                             <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
                             </fieldset>

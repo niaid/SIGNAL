@@ -172,24 +172,24 @@ if (interactive()) {
         
         networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
         # # Set the network to be used
-        # network <- input$network
-        # 
-        # if(tolower(organism) == 'human'){
-        #   if("hSTRINGhi" %in% network){
-        #     networkType <- 'hSTRINGppi.hi'
-        #   }
-        #   if("hSTRINGmed" %in% network){
-        #     networkType <- 'hSTRINGppi.med'
-        #   }
-        # }
-        # else if(tolower(organism) == 'mouse'){
-        #   if("mSTRINGhi" %in% network){
-        #     networkType <- 'mSTRINGppi.hi'
-        #   }
-        #   if("mSTRINGmed" %in% network){
-        #     networkType <- 'mSTRINGppi.med'
-        #   }
-        # }
+        network <- input$network
+
+        if(tolower(organism) == 'human'){
+          if("hSTRINGhi" %in% network){
+            networkType <- 'hSTRINGppi.hi'
+          }
+          if("hSTRINGmed" %in% network){
+            networkType <- 'hSTRINGppi.med'
+          }
+        }
+        else if(tolower(organism) == 'mouse'){
+          if("mSTRINGhi" %in% network){
+            networkType <- 'mSTRINGppi.hi'
+          }
+          if("mSTRINGmed" %in% network){
+            networkType <- 'mSTRINGppi.med'
+          }
+        }
         
         use.only.commnected.components <- c('Yes')
         
