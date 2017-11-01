@@ -1,0 +1,49 @@
+format_version: 1
+
+pipelines:
+
+  triage_build_yaml:
+    group: LSB_triage
+    label_template: ${COUNT}_${app-repo[:7]}
+    locking: on
+    timer:
+      spec: "0 13 6 * * ?"
+      only_on_changes: no
+    materials:
+      app-repo:
+        git: git@github.niaid.nih.gov:grothja/TRIAGE.git
+      shiny1-image:
+        pipeline: shiny1-alpine3
+        stage: Build
+    environment_variables:
+      IMAGE_LOCATION: .
+      IMAGE_NAME: triage
+      IMAGE_REPO: lsb-triage
+      REGISTRY_USER: grothja
+    secure_variables:
+      REGISTRY_PASS:  pL7+IBIkwPfehf2l2tfN2a6bdIo3W/kNTbrVm37gE7EynuWRtr7RjkLeTC2+LwIHUaqDyMV2QnNSNQvKblsaDpAe6r/j3YzVGsRE4eOYME68Toaj4IIsurs3x8+ZL4ieK8AZbEwG1fRW7zeP1K8w0yDTblec6rWnWZoGr8lHHT6iYSw1zgkc+ydMkiFSsY1PVgt7HXzNDYfej2XgzT4EO9VMci0fPeziI+ig/LEJ1VFF86kezwyMI+NlJWXdye+XS/WcKNXwE2XjCP8UgQG9hSdc3192nVbd/zRyp4ZhkgIDVo53/NkkUbsKdx7/+G/fYUFmWpg2SfaYh8Vfz1HW3q+JCbv0yiBD52KZtJiig5f0UOnXav5f8qpPkxl4pyTMMaD7QB5BFe6VgG3atoRClj7Uh6VuCVymV66GGQ8zi3gcqL/Y6s6ByIyy1lFzJA0wesAz1T5LZuhVXgRn9hdvA2vRnXMYXzMtl8a32oJBCVxGSuzb1oxKeLMlH1FW/u8jmOH+dwrb/qHUeBQXAbfLhc8DtiPka/1yxwiT0aNnMN99rRR6jiuJtgNL0eEWnhVxAT4cuCHlj8gEPAJUbENdE9x4G5WtiDvSGQD2kzGp8KC7blpxpg9U750r4r55K/1U6wxp4PGNvLP5CXzlZkCYUZ1BJEdIcDSbhvEoZeBqcyaxu9nfIVB1839QU8UZGM3irYwOgx8bNg3tcNgqQL2AMN4K6iv9N8JIbgFoXWudneY6kXNFVWmoT6vEKWb+m248vma4YLxrvW0a5QohCOez0jO7AbX+3P7w7XGKG6wNJ9aX3YXQCuDY3UMnplMJlQ3SA0aZJTNzYid7geyCdsUhvnm4szKaOm3CaiywDnH5wxb7Yp5E7RbbJTLdRKfGpfs07bOHTyHIHScrgMKd4LwFGu0OxxBAgcP9zom1svaM2ELGFm5ZyR+q6uvPoZA/p3q7t8ISdVSnVhMO2wjkfCUj+hKgwC1wNCaEoQhuCn3FUyGmUMQ/I4MhYEEPdyd/NEKcRbfl7J5s1RiV/F/MkA/KZsTUFsnyUTcM8Xz9HuX9shnjO9au1pWfwGs1HSe6VN91DeCtJnr71GGvjF8Mm7HMXIHHN2VHpwcrpeXQhf+WvwnoqIG7GtODHVU31gBWAkC/NlScJ9ojex+0Yuc3MguID3R/MXlibuqEr3x18jejY1g=
+    stages:
+      - Build:
+          fetch_materials: yes
+          keep_artifacts: yes
+          approval: manual
+          artifacts:
+            - build:
+                source: triage-tag_only.txt
+            - build:
+                source: .build/qa
+          tasks:
+            - fetch:
+                run_if: manual
+                pipeline: shiny1-alpine3
+                stage: Build
+                job: build
+                is_file: yes
+                source: shiny1-alpine3-full.txt
+            - script: >
+                docker_pipeline -m true -s false -g true -o $(cat shiny1-alpine3-full.txt) &&
+                export IMAGE_NAME="${IMAGE_REPO}/${IMAGE_NAME}" &&
+                export IMAGE_REPO="monarch-pre-prod" &&
+                export REGISTRY_PASS=${ART_PROMOTE_KEY} &&  
+                export IMAGE_TAG=${GO_PIPELINE_LABEL} &&
+                promote monarch-prod
