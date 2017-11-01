@@ -19,14 +19,19 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #############################################################
   #Set directories
   
-  TRIAGE.input <- "~/TRIAGE/data"
-  TRIAGE.output <- "~/TRIAGE/InputOutputs/TRIAGEoutputFiles"
+  #TRIAGE.input <- "~/TRIAGE/app/data"
+  TRIAGE.input <- dataDir
+  message(TRIAGE.input)
+  #TRIAGE.output <- "~/TRIAGE/app/InputOutputs/TRIAGEoutputFiles"
+  TRIAGE.output <- outputDir
+  message(TRIAGE.output)
+  message("Current working directory is :", getwd())
   
   # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
   # PlotDir <- "~/Documents/Analysis/Simulating_Collar_Plot/"        # Where to place the plot you are going to create
   # Database.dir <- "~/Documents/Analysis/GeneListsDB/"              # Where to place additional membership lists, in this case this is where I placed  my own list of "TLR" genes
   # HitsDir <- "~/Documents/Analysis/April_MoTNFtests/ImprovedAnnotationPlusNonKEGGaddition/Testing/STRINGdb/" #Where to place the output of your TRIAGE analysis
-  # CARDdirectory <- "~/Desktop/CARDcode/"                           # Where you placed your download from CARD (as well as the igraphs from STRING, in this case they are in a folder within it "./Rscripts/Resources/Network/")
+  # CARDdirectory <- "~/Desktop/CARDcode/"                           # Where you placed your download from CARD (as well as the igraphs from STRING, in this case they are in a folder within it "~/TRIAGE/app/Rscripts/Resources/Network/")
   
   #############################################################
   # I create matrices of the three pathways I want to look at. Currently this first step -choosing the pathways- is done manually. 
@@ -34,8 +39,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # pathways that stood out to us.
   # Set working Directory
   
-  setwd(TRIAGE.input)
-  
+  #setwd(TRIAGE.input)
+
   ##Getting Gene Hit Lists
   
   #KEGG and pathwyay files
@@ -43,7 +48,10 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #Ian.tlr.canon <- read.csv("TLR128.csv", stringsAsFactors = F)
   
   # setwd(KEGGdir)
-  KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
+  pathwayFile <- c(paste0(dataDir, "Pathways/KEGGHuman.csv"))
+  message(pathwayFile)
+  #KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
+  KEGGhuman <- read.csv(file=pathwayFile, stringsAsFactors = F)
   
   #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
   #Get TLR Canonical Genes
@@ -67,7 +75,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
   # setwd(HitsDir)
-  HuTNFanno <- read.csv("~/TRIAGE/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
+  #HuTNFanno <- read.csv("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
+  HuTNFanno <- read.csv(paste0(outputDir, "TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv"), stringsAsFactors = F)
   
   #IAM hits and definging last iteration column name &  inflection point
   IAM_final_iteration <- colnames(HuTNFanno)[(ncol(HuTNFanno))-3] # This column corresponds to the last network analysis step (expnasion) of the TRIAGE analysis.
@@ -130,35 +139,43 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #############################################################
   library("igraph")
   set.seed(123)
-  #############################################################  #Graphs loaded from ./Rscripts/Resources/Network/ it's written so that graphs can be added together cumilatively though this isn't used here
+  #############################################################  #Graphs loaded from ~/TRIAGE/app/Rscripts/Resources/Network/ it's written so that graphs can be added together cumilatively though this isn't used here
   #                   Load the Graphs
   #############################################################
   if(tolower(organism) == "human") 
   {  
     if("hSTRINGhi" %in% networkType)
     {
-      load("./Networks/igraph.string.hu.hiConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.string.hu.hiConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.string.hu.hiConf.Rdata"))
+      
       if(exists("G")) {
         G <- graph.union(igraph.string.hu.hiConf,G)
       } else {G <- igraph.string.hu.hiConf}
     }
     if("hSTRINGmed" %in% networkType)
     {
-      load("./Networks/igraph.string.hu.medConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.string.hu.medConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.string.hu.medConf.Rdata"))
+
       if(exists("G")) {
         G <- graph.union(G,igraph.string.hu.medConf)
       } else {G <- igraph.string.hu.medConf}
     }
     if("hSTRINGppi.hi" %in% networkType)
     {
-      load("./Networks/igraph.stringPPI.hu.hiConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.hiConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.stringPPI.hu.hiConf.Rdata"))
+
       if(exists("G")) {
         G <- graph.union(igraph.stringPPI.hu.hiConf,G)
       } else {G <- igraph.stringPPI.hu.hiConf}
     }
     if("hSTRINGppi.med" %in% networkType)
     {
-      load("./Networks/igraph.stringPPI.hu.medConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.medConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.stringPPI.hu.medConf.Rdata"))
+
       if(exists("G")) {
         G <- graph.union(G,igraph.stringPPI.hu.medConf)
       } else {G <- igraph.stringPPI.hu.medConf}
@@ -170,28 +187,36 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     if("mSTRINGhi" %in% networkType)
     {
       cat('4')
-      load("./Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
+      #load("~/TRIAGE/app/Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
+      load(paste0(scriptDir, "Resources/Network/igraph.string.mo.hiConf.Rdata"))
+      
       if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
       else {G <- igraph.string.mo.hiConf}
     }
     if("mSTRINGmed" %in% networkType)
     {
       cat('2')
-      load("./Networks/igraph.string.mo.medConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.string.mo.medConf.Rdata"))
+      
       if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
       else {G <- igraph.string.med.medConf}
     }
     if("mSTRINGppi.hi" %in% networkType)
     {
       cat('4')
-      load("./Networks/igraph.stringPPI.mo.hiConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.hiConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.stringPPI.mo.hiConf.Rdata"))
+      
       if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
       else {G <- igraph.stringPPI.mo.hiConf}
     }
     if("mSTRINGppi.med" %in% networkType)
     {
       cat('2')
-      load("./Networks/igraph.stringPPI.mo.medConf.Rdata")
+      #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")
+      load(paste0(dataDir, "Networks/igraph.stringPPI.mo.medConf.Rdata"))
+      
       if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.medConf,G)}
       else {G <- igraph.stringPPI.mo.medConf}
     }
@@ -473,7 +498,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   ###write file                                                                                   #Final File is created
   # setwd(AnalysisDir)                                                                              #Directory for final file
-  setwd(TRIAGE.output)
+  #setwd(TRIAGE.output)
+  message(TRIAGE.output, "**")
   write.csv(Scores_nodes_and_edges, "Ranking_HumanTNFScreen.csv")
   
   ############################################################################### Add visualization ##############################################################################
@@ -625,22 +651,38 @@ Generate_NetworkGraph <- function(selectedRows, organism){
 
 
   #Places (2) where plot will be saved to
-  setwd(TRIAGE.output)                                                      
-  saveEdgebundle(Chimera,file = "Chimera_STRINGHi_MoTNF.hits.html")
-  saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
-  
+  #setwd(TRIAGE.output)    
+  saveEdgebundle(Chimera, "Chimera_STRINGHi_MoTNF.hits.html")
+
+  if(grepl('shiny', outputDir)){
+    saveEdgebundle(Chimera,file = "/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+  }else{
+    saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  }
+
   # Add figure legend only if created when 1-3 pathways were selected
   if(exists("figureLegend")){ 
     
     # Put a legend in the HTML file (inputOutput directory)
+    #inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
     inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
     outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML)
     writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
 
     # Put a legend in the HTML file (localhost)
-    inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    if(grepl('shiny', outputDir)){
+      inHTML2  <- readLines("/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+    }else{
+      inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    }
+    
     outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML2)
-    writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    
+    if(grepl('shiny', outputDir)){
+      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+    }else{
+      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    }
   }
   return(TRUE)
 }

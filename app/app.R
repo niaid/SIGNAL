@@ -24,7 +24,7 @@ originalHits <- NULL
 networkType <- NULL
 completed2 <- FALSE
 
-if (interactive()) {
+#if (interactive()) {
   
     ##################################################
     # Define UI for application that draws a histogram
@@ -158,17 +158,46 @@ if (interactive()) {
         withCallingHandlers({
           shinyjs::html("status", "")
         
-        # Global variables
-        scriptDir <- "~/TRIAGE/Rscripts/"
-        inputDir <- "~/TRIAGE/inputOutputs/TRIAGEinputFiles/"
-        outputDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/"
-        dataDir <- "~/TRIAGE/data/"
+        # Global environmental variables
+        envs <- Sys.getenv()
+        env_names <- names(envs)
 
+        #scriptDir <- "~/TRIAGE/app/Rscripts/"
+        if('SHINY_APP' %in% env_names){
+          scriptDir <- '/srv/shiny-server/Rscripts/'
+        }else{
+          scriptDir <- "~/TRIAGE/app/Rscripts/"
+        }   
+        
+        #inputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEinputFiles/"
+        if('SHINY_APP' %in% env_names){
+          inputDir <- '/srv/shiny-server/inputOutputs/TRIAGEinputFiles/'
+        }else{
+          inputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEinputFiles/"
+        }  
+        
+        #outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
+        if('SHINY_APP' %in% env_names){
+          outputDir <- '/srv/shiny-server/inputOutputs/TRIAGEoutputFiles/'
+        }else{
+          outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
+        }  
+        
+        #dataDir <- "~/TRIAGE/app/data/"
+        if('SHINY_APP' %in% env_names){
+          dataDir <- '/srv/shiny-server/data/'
+        }else{
+          dataDir <- "~/TRIAGE/app/data/"
+        }
+        message(dataDir, "*")
+        message(scriptDir, "**")
+        message(inputDir, "***")
+        
         organism <- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
         
         print(organism)
-        source("~/TRIAGE/Rscripts/pathway_iteration.R", local = TRUE)
+        source("./Rscripts/pathway_iteration.R", local = TRUE)
         
         networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
         # # Set the network to be used
@@ -197,16 +226,16 @@ if (interactive()) {
         do.call(file.remove, list(list.files(outputDir, full.names = TRUE)))
         
         # Set the output file name
-        outDir <- "~/TRIAGE/inputOutputs/TRIAGEoutputFiles"
         inputFile <- input$file1
         inputFileName <- inputFile$name
         inputFilePrefix = unlist(strsplit(inputFileName, split='.csv', fixed=TRUE))[1]
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
         
         # 1) Seed Pathway Analysis
-        setwd(outDir)
+        setwd("./inputOutputs/TRIAGEoutputFiles")
         pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         pathway.type <- pathway.types[1]
+        message(dataDir)
         pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
         # Get input file 
@@ -517,7 +546,7 @@ if (interactive()) {
           }
           message(selectedRows)
           
-          source("~/TRIAGE/Rscripts/Ranking_plusComments_v2.R", local = TRUE)
+          source(paste0(scriptDir, "Ranking_plusComments_v2.R"), local = TRUE)
           
           Generate_NetworkGraph(selectedRows, organism)
           
@@ -526,8 +555,12 @@ if (interactive()) {
         observeEvent(input$submitButton, {
           if(length(selectedRows) >= 1 & length(selectedRows) <= 3) {
             output$link2Graph <- renderUI({
-              #a(href="file:///Users/songj11/TRIAGE/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph") 
-              a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
+              #a(href="file:///Users/songj11/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph")
+              if(grepl('shiny', outputDir)){
+                a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost:3838/Chimera_STRINGHi_MoTNF.hits.html")
+              }else{
+                a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
+              }
             })
           }
         })
@@ -538,7 +571,7 @@ if (interactive()) {
       output$downloadFiles <- renderUI({
         updateTabsetPanel(session, "inTabset", selected = "downloads")
         
-        outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
+        outputFiles <- list.files(path = outputDir)
         out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
         
         for(i in 1:length(outputFiles)){
@@ -555,7 +588,7 @@ if (interactive()) {
           paste("TRIAGE_analysis_output","zip",sep=".")
         },
         content = function(filename){
-          outputFiles <- list.files(path = "~/TRIAGE/inputOutputs/TRIAGEoutputFiles/")
+          outputFiles <- list.files(path = outputDir)
           zip(zipfile=filename, files = outputFiles)
         },
         contentType = "application/zip"
@@ -568,4 +601,4 @@ if (interactive()) {
   #####################
   # Run the application 
   shinyApp(ui = ui, server = server)
-}
+#}
