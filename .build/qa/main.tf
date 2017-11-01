@@ -98,6 +98,6 @@ data "terraform_remote_state" "stack" {
 // The listener_id of the ALB created by/for the web-application
 
 output "alb_listener_id" {
-  value = "${module.vflow.listener_id}"
+  value = "${module.triage.listener_id}"
 }
 
