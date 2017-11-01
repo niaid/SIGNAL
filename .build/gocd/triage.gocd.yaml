@@ -40,7 +40,7 @@ pipelines:
                 is_file: yes
                 source: shiny1-alpine3-full.txt
             - script: >
-                docker_pipeline -m true -s false -g true -o $(cat shiny1-alpine3-full.txt) &&
+                docker_pipeline -m true -g true -o $(cat shiny1-alpine3-full.txt) &&
                 export IMAGE_NAME="${IMAGE_REPO}/${IMAGE_NAME}" &&
                 export IMAGE_REPO="monarch-pre-prod" &&
                 export REGISTRY_PASS=${ART_PROMOTE_KEY} &&  
