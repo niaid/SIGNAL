@@ -1,0 +1,3 @@
+stack:
+  source:  "git@github.niaid.nih.gov:oeb/stack.git"
+  version: "2017.09.2"
