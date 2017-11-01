@@ -26,7 +26,6 @@ pipelines:
       - Build:
           fetch_materials: yes
           keep_artifacts: yes
-          approval: manual
           artifacts:
             - build:
                 source: triage-tag_only.txt
