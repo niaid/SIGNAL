@@ -6,9 +6,6 @@ pipelines:
     group: LSB_triage
     label_template: ${COUNT}_${app-repo[:7]}
     locking: on
-    timer:
-      spec: "0 13 6 * * ?"
-      only_on_changes: no
     materials:
       app-repo:
         git: git@github.niaid.nih.gov:grothja/TRIAGE.git
@@ -19,9 +16,9 @@ pipelines:
       IMAGE_LOCATION: .
       IMAGE_NAME: triage
       IMAGE_REPO: lsb-triage
-      REGISTRY_USER: grothja
+      REGISTRY_USER: songj11
     secure_variables:
-      REGISTRY_PASS: d3f/vk8cqY1Ii+FKBQpN5l5fp/hduiyf2r1fMQIKx55NV0F0cXxmcDQjjL1xBUgqqP/z2+9IX5O65vnTyCySGYqGG6dtzhDLAgZ4uiqj3j4
+      REGISTRY_PASS: iDnXdpsAhhx/Sjlo6NDEBBKh6+97Y8OrQ1mk+hEsi296kFp8gtqf2Q==
     stages:
       - Build:
           fetch_materials: yes
