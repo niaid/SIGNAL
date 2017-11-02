@@ -1,0 +1,95 @@
+format_version: 1
+
+pipelines:
+
+  triage_build_yaml:
+    group: LSB_triage
+    label_template: ${COUNT}_${app-repo[:7]}
+    locking: on
+    timer:
+      spec: "0 13 6 * * ?"
+      only_on_changes: no
+    materials:
+      app-repo:
+        git: git@github.niaid.nih.gov:grothja/TRIAGE.git
+      shiny1-image:
+        pipeline: shiny1-alpine3
+        stage: Build
+    environment_variables:
+      IMAGE_LOCATION: .
+      IMAGE_NAME: triage
+      IMAGE_REPO: lsb-triage
+      REGISTRY_USER: grothja
+    secure_variables:
+      REGISTRY_PASS: d3f/vk8cqY1Ii+FKBQpN5l5fp/hduiyf2r1fMQIKx55NV0F0cXxmcDQjjL1xBUgqqP/z2+9IX5O65vnTyCySGYqGG6dtzhDLAgZ4uiqj3j4
+    stages:
+      - Build:
+          fetch_materials: yes
+          keep_artifacts: yes
+          artifacts:
+            - build:
+                source: triage-tag_only.txt
+            - build:
+                source: .build/qa
+          tasks:
+            - fetch:
+                run_if: manual
+                pipeline: shiny1-alpine3
+                stage: Build
+                job: build
+                is_file: yes
+                source: shiny1-alpine3-full.txt
+            - script: >
+                docker_pipeline -m true -g true -o $(cat shiny1-alpine3-full.txt) &&
+                export IMAGE_NAME="${IMAGE_REPO}/${IMAGE_NAME}" &&
+                export IMAGE_REPO="monarch-pre-prod" &&
+                export REGISTRY_PASS=${ART_PROMOTE_KEY} &&  
+                export IMAGE_TAG=${GO_PIPELINE_LABEL} &&
+                promote monarch-prod
+
+  triage_deploy_qa_yaml:
+    group: LSB_triage
+    label_template: ${triage_build_pipeline}
+    locking: on
+    materials:
+      triage_build_pipeline:
+        pipeline: triage_build_yaml
+        stage: Build
+    environment_variables:
+      REGISTRY_USER: grothja
+    secure_variables:
+      REGISTRY_PASS: d3f/vk8cqY1Ii+FKBQpN5l5fp/hduiyf2r1fMQIKx55NV0F0cXxmcDQjjL1xBUgqqP/z2+9IX5O65vnTyCySGYqGG6dtzhDLAgZ4uiqj3j4
+    stages:
+      - Deploy_AWS_App:
+          fetch_materials: yes
+          keep_artifacts: yes
+          artifacts:
+            - build:
+                source: qa/qa-plan.html
+            - build:
+                source: qa/qa-apply.html
+            - build:
+                source: qa/.terraform/terraform.tfstate
+          tabs:
+            QA_plan:  qa-plan.html
+            QA_apply: qa-apply.html
+          tasks:
+            - fetch:
+                run_if: passed
+                pipeline: triage_build_yaml
+                stage: Build
+                job: Build
+                is_file: yes
+                source: triage-tag_only.txt
+            - fetch:
+                run_if: passed
+                pipeline: triage_build_yaml
+                stage: Build
+                job: Build
+                is_file: no
+                source: qa
+            - script: >
+                /bin/git init &&
+                export TF_VAR_tag=$(cat triage-tag_only.txt) &&
+                d-tfw --plan -e qa &&
+                d-tfw --apply -e qa
