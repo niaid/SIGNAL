@@ -22,6 +22,7 @@ RUN apk add --no-cache --virtual .build-dependencies R-dev g++ libxml2-dev && \
 
 # Make all files inside the directory 'app' available to the container
 COPY app/ /srv/shiny-server/
+RUN chown -R default /srv/shiny-server/ 
 
 # Set or override the environmental variables
 ENV LANG=en_US.UTF-8
