@@ -2,7 +2,7 @@ format_version: 1
 
 pipelines:
 
-  triage_build_yaml:
+  triage_build:
     group: LSB_triage
     label_template: ${COUNT}_${app-repo[:7]}
     locking: on
@@ -44,13 +44,13 @@ pipelines:
                 export IMAGE_TAG=${GO_PIPELINE_LABEL} &&
                 promote monarch-prod
 
-  triage_deploy_qa_yaml:
+  triage_deploy_qa:
     group: LSB_triage
     label_template: ${triage_build_pipeline}
     locking: on
     materials:
       triage_build_pipeline:
-        pipeline: triage_build_yaml
+        pipeline: triage_build
         stage: Build
     environment_variables:
       REGISTRY_USER: songj11
@@ -73,14 +73,14 @@ pipelines:
           tasks:
             - fetch:
                 run_if: passed
-                pipeline: triage_build_yaml
+                pipeline: triage_build
                 stage: Build
                 job: Build
                 is_file: yes
                 source: triage-tag_only.txt
             - fetch:
                 run_if: passed
-                pipeline: triage_build_yaml
+                pipeline: triage_build
                 stage: Build
                 job: Build
                 is_file: no
