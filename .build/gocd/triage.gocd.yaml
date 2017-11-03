@@ -2,13 +2,10 @@ format_version: 1
 
 pipelines:
 
-  triage_build_yaml:
+  triage_build:
     group: LSB_triage
     label_template: ${COUNT}_${app-repo[:7]}
     locking: on
-    timer:
-      spec: "0 13 6 * * ?"
-      only_on_changes: no
     materials:
       app-repo:
         git: git@github.niaid.nih.gov:grothja/TRIAGE.git
@@ -19,9 +16,9 @@ pipelines:
       IMAGE_LOCATION: .
       IMAGE_NAME: triage
       IMAGE_REPO: lsb-triage
-      REGISTRY_USER: grothja
+      REGISTRY_USER: songj11
     secure_variables:
-      REGISTRY_PASS: d3f/vk8cqY1Ii+FKBQpN5l5fp/hduiyf2r1fMQIKx55NV0F0cXxmcDQjjL1xBUgqqP/z2+9IX5O65vnTyCySGYqGG6dtzhDLAgZ4uiqj3j4
+      REGISTRY_PASS: Eq1ailPp4vUXP+LYw3Zg62MQEcwCvlALis2i1hryHBF4OXZs9e7xLS7LSroMiMKw+LnKyHhQ4JultE37H/wytCVM2+rT90XdVhin7ljhK9c=
     stages:
       - Build:
           fetch_materials: yes
@@ -47,18 +44,18 @@ pipelines:
                 export IMAGE_TAG=${GO_PIPELINE_LABEL} &&
                 promote monarch-prod
 
-  triage_deploy_qa_yaml:
+  triage_deploy_qa:
     group: LSB_triage
     label_template: ${triage_build_pipeline}
     locking: on
     materials:
       triage_build_pipeline:
-        pipeline: triage_build_yaml
+        pipeline: triage_build
         stage: Build
     environment_variables:
-      REGISTRY_USER: grothja
+      REGISTRY_USER: songj11
     secure_variables:
-      REGISTRY_PASS: d3f/vk8cqY1Ii+FKBQpN5l5fp/hduiyf2r1fMQIKx55NV0F0cXxmcDQjjL1xBUgqqP/z2+9IX5O65vnTyCySGYqGG6dtzhDLAgZ4uiqj3j4
+      REGISTRY_PASS: Eq1ailPp4vUXP+LYw3Zg62MQEcwCvlALis2i1hryHBF4OXZs9e7xLS7LSroMiMKw+LnKyHhQ4JultE37H/wytCVM2+rT90XdVhin7ljhK9c=
     stages:
       - Deploy_AWS_App:
           fetch_materials: yes
@@ -76,14 +73,14 @@ pipelines:
           tasks:
             - fetch:
                 run_if: passed
-                pipeline: triage_build_yaml
+                pipeline: triage_build
                 stage: Build
                 job: Build
                 is_file: yes
                 source: triage-tag_only.txt
             - fetch:
                 run_if: passed
-                pipeline: triage_build_yaml
+                pipeline: triage_build
                 stage: Build
                 job: Build
                 is_file: no
