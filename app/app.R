@@ -189,9 +189,6 @@ completed2 <- FALSE
         }else{
           dataDir <- "~/TRIAGE/app/data/"
         }
-        message(dataDir, "*")
-        message(scriptDir, "**")
-        message(inputDir, "***")
         
         organism <- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
@@ -235,7 +232,6 @@ completed2 <- FALSE
         setwd("./inputOutputs/TRIAGEoutputFiles")
         pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         pathway.type <- pathway.types[1]
-        message(dataDir)
         pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
         # Get input file 
