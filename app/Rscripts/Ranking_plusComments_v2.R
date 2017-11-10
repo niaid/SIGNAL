@@ -21,11 +21,9 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #TRIAGE.input <- "~/TRIAGE/app/data"
   TRIAGE.input <- dataDir
-  message(TRIAGE.input)
+
   #TRIAGE.output <- "~/TRIAGE/app/InputOutputs/TRIAGEoutputFiles"
   TRIAGE.output <- outputDir
-  message(TRIAGE.output)
-  message("Current working directory is :", getwd())
   
   # KEGGdir <- "~/Desktop/CARDcode/Rscripts/Resources/Pathways"      # This directory should countain a document with the memebrship lists of genes in pathways
   # PlotDir <- "~/Documents/Analysis/Simulating_Collar_Plot/"        # Where to place the plot you are going to create

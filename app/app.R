@@ -191,10 +191,16 @@ completed2 <- FALSE
         }
         
         organism <- input$organism
+        
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
         
         print(organism)
-        source("./Rscripts/pathway_iteration.R", local = TRUE)
+        
+        if('SHINY_APP' %in% env_names){
+          source("/srv/shiny-server/Rscripts/pathway_iteration.R", local = TRUE)
+        }else{
+          source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
+        }
         
         networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
         # # Set the network to be used
@@ -229,9 +235,18 @@ completed2 <- FALSE
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
         
         # 1) Seed Pathway Analysis
-        setwd("./inputOutputs/TRIAGEoutputFiles")
-        pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
-        pathway.type <- pathway.types[1]
+        if('SHINY_APP' %in% env_names){
+          setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
+        }
+        else{
+          setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
+        }
+        
+        # Pathway types
+        #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
+        #pathway.type <- pathway.types[1]
+        pathway.type <- input$pathway
+        
         pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
         
         # Get input file 
@@ -243,6 +258,18 @@ completed2 <- FALSE
         # Get a copy of the original list of high-confidence genes
         originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] >= input$cutoff_valueH]
         
+        # Check to see if the genes from the input file match the genes from the pathwayData 
+        # No match in case the input genes are from Mouse, but the genes from the pathwayData are from Human
+        matchingHits <- intersect(siRNA.Score$EntrezID,pathwayData$EntrezID)
+        
+        # If zero length, catch and handle the error
+        if(length(matchingHits) == 0){
+          message("Organism - gene set mismatch! You selected either the incorrect organism or a wrong data file.")
+          showNotification("organism-gene set MISMATCH! \nThe organism you selected and the organism from which the input data generated do not match.", duration = NULL,
+                           action = a(href = "javascript:location.reload();", "Reload page")
+          )
+        } 
+          
         # Perform iterative TRIAGE analysis
         while (counter == TRUE) {
           
@@ -553,7 +580,7 @@ completed2 <- FALSE
             output$link2Graph <- renderUI({
               #a(href="file:///Users/songj11/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph")
               if(grepl('shiny', outputDir)){
-                a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost:3838/Chimera_STRINGHi_MoTNF.hits.html")
+                a("Done! Click here to see the resulting network graph",target="_blank",href="/results/Chimera_STRINGHi_MoTNF.hits.html")
               }else{
                 a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
               }
