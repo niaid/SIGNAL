@@ -98,11 +98,15 @@ completed2 <- FALSE
                      div(style="display:inline-block",uiOutput("link2Graph")),
                      dataTableOutput("myNetworkGraph")
             ),
+            tabPanel(title = "Graph View", value = "graphView", 
+                     htmlOutput("graphView")
+            ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
                      downloadButton('downloadButton', 'Download all files')
             )
-          )    
+          ), 
+          width = 9
         )
       ),
       
@@ -589,6 +593,13 @@ completed2 <- FALSE
         })
       })
       message("Outside NetworkGraph")
+      
+      # 
+      output$graphView <- renderUI({
+        updateTabsetPanel(session, "inTabset", selected = "graphView")
+        
+          includeHTML("Chimera_STRINGHi_MoTNF.hits.html")
+      })
       
       # Create the 'Download' tab
       output$downloadFiles <- renderUI({
