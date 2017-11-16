@@ -158,7 +158,7 @@ networkType <- NULL
         # Upon job submission, switch to 'status' tab
         message("switching to status tab")
         updateTabsetPanel(session, "inTabset", selected = "status")
- 
+
         withCallingHandlers({
           shinyjs::html("status", "")
         
@@ -206,26 +206,29 @@ networkType <- NULL
           source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
         }
         
-        networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
+        #networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
         # # Set the network to be used
         network <- input$network
+        message(network)
 
         if(tolower(organism) == 'human'){
-          if("hSTRINGhi" %in% network){
+          if(grepl("high", network)){
             networkType <- 'hSTRINGppi.hi'
           }
-          if("hSTRINGmed" %in% network){
+          if(grepl("medium", network)){
             networkType <- 'hSTRINGppi.med'
           }
         }
         else if(tolower(organism) == 'mouse'){
-          if("mSTRINGhi" %in% network){
+          if(grepl("high", network)){
             networkType <- 'mSTRINGppi.hi'
           }
-          if("mSTRINGmed" %in% network){
+          if(grepl("medium", network)){
             networkType <- 'mSTRINGppi.med'
           }
         }
+        
+        message(networkType)
         
         use.only.commnected.components <- c('Yes')
         
@@ -237,6 +240,8 @@ networkType <- NULL
         inputFileName <- inputFile$name
         inputFilePrefix = unlist(strsplit(inputFileName, split='.csv', fixed=TRUE))[1]
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
+        
+        message(networkType)
         
         # 1) Seed Pathway Analysis
         if('SHINY_APP' %in% env_names){

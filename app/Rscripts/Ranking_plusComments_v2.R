@@ -74,7 +74,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
   # setwd(HitsDir)
   #HuTNFanno <- read.csv("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
-  HuTNFanno <- read.csv(paste0(outputDir, "TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv"), stringsAsFactors = F)
+  #HuTNFanno <- read.csv(paste0(outputDir, "TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv"), stringsAsFactors = F)
+  HuTNFanno <- read.csv(paste0(outputDir, outputFileName), stringsAsFactors = F)
   
   #IAM hits and definging last iteration column name &  inflection point
   IAM_final_iteration <- colnames(HuTNFanno)[(ncol(HuTNFanno))-3] # This column corresponds to the last network analysis step (expnasion) of the TRIAGE analysis.
