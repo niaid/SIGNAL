@@ -8,7 +8,7 @@ pipelines:
     locking: on
     materials:
       app-repo:
-        git: git@github.niaid.nih.gov:grothja/TRIAGE.git
+        git: git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git
       shiny1-image:
         pipeline: shiny1-alpine3
         stage: Build
