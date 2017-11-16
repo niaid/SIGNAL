@@ -14,7 +14,7 @@ library(readr)
 library(dplyr)
 library(stringi)
 library(DT)
-
+library(igraph)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
@@ -22,7 +22,6 @@ organism <- NULL
 organismAbbr <- NULL
 originalHits <- NULL
 networkType <- NULL
-completed2 <- FALSE
 
 #if (interactive()) {
   
@@ -49,11 +48,11 @@ completed2 <- FALSE
           ),
           selectInput(inputId = "pathway",
                       label = "Select a pathway to enrich:",
-                      choices = c("KEGG", "REACTOME", "Gene_Ontology") 
+                      choices = c("KEGG", "REACTOME") 
           ),
           selectInput(inputId = "network",
                       label = "Select a PPI database to use:",
-                      choices = c("STRING high conf", "STRING medium conf", "BioGRID") 
+                      choices = c("STRING high conf", "STRING medium conf") 
           ),
           fileInput(inputId= "file1", 
                     label = 'Choose an inputfile to upload'
@@ -81,7 +80,8 @@ completed2 <- FALSE
                      textOutput("cutoff_valueH"),
                      textOutput("cutoff_valueM")
             ),
-            tabPanel(title = "Status", value = "status", tags$pre(id = "status")
+            tabPanel(title = "Status", value = "status", 
+                     tags$pre(id = "status")
             ),
             tabPanel(title = "Enriched Pathways", value = "enrichedPathways", 
                      dataTableOutput("enrichedPathways")
@@ -99,7 +99,8 @@ completed2 <- FALSE
                      dataTableOutput("myNetworkGraph")
             ),
             tabPanel(title = "Graph View", value = "graphView", 
-                     htmlOutput("graphView")
+                     htmlOutput("graphLegend"),
+                     edgebundleOutput("graphView", width = "100%", height = "700px")
             ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
@@ -117,7 +118,6 @@ completed2 <- FALSE
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-      completed4 <- FALSE
 
       # Read in the input fie  
       output$contents <- renderDataTable({
@@ -152,13 +152,13 @@ completed2 <- FALSE
       # output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
       # output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
       # output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
-      
-      # Upon job submission, switch to 'status' tab
-      output$status <- eventReactive(input$goButton, 'Analysis started!')
 
       # Perfrom enrichment
-      observeEvent(input$goButton, {
+      observeEvent(input$goButton, {   
+        # Upon job submission, switch to 'status' tab
+        message("switching to status tab")
         updateTabsetPanel(session, "inTabset", selected = "status")
+ 
         withCallingHandlers({
           shinyjs::html("status", "")
         
@@ -568,38 +568,68 @@ completed2 <- FALSE
           if(length(selectedRows) == 0){
             showNotification("You must select at least ONE pathway!", duration = 5,  type=c("error"))
           }
-          if(length(selectedRows) > 3){
+          else if(length(selectedRows) > 3){
             showNotification("You selected more than 3 pathways! Please remove the extra pathways before your re-submission", duration = 10, type=c("error"))
           }
-          message(selectedRows)
-          
-          source(paste0(scriptDir, "Ranking_plusComments_v2.R"), local = TRUE)
-          
-          Generate_NetworkGraph(selectedRows, organism)
-          
-        })
-        
-        observeEvent(input$submitButton, {
-          if(length(selectedRows) >= 1 & length(selectedRows) <= 3) {
-            output$link2Graph <- renderUI({
-              #a(href="file:///Users/songj11/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph")
-              if(grepl('shiny', outputDir)){
-                a("Done! Click here to see the resulting network graph",target="_blank",href="/results/Chimera_STRINGHi_MoTNF.hits.html")
-              }else{
-                a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
-              }
-            })
+          else{
+            message(selectedRows)
+            source(paste0(scriptDir, "Ranking_plusComments_v2.R"), local = TRUE)
+            Generate_NetworkGraph(selectedRows, organism)
+            
+            #observeEvent(input$submitButton, {
+              updateTabsetPanel(session, "inTabset", selected = "graphView")
+              
+              # Display the HTML result in a Shiny tab
+              output$graphView <- renderUI({
+                message("Inside graphView tab")
+                #updateTabsetPanel(session, "inTabset", selected = "graphView")
+                
+                output$graphLegend <- renderUI({
+                  HTML(graphLegend)
+                })
+                
+                output$graphView <- renderEdgebundle({
+                  # Display the network graph
+                  Chimera
+                })
+              })
+            #})
           }
         })
+        
+        # observeEvent(input$submitButton, {
+        #   if(length(selectedRows) >= 1 & length(selectedRows) <= 3) {
+        #     output$link2Graph <- renderUI({
+        #       #a(href="file:///Users/songj11/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/Chimera_STRINGHi_MoTNF.hits.html", target="_blank", "Click here to see the resulting network graph")
+        #       if(grepl('shiny', outputDir)){
+        #         a("Done! Click here to see the resulting network graph",target="_blank",href="/results/Chimera_STRINGHi_MoTNF.hits.html")
+        #       }else{
+        #         a("Done! Click here to see the resulting network graph",target="_blank",href="http://localhost/Chimera_STRINGHi_MoTNF.hits.html")
+        #       }
+        #     })
+        #   }
+        # })
       })
       message("Outside NetworkGraph")
       
-      # 
-      output$graphView <- renderUI({
-        updateTabsetPanel(session, "inTabset", selected = "graphView")
-        
-          includeHTML("Chimera_STRINGHi_MoTNF.hits.html")
-      })
+      # observeEvent(input$submitButton, {
+      #   updateTabsetPanel(session, "inTabset", selected = "graphView")
+      #   
+      #   # Display the HTML result in a Shiny tab
+      #   output$graphView <- renderUI({
+      #     message("Inside graphView tab")
+      #     #updateTabsetPanel(session, "inTabset", selected = "graphView")
+      #     
+      #     output$graphLegend <- renderUI({
+      #       HTML(graphLegend)
+      #     })
+      #     
+      #     output$graphView <- renderEdgebundle({
+      #       # Display the network graph
+      #       Chimera
+      #     })
+      #   })
+      # })
       
       # Create the 'Download' tab
       output$downloadFiles <- renderUI({

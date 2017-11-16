@@ -602,14 +602,13 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # igraph static plot
   #plot(g, layout = layout.circle, vertex.label=NA)
   
-  Chimera <- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 3)       
-  print(Chimera)
+  Chimera <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 3)       
 
   # Add a legend box on the html page
   if(length(selectedRows) == 3){
-    figureLegend <- sprintf('
+    graphLegend <<- sprintf('
   <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto;">
+                            <form style="width: 360px; margin: 0 auto; color: grey;">
                             <fieldset>
                             <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
@@ -621,9 +620,9 @@ Generate_NetworkGraph <- function(selectedRows, organism){
                             path1_name, path2_name, path3_name, "other TRIAGE hit genes")
   }
   if(length(selectedRows) == 2){
-    figureLegend <- sprintf('
+    graphLegend <<- sprintf('
   <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto;">
+                            <form style="width: 360px; margin: 0 auto; color: grey">
                             <fieldset>
                             <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
@@ -634,9 +633,9 @@ Generate_NetworkGraph <- function(selectedRows, organism){
                             path1_name, path2_name, "other TRIAGE hit genes")
   }
   if(length(selectedRows) == 1){
-    figureLegend <- sprintf('
+    graphLegend <<- sprintf('
   <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto;">
+                            <form style="width: 360px; margin: 0 auto; color: grey;">
                             <fieldset>
                             <legend>Network Graph Colors:</legend>
                             <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
@@ -659,12 +658,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   }
 
   # Add figure legend only if created when 1-3 pathways were selected
-  if(exists("figureLegend")){ 
+  if(exists("graphLegend")){ 
     
     # Put a legend in the HTML file (inputOutput directory)
     #inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
     inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
-    outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML)
+    outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML)
     writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
 
     # Put a legend in the HTML file (localhost)
@@ -674,7 +673,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
       inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
     }
     
-    outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = figureLegend, x = inHTML2)
+    outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML2)
     
     if(grepl('shiny', outputDir)){
       writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
