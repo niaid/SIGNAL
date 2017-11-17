@@ -18,6 +18,8 @@ RUN apk add --no-cache --virtual .build-dependencies R-dev g++ libxml2-dev && \
     R -e "install.packages('data.table', repos='https://cran.rstudio.com/')" && \ 
     R -e "install.packages('edgebundleR', repos='https://cran.rstudio.com/')" && \ 
     R -e "install.packages('igraph', repos='https://cran.rstudio.com/')" && \ 
+    R -e "install.packages('graphics', repos='https://cran.rstudio.com/')" && \ 
+    R -e "install.packages('grDevices', repos='https://cran.rstudio.com/')" && \ 
     apk del .build-dependencies
 
 # Make all files inside the directory 'app' available to the container

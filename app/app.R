@@ -15,6 +15,7 @@ library(dplyr)
 library(stringi)
 library(DT)
 library(igraph)
+library(edgebundleR)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
