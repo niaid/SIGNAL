@@ -25,6 +25,7 @@ variable "container_port"         {
 
 ## Monarch Provider Configurations
 provider "aws" {
+  version             = "1.2.0"
   region              = "${var.region}"
   allowed_account_ids = [ "${var.allowed_account_ids}" ]
 }
