@@ -7,7 +7,7 @@
 # modified by Jian Song
 ###################################################
 
-require(edgebundleR)                        #Load Libraries
+require('edgebundleR')                        #Load Libraries
 library('igraph')
 library('data.table')
 library('dplyr')
