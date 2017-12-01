@@ -24,16 +24,28 @@ organismAbbr <- NULL
 originalHits <- NULL
 networkType <- NULL
 
-#if (interactive()) {
+# Function to validation email addresses
+isValidEmail <- function(x) {
+  grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x), 
+        ignore.case=TRUE)
+}
+
+if (interactive()) {
   
     ##################################################
     # Define UI for application that draws a histogram
     ui <- fluidPage( 
+      
+      # Capture user access information
+      tags$head(
+        tags$script(src="getIP.js")
+      ),
+      
       # style
       theme = "./css/triage.css",
       
       # use shinyjs
-      shinyjs::useShinyjs(), br(),
+      useShinyjs(), br(),
       
       # Application title
       headerPanel(includeHTML("header.html")),
@@ -112,6 +124,18 @@ networkType <- NULL
         )
       ),
       
+      # Get user inputs (user name and email address)
+      # bsModal("modalnew", "Info to Access Your Results:", "goButton", size = "small",
+      #         textOutput("textnew"),
+      #         textInput("userName", "User Name", placeholder = "your name"),
+      #         textInput("userEmail", "User Email Address", placeholder = "your email address"),
+      #         tags$head(tags$style("#modalnew .modal-footer{ display:none}")),
+      #         # check for valid email
+      #         conditionalPanel(condition = "input.userName.length > 2
+      #                          && input.userEmail.indexOf('@') > -1
+      #                          && input.userEmail.indexOf('.') > -1", 
+      #                          modalButton("Submit"))
+      # ),
       # Show a footer using the header style
       headerPanel(includeHTML("footer.html"))
     )
@@ -119,7 +143,7 @@ networkType <- NULL
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-
+  
       # Read in the input fie  
       output$contents <- renderDataTable({
         inFile <- input$file1
@@ -130,7 +154,6 @@ networkType <- NULL
         data <- read.csv(inFile$datapath)
         
         # display the input file dimension
-        #output$dataSummary <- renderText(c("Your input data have ",  nrow(data),  "rows and ",  ncol(data), "columns."))
         data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
         return(data)
       })
@@ -154,8 +177,40 @@ networkType <- NULL
       # output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
       # output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
 
+      # These user information (userName and userEmail) will collected after the modal is closed/submitted
+      values = reactiveValues(userInfo = "",   ## This is the text that will be displayed
+                              modal_closed=F)  ## This prevents the values$userInfo output from updating until the modal is closed/submitted
+      
       # Perfrom enrichment
       observeEvent(input$goButton, {   
+        
+        ## Open the modal when button clicked
+        values$modal_closed <- F
+        showModal(modalDialog(
+          title = "User Info Needed to Access Results",
+          size = "s",
+          textInput("userName", "User Name", placeholder = "your name"),
+          textInput("userEmail", "User Email Address", placeholder = "your email address"),
+          
+          ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
+          footer = actionButton("submit_modal",label = "Submit")
+        ))
+      })
+    
+      ## This event is triggered by the actionButton inside the modalDialog
+      #  It closes the modal, and by setting values$modal_closed <- T, it
+      #  triggers values$userInfo to update.
+      
+      observeEvent(input$submit_modal,{
+        values$modal_closed <- T
+        
+        if(isValidEmail(input$userEmail)){
+          removeModal()
+        }
+        else{
+          reset("userEmail")
+        }
+        
         # Upon job submission, switch to 'status' tab
         message("switching to status tab")
         updateTabsetPanel(session, "inTabset", selected = "status")
@@ -167,50 +222,47 @@ networkType <- NULL
         envs <- Sys.getenv()
         env_names <- names(envs)
 
-        #scriptDir <- "~/TRIAGE/app/Rscripts/"
+        ## Set up scriptDir, inputDir, outputDir depending on whether this is used 
+        # as a standalone tool or on AWS webservice
         if('SHINY_APP' %in% env_names){
           scriptDir <- '/srv/shiny-server/Rscripts/'
         }else{
           scriptDir <- "~/TRIAGE/app/Rscripts/"
         }   
         
-        #inputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEinputFiles/"
         if('SHINY_APP' %in% env_names){
           inputDir <- '/srv/shiny-server/inputOutputs/TRIAGEinputFiles/'
         }else{
           inputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEinputFiles/"
         }  
         
-        #outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
         if('SHINY_APP' %in% env_names){
           outputDir <- '/srv/shiny-server/inputOutputs/TRIAGEoutputFiles/'
         }else{
           outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
         }  
         
-        #dataDir <- "~/TRIAGE/app/data/"
         if('SHINY_APP' %in% env_names){
           dataDir <- '/srv/shiny-server/data/'
         }else{
           dataDir <- "~/TRIAGE/app/data/"
         }
         
+        # Get organism name from user input
         organism <- input$organism
-        
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
-        
         print(organism)
         
+        ## Source other codes depending on whether this is used 
+        # as a standalone tool or on AWS webservice 
         if('SHINY_APP' %in% env_names){
           source("/srv/shiny-server/Rscripts/pathway_iteration.R", local = TRUE)
         }else{
           source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
         }
         
-        #networkType <- ifelse(grepl("human", tolower(organism)), 'hSTRINGppi.hi', 'mSTRINGhi')
-        # # Set the network to be used
+        # Set the network to be used based on user selection
         network <- input$network
-        message(network)
 
         if(tolower(organism) == 'human'){
           if(grepl("high", network)){
@@ -229,28 +281,60 @@ networkType <- NULL
           }
         }
         
-        message(networkType)
-        
+        #message(networkType)
         use.only.commnected.components <- c('Yes')
+      
+        # Generate logfiles
+        # user.log - with user input information
+        userLoginInfo <- c(input$userName, input$userEmail)
+        write.table(userLoginInfo, file = "./user_login.log", append = TRUE)
         
-        # Clear any file in the output directory
-        do.call(file.remove, list(list.files(outputDir, full.names = TRUE)))
+        # access.log 
+        # Capture user access information
+        IP <- reactive({ input$getIP })
+        observe({
+          cat(capture.output(str(IP()), split=TRUE))
+          userAccessInfo <- capture.output(str(IP()), split=TRUE)
+          write.table(userAccessInfo, file = "./user_access.log", append = TRUE, quote = TRUE, sep = " ",
+                      eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+                      col.names = TRUE, qmethod = c("escape", "double"))
+        })
+        
+                
+        # Create uesr-specific directory 
+        userDir <- input$userEmail
+        userDir <- gsub("\\.", "_", userDir)
+        userDir <- gsub("@", "_", userDir)
+        setwd(outputDir)
+        outDir <- c(getwd(), "/", userDir)
+        
+        # Remove all files in the outputDir
+        unlink(outputDir, recursive = FALSE)
+        
+        # Create user-specific directory
+        if(!dir.exists(userDir)){
+          dir.create(userDir)
+        }else{
+          unlink(userDir, recursive = FALSE)
+        }
+        
+        setwd(paste0('./', userDir))
+        message(getwd(), "@")
+        message(outDir, "@@")
         
         # Set the output file name
         inputFile <- input$file1
         inputFileName <- inputFile$name
         inputFilePrefix = unlist(strsplit(inputFileName, split='.csv', fixed=TRUE))[1]
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
-        
-        message(networkType)
-        
+      
         # 1) Seed Pathway Analysis
-        if('SHINY_APP' %in% env_names){
-          setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
-        }
-        else{
-          setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
-        }
+        # if('SHINY_APP' %in% env_names){
+        #   setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
+        # }
+        # else{
+        #   setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
+        # }
         
         # Pathway types
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
@@ -290,6 +374,7 @@ networkType <- NULL
           outPrefix <- paste(pathway.type, iteration, sep = "_")  
           
           # 1) Contraction - [Pathway Analysis]
+          message(getwd())
           siRNA.Score <- ComputeEnrichment(pathwayData, Hits, nonHits, outPrefix, siRNA.Score, iteration)
           siRNA.Score <- data.frame(siRNA.Score, temp = 0, stringsAsFactors = FALSE)
           kName1 <- paste0("KEGG.class.iteration", iteration)
@@ -356,7 +441,9 @@ networkType <- NULL
         
         ## Save the results into utput files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
-        #setwd(outDir)
+
+        message(getwd(), "#####")
+        
         write.csv(out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv") 
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
@@ -640,8 +727,8 @@ networkType <- NULL
       # Create the 'Download' tab
       output$downloadFiles <- renderUI({
         updateTabsetPanel(session, "inTabset", selected = "downloads")
-        
-        outputFiles <- list.files(path = outputDir)
+        message(outDir, "*****")
+        outputFiles <- list.files(path = './')
         out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
         
         for(i in 1:length(outputFiles)){
@@ -658,7 +745,8 @@ networkType <- NULL
           paste("TRIAGE_analysis_output","zip",sep=".")
         },
         content = function(filename){
-          outputFiles <- list.files(path = outputDir)
+          #outputFiles <- list.files(path = outputDir)
+          outputFiles <- list.files(path = outDir)
           zip(zipfile=filename, files = outputFiles)
         },
         contentType = "application/zip"
@@ -666,9 +754,12 @@ networkType <- NULL
       
       message("Download content completed")      
     })
+
+    # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
+    session$allowReconnect(TRUE)
   }
     
   #####################
   # Run the application 
   shinyApp(ui = ui, server = server)
-#}
+}
