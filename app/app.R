@@ -288,6 +288,7 @@ if (interactive()) {
         # user.log - with user input information
         userLoginInfo <- c(input$userName, input$userEmail)
         write.table(userLoginInfo, file = "./user_login.log", append = TRUE)
+        logDir <- getwd()
         
         # access.log 
         # Capture user access information
@@ -295,7 +296,7 @@ if (interactive()) {
         observe({
           cat(capture.output(str(IP()), split=TRUE))
           userAccessInfo <- capture.output(str(IP()), split=TRUE)
-          write.table(userAccessInfo, file = "./user_access.log", append = TRUE, quote = TRUE, sep = " ",
+          write.table(userAccessInfo, file = paste0(logDir, "/user_access.log"), append = TRUE, quote = TRUE, sep = " ",
                       eol = "\n", na = "NA", dec = ".", row.names = TRUE,
                       col.names = TRUE, qmethod = c("escape", "double"))
         })
