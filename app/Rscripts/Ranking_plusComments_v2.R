@@ -538,20 +538,21 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #Remove non hits                                                   #There are more connections than we want to visualize so here some connections are being removed to simplify
   rel.target.filter <- filter(rel.target, Loc.source !=  Loc.target) #Here connections within the same group are ignored (assuming that we are only interested in intergroup connections)
-  rel.7 <- filter(rel.target, Loc.source == 4 &  Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
-  rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
+  rel.7 <- filter(rel.target, Loc.source != 4 & Loc.target != 4 &     #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+                              Loc.source != 3 & Loc.target != 3 &
+                              Loc.source != 2 & Loc.target != 2 &
+                              Loc.source != 1 & Loc.target != 1 )
+rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
   rel.target <- filter(rel.target,                                   #Connections to "non-hits" are removed
                        Loc.source != 7 &
                          Loc.target != 7 &
                          Loc.source != 5 &
                          Loc.target != 5 &
                          Loc.source != 6 &
-                         Loc.target != 6)
+                         Loc.target != 6 )
   #Filter Node info                                                 #"Non hits" are removed from the NodeInfo list as well.
-  NodeInfo <- filter(NodeInfo, Loc != 7 &
-                       Loc != 5 &
-                       Loc != 6)
-  
+  NodeInfo <- filter(NodeInfo, Loc != 7 & Loc != 5 & Loc != 6)
+
   #Fix directionality of connection for members of group seven    #Hirarchical edge bundling colors the interactions based on the source so here the columns are switched to get the result wanted (shoudl Novel-group interactions be the color of the group or the color of the "novel" gene category)
   rel.target.filter <- filter(rel.target, Loc.target != 4)
   rel.7 <- filter(rel.target, Loc.target == 4)
@@ -582,6 +583,13 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   names(rel)[names(rel)=="source.ID"] <- "V1"
   names(rel)[names(rel)=="target.ID"] <- "V2"
   
+  # Remove nodes that do not have connection to the selected pathways
+  rel.V1.matrix <- as.matrix((unique(rel$V1)))
+  rel.V2.matrix <- as.matrix((unique(rel$V2)))
+  rel.genes.matrix <- as.matrix(unique(rbind(rel.V1.matrix, rel.V2.matrix)))
+  
+  NodeInfo <- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
+  
   #Generate the graph
   g <- graph.data.frame(rel, directed=T, vertices=NodeInfo)
   
@@ -603,7 +611,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # igraph static plot
   #plot(g, layout = layout.circle, vertex.label=NA)
   
-  Chimera <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 3)       
+  Chimera <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 5)       
 
   # Add a legend box on the html page
   if(length(selectedRows) == 3){

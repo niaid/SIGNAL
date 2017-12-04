@@ -286,9 +286,10 @@ if (interactive()) {
       
         # Generate logfiles
         # user.log - with user input information
-        userLoginInfo <- c(input$userName, input$userEmail)
-        write.table(userLoginInfo, file = "./user_login.log", append = TRUE)
         logDir <- getwd()
+        message(logDir, "***")
+        userLoginInfo <- c(input$userName, input$userEmail)
+        write.table(userLoginInfo, file = paste0(logDir, '/user_login.log'), append = TRUE)
         
         # access.log 
         # Capture user access information
@@ -296,12 +297,11 @@ if (interactive()) {
         observe({
           cat(capture.output(str(IP()), split=TRUE))
           userAccessInfo <- capture.output(str(IP()), split=TRUE)
-          write.table(userAccessInfo, file = paste0(logDir, "/user_access.log"), append = TRUE, quote = TRUE, sep = " ",
+          write.table(userAccessInfo, file = paste0(logDir, '/user_access.log'), append = TRUE, quote = TRUE, sep = " ",
                       eol = "\n", na = "NA", dec = ".", row.names = TRUE,
                       col.names = TRUE, qmethod = c("escape", "double"))
         })
         
-                
         # Create uesr-specific directory 
         userDir <- input$userEmail
         userDir <- gsub("\\.", "_", userDir)
@@ -313,15 +313,13 @@ if (interactive()) {
         unlink(outputDir, recursive = FALSE)
         
         # Create user-specific directory
-        if(!dir.exists(userDir)){
+        if(!dir.exists(userDir)[1]){
           dir.create(userDir)
-        }else{
-          unlink(userDir, recursive = FALSE)
         }
-        
-        setwd(paste0('./', userDir))
-        message(getwd(), "@")
-        message(outDir, "@@")
+        else{
+          unlink(outDir, recursive = FALSE)
+        }
+        setwd(userDir)
         
         # Set the output file name
         inputFile <- input$file1
@@ -463,10 +461,6 @@ if (interactive()) {
       observe({
         if(completed) {
           updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
-          
-          # Display the complete table
-          #output$results <- renderDataTable({out[100:115,]})
-          # Display the pathway table
           
           output$enrichedPathways <- renderDataTable({
             options = list(autoWidth = TRUE, scrollX = TRUE,
