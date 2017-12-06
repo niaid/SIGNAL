@@ -538,13 +538,29 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #Remove non hits                                                   #There are more connections than we want to visualize so here some connections are being removed to simplify
   rel.target.filter <- filter(rel.target, Loc.source !=  Loc.target) #Here connections within the same group are ignored (assuming that we are only interested in intergroup connections)
-  rel.7 <- filter(rel.target, Loc.source != 4 & Loc.target != 4 &     #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  rel.7 <- filter(rel.target, Loc.source != 4 & Loc.target != 4 &    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
                               Loc.source != 3 & Loc.target != 3 &
                               Loc.source != 2 & Loc.target != 2 &
                               Loc.source != 1 & Loc.target != 1 )
-rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
+  
+  # Netgraph with 2nd dimension of connections
+  rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
+ 
+  # For netgraph with 2nd dimension of connections
+  rel2.target <- rbind(rel.target.filter, rel2.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
+
   rel.target <- filter(rel.target,                                   #Connections to "non-hits" are removed
-                       Loc.source != 7 &
+                         Loc.source != 7 &
+                         Loc.target != 7 &
+                         Loc.source != 5 &
+                         Loc.target != 5 &
+                         Loc.source != 6 &
+                         Loc.target != 6 )
+  
+  # For netgraph with 2nd dimension of connections
+  rel2.target <- filter(rel2.target,                                   #Connections to "non-hits" are removed
+                         Loc.source != 7 &
                          Loc.target != 7 &
                          Loc.source != 5 &
                          Loc.target != 5 &
@@ -553,10 +569,15 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
   #Filter Node info                                                 #"Non hits" are removed from the NodeInfo list as well.
   NodeInfo <- filter(NodeInfo, Loc != 7 & Loc != 5 & Loc != 6)
 
-  #Fix directionality of connection for members of group seven    #Hirarchical edge bundling colors the interactions based on the source so here the columns are switched to get the result wanted (shoudl Novel-group interactions be the color of the group or the color of the "novel" gene category)
+  # Fix directionality of connection for members of group seven    #Hirarchical edge bundling colors the interactions based on the source so here the columns are switched to get the result wanted (shoudl Novel-group interactions be the color of the group or the color of the "novel" gene category)
   rel.target.filter <- filter(rel.target, Loc.target != 4)
+  # For netgraph with 2nd dimension of connections
+  rel2.target.filter <- filter(rel2.target, Loc.target != 4)
   rel.7 <- filter(rel.target, Loc.target == 4)
-  #Switchnames
+  # For netgraph with 2nd dimension of connections
+  rel2.7 <- filter(rel2.target, Loc.target == 4)
+  
+  #Switchnames for 1st dimension graph only
   names(rel.7)[names(rel.7)=="target.ID"] <- "target.ID2"
   names(rel.7)[names(rel.7)=="source.ID"] <- "source.ID2"
   names(rel.7)[names(rel.7)=="target"] <- "target2"
@@ -566,7 +587,18 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
   names(rel.7)[names(rel.7)=="target2"] <- "source"
   names(rel.7)[names(rel.7)=="source2"] <- "target"
   
+  #Switchnames for 2nd dimension graph
+  names(rel2.7)[names(rel2.7)=="target.ID"] <- "target.ID2"
+  names(rel2.7)[names(rel2.7)=="source.ID"] <- "source.ID2"
+  names(rel2.7)[names(rel2.7)=="target"] <- "target2"
+  names(rel2.7)[names(rel2.7)=="source"] <- "source2"
+  names(rel2.7)[names(rel2.7)=="target.ID2"] <- "source.ID"
+  names(rel2.7)[names(rel2.7)=="source.ID2"] <- "target.ID"
+  names(rel2.7)[names(rel2.7)=="target2"] <- "source"
+  names(rel2.7)[names(rel2.7)=="source2"] <- "target"
+  
   rel.target <- rbind(rel.target.filter, rel.7)
+  rel2.target <- rbind(rel2.target.filter, rel2.7)
   
   #Flip columns to get pathway colors as links
   names(rel.target)[names(rel.target)=="target.ID"] <- "target.ID2"
@@ -578,41 +610,65 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
   names(rel.target)[names(rel.target)=="target2"] <- "source"
   names(rel.target)[names(rel.target)=="source2"] <- "target"
   
-  
   rel <- rel.target[, c("source.ID", "target.ID")]
   names(rel)[names(rel)=="source.ID"] <- "V1"
   names(rel)[names(rel)=="target.ID"] <- "V2"
+  
+  #Flip columns to get pathway colors as links for 2nd dimension graph
+  names(rel2.target)[names(rel2.target)=="target.ID"] <- "target.ID2"
+  names(rel2.target)[names(rel2.target)=="source.ID"] <- "source.ID2"
+  names(rel2.target)[names(rel2.target)=="target"] <- "target2"
+  names(rel2.target)[names(rel2.target)=="source"] <- "source2"
+  names(rel2.target)[names(rel2.target)=="target.ID2"] <- "source.ID"
+  names(rel2.target)[names(rel2.target)=="source.ID2"] <- "target.ID"
+  names(rel2.target)[names(rel2.target)=="target2"] <- "source"
+  names(rel2.target)[names(rel2.target)=="source2"] <- "target"
+  
+  rel2 <- rel2.target[, c("source.ID", "target.ID")]
+  names(rel2)[names(rel2)=="source.ID"] <- "V1"
+  names(rel2)[names(rel2)=="target.ID"] <- "V2"
   
   # Remove nodes that do not have connection to the selected pathways
   rel.V1.matrix <- as.matrix((unique(rel$V1)))
   rel.V2.matrix <- as.matrix((unique(rel$V2)))
   rel.genes.matrix <- as.matrix(unique(rbind(rel.V1.matrix, rel.V2.matrix)))
   
-  NodeInfo <- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
-  
+  NodeInfo1 <- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
+
   #Generate the graph
-  g <- graph.data.frame(rel, directed=T, vertices=NodeInfo)
+  g <- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
+  g2 <- graph.data.frame(rel2, directed=T, vertices=NodeInfo)
+  
+  
   
   clr <- as.factor(V(g)$Loc)
+  clr2 <- as.factor(V(g2)$Loc)
   
   if(length(selectedRows) == 3){
     levels(clr) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
+    levels(clr2) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
   }
   if(length(selectedRows) == 2){
     levels(clr) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
+    levels(clr2) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
   }
   if(length(selectedRows) == 1){
     levels(clr) <- c("red", "green")  #Two colors are chosen since there are two groups
+    levels(clr2) <- c("red", "green")  #Two colors are chosen since there are two groups
   }
   
   V(g)$color <- as.character(clr)
   V(g)$size = degree(g)*5
   
+  V(g2)$color <- as.character(clr2)
+  V(g2)$size = degree(g2)*5
+  
   # igraph static plot
   #plot(g, layout = layout.circle, vertex.label=NA)
   
-  Chimera <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 5)       
-
+  Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
+  Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)       
+  
   # Add a legend box on the html page
   if(length(selectedRows) == 3){
     graphLegend <<- sprintf('
@@ -658,12 +714,15 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
 
   #Places (2) where plot will be saved to
   #setwd(TRIAGE.output)    
-  saveEdgebundle(Chimera, "Chimera_STRINGHi_MoTNF.hits.html")
-
+  saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  
   if(grepl('shiny', outputDir)){
-    saveEdgebundle(Chimera,file = "/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+    saveEdgebundle(Chimera1,file = "/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+    saveEdgebundle(Chimera2,file = "/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
   }else{
-    saveEdgebundle(Chimera,file = "/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+    saveEdgebundle(Chimera1,file = "/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+    saveEdgebundle(Chimera2,file = "/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
   }
 
   # Add figure legend only if created when 1-3 pathways were selected
@@ -671,13 +730,15 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
     
     # Put a legend in the HTML file (inputOutput directory)
     #inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
-    inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
+    inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+    inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
     outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML)
-    writeLines(outHTML, con="Chimera_STRINGHi_MoTNF.hits.html")
-
+    writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+    writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+    
     # Put a legend in the HTML file (localhost)
     if(grepl('shiny', outputDir)){
-      inHTML2  <- readLines("/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+      inHTML2  <- readLines("/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
     }else{
       inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
     }
@@ -685,9 +746,11 @@ rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connec
     outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML2)
     
     if(grepl('shiny', outputDir)){
-      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_MoTNF.hits.html")
+      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
     }else{
-      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
     }
   }
   return(TRUE)

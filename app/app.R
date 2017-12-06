@@ -111,9 +111,15 @@ if (interactive()) {
                      div(style="display:inline-block",uiOutput("link2Graph")),
                      dataTableOutput("myNetworkGraph")
             ),
-            tabPanel(title = "Graph View", value = "graphView", 
-                     htmlOutput("graphLegend"),
-                     edgebundleOutput("graphView", width = "100%", height = "700px")
+            tabPanel(title = "Graph View", value = "graphView",
+                tabsetPanel(id = 'networkViews',
+                      tabPanel(title="1st Dimension Network", value="graphView1", 
+                               htmlOutput("graphLegend1"), 
+                               edgebundleOutput("graphView1", width = "100%", height = "600px")),
+                      tabPanel(title="2nd Dimension Network", value="graphView2", 
+                               htmlOutput("graphLegend2"),
+                               edgebundleOutput("graphView2", width = "100%", height = "600px"))
+                )
             ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
@@ -668,21 +674,29 @@ if (interactive()) {
               updateTabsetPanel(session, "inTabset", selected = "graphView")
               
               # Display the HTML result in a Shiny tab
-              output$graphView <- renderUI({
-                message("Inside graphView tab")
-                #updateTabsetPanel(session, "inTabset", selected = "graphView")
+              # output$graphView <- renderUI({
+              #   message("Inside graphView tab")
                 
-                output$graphLegend <- renderUI({
-                  HTML(graphLegend)
-                })
-                
-                output$graphView <- renderEdgebundle({
-                  # Display the network graph
-                  Chimera
-                })
-              })
-            #})
-          }
+                # tabsetPanel(id = 'networkViews', 
+                #       tabPanel("1st Dimension Network", 
+                            output$graphLegend1 <- renderUI({
+                                  HTML(graphLegend)
+                            })  
+                            output$graphView1 <- renderEdgebundle({
+                                  return(Chimera1)
+                            })
+                #         ),
+                #         tabPanel("2nd Dimension Network",
+                            output$graphLegend2 <- renderUI({
+                                  HTML(graphLegend)
+                            })
+                            output$graphView2 <- renderEdgebundle({
+                              return(Chimera2)
+                            })
+                #         )
+                #    )
+                #})
+            }
         })
         
         # observeEvent(input$submitButton, {
@@ -737,11 +751,10 @@ if (interactive()) {
       output$downloadButton <- downloadHandler(
         
         filename = function(){
-          paste("TRIAGE_analysis_output","zip",sep=".")
+          paste("TRIAGE_analysis_output", "zip", sep=".")
         },
         content = function(filename){
-          #outputFiles <- list.files(path = outputDir)
-          outputFiles <- list.files(path = outDir)
+          outputFiles <- list.files(path = './')
           zip(zipfile=filename, files = outputFiles)
         },
         contentType = "application/zip"
