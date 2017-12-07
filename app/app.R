@@ -30,7 +30,7 @@ isValidEmail <- function(x) {
         ignore.case=TRUE)
 }
 
-if (interactive()) {
+#if (interactive()) {
   
     ##################################################
     # Define UI for application that draws a histogram
@@ -227,6 +227,7 @@ if (interactive()) {
         # Global environmental variables
         envs <- Sys.getenv()
         env_names <- names(envs)
+        
 
         ## Set up scriptDir, inputDir, outputDir depending on whether this is used 
         # as a standalone tool or on AWS webservice
@@ -770,4 +771,4 @@ if (interactive()) {
   #####################
   # Run the application 
   shinyApp(ui = ui, server = server)
-}
+#}
