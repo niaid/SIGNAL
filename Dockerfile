@@ -6,7 +6,10 @@ USER root
 
 # Install R package dependencies for the application. 
 # The system packages required for building the R packages are installed but then removed at the end in order to reduce the container size
-RUN apk add --no-cache --virtual .build-dependencies R-dev g++ libxml2-dev && \
+RUN apk update && \
+    apk upgrade && \
+    apk add zip && \
+    apk add --no-cache --virtual .build-dependencies R-dev g++ libxml2-dev && \
     R -e "install.packages('dplyr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('leaflet', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \    
@@ -19,7 +22,6 @@ RUN apk add --no-cache --virtual .build-dependencies R-dev g++ libxml2-dev && \
     R -e "install.packages('edgebundleR', repos='https://cran.rstudio.com/')" && \ 
     R -e "install.packages('igraph', repos='https://cran.rstudio.com/')" && \ 
     apk del .build-dependencies
-
 # Make all files inside the directory 'app' available to the container
 COPY app/ /srv/shiny-server/
 RUN chown -R default /srv/shiny-server/ 
