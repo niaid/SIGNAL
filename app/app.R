@@ -16,6 +16,9 @@ library(stringi)
 library(DT)
 library(igraph)
 library(edgebundleR)
+library(shinyAce)
+library(mailR)
+library(rJava)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # global variables
@@ -38,6 +41,7 @@ isValidEmail <- function(x) {
       
       # Capture user access information
       tags$head(
+        tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
         tags$script(src="getIP.js")
       ),
       
@@ -102,7 +106,7 @@ isValidEmail <- function(x) {
             tabPanel(title = "Gene List", value = "geneList", 
                      dataTableOutput("geneList")
             ),
-            tabPanel(title = "Network Graph", value = "myNetworkGraph", 
+            tabPanel(title = "Network", value = "myNetworkGraph", 
                      h4('Please select your (1-3) pathways for network graph analysis'), hr(),
                      #textInput("mySelection", label="Your selected pathway IDs:"),
                      #uiOutput("submitGraph"),
@@ -124,6 +128,9 @@ isValidEmail <- function(x) {
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("downloadFiles"),
                      downloadButton('downloadButton', 'Download all files')
+            ),
+            tabPanel(title = "Contact us", value = "contactUS",
+                     uiOutput("contactUS")
             )
           ), 
           width = 9
@@ -761,7 +768,52 @@ isValidEmail <- function(x) {
         contentType = "application/zip"
       )
       
-      message("Download content completed")      
+      message("Download content completed")   
+      
+    })
+      
+    # Contact us by sending email to triage@niaid.nih.gov
+    # Send email using mailR package
+    # in order for this to work, set the java path for R on commandline in a terminal
+    # $sudo ln -f -s $(/usr/libexec/java_home)/jre/lib/server/libjvm.dylib /usr/local/lib
+
+    output$contactUS <- renderUI({
+      tagList(
+            textInput("userName", "Your Name:", placeholder = "your name"),
+            textInput("from", "Your Email Address:", placeholder = "your email address"),
+            textInput("subject", "Subject:", placeholder = "Subject"),
+            textAreaInput(inputId = "message", label= "Your Email Content:", width = "600px", height = "200px", resize = "vertical", placeholder = "Enter your message here"),
+            actionButton("send", " Send email")
+      )
+    })
+
+    observeEvent(input$send,{
+      
+      isolate({
+        # Send the email to TRIAGE team
+        send.mail(from = input$from,
+                  #to <- c("jian.song@nih.gov","sakatz@nih.gov"),
+                  to <- c("jian.song@nih.gov"),
+                  subject = input$subject,
+                  body = paste(paste0("This email is from: ", input$userName, " [", input$from, "]"), input$message, sep="<br/>"),
+                  smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "triage.lisb@gmail.com", passwd = "LISB@NIH", ssl = TRUE),
+                  authenticate = TRUE,
+                  html = TRUE,
+                  send = TRUE)
+        
+        # Send email to the user
+        send.mail(from = input$from,
+                  to = input$from,
+                  subject = input$subject,
+                  body = paste("Your email was sent!", input$message, sep="<br/>"),
+                  smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "triage.lisb@gmail.com", passwd = "LISB@NIH", ssl = TRUE),
+                  authenticate = TRUE,
+                  html = TRUE,
+                  send = TRUE)      })
+      #showNotification("Email sent!", type="message")
+      output$contactUS <- renderText({
+        "Your email was sent!"
+      })
     })
 
     # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
