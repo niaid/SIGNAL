@@ -783,11 +783,16 @@ isValidEmail <- function(x) {
             textInput("from", "Your Email Address:", placeholder = "your email address"),
             textInput("subject", "Subject:", placeholder = "Subject"),
             textAreaInput(inputId = "message", label= "Your Email Content:", width = "600px", height = "200px", resize = "vertical", placeholder = "Enter your message here"),
+            checkboxInput("contact_not_a_robot", "I'm not a robot*", value = FALSE),
             actionButton("send", " Send email")
       )
     })
 
     observeEvent(input$send,{
+      
+      if( is.null(input$send) || input$send==0 || !input$contact_not_a_robot){
+        return(NULL)
+      }      
       
       isolate({
         # Send the email to TRIAGE team
@@ -809,7 +814,8 @@ isValidEmail <- function(x) {
                   smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "triage.lisb@gmail.com", passwd = "LISB@NIH", ssl = TRUE),
                   authenticate = TRUE,
                   html = TRUE,
-                  send = TRUE)      })
+                  send = TRUE)      
+      })
       #showNotification("Email sent!", type="message")
       output$contactUS <- renderText({
         "Your email was sent!"
