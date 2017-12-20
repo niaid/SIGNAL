@@ -797,8 +797,8 @@ isValidEmail <- function(x) {
       isolate({
         # Send the email to TRIAGE team
         send.mail(from = input$from,
-                  #to <- c("jian.song@nih.gov","sakatz@nih.gov"),
-                  to <- c("jian.song@nih.gov"),
+                  to <- c("jian.song@nih.gov","sakatz@nih.gov"),
+                  #to <- c("jian.song@nih.gov"),
                   subject = input$subject,
                   body = paste(paste0("This email is from: ", input$userName, " [", input$from, "]"), input$message, sep="<br/>"),
                   smtp = list(host.name = "smtp.gmail.com", port = 465, user.name = "triage.lisb@gmail.com", passwd = "LISB@NIH", ssl = TRUE),
