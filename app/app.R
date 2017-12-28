@@ -167,13 +167,11 @@ isValidEmail <- function(x) {
           return(NULL)
         
         data <- read.csv(inFile$datapath)
-        
-        # display the input file dimension
-        data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
-        #return(data)
-        
+ 
         # Check to see if 'EntrezID' column is in the input file
-        if(!exists("data$EntrezID")){
+        if("EntrezID" %in% colnames(data)){
+          message("Input file has 'EntrezID' column")
+        }else{
           showModal(modalDialog(
             title=HTML("<h3><font color=#ff0000>Input file format error!</font></h3>"), 
             HTML("Your input file does not contain the required column named 'EntrezID'. <br>Please fix your input file and try again!"),
@@ -182,6 +180,9 @@ isValidEmail <- function(x) {
           Sys.sleep(10)
           session$reload()
         }   
+        
+        # display the input file dimension
+        data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
         return(data)
       })
       
