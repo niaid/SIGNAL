@@ -50,7 +50,7 @@ isValidEmail <- function(x) {
       
       # use shinyjs
       useShinyjs(), br(),
-      
+
       # Application title
       headerPanel(includeHTML("header.html")),
       
@@ -82,6 +82,8 @@ isValidEmail <- function(x) {
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           actionButton("goButton", "Analyze my data !", icon("angle-double-right"), 
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
+          actionButton("refresh", "Reset", icon("undo"),
+                       style="padding:4px; font-size:120%; color: #0086b3; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
         ),
         # Show a plot of the generated distribution
@@ -168,6 +170,18 @@ isValidEmail <- function(x) {
         
         # display the input file dimension
         data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
+        #return(data)
+        
+        # Check to see if 'EntrezID' column is in the input file
+        if(!exists("data$EntrezID")){
+          showModal(modalDialog(
+            title=HTML("<h3><font color=#ff0000>Input file format error!</font></h3>"), 
+            HTML("Your input file does not contain the required column named 'EntrezID'. <br>Please fix your input file and try again!"),
+            easyClose = TRUE
+            ))
+          Sys.sleep(10)
+          session$reload()
+        }   
         return(data)
       })
       
@@ -208,6 +222,11 @@ isValidEmail <- function(x) {
           ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
           footer = actionButton("submit_modal",label = "Submit")
         ))
+      })
+      
+      # Reset/reload the TRIAGE
+      observeEvent(input$refresh, {
+        session$reload()
       })
     
       ## This event is triggered by the actionButton inside the modalDialog
@@ -778,18 +797,21 @@ isValidEmail <- function(x) {
     # $sudo ln -f -s $(/usr/libexec/java_home)/jre/lib/server/libjvm.dylib /usr/local/lib
 
     output$contactUS <- renderUI({
+      
       tagList(
             textInput("userName", "Your Name:", placeholder = "your name"),
             textInput("from", "Your Email Address:", placeholder = "your email address"),
             textInput("subject", "Subject:", placeholder = "Subject"),
             textAreaInput(inputId = "message", label= "Your Email Content:", width = "600px", height = "200px", resize = "vertical", placeholder = "Enter your message here"),
             checkboxInput("contact_not_a_robot", "I'm not a robot*", value = FALSE),
-            actionButton("send", " Send email")
+            actionButton("send", " Send email", icon("send-o"), style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4")
       )
     })
 
+    # Send 
     observeEvent(input$send,{
       
+      # Send email if the 'Send email!' button is clicked and the 'I am not a robot' checked
       if( is.null(input$send) || input$send==0 || !input$contact_not_a_robot){
         return(NULL)
       }      
@@ -816,7 +838,8 @@ isValidEmail <- function(x) {
                   html = TRUE,
                   send = TRUE)      
       })
-      #showNotification("Email sent!", type="message")
+      
+      # Replace the contact me form page with a message after sending the email
       output$contactUS <- renderText({
         "Your email was sent!"
       })
