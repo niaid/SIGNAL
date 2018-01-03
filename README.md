@@ -60,7 +60,7 @@ A sample input file (`TRIAGEinput_HuTNF_CSAfdr_5percCO.csv`) can be used to test
 TRIAGE/app/inputOutputs/TRIAGEinputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO.csv
 ```
 
-![TRIAGE Screenshot](https://github.niaid.nih.gov/Signaling-Systems-Unit/TRIAGE/app/www/images/TRIAGE_screen3.tiff)
+![TRIAGE Screenshot](https://github.niaid.nih.gov/Signaling-Systems-Unit/TRIAGE/tree/master/app/www/images/TRIAGE_screen3.tiff)
 
 ## Authors
 
