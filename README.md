@@ -1,16 +1,16 @@
 # TRIAGE
-## (_T_hroughput _R_anking by _I_terative _A_nalysis of _G_enomic _E_nrichment)
+## __T__hroughput __R__anking by __I__terative __A__nalysis of __G__enomic __E__nrichment)
 
 TRIAGE is designed to analyze the user input for enrichment and predicted interactions using locally saved repositories from publicly available databases. The expected user input is a genome-scale list of gene candidates (~20,000 observations) with an integer based variable to break down the gene candidates into groups of high, medium, and low confidence according to a cutoff set by the user. The expected output is a subset of gene candidates suggested for further analysis (<1,000), enriched pathways of biological processes represented by the new data set, and HTML file of interactive graph for further analysis of novel and canonical candidates. Unless otherwise noted, all input and output files are in CSV format.
 
 
 ## Getting Started
 
-TRIAG is available either at https://triage.niaidawsqa.net (developmental version) or/and at https://triage.niaid.nih.gov/ (production version). TRIAGE can also be downloaded and run as a standalone application. The instructions below will get you a copy of TRIAGE up and running on your local machine. 
+TRIAG is available either as the [development version](https://triage.niaidawsqa.net) or/and [production version](https://triage.niaid.nih.gov/). TRIAGE can also be downloaded and run as a standalone application. The instructions below will get you a copy of TRIAGE up and running on your local machine. 
 
 ### Prerequisites
 
-To run TRIAGE on your local machine, R and Rstudio should be installed and running on your machine. Instructions are available [for R installation]: https://cran.r-project.org/bin/ and [for RStudio installation]: https://www.rstudio.com/products/rstudio/download/. In addition, several R packages are also required for TRIAGE to work on your local machine. 
+To run TRIAGE on your local machine, R and Rstudio should be installed and running on your machine. Instructions are available for [R installation](https://cran.r-project.org/bin/) and for [RStudio installation](https://www.rstudio.com/products/rstudio/download/). In addition, several R packages are also required for TRIAGE to work on your local machine. 
 
 ```
 # To install required R packages from R commandline
