@@ -1,5 +1,6 @@
-# TRIAGE 
-## T*hroughput* R*anking by* I*terative* A*nalysis of* G*enomic* E*nrichment*)
+# TRIAGE
+(**T**hroughput **R**anking by **I**terative **A**nalysis of **G**enomic **E**nrichment)
+
 
 TRIAGE is designed to analyze the user input for enrichment and predicted interactions using locally saved repositories from publicly available databases. The expected user input is a genome-scale list of gene candidates (~20,000 observations) with an integer based variable to break down the gene candidates into groups of high, medium, and low confidence according to a cutoff set by the user. The expected output is a subset of gene candidates suggested for further analysis (<1,000), enriched pathways of biological processes represented by the new data set, and HTML file of interactive graph for further analysis of novel and canonical candidates. Unless otherwise noted, all input and output files are in CSV format.
 
@@ -32,7 +33,7 @@ install.packages('mailR')
 
 ### Installing
 
-Before installing TRIAGE, you need to install *git* by following [these instructions]: https://gist.github.com/derhuerst/1b15ff4652a867391f03. After installing *git*, you can install TRIAGE on your local machine from command line. You can install it in your home directory or anywhere under your home directory:
+Before installing TRIAGE, you need to install *git* by following [these instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03). After installing *git*, you can install TRIAGE on your local machine from command line. You can install it in your home directory or anywhere under your home directory:
 
 ```
 # For developmental version
