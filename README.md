@@ -64,7 +64,7 @@ TRIAGE/app/inputOutputs/TRIAGEinputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO.csv
 **Sam Katz,**
 **Jian Song,**
 **Iain Fraser**
-[Contact us](mailto: triage-team@nih.gov)
+Contact us at triage-team@nih.gov
 
 
 ## Acknowledgments
