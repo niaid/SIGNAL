@@ -50,7 +50,7 @@ After this, you should see a TRIAGE directory which contains all required files 
 
 To run TRIAGE on your local machine, start RStudio first, open 'app.R' file in RStudio from your TRIAGE directory, and then click 'Run App' button to start TRIAGE. You should see TRIAGE running in your default web browser.
 
-![TRIAGE Screenshot](./app/www/images/TRIAGE_screen1.png)
+![TRIAGE Screenshot1](./app/www/images/TRIAGE_screen1.png)
 
 ### Running Tests
 
@@ -61,7 +61,7 @@ A sample input file (`TRIAGEinput_HuTNF_CSAfdr_5percCO.csv`) can be used to test
 TRIAGE/app/inputOutputs/TRIAGEinputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO.csv
 ```
 
-![TRIAGE Screenshot](./app/www/images/TRIAGE_screen2.png)
+![TRIAGE Screenshot2](./app/www/images/TRIAGE_screen2.png)
 
 ## Authors
 
