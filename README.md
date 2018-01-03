@@ -60,6 +60,8 @@ A sample input file (`TRIAGEinput_HuTNF_CSAfdr_5percCO.csv`) can be used to test
 TRIAGE/app/inputOutputs/TRIAGEinputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO.csv
 ```
 
+![TRIAGE Screenshot](./www/images/TRIAGE_screen3.tiff)
+
 ## Authors
 
 **Sam Katz,**
