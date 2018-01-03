@@ -70,7 +70,7 @@ Contact us at triage-team@nih.gov
 
 ## Acknowledgments
 
-* We appreciate all the help we got from of the OEB Platform Team, NIH\NIAID\OCICB.
-* We also want to thank LISB colleagues at NIH for their supports.
+* We appreciate all the help we got from the OEB Platform Team, NIH\NIAID\OCICB.
+* We also want to thank [LSB colleagues](https://www.niaid.nih.gov/research/lab-systems-biology) at NIH for their supports.
 
 
