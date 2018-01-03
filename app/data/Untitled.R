@@ -17,6 +17,26 @@ server <- function(input, output, session) {
                                                     ordering=FALSE)
   )
   observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
+  observeEvent(input$datatable_rows_selected, {
     row <- input$datatable_rows_selected 
     output$text <- renderText({paste("X =", X[row, "x"], "Y =", X[row, "y"])})
     updateTabsetPanel(session, "mainPanel", selected = "tab2")
