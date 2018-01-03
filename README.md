@@ -8,7 +8,7 @@ TRIAGE is designed to analyze the user input for enrichment and predicted intera
 
 ## Getting Started
 
-TRIAG is available either as the [development version](https://triage.niaidawsqa.net) or/and [production version](https://triage.niaid.nih.gov/). TRIAGE can also be downloaded and run as a standalone application. The instructions below will get you a copy of TRIAGE up and running on your local machine. 
+TRIAGE is available on the Internet through our [development site](https://triage.niaidawsqa.net) or/and [production site](https://triage.niaid.nih.gov/). TRIAGE can also be downloaded and run as a standalone application. The instructions below will get you a copy of TRIAGE up and running on your local machine. 
 
 ### Prerequisites
 
@@ -34,7 +34,7 @@ install.packages('mailR')
 
 ### Installing
 
-Before installing TRIAGE, you need to install *git* if not installed already by following [these instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03). After installing *git*, you can install TRIAGE on your local machine in your home directory or anywhere under your home directory:
+Before installing TRIAGE, you need to install *git*, if not installed already, by following [these instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03). After installing *git*, you can install TRIAGE on your local machine in your home directory or anywhere under your home directory:
 
 ```
 # For developmental version
@@ -43,16 +43,17 @@ $git clone https://github.niaid.nih.gov/Signaling-Systems-Unit/TRIAGE.git
 # Or for production version
 TO BE ADDED HERE!!!
 ```
+
 After this, you should see a TRIAGE directory which contains all required files and data to run TRIAGE on your local machine.
 
 ## Running TRIAGE
 
-To run TRIAGE on your local machine, start RStudio, open 'app.R' file in your TRIAGE directory, and then click 'Run App' button. You should see TRIAGE running in your default web browser.
+To run TRIAGE on your local machine, start RStudio first, open 'app.R' file in RStudio from your TRIAGE directory, and then click 'Run App' button to start TRIAGE. You should see TRIAGE running in your default web browser.
 
 
-## Running Tests
+### Running Tests
 
-A sample input file (`TRIAGEinput_HuTNF_CSAfdr_5percCO.csv`) can be used to test TRIAGE. The sample is a part of TRIAGE package and can be found at:
+A sample input file (`TRIAGEinput_HuTNF_CSAfdr_5percCO.csv`) can be used to test TRIAGE. The sample file is a part of TRIAGE package and can be found in the TRIAGE directory:
 
 ```
 # Sample input file
