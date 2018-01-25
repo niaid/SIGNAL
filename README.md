@@ -16,20 +16,29 @@ To run TRIAGE on your local machine, R and Rstudio should be installed and runni
 
 ```
 # To install required R packages from R commandline
-install.packages('dplyr')
-install.packages('leaflet')
-install.packages('DT')   
-install.packages('shinyjs')
-install.packages('shinyBS')
-install.packages('readr')
-install.packages('stringi')
-install.packages('reshape2')
-install.packages('data.table')
-install.packages('edgebundleR')
-install.packages('igraph')
-install.packages('shinyAce')
-install.packages('rJava')
-install.packages('mailR')
+library(shiny)
+library(shinyjs)
+library(shinyBS)
+library(readr)
+library(dplyr)
+library(stringi)
+library(DT)
+library(igraph)
+library(edgebundleR)
+library(shinyAce)
+library(mailR)
+library(rJava)
+library(networkD3)
+library(visNetwork)
+library(org.Hs.eg.db)
+library(org.Mm.eg.db)
+library(reshape2)
+library(ggplot2)
+library(tidyr)
+library(gridExtra)
+library(crosstalk)
+library(htmltools)
+Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 ```
 
 ### Installing
@@ -62,6 +71,8 @@ TRIAGE/app/inputOutputs/TRIAGEinputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO.csv
 ```
 
 ![TRIAGE Screenshot1](./app/www/images/TRIAGE_screen2.png)
+![TRIAGE Screenshot1](./app/www/images/TRIAGE_screen3.png)
+![TRIAGE Screenshot1](./app/www/images/TRIAGE_screen4.png)
 
 ## Authors
 
