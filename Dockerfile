@@ -25,6 +25,14 @@ RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-
     R -e "install.packages('shinyAce', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('rJava', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('mailR', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('networkD3', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('visNetwork', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('ggplot2', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('tidyr', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('gridExtra', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('crosstalk', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('htmltools', dep=T, repos='https://cran.rstudio.com/')" && \
+    R -e 'source("http://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE);'  && \
     apk del .build-dependencies
 
 # Make all files inside the directory 'app' available to the container

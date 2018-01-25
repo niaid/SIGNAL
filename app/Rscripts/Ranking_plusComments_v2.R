@@ -54,20 +54,17 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
   #Get TLR Canonical Genes
   #TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
-  path1_name <- sigPathways$Pathway[as.numeric(selectedRows[1])]
-  message(path1_name)
+  path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]
   TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
   TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
   
   #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
-  path2_name <- sigPathways$Pathway[as.numeric(selectedRows[2])]
-  message(path2_name)
+  path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]
   PROTpathway.genes <- filter(KEGGhuman, PathwayName == path2_name)
   PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
 
   #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
-  path3_name <- sigPathways$Pathway[as.numeric(selectedRows[3])]
-  message(path3_name)
+  path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]
   SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path3_name)
   SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
   
@@ -87,13 +84,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   IAMhits.matrix <- matrix(IAMhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
   
-  
   #Get filtered IAM file + Pathway genes                          # To do the complete networks, cerating a matrix of hit genes + plus genes that are in the pathways of interest
-  IAM <- filter(HuTNFanno, (Zscore < InflectionPoint & KEGGdb == "Absent" & CSAdes == "HitbyCSA" & get(IAM_final_iteration, envir = as.environment(HuTNFanno)) != 1) | 
-                  get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1 | 
-                  EntrezID %in% TLRpathway.genes.matrix 
-                | EntrezID %in% PROTpathway.genes.matrix        # I commented out the protein pathway here and below but it can be commented back in.            
-                | EntrezID %in% SPLICEpathway.genes.matrix)
+  # IAM <- filter(HuTNFanno, (Zscore < InflectionPoint & KEGGdb == "Absent" & CSAdes == "HitbyCSA" & get(IAM_final_iteration, envir = as.environment(HuTNFanno)) != 1) | 
+  #                 get(IAM_final_iteration, envir = as.environment(HuTNFanno)) == 1 | 
+  #                 EntrezID %in% TLRpathway.genes.matrix 
+  #               | EntrezID %in% PROTpathway.genes.matrix        # I commented out the protein pathway here and below but it can be commented back in.            
+  #               | EntrezID %in% SPLICEpathway.genes.matrix)
   
   #Get matrices for Pathways (Hits and non hits seperately)      # Now creating seperate matrices for each pathway containing only the genes of that pathway that are ALSO hits in the screen
   #Hits
@@ -132,7 +128,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   show.dendogram <- TRUE
   
   
-  siRNA.Score.Original <- IAM                                   #The gene input list, in this case all the genes (TRIAGE hits + pathways) that were put together earlier
+  siRNA.Score.Original <- IAMhits                                  #The gene input list, in this case all the genes (TRIAGE hits + pathways) that were put together earlier
   #############################################################
   #                   Load Library
   #############################################################
@@ -272,14 +268,14 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   ###############################################################################
   #                 Add back GeneSymbol and Hit Designation to output
   ###############################################################################
-  GraphNodesHit <- merge(GraphNodesHit, IAM[, c("EntrezID", "GeneSymbol", "ZSdes", IAM_final_iteration)], #Here my input file had a column "ZSdes" which indicated wether the gene made the zscore cutoff independently of TRIAGE, you can skip that part
+  GraphNodesHit <- merge(GraphNodesHit, IAMhits[, c("EntrezID", "GeneSymbol", IAM_final_iteration)], #Here my input file had a column "ZSdes" which indicated wether the gene made the zscore cutoff independently of TRIAGE, you can skip that part
                          by.x = "EntrezID", by.y = "EntrezID", all.x = T)
   
   #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
   
   EdgeInfo <- GraphEdgesHitNumber
   NodeInfo <- GraphNodesHit
-  
+
   
   #######################################                                            # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
   #Get Matrix of genes for each pathway in KEGG
@@ -293,6 +289,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #Add GeneSymbols to Edge dataframe                                              # Using the NodeInfo File to get the genesymbols for the EdgeInfo file. Done twice, one 
   Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
+
   names(Edge.source)[names(Edge.source)=="GeneSymbol"] <- "source.ID"
   
   Edge.target <- merge(Edge.source, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
@@ -309,7 +306,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
 
   #Merge Zscore, Pathway, and Hit_IAM to NodeInfo
   Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
-                            siRNA.Score.Original[, c("GeneSymbol", "EntrezID", "Zscore", "Pathway")], 
+                            siRNA.Score.Original[, c("GeneSymbol", "EntrezID", "Pathway")], 
                             by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
   
   
@@ -330,7 +327,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   #Merge with scores 
   Scores_nodes_and_edges <- merge(Scores_and_nodes, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
-  
+
   #Create column with counts for interacting genes                                               #Here a counter is added, this counts for each gene how many genes (within the TRIAGE set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
   for (i in 1:length(Scores_nodes_and_edges$Ntwrk.all)) {
     Scores_nodes_and_edges$Allnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.all[i]) == T, 0, 
@@ -508,8 +505,6 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #                 Hirachical Edge Bundling
   ###############################################################################
   
-  
-  
   #Set up dataframe for groupings (Loc)                                          #Assigning a number to each group (this will enable the grouping later)
   NodeInfo$Loc <- 4
   NodeInfo$Loc[NodeInfo$EntrezID %in% PROTnonhits.matrix] <-7
@@ -524,8 +519,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   
   #Move ID column first
-  NodeInfo = NodeInfo %>% select(ID, GeneMappingID, key, Loc)
-  
+  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc')]
   
   #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
   rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
@@ -633,13 +627,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   rel.V2.matrix <- as.matrix((unique(rel$V2)))
   rel.genes.matrix <- as.matrix(unique(rbind(rel.V1.matrix, rel.V2.matrix)))
   
-  NodeInfo1 <- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
-
+  NodeInfo2 <<- NodeInfo
+  NodeInfo1 <<- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
+  
   #Generate the graph
   g <- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
-  g2 <- graph.data.frame(rel2, directed=T, vertices=NodeInfo)
-  
-  
+  g2 <- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
   
   clr <- as.factor(V(g)$Loc)
   clr2 <- as.factor(V(g2)$Loc)
@@ -668,6 +661,24 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   
   Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
   Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)       
+  
+  # Create 1st dimension networkD3 object
+  g11 = g
+  g11_wc <- cluster_walktrap(g11)
+  g11_members <- membership(g11_wc)
+  
+  # Convert to object suitable for networkD3
+  g11_d3 <<- igraph_to_networkD3(g11, group = g11_members)
+  g11_vis <<- toVisNetworkData(g11)
+    
+  # Create 2nd dimension networkD3 object
+  g22 = g2
+  g22_wc <- cluster_walktrap(g22)
+  g22_members <- membership(g22_wc)
+  
+  # Convert to object suitable for networkD3
+  g22_d3 <<- igraph_to_networkD3(g22, group = g22_members)
+  g22_vis <<- toVisNetworkData(g22)
   
   # Add a legend box on the html page
   if(length(selectedRows) == 3){
@@ -714,8 +725,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
 
   #Places (2) where plot will be saved to
   #setwd(TRIAGE.output)    
-  saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-  saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  #saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
   
   if(grepl('shiny', outputDir)){
     saveEdgebundle(Chimera1,file = "/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
@@ -725,33 +736,33 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     saveEdgebundle(Chimera2,file = "/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
   }
 
-  # Add figure legend only if created when 1-3 pathways were selected
-  if(exists("graphLegend")){ 
-    
-    # Put a legend in the HTML file (inputOutput directory)
-    #inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
-    inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-    inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
-    outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML)
-    writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-    writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
-    
-    # Put a legend in the HTML file (localhost)
-    if(grepl('shiny', outputDir)){
-      inHTML2  <- readLines("/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-    }else{
-      inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
-    }
-    
-    outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML2)
-    
-    if(grepl('shiny', outputDir)){
-      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-      writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
-    }else{
-      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-      writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
-    }
-  }
+  # # Add figure legend only if created when 1-3 pathways were selected
+  # if(exists("graphLegend")){
+  # 
+  #   # Put a legend in the HTML file (inputOutput directory)
+  #   #inHTML  <- readLines("Chimera_STRINGHi_MoTNF.hits.html")
+  #   inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #   inHTML  <- readLines("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  #   outHTML  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML)
+  #   writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #   writeLines(outHTML, con="Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  # 
+  #   # Put a legend in the HTML file (localhost)
+  #   if(grepl('shiny', outputDir)){
+  #     inHTML2  <- readLines("/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #   }else{
+  #     inHTML2  <- readLines("/Library/WebServer/Documents/Chimera_STRINGHi_MoTNF.hits.html")
+  #   }
+  # 
+  #   outHTML2  <- gsub(pattern = '<div id="htmlwidget_container">', replace = graphLegend, x = inHTML2)
+  # 
+  #   if(grepl('shiny', outputDir)){
+  #     writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #     writeLines(outHTML2, con="/srv/shiny-server/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  #   }else{
+  #     writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
+  #     writeLines(outHTML2, con="/Library/WebServer/Documents/Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
+  #   }
+  # }
   return(TRUE)
 }
