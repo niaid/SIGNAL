@@ -1,0 +1,5 @@
+name                 = "triage"
+org                  = "lsb-triage"
+environment          = "qa"
+allowed_account_ids  = "117782747679"
+region               = "us-east-1"

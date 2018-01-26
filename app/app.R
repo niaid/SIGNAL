@@ -172,10 +172,10 @@ isValidEmail <- function(x) {
             ),
             tabPanel(title = "Help", value = "helpUs",
               tabsetPanel(id = 'helpTab',
-                  tabPanel(title = "Documention", value = "Readme",
-                      uiOutput("documentation")),                          
                   tabPanel(title = "Contact us", value = "contactUS",
-                      uiOutput("contactUS"))
+                      uiOutput("contactUS")),
+                  tabPanel(title = "Documention", value = "Readme",
+                      uiOutput("documentation"))                          
               )
             )
           ),
