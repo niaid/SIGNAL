@@ -298,22 +298,23 @@ options(shiny.maxRequestSize = 3*1024^2)
         if(is.null(input$file1)){
           showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No input file selected!</font><h3>")))
         }
-        else if(is.null(input$cutoffTypes)){
-          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br>
-                                                                <i>or</i><br> no cuoff value entered!</font><h3>")))
-        }
+        # else if(is.null(input$cutoffTypes)){
+        #   showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br>
+        #                                                         <i>or</i><br> no cuoff value entered!</font><h3>")))
+        # }
         else{
-        ## Open the modal when button clicked
-        values$modal_closed <- FALSE
-        showModal(modalDialog(
-          title = "Info Needed to Access Results",
-          size = "s",
-          textInput("userName", "User Name", placeholder = "your name"),
-          textInput("userEmail", "User Email Address", placeholder = "your email address"),
-
-          ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
-          footer = actionButton("submit_modal",label = "Submit")
-        ))
+          ## Open the modal when button clicked
+          values$modal_closed <- FALSE
+          
+          showModal(modalDialog(
+            title = "Info Needed to Access Results",
+            size = "s",
+            textInput("userName", "User Name", placeholder = "your name"),
+            textInput("userEmail", "User Email Address", placeholder = "your email address"),
+  
+            ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
+            footer = actionButton("submit_modal",label = "Submit")
+          ))
         }
       })
 
