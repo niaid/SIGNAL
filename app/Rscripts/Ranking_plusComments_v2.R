@@ -7,10 +7,10 @@
 # modified by Jian Song
 ###################################################
 
-require('edgebundleR')                        #Load Libraries
-library('igraph')
-library('data.table')
-library('dplyr')
+# require('edgebundleR')                        #Load Libraries
+# library('igraph')
+# library('data.table')
+# library('dplyr')
 
 #selectedRows <- c(1,2,3)  
 #Generate_NetworkGraph(selectedRows)
@@ -178,25 +178,25 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     
   } else if(tolower(organism) == "mouse")
   {
-    cat('1')
-    if("mSTRINGhi" %in% networkType)
-    {
-      cat('4')
-      #load("~/TRIAGE/app/Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
-      load(paste0(scriptDir, "Resources/Network/igraph.string.mo.hiConf.Rdata"))
-      
-      if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
-      else {G <- igraph.string.mo.hiConf}
-    }
-    if("mSTRINGmed" %in% networkType)
-    {
-      cat('2')
-      #load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
-      load(paste0(dataDir, "Networks/igraph.string.mo.medConf.Rdata"))
-      
-      if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
-      else {G <- igraph.string.med.medConf}
-    }
+    # cat('1')
+    # if("mSTRINGhi" %in% networkType)
+    # {
+    #   cat('4')
+    #   #load("~/TRIAGE/app/Rscripts/Resources/Network/igraph.string.mo.hiConf.Rdata")
+    #   load(paste0(scriptDir, "Resources/Network/igraph.string.mo.hiConf.Rdata"))
+    #   
+    #   if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
+    #   else {G <- igraph.string.mo.hiConf}
+    # }
+    # if("mSTRINGmed" %in% networkType)
+    # {
+    #   cat('2')
+    #   #load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
+    #   load(paste0(dataDir, "Networks/igraph.string.mo.medConf.Rdata"))
+    #   
+    #   if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
+    #   else {G <- igraph.string.med.medConf}
+    # }
     if("mSTRINGppi.hi" %in% networkType)
     {
       cat('4')
@@ -206,7 +206,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
       if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
       else {G <- igraph.stringPPI.mo.hiConf}
     }
-    if("mSTRINGppi.med" %in% networkType)
+    else if("mSTRINGppi.med" %in% networkType)
     {
       cat('2')
       #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")

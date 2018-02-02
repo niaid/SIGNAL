@@ -13,13 +13,12 @@ RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-
     R CMD javareconf && \
     R -e "install.packages('dplyr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('leaflet', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \   
     R -e "install.packages('shinyjs', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('shinyBS', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('readr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('stringi', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('reshape2', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('data.table', repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('edgebundleR', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('igraph', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('shinyAce', repos='https://cran.rstudio.com/')" && \

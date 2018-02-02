@@ -54,21 +54,21 @@ if(tolower(organism) == "human")
 
 } else if(tolower(organism) == "mouse")
 {
-  cat('1')
-  if(grepl("mSTRING.hi", networkType))
-  {
-    cat('4')
-    load("~/TRIAGE/app/data/Networks/igraph.string.mo.hiConf.Rdata")
-    if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
-    else {G <- igraph.string.mo.hiConf}
-  }
-  if(grep("mSTRING.med", networkType))
-  {
-    cat('2')
-    load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
-    if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
-    else {G <- igraph.string.med.medConf}
-  }
+  # cat('1')
+  # if(grepl("mSTRING.hi", networkType))
+  # {
+  #   cat('4')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.hiConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
+  #   else {G <- igraph.string.mo.hiConf}
+  # }
+  # else if(grep("mSTRING.med", networkType))
+  # {
+  #   cat('2')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
+  #   else {G <- igraph.string.med.medConf}
+  # }
   if(grepl("mSTRINGppi.hi", networkType))
   {
     cat('4')
@@ -76,7 +76,7 @@ if(tolower(organism) == "human")
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
     else {G <- igraph.stringPPI.mo.hiConf}
   }
-  if(grepl("mSTRINGppi.med", networkType))
+  else if(grepl("mSTRINGppi.med", networkType))
   {
     cat('2')
     load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")

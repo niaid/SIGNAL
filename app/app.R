@@ -14,6 +14,7 @@ library(readr)
 library(dplyr)
 library(stringi)
 library(DT)
+library(data.table)
 library(igraph)
 library(edgebundleR)
 library(shinyAce)
@@ -42,6 +43,9 @@ isValidEmail <- function(x) {
   grepl("\\<[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\>", as.character(x),
         ignore.case=TRUE)
 }
+
+# Set the maximum input file size to 3Mb
+options(shiny.maxRequestSize = 3*1024^2)
 
 #if (interactive()) {
 
@@ -75,14 +79,16 @@ isValidEmail <- function(x) {
           ),
           selectInput(inputId = "pathway",
                       label = "Select a pathway to enrich:",
-                      choices = c("KEGG", "REACTOME")
+                      choices = c("KEGG")
           ),
           selectInput(inputId = "network",
                       label = "Select a PPI database to use:",
                       choices = c("STRING high conf", "STRING medium conf")
           ),
           fileInput(inputId= "file1",
-                    label = 'Choose an inputfile to upload'
+                    label = 'Choose an input file to upload',
+                    # Restrict input file types to .txt and .csv files
+                    accept=c("txt/csv", "text/comma-separated-values,text/plain", ".csv")
           ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
@@ -100,14 +106,14 @@ isValidEmail <- function(x) {
         mainPanel(
           tabsetPanel(id = "inTabset",
             tabPanel(title = "Input", value = "contents",
-                     textOutput("dataSummary"),
-                     dataTableOutput("contents"),
-                     textOutput("organism"),
-                     textOutput("pathway"),
-                     textOutput("network"),
-                     textOutput("cutoff_type"),
-                     textOutput("cutoff_valueH"),
-                     textOutput("cutoff_valueM")
+                     htmlOutput("inputErrors"),
+                     dataTableOutput("contents")
+                     # textOutput("organism"),
+                     # textOutput("pathway"),
+                     # textOutput("network"),
+                     # textOutput("cutoff_type"),
+                     # textOutput("cutoff_valueH"),
+                     # textOutput("cutoff_valueM")
             ),
             # tabPanel(title = "Status", value = "status",
             #          tags$pre(id = "status")
@@ -174,8 +180,10 @@ isValidEmail <- function(x) {
               tabsetPanel(id = 'helpTab',
                   tabPanel(title = "Contact us", value = "contactUS",
                       uiOutput("contactUS")),
-                  tabPanel(title = "Documention", value = "Readme",
-                      uiOutput("documentation"))                          
+                  tabPanel(title = "Documention", value = "readMe",
+                      uiOutput("documentation")),        
+                  tabPanel(title = "Updates", value = "changeLog",
+                      uiOutput("changeLog"))                          
               )
             )
           ),
@@ -190,7 +198,7 @@ isValidEmail <- function(x) {
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-
+      
       # Read in the input fie
       output$contents <- renderDataTable({
         inFile <- input$file1
@@ -259,18 +267,18 @@ isValidEmail <- function(x) {
             data$GeneSymbol[i] <- data$EntrezID[i]
           }
         }
+        
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
         
         # display the input file dimension
-        data <- datatable(data, rownames = FALSE, options = list(paging=TRUE))
-        return(data)
+        datatable(data, rownames = FALSE, options = list(paging=TRUE))
       })
 
       output$cutoffTypes <- renderUI({
         inFile2 <- input$file1
         if (is.null(inFile2))
-          return()
+          return(NULL)
 
         data2 <- read.csv(inFile2$datapath)
         pulldown_types <- colnames(data2)
@@ -278,21 +286,23 @@ isValidEmail <- function(x) {
         selectInput("cutoff_type", "Cutoff Types", pulldown_types)
       })
 
-      # parameters
-      # output$organism <- eventReactive(input$goButton, paste("Organism:", input$organism))
-      # output$pathway  <- eventReactive(input$goButton, paste("Pathway:", input$pathway))
-      # output$network  <- eventReactive(input$goButton, paste("Network:", input$network))
-      # output$cutoff_type <- eventReactive(input$goButton, paste("Cutoff Type:", input$cutoff_type))
-      # output$cutoff_valueH <- eventReactive(input$goButton, paste("High-conf Cutoff Value:", input$cutoff_valueH))
-      # output$cutoff_valueM <- eventReactive(input$goButton, paste("Med-conf Cutoff Value:", input$cutoff_valueM))
-
       # These user information (userName and userEmail) will collected after the modal is closed/submitted
       values = reactiveValues(userInfo = "",   ## This is the text that will be displayed
                               modal_closed=F)  ## This prevents the values$userInfo output from updating until the modal is closed/submitted
-
-      # Perfrom enrichment
+      
+      ## Start perfroming enrichment
       observeEvent(input$goButton, {
-
+        
+        ## Check if input file and relevant paremater selected
+        ## if not, show an error message
+        if(is.null(input$file1)){
+          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No input file selected!</font><h3>")))
+        }
+        # else if(is.null(input$cutoffTypes)){
+        #   showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br> 
+        #                                                         <i>or</i><br> no cuoff value entered!</font><h3>")))
+        # }
+        else{
         ## Open the modal when button clicked
         values$modal_closed <- FALSE
         showModal(modalDialog(
@@ -304,6 +314,7 @@ isValidEmail <- function(x) {
           ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
           footer = actionButton("submit_modal",label = "Submit")
         ))
+        }
       })
 
       # Reset/reload the TRIAGE
@@ -323,7 +334,8 @@ isValidEmail <- function(x) {
           removeModal()
         }
         else{
-          reset("userEmail")
+          #reset("userEmail")
+          session$reload()
         }
       
         ## Upon job submission, switch to 'status' tab
@@ -415,22 +427,22 @@ isValidEmail <- function(x) {
         use.only.commnected.components <- c('Yes')
 
         # Generate logfiles
-        # user.log - with user input information
-        logDir <- getwd()
-        message(logDir, "***")
-        userLoginInfo <- c(input$userName, input$userEmail)
-        write.table(userLoginInfo, file = paste0(logDir, '/user_login.log'), append = TRUE)
+        # user_login.log - with user input information
+        # logDir <- getwd()
+        # message(logDir, "***")
+        # userLoginInfo <- c(input$userName, input$userEmail)
+        # write.table(userLoginInfo, file = paste0(logDir, '/user_login.log'), append = TRUE)
 
-        # access.log
+        # user_access.log
         # Capture user access information
-        IP <- reactive({ input$getIP })
-        observe({
-          cat(capture.output(str(IP()), split=TRUE))
-          userAccessInfo <- capture.output(str(IP()), split=TRUE)
-          write.table(userAccessInfo, file = paste0(logDir, '/user_access.log'), append = TRUE, quote = TRUE, sep = " ",
-                      eol = "\n", na = "NA", dec = ".", row.names = TRUE,
-                      col.names = TRUE, qmethod = c("escape", "double"))
-        })
+        # IP <- reactive({ input$getIP })
+        # observe({
+        #   cat(capture.output(str(IP()), split=TRUE))
+        #   userAccessInfo <- capture.output(str(IP()), split=TRUE)
+        #   write.table(userAccessInfo, file = paste0(logDir, '/user_access.log'), append = TRUE, quote = TRUE, sep = " ",
+        #               eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+        #               col.names = TRUE, qmethod = c("escape", "double"))
+        # })
 
         # Create uesr-specific directory
         userDir <- input$userEmail
@@ -996,6 +1008,12 @@ isValidEmail <- function(x) {
               # Create a copy of network nodes and links for visNetwork
               visNodes11 <<- g11_nodes
               visLinks11 <<- g11_links
+
+              # Save to a html file
+              forceNetwork(Links = g11_links, Nodes = g11_nodes,
+                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE) %>%
+                saveNetwork(file = 'Chimera_STRINGHi_against_selectedPathways_1st.D3.html')
               
               # Create force directed network plot
               forceNetwork(Links = g11_links, Nodes = g11_nodes,
@@ -1004,7 +1022,7 @@ isValidEmail <- function(x) {
 
               # Add a search box for D3 network
             })
-            
+                        
             ## Display in D3 (2nd dimension)
             output$networkView2D3 <- renderForceNetwork({
               # build the two data frames - 'links' and 'nodes'
@@ -1062,12 +1080,21 @@ isValidEmail <- function(x) {
               # Create a copy of network nodes and links for visNetwork
               visNodes22 <<- g22_nodes
               visLinks22 <<- g22_links
+
+              # Save to a html file
+              forceNetwork(Links = g22_links, Nodes = g22_nodes,
+                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE) %>%                            
+                saveNetwork(file = 'Chimera_STRINGHi_against_selectedPathways_2nd.D3.html')
               
               # Create force directed network plot
               forceNetwork(Links = g22_links, Nodes = g22_nodes,
                            Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
                            Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE)
+              
+              # Add a search box for D3 network
             })
+            
             
             ################
             ## visNetwork ##
@@ -1178,6 +1205,16 @@ isValidEmail <- function(x) {
       })
     })
 
+    ## User documentation
+    output$documentation <- renderUI({
+      HTML("User documentation here")
+    })    
+    
+    ## Change log
+    output$changeLog <- renderUI({
+      HTML("Change Log - version and update history")
+    })
+    
     # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
     session$allowReconnect(TRUE)
   }
