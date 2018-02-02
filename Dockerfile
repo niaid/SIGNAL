@@ -19,6 +19,7 @@ RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-
     R -e "install.packages('stringi', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('reshape2', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('data.table', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('edgebundleR', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('igraph', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('shinyAce', repos='https://cran.rstudio.com/')" && \
