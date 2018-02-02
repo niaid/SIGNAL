@@ -298,10 +298,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         if(is.null(input$file1)){
           showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No input file selected!</font><h3>")))
         }
-        # else if(is.null(input$cutoffTypes)){
-        #   showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br> 
-        #                                                         <i>or</i><br> no cuoff value entered!</font><h3>")))
-        # }
+        else if(is.null(input$cutoffTypes)){
+          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br>
+                                                                <i>or</i><br> no cuoff value entered!</font><h3>")))
+        }
         else{
         ## Open the modal when button clicked
         values$modal_closed <- FALSE
