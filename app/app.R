@@ -145,11 +145,11 @@ options(shiny.maxRequestSize = 3*1024^2)
 
                 tabsetPanel(id = 'igraphViews',
                       ## Display in igrap
-                      tabPanel(title="1st Dimension Network in Igraph", value="graphView1",
+                      tabPanel(title="1st Dimension Network", value="graphView1",
                                htmlOutput("graphLegend1"),
                                htmlOutput("graphView1i", width = "100%", height = "700px")
                       ),
-                      tabPanel(title="2nd Dimension Network in Igraph", value="graphView2",
+                      tabPanel(title="2nd Dimension Network", value="graphView2",
                                htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
                       )
@@ -158,10 +158,10 @@ options(shiny.maxRequestSize = 3*1024^2)
             tabPanel(title = "NetworkD3", value = "networkViews",
                 tabsetPanel(id = 'networkD3Views',
                       ## Display in networkD3
-                      tabPanel(title="1st Dimension D3Net", value="networkView1",
+                      tabPanel(title="1st Dimension D3 Network", value="networkView1",
                                forceNetworkOutput("networkView1D3", width = "100%", height = "700px")),
 
-                      tabPanel(title="2nd Dimension D3Net", value="networkView2",
+                      tabPanel(title="2nd Dimension D3 Network", value="networkView2",
                               forceNetworkOutput("networkView2D3", width = "100%", height = "700px"))
 
                       # # Display in visNetwork
