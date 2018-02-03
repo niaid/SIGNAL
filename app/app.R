@@ -298,13 +298,20 @@ options(shiny.maxRequestSize = 3*1024^2)
         if(is.null(input$file1)){
           showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No input file selected!</font><h3>")))
         }
-        # else if(is.null(input$cutoffTypes)){
-        #   showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No cutoff type selected <br>
-        #                                                         <i>or</i><br> no cuoff value entered!</font><h3>")))
-        # }
+        else if(is.null(input$cutoff_type)){
+          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No 'Cutoff Types' selected!</font><h3>")))
+        }
         else{
+          # Both cutoff values are required
+          req(input$cutoff_valueH)
+          req(input$cutoff_valueM)
+          
           ## Open the modal when button clicked
           values$modal_closed <- FALSE
+          
+          message(input$cutoff_type, "*")
+          message(input$cutoff_valueH, "**")
+          message(input$cutoff_valueM, "***")
           
           showModal(modalDialog(
             title = "Info Needed to Access Results",
@@ -639,13 +646,16 @@ options(shiny.maxRequestSize = 3*1024^2)
               # Check the data submitted by the form using http post method
               #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
               # Create a form for each datatable row
-              sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://www.genome.jp/kegg-bin/mcolor_pathway">
+              sprintf('<script>function extLink() {
+                          alert("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
+                       }</script>                        
+                       <form target="_blank" enctype="multipart/form-data" method="post" action="http://www.genome.jp/kegg-bin/mcolor_pathway">
                        <input type="hidden" name="map" value="%s0%s">
                        <input type="hidden" name="unclassified" value="%s">
                        <input type="hidden" name="s_sample" value="color">
                        <input type="hidden" name="mode" value="color">
                        <input type="hidden" name="reference" value="white">
-                       <input type="submit" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
+                       <input type="submit" onclick="extLink()" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
             }
 
             # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
