@@ -99,7 +99,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           actionButton("goButton", "Analyze my data",
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
-                       style="padding:4px; font-size:120%; color: #0086b3; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
+                       style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
         ),
         # Show a plot of the generated distribution
