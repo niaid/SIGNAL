@@ -60,6 +60,7 @@ module "triage" {
   desired_count      = "${var.desired_count}"
   cpu                = "${var.cpu}"
   memory             = "${var.memory}"
+  command            = "tini /usr/local/bin/shiny_server.sh"
   environment        = "${data.terraform_remote_state.stack.environment}"
   cluster            = "${data.terraform_remote_state.stack.cluster}"
   iam_role           = "${data.terraform_remote_state.stack.iam_role}"
