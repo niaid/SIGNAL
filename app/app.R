@@ -47,10 +47,6 @@ isValidEmail <- function(x) {
 # Set the maximum input file size to 3Mb
 options(shiny.maxRequestSize = 3*1024^2)
 
-# Collect memory through garbage collection
-cleanMem <- function(n=10) { for (i in 1:n) gc() }
-
-
 #if (interactive()) {
 
     ##################################################
@@ -202,13 +198,6 @@ cleanMem <- function(n=10) { for (i in 1:n) gc() }
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
-      
-      # Collect memory
-      observe({
-        # periodically collect
-        invalidateLater(1000,session)
-        cleanMem()
-      })
       
       # Read in the input fie
       output$contents <- renderDataTable({
