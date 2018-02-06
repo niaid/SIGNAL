@@ -29,13 +29,13 @@ header{
 
 
 footer{
-    background-color: rgb(27, 80, 160);
+    background-color: rgb(1, 81, 154);
     color: white;
     width: 1100px;
     height: 80px;
     -webkit-border-radius: 1px;
     -moz-border-radius: 25px;
-    border: 1px solid rgb(27, 80, 160);
+    border: 1px solid rgb(1, 81, 154);
     border-radius: 25px;
 }
 
