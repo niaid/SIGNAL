@@ -96,7 +96,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          actionButton("goButton", "Analyze my data",
+          actionButton("goButton", "Analyze my data !", icon("angle-double-right"),
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
                        style="padding:4px; font-size:120%; color: #0086b3; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
@@ -180,7 +180,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               tabsetPanel(id = 'helpTab',
                   tabPanel(title = "Contact us", value = "contactUS",
                       uiOutput("contactUS")),
-                  tabPanel(title = "Documentation", value = "readMe",
+                  tabPanel(title = "Documention", value = "readMe",
                       uiOutput("documentation")),        
                   tabPanel(title = "Updates", value = "changeLog",
                       uiOutput("changeLog"))                          
