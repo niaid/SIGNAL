@@ -23,31 +23,6 @@ variable "container_port"         {
   default = "3838"
 }
 
-## Monarch Provider Configurations
-provider "aws" {
-  version             = "1.2.0"
-  region              = "${var.region}"
-  allowed_account_ids = [ "${var.allowed_account_ids}" ]
-}
-
-provider "logentries" {
-  account_key = "${data.terraform_remote_state.stack.le_account_id}"
-}
-
-data "aws_ssm_parameter" "dd_api_key" {
-  name = "/platform/datadog_api_key"
-}
-
-data "aws_ssm_parameter" "dd_app_key" {
-  name = "/platform/datadog_app_key"
-}
-
-provider "datadog" {
-  api_key = "${data.aws_ssm_parameter.dd_api_key.value}"
-  app_key = "${data.aws_ssm_parameter.dd_app_key.value}"
-}
-
-##
 
 module "triage" {
   source             = "modules/stack/web-application"
