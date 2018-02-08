@@ -498,7 +498,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Set the output file name
         inputFile <- input$file1
         inputFileName <- inputFile$name
-        inputFilePrefix = unlist(strsplit(inputFileName, split='.csv', fixed=TRUE))[1]
+        inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
 
         # 1) Seed Pathway Analysis
@@ -640,7 +640,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       #},
       # message = function(m) {
       #   shinyjs::html(id = "status", html = m$message, add = TRUE)
-      # }#)
+      # })
 
       ## Switch to 'Enriched Pathways' tab adn display partial results
       observe({
