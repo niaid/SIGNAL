@@ -24,6 +24,7 @@ library(networkD3)
 library(visNetwork)
 library(org.Hs.eg.db)
 library(org.Mm.eg.db)
+library(AnnotationDbi)
 library(reshape2)
 library(ggplot2)
 library(tidyr)
@@ -96,10 +97,10 @@ options(shiny.maxRequestSize = 3*1024^2)
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          actionButton("goButton", "Analyze my data !", icon("angle-double-right"),
+          actionButton("goButton", "Analyze my data",
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
-                       style="padding:4px; font-size:120%; color: #0086b3; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
+                       style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           width = 3
         ),
         # Show a plot of the generated distribution
@@ -180,7 +181,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               tabsetPanel(id = 'helpTab',
                   tabPanel(title = "Contact us", value = "contactUS",
                       uiOutput("contactUS")),
-                  tabPanel(title = "Documention", value = "readMe",
+                  tabPanel(title = "Documentation", value = "readMe",
                       uiOutput("documentation")),        
                   tabPanel(title = "Updates", value = "changeLog",
                       uiOutput("changeLog"))                          
@@ -206,8 +207,18 @@ options(shiny.maxRequestSize = 3*1024^2)
         if (is.null(inFile))
           return(NULL)
 
-        data <- read.csv(inFile$datapath, stringsAsFactors = F)
-
+        data <- read.csv(inFile$datapath, stringsAsFactors = F,header=TRUE)
+        
+        # # Check for duplicated GeneSymbols
+        # if(anyDuplicated(data$GeneSymbol)){
+        #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
+        # }        
+        # 
+        # # Check for duplicated GeneSymbols
+        # if(anyDuplicated(data$EntrezID)){
+        #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated EntrezIDs were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
+        # }        
+        
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
           # Input data do not have EntrezID AND GeneSymbol columns
@@ -229,12 +240,25 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Mm.egSYMBOL2EG
           }
           mapped_genes <- mappedkeys(x)
-          overlappingGenes <- intersect(mapped_genes,as.character(data$GeneSymbol))
+          overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(toupper(data$GeneSymbol)))
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL)
-          tempData <- merge(data,y,by="GeneSymbol", all.x = TRUE)
+          # Change the GeneSymbols in the input file to UPPERCASE
+          numGeneInInput <- nrow(data)
+          data$GeneSymbol <- toupper(data$GeneSymbol)
+          tempData <- merge(x=data, y=y, by="GeneSymbol")
           data <- tempData
+          numGeneWithEntrezID <- nrow(data)
+          
+          # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
+          if((numGeneInInput - numGeneWithEntrezID) > 0){
+            showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
+                                                    HTML("Please update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
+          }
+          
+          # Switch/reorder 'EntrezID' to the FIRST column
+          data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           rm(tempData,x,y,xx)
 
           message("Input file has a 'GeneSymbol' column!")
@@ -244,26 +268,30 @@ options(shiny.maxRequestSize = 3*1024^2)
           # Get 'GeneSymbol' from 'EntrezID'
           if(input$organism == "Human"){
             library('org.Hs.eg.db')
-            x <- org.Hs.egSYMBOL2EG
+            x <- org.Hs.egSYMBOL
           } else if(input$organism == "Mouse"){
             library('org.Mm.eg.db')
-            x <- org.Mm.egSYMBOL2EG
+            x <- org.Mm.egSYMBOL
           }
           mapped_genes <- mappedkeys(x)
-          overlappingGenes <- intersect(mapped_genes,as.character(data$GeneSymbol))
+          overlappingGenes <- intersect(mapped_genes,data$EntrezID)
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL)
-          tempData <- merge(data,y,by="GeneSymbol", all.x = TRUE)
-          data <- tempData
-          rm(tempData,x,y,xx)
+          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL)
 
+          tempData <- merge(x=data, y=y, by="EntrezID", all.x = TRUE)
+          data <- tempData
+          data = data[, c(ncol(data), 1:(ncol(data) - 1))]
+          
+          rm(tempData,x,y,xx)
           message("Input file has a 'EntrezID' column!")
         }
         
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
         for (i in 1:nrow(data)){
           if(grepl('-', data$GeneSymbol[i])){
+            data$GeneSymbol[i] <- data$EntrezID[i]
+          }else if(is.na(data$GeneSymbol[i])){
             data$GeneSymbol[i] <- data$EntrezID[i]
           }
         }
@@ -308,10 +336,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           
           ## Open the modal when button clicked
           values$modal_closed <- FALSE
-          
-          message(input$cutoff_type, "*")
-          message(input$cutoff_valueH, "**")
-          message(input$cutoff_valueM, "***")
           
           showModal(modalDialog(
             title = "Info Needed to Access Results",
@@ -394,9 +418,9 @@ options(shiny.maxRequestSize = 3*1024^2)
 
         # To keep a copy of html files for iframe to access
         if('SHINY_APP' %in% env_names){
-          wwwDir <- '/srv/shiny-server/www/'
+          wwwDir <<- '/srv/shiny-server/www/'
         }else{
-          wwwDir <- "~/TRIAGE/app/www/"
+          wwwDir <<- "~/TRIAGE/app/www/"
         }        
         # Get organism name from user input
         organism <- input$organism
@@ -923,7 +947,10 @@ options(shiny.maxRequestSize = 3*1024^2)
             saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html", selfcontained = TRUE)
             saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html", selfcontained = TRUE)
             
-            # Display in igraph (1st dimension)
+            # Remove existing html file in www folder
+            Sys.chmod(wwwDir, mode = "0777")
+            
+            ## Display 1st dimension
             # legend
             output$graphLegend1 <- renderUI({
               HTML(graphLegend)
@@ -931,7 +958,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             #output$graphView1i <- renderEdgebundle({
             output$graphView1i <- renderUI({
               
-              file.copy("Chimera_STRINGHi_against_selectedPathways_1st.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html"))
+              file.copy("Chimera_STRINGHi_against_selectedPathways_1st.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html"), overwrite = TRUE)
               tags$iframe(
                 seamless="seamless",
                 src="Chimera_STRINGHi_against_selectedPathways_1st.hits.html",
@@ -941,13 +968,15 @@ options(shiny.maxRequestSize = 3*1024^2)
               )
             })
             
+            # Display 2nd dimension)
             # legend
             output$graphLegend2 <- renderUI({
               HTML(graphLegend)
             })
             
             output$graphView2i <- renderUI({
-              file.copy("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html"))
+              # Copy HTML files to www directory for display in iframe
+              file.copy("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html"), overwrite = TRUE)
               tags$iframe(
                 seamless="seamless",
                 src="Chimera_STRINGHi_against_selectedPathways_2nd.hits.html",
@@ -956,7 +985,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                 width=700
               )              
             })
-
+            
             ################
             ## D3 Network ##
             ################
@@ -1233,4 +1262,5 @@ options(shiny.maxRequestSize = 3*1024^2)
   #####################
   # Run the application
   shinyApp(ui = ui, server = server)
+
 #}

@@ -1,0 +1,37 @@
+.edgebundleR .node {
+  fill: black;
+  font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.edgebundleR .node:hover {
+  font-weight: 800;
+  fill: steelblue;
+}
+.edgebundleR .link {
+  stroke: steelblue;
+  stroke-opacity: .3;
+  fill: none;
+  pointer-events: none;
+}
+.edgebundleR path.arc {
+  cursor: move;
+  fill: #fff;
+}
+.edgebundleR .link.source {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+  stroke: #d62728;
+}
+.edgebundleR .node.target {
+  fill: #d62728 ;
+  font-weight: 800;
+}
+.edgebundleR .node.source  {
+  fill: #d62728 ; /*#2ca02c;*/
+  font-weight: 800;
+}
+.edgebundleR .link.target {
+  stroke-opacity: 1;
+  stroke-width: 2px;
+  stroke: #d62728; /*#2ca02c;*/
+}
+
