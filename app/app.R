@@ -235,7 +235,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           if(input$organism == "Human"){
             library('org.Hs.eg.db')
             x <- org.Hs.egSYMBOL2EG
-          } else if(input$irganism == "Mouse"){
+          } else if(input$organism == "Mouse"){
             library('org.Mm.eg.db')
             x <- org.Mm.egSYMBOL2EG
           }
@@ -374,8 +374,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         # message("switching to status tab")
         # updateTabsetPanel(session, "inTabset", selected = "status")
 
-        withCallingHandlers({
-          shinyjs::html("status", "")
+        #withCallingHandlers({
+        #   shinyjs::html("status", "")
 
         # Global environmental variables
         envs <- Sys.getenv()
@@ -637,10 +637,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
 
         completed <- TRUE
-      },
-      message = function(m) {
-        shinyjs::html(id = "status", html = m$message, add = TRUE)
-      })
+      #},
+      # message = function(m) {
+      #   shinyjs::html(id = "status", html = m$message, add = TRUE)
+      # }#)
 
       ## Switch to 'Enriched Pathways' tab adn display partial results
       observe({
