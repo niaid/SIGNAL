@@ -498,7 +498,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Set the output file name
         inputFile <- input$file1
         inputFileName <- inputFile$name
-        inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
+        #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
+        inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
+    message(inputFilePrefix)
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
 
         # 1) Seed Pathway Analysis
