@@ -75,3 +75,10 @@ footer{
     color: rgb(52, 152, 219);
     background-color:white;
 }
+.privacy {
+    float: right;
+}
+
+iframe {
+  border: 0;
+}

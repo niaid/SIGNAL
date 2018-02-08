@@ -17,7 +17,7 @@ set.seed(123)
 
 if(tolower(organism) == "human") 
 {  
-  if("hSTRINGhi" %in% networkType)
+  if(grepl("hSTRING.hi", networkType))
   {
     load(paste0(dataDir, "Networks/igraph.string.hu.hiConf.Rdata"))
     
@@ -25,7 +25,7 @@ if(tolower(organism) == "human")
       G <- graph.union(igraph.string.hu.hiConf,G)
     } else {G <- igraph.string.hu.hiConf}
   }
-  if("hSTRINGmed" %in% networkType)
+  if(grepl("hSTRING.med", networkType))
   {
     #load("~/TRIAGE/app/data/Networks/igraph.string.hu.medConf.Rdata")
     load(paste0(dataDir, "Networks/igraph.string.hu.medConf.Rdata"))
@@ -33,7 +33,7 @@ if(tolower(organism) == "human")
       G <- graph.union(G,igraph.string.hu.medConf)
     } else {G <- igraph.string.hu.medConf}
   }
-  if("hSTRINGppi.hi" %in% networkType)
+  if(grepl("hSTRINGppi.hi", networkType))
   {
     #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.hiConf.Rdata")
     load(paste0(dataDir, "Networks/igraph.stringPPI.hu.hiConf.Rdata"))
@@ -42,7 +42,7 @@ if(tolower(organism) == "human")
       G <- graph.union(igraph.stringPPI.hu.hiConf,G)
     } else {G <- igraph.stringPPI.hu.hiConf}
   }
-  if("hSTRINGppi.med" %in% networkType)
+  if(grepl("hSTRINGppi.med", networkType))
   {
     #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.medConf.Rdata")
     load(paste0(dataDir, "Networks/igraph.stringPPI.hu.medConf.Rdata"))
@@ -54,29 +54,29 @@ if(tolower(organism) == "human")
 
 } else if(tolower(organism) == "mouse")
 {
-  cat('1')
-  if("mSTRINGhi" %in% networkType)
-  {
-    cat('4')
-    load("~/TRIAGE/app/data/Networks/igraph.string.mo.hiConf.Rdata")
-    if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
-    else {G <- igraph.string.mo.hiConf}
-  }
-  if("mSTRINGmed" %in% networkType)
-  {
-    cat('2')
-    load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
-    if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
-    else {G <- igraph.string.med.medConf}
-  }
-  if("mSTRINGppi.hi" %in% networkType)
+  # cat('1')
+  # if(grepl("mSTRING.hi", networkType))
+  # {
+  #   cat('4')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.hiConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
+  #   else {G <- igraph.string.mo.hiConf}
+  # }
+  # else if(grep("mSTRING.med", networkType))
+  # {
+  #   cat('2')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
+  #   else {G <- igraph.string.med.medConf}
+  # }
+  if(grepl("mSTRINGppi.hi", networkType))
   {
     cat('4')
     load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.hiConf.Rdata")
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
     else {G <- igraph.stringPPI.mo.hiConf}
   }
-  if("mSTRINGppi.med" %in% networkType)
+  else if(grepl("mSTRINGppi.med", networkType))
   {
     cat('2')
     load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")
