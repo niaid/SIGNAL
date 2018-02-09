@@ -240,13 +240,15 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Mm.egSYMBOL2EG
           }
           mapped_genes <- mappedkeys(x)
-          overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(toupper(data$GeneSymbol)))
+          # Change the GeneSymbols in the input file to UPPERCASE
+          #overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(toupper(data$GeneSymbol)))
+          overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL)
-          # Change the GeneSymbols in the input file to UPPERCASE
           numGeneInInput <- nrow(data)
-          data$GeneSymbol <- toupper(data$GeneSymbol)
+          # Change the GeneSymbols in the input file to UPPERCASE
+          #data$GeneSymbol <- toupper(data$GeneSymbol)
           tempData <- merge(x=data, y=y, by="GeneSymbol")
           data <- tempData
           numGeneWithEntrezID <- nrow(data)
