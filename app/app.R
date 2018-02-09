@@ -997,7 +997,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               g11_links <- g11_d3$links
               g11.links.original <<- g11_links
               g11_nodes <- NodeInfo1
-                
+
               # delete unneeded data columns
               g11_nodes$ID <- NULL
               g11_nodes$GeneMappingID <- NULL
@@ -1010,9 +1010,9 @@ options(shiny.maxRequestSize = 3*1024^2)
               if(length(selectedRows) == 3){
                 g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
                 index1 <<- nrow(g11_nodes)
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
-                index2 <<- nrow(g11_nodes)
                 g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
+                index2 <<- nrow(g11_nodes)
+                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
                 index3 <<- nrow(g11_nodes)
                 # Add Nodesize column
                 g11_nodes$nodesize <- 1
@@ -1022,7 +1022,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               }else if(length(selectedRows) == 2){
                 g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
                 index1 <<- nrow(g11_nodes)
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
+                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
                 index2 <<- nrow(g11_nodes)
                 # Add Nodesize column
                 g11_nodes$nodesize <- 1
@@ -1036,13 +1036,13 @@ options(shiny.maxRequestSize = 3*1024^2)
                 g11_nodes[index1, 'nodesize'] <- 20
               }
 
-              # Update the g11_links with the added pathway nodes
+              # # Update the g11_links with the added pathway nodes
               for (i in 1:(index1 - 1)){
                 if(g11_nodes[i, 'group'] == 1){
                   g11_links[nrow(g11_links) + 1,] <- c((index1-1), (i-1))
-                }else if(g11_nodes[i, 'group'] == 2){
-                  g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
                 }else if(g11_nodes[i, 'group'] == 3){
+                  g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
+                }else if(g11_nodes[i, 'group'] == 2){
                   g11_links[nrow(g11_links) + 1,] <- c((index3-1), (i-1))
                 }
               }
@@ -1082,9 +1082,9 @@ options(shiny.maxRequestSize = 3*1024^2)
               if(length(selectedRows) == 3){
                 g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
                 index1 <<- nrow(g22_nodes)
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
-                index2 <<- nrow(g22_nodes)
                 g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
+                index2 <<- nrow(g22_nodes)
+                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
                 index3 <<- nrow(g22_nodes)
                 # Add Nodesize column
                 g22_nodes$nodesize <- 1
@@ -1094,7 +1094,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               }else if(length(selectedRows) == 2){
                 g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
                 index1 <<- nrow(g22_nodes)
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
+                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
                 index2 <<- nrow(g22_nodes)
                 # Add Nodesize column
                 g22_nodes$nodesize <- 1
@@ -1112,9 +1112,9 @@ options(shiny.maxRequestSize = 3*1024^2)
               for (i in 1:(index1 - 1)){
                 if(g22_nodes[i, 'group'] == 1){
                   g22_links[nrow(g22_links) + 1,] <- c((index1-1), (i-1))
-                }else if(g22_nodes[i, 'group'] == 2){
-                  g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
                 }else if(g22_nodes[i, 'group'] == 3){
+                  g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
+                }else if(g22_nodes[i, 'group'] == 2){
                   g22_links[nrow(g22_links) + 1,] <- c((index3-1), (i-1))
                 }
               }      
