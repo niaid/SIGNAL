@@ -256,7 +256,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
           if((numGeneInInput - numGeneWithEntrezID) > 0){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
-                                                    HTML("Please update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
+                                                    HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
           }
           
           # Switch/reorder 'EntrezID' to the FIRST column
@@ -316,9 +316,13 @@ options(shiny.maxRequestSize = 3*1024^2)
         selectInput("cutoff_type", "Cutoff Types", pulldown_types)
       })
 
-      # These user information (userName and userEmail) will collected after the modal is closed/submitted
-      values = reactiveValues(userInfo = "",   ## This is the text that will be displayed
-                              modal_closed=F)  ## This prevents the values$userInfo output from updating until the modal is closed/submitted
+      # # These user information (userName and userEmail) will collected after the modal is closed/submitted
+      # values = reactiveValues(userInfo = "",   ## This is the text that will be displayed
+      #                         modal_closed=F)  ## This prevents the values$userInfo output from updating until the modal is closed/submitted
+      
+      observeEvent(input$refresh, {   
+        session$reload()
+      })
       
       ## Start perfroming enrichment
       observeEvent(input$goButton, {
@@ -336,41 +340,37 @@ options(shiny.maxRequestSize = 3*1024^2)
           req(input$cutoff_valueH)
           req(input$cutoff_valueM)
           
-          ## Open the modal when button clicked
-          values$modal_closed <- FALSE
-          
-          showModal(modalDialog(
-            title = "Info Needed to Access Results",
-            size = "s",
-            textInput("userName", "User Name", placeholder = "your name"),
-            textInput("userEmail", "User Email Address", placeholder = "your email address"),
-  
-            ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
-            footer = actionButton("submit_modal",label = "Submit")
-          ))
+          # ## Open the modal when button clicked
+          # values$modal_closed <- FALSE
+          # 
+          # showModal(modalDialog(
+          #   title = "Info Needed to Access Results",
+          #   size = "s",
+          #   textInput("userName", "User Name", placeholder = "your name"),
+          #   textInput("userEmail", "User Email Address", placeholder = "your email address"),
+          # 
+          #   ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
+          #   footer = actionButton("submit_modal",label = "Submit")
+          # ))
         }
-      })
-
-      # Reset/reload the TRIAGE
-      observeEvent(input$refresh, {
-        session$reload()
-      })
-
-      ## This event is triggered by the actionButton inside the modalDialog
-      #  It closes the modal, and by setting values$modal_closed <- T, it
-      #  triggers values$userInfo to update.
-
-      observeEvent(input$submit_modal,{
+      # })
+      # 
+      # 
+      # ## This event is triggered by the actionButton inside the modalDialog
+      # #  It closes the modal, and by setting values$modal_closed <- T, it
+      # #  triggers values$userInfo to update.
+      # 
+      # observeEvent(input$submit_modal,{
         
-        values$modal_closed <- TRUE
-
-        if(isValidEmail(input$userEmail)){
-          removeModal()
-        }
-        else{
-          #reset("userEmail")
-          session$reload()
-        }
+        # values$modal_closed <- TRUE
+        # 
+        # if(isValidEmail(input$userEmail)){
+        #   removeModal()
+        # }
+        # else{
+        #   #reset("userEmail")
+        #   session$reload()
+        # }
       
         ## Upon job submission, switch to 'status' tab
         # message("switching to status tab")
@@ -479,30 +479,36 @@ options(shiny.maxRequestSize = 3*1024^2)
         # })
 
         # Create uesr-specific directory
-        userDir <- input$userEmail
-        userDir <- gsub("\\.", "_", userDir)
-        userDir <- gsub("@", "_", userDir)
-        setwd(outputDir)
-        outDir <- c(getwd(), "/", userDir)
+        # userDir <- input$userEmail
+        # userDir <- gsub("\\.", "_", userDir)
+        # userDir <- gsub("@", "_", userDir)
+        # setwd(outputDir)
+        # outDir <- c(getwd(), "/", userDir)
 
         # Remove all files in the outputDir
         unlink(outputDir, recursive = FALSE)
 
         # Create user-specific directory
-        if(!dir.exists(userDir)[1]){
-          dir.create(userDir)
-        }
-        else{
-          unlink(outDir, recursive = FALSE)
-        }
-        setwd(userDir)
-
+        # if(!dir.exists(userDir)[1]){
+        #   dir.create(userDir)
+        # }
+        # else{
+        #   unlink(outDir, recursive = FALSE)
+        # }
+        # setwd(userDir)
+        
+        # Create user-specific directory using system time
+        userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
+        outDir <- paste0(outputDir,"/", userDir)
+        dir.create(outDir)
+        setwd(outDir)
+        
         # Set the output file name
         inputFile <- input$file1
         inputFileName <- inputFile$name
         #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
         inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
-    message(inputFilePrefix)
+
         outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
 
         # 1) Seed Pathway Analysis
