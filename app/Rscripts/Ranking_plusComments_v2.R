@@ -139,7 +139,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #           Setting up Network Databases and input
   #############################################################
   
-<<<<<<< HEAD
+
   #organism <- "Human"
   
   #setwd(CARDdirectory)                                # Selecting which network to use, h/m human/mouse, hi/med hi confidence/medium confidence, ppi = Protein-Protein 
@@ -150,8 +150,6 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     networkTypes <- c("mSTRINGhi", "mSTRINGmed", "mSTRINGppi.hi", "mSTRINGppi.med")
   }
   networkType <- networkTypes[c(3)] #**                          # Setting which network file to use.
-=======
->>>>>>> d7b82696e0d6929235961102e108cac5839af78c
   
   use.only.commnected.components = "yes"
   show.dendogram <- TRUE

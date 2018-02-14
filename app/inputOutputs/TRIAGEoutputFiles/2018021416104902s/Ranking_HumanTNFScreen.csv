@@ -1,0 +1,422 @@
+"","GeneSymbol","GeneMappingID","Group","EntrezID","Pathway","Ntwrk.all","Allnet.count","Ntwrk.TLR","TLRnet.count","Ntwrk.PROT","PROTnet.count","Ntwrk.SPLICE","SPLICEnet.count","Ntwrk.TLR.hits","TLRhits.net.count","Ntwrk.PROT.hits","PROThits.net.count","Ntwrk.SPLICE.hits","SPLICEhits.net.count","Total_Path_Hits.net.count"
+"1","A2M",110,"Novel",2,NA,"LRP1, IL1B",2,"IL1B",1,"IL1B",1,"IL1B",1,"IL1B",1,NA,0,"IL1B",1,2
+"2","ACACB",130,"Novel",32,"Propanoate metabolism","UBQLN4, OASL, RRAGA, SUN1, SPAG4, UBC, ISG15, E2F3, RPS27A, UBB",10,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"3","ACIN1",144,"Novel",22985,"Spliceosome ; RNA transport","SRPK2, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"4","ACTA2",129,"Novel",59,NA,"CFL1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"5","ADRB2",317,"Novel",154,"Endocytosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"6","AHRR",409,"Novel",57491,NA,"ARNT",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"7","AIRE",314,"Novel",326,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"8","ALAS1",372,"Novel",211,NA,"POLD4, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"9","ALCAM",376,"Novel",214,"Cell adhesion molecules (CAMs)","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"10","ALDH3A2",403,"Novel",224,"Lysine degradation ; Propanoate metabolism ; beta-Alanine metabolism","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"11","APOB",273,"Novel",338,NA,"CALR, CALCR, LDLR, HSPA5, HSP90B1, VCP, UBC",7,NA,0,"CALR",1,NA,0,NA,0,"CALR",1,NA,0,1
+"12","ARHGAP32",362,"Novel",9743,NA,"CDC42",1,NA,0,NA,0,"CDC42",1,NA,0,NA,0,"CDC42",1,1
+"13","ARHGDIB",289,"Novel",397,"Vasopressin-regulated water reabsorption ; Neurotrophin signaling pathway","CDC42",1,NA,0,NA,0,"CDC42",1,NA,0,NA,0,"CDC42",1,1
+"14","ARHGEF6",344,"Novel",9459,"Regulation of actin cytoskeleton ; Pancreatic cancer","CDC42, GIT1",2,NA,0,NA,0,"CDC42",1,NA,0,NA,0,"CDC42",1,1
+"15","ARNT",195,"Novel",405,"Renal cell carcinoma","NPAS4, SIM1, AHRR, EPAS1, PTGES3",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"16","ARPC1B",242,"Novel",10095,"Regulation of actin cytoskeleton ; Shigellosis ; Fc gamma R-mediated phagocytosis ; Bacterial invasion of epithelial cells ; Pathogenic Escherichia coli infection","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"17","ASAP1",320,"Novel",50807,"Endocytosis ; Fc gamma R-mediated phagocytosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"18","ASAP2",258,"Novel",8853,"Endocytosis ; Fc gamma R-mediated phagocytosis","PXN, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"19","ASF1A",281,"Novel",25842,NA,"ASF1B, ATR, TAF1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"20","ASF1B",151,"Novel",55723,NA,"ASF1A, KAT2B, ATR, UBC, TAF1",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"21","ATF3",209,"Novel",467,NA,"JUN, UBC",2,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"22","ATP6V1B2",220,"Novel",526,"Phagosome ; Rheumatoid arthritis ; Epithelial cell signaling in Helicobacter pylori infection","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"23","ATR",135,"Novel",545,"Cell cycle","ASF1B, ASF1A, RAD51, UBC, MSH2, XPA, CCNB2",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"24","BCAS2",225,"Novel",10286,"Spliceosome","PLRG1, CDC5L, UBC, PRPF8, MFAP1, EFTUD2",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"25","BCL11B",210,"Novel",64919,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"26","BCL2L1",123,"Novel",598,"Toxoplasmosis ; Apoptosis ; Amyotrophic lateral sclerosis (ALS) ; Pancreatic cancer ; Jak-STAT signaling pathway ; Chronic myeloid leukemia","DNM1L, SPATA25, PMAIP1, PGAM5, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"27","BCL3",236,"Novel",602,NA,"RELA, IKBKB, UBC",3,NA,0,"RELA, IKBKB",2,"RELA, IKBKB",2,NA,0,NA,0,"RELA, IKBKB",2,2
+"28","BMP7",150,"Cytokine-cytokine receptor interaction",655,"Cytokine-cytokine receptor interaction","BMPR1B",1,"BMPR1B",1,NA,0,NA,0,"BMPR1B",1,NA,0,NA,0,1
+"29","BMPR1B",172,"Cytokine-cytokine receptor interaction",658,"Cytokine-cytokine receptor interaction","SMAD6, BMP7",2,"BMP7",1,NA,0,NA,0,"BMP7",1,NA,0,NA,0,1
+"30","BRAF",106,"MAPK signaling pathway",673,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Chemokine signaling pathway ; Focal adhesion ; Hepatitis C ; Pancreatic cancer ; Prostate cancer ; Long-term depression ; Chronic myeloid leukemia ; Melanoma ; Natural killer cell mediated cytotoxicity ; Neurotrophin signaling pathway ; Renal cell carcinoma ; Progesterone-mediated oocyte maturation","RAP1A, CAPN3, UBC, YWHAG, SFN, YWHAH",6,NA,0,NA,0,"RAP1A",1,NA,0,NA,0,"RAP1A",1,1
+"31","BRCA2",192,"Novel",675,"Pancreatic cancer","PALB2, RAD51",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"32","BRSK2",283,"Novel",9024,NA,"UBC, CDC25C, CDC25B",3,NA,0,NA,0,"CDC25B",1,NA,0,NA,0,"CDC25B",1,1
+"33","BUB1B",177,"Novel",701,"Cell cycle","CDC20B, PLK1, UBC, MIS12",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"34","CACNA1C",336,"MAPK signaling pathway",775,"MAPK signaling pathway ; GnRH signaling pathway ; Arrhythmogenic right ventricular cardiomyopathy (ARVC)","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"35","CALCR",142,"Novel",799,"Osteoclast differentiation","APOB",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"36","CALR",111,"Chagas disease (American trypanosomiasis)",811,"Chagas disease (American trypanosomiasis) ; Phagosome","HSP90B1, LRP1, APOB, PDIA3, UBC, P4HB",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"37","CAMLG",306,"Novel",819,NA,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"38","CAPN2",284,"Novel",824,"Focal adhesion ; Apoptosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"39","CAPN3",349,"Novel",825,NA,"BRAF",1,NA,0,NA,0,"BRAF",1,NA,0,NA,0,"BRAF",1,1
+"40","CARD11",319,"Novel",84433,"T cell receptor signaling pathway","UBC, MAP3K7",2,NA,0,NA,0,"MAP3K7",1,NA,0,NA,0,"MAP3K7",1,1
+"41","CCDC12",241,"Novel",151903,"Spliceosome","CDC5L",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"42","CCDC94",253,"Novel",55702,NA,"SNW1, CDC5L, PLRG1, XAB2",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"43","CCDC97",268,"Novel",90324,NA,"SF3B6, SF3B1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"44","CCNB2",79,"Novel",9133,"Cell cycle ; Progesterone-mediated oocyte maturation","ATR, CKS2, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"45","CCND2",205,"Novel",894,"Focal adhesion ; Cell cycle ; Jak-STAT signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"46","CCNE1",91,"Novel",898,"Prostate cancer ; Cell cycle","E2F3, MYBL2, HIST1H1B, UBC, FBXW7",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"47","CCS",335,"Novel",9973,"Amyotrophic lateral sclerosis (ALS)","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"48","CD14",178,"MAPK signaling pathway",929,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Amoebiasis ; Phagosome ; Hematopoietic cell lineage ; Pathogenic Escherichia coli infection","TLR2",1,NA,0,"TLR2",1,NA,0,NA,0,"TLR2",1,NA,0,1
+"49","CD2BP2",230,"Novel",10421,NA,"PRPF8",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"50","CDC20B",338,"Novel",166979,NA,"BUB1B",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"51","CDC25B",152,"MAPK signaling pathway",994,"MAPK signaling pathway ; Cell cycle ; Progesterone-mediated oocyte maturation","BRSK2, YWHAH, UBC, YWHAG, SFN",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"52","CDC25C",153,"Novel",995,"Cell cycle ; Progesterone-mediated oocyte maturation","BRSK2, YWHAH, UBC, PCNA, PLK1",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"53","CDC42",107,"MAPK signaling pathway",998,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Focal adhesion ; Endocytosis ; Tight junction ; Shigellosis ; Fc gamma R-mediated phagocytosis ; Bacterial invasion of epithelial cells ; Pancreatic cancer ; GnRH signaling pathway ; Epithelial cell signaling in Helicobacter pylori infection ; T cell receptor signaling pathway ; Pathogenic Escherichia coli infection ; Neurotrophin signaling pathway ; VEGF signaling pathway ; Renal cell carcinoma","RAP1A, ARHGDIB, ARHGEF6, PARD6G, ARHGAP32, CDC42EP3, UBC",7,NA,0,NA,0,"RAP1A",1,NA,0,NA,0,"RAP1A",1,1
+"54","CDC42EP3",374,"Novel",10602,NA,"CDC42",1,NA,0,NA,0,"CDC42",1,NA,0,NA,0,"CDC42",1,1
+"55","CDC5L",51,"Novel",988,"Spliceosome","PRPF8, PLRG1, SNW1, SF3B1, XAB2, SF3B2, SNRPD3, EFTUD2, SRSF1, DYNC1H1, TOP2A, BCAS2, SRRM1, CCDC12, CCDC94, SFPQ, UBC",17,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"56","CDH5",168,"Novel",1003,"Leukocyte transendothelial migration ; Cell adhesion molecules (CAMs)","CTNND1, PARD6G, PARD3",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"57","CDX2",202,"Novel",1045,NA,"PSMD2, PSMC4, PSMA5",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"58","CFL1",137,"Novel",1072,"Regulation of actin cytoskeleton ; Fc gamma R-mediated phagocytosis","CFL2, ACTA2, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"59","CFL2",264,"Novel",1073,"Regulation of actin cytoskeleton ; Fc gamma R-mediated phagocytosis","UBC, CFL1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"60","CFLAR",234,"Chagas disease (American trypanosomiasis)",8837,"Chagas disease (American trypanosomiasis) ; Apoptosis","UBC, RIPK1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"61","CHD4",162,"Novel",1108,NA,"MBD3, MTA2, HDAC2, UBC",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"62","CHMP2A",228,"Novel",27243,"Endocytosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"63","CKS2",63,"Novel",1164,NA,"CCNB2, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"64","CLINT1",332,"Novel",9685,NA,"CLTC, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"65","CLK1",304,"Novel",1195,NA,"SRSF1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"66","CLTA",295,"Novel",1211,"Endocytosis ; Bacterial invasion of epithelial cells","CLTC, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"67","CLTC",158,"Novel",1213,"Endocytosis ; Bacterial invasion of epithelial cells","SNX9, CLTA, CLINT1, EPN1, IKBKB, MAP3K7, UBC",7,NA,0,"IKBKB",1,"MAP3K7, IKBKB",2,NA,0,NA,0,"MAP3K7, IKBKB",2,2
+"68","CNTN2",313,"Novel",6900,"Cell adhesion molecules (CAMs)","UBC, IKBKB, KAT2B",3,NA,0,"IKBKB",1,"IKBKB",1,NA,0,NA,0,"IKBKB",1,1
+"69","COPS2",155,"Novel",9318,NA,"SIN3B, COPS5, JUN, SIN3A, PSMA6, COPS6, UBC, PSMC1, PSMC5",9,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"70","COPS5",93,"Novel",10987,NA,"SMAD4, COPS2, TOP2A, IKBKB, COPS6, PSMD12, UBC, PSMA6, JUN",9,NA,0,"JUN, IKBKB",2,"JUN, IKBKB",2,NA,0,NA,0,"JUN, IKBKB",2,2
+"71","COPS6",65,"Novel",10980,NA,"COPS5, RAE1, COPS2, KLHL8, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"72","CREB1",263,"Novel",1385,"Vasopressin-regulated water reabsorption ; Osteoclast differentiation ; Prostate cancer","HDAC2, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"73","CSF1R",325,"Cytokine-cytokine receptor interaction",1436,"Cytokine-cytokine receptor interaction ; Endocytosis ; Osteoclast differentiation ; Hematopoietic cell lineage","RPS27A, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"74","CSNK2A2",95,"Novel",1459,"Tight junction","TOP2A, MAF1, RRP1, HADHA, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"75","CTNND1",307,"Novel",1500,"Leukocyte transendothelial migration","UBC, CDH5, EGFR",3,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"76","CXCL11",411,"Cytokine-cytokine receptor interaction",6373,"Cytokine-cytokine receptor interaction ; Toll-like receptor signaling pathway ; Chemokine signaling pathway","CXCR3",1,"CXCR3",1,NA,0,NA,0,"CXCR3",1,NA,0,NA,0,1
+"77","CXCL13",352,"Cytokine-cytokine receptor interaction",10563,"Cytokine-cytokine receptor interaction ; Chemokine signaling pathway","CXCR5",1,"CXCR5",1,NA,0,NA,0,"CXCR5",1,NA,0,NA,0,1
+"78","CXCL8",357,"Novel",3576,NA,"RELA",1,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"79","CXCR3",197,"Cytokine-cytokine receptor interaction",2833,"Cytokine-cytokine receptor interaction ; Chemokine signaling pathway","CXCL11",1,"CXCL11",1,NA,0,NA,0,"CXCL11",1,NA,0,NA,0,1
+"80","CXCR4",180,"Cytokine-cytokine receptor interaction",7852,"Cytokine-cytokine receptor interaction ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Endocytosis","TLR2, UBC",2,NA,0,"TLR2",1,NA,0,NA,0,"TLR2",1,NA,0,1
+"81","CXCR5",185,"Cytokine-cytokine receptor interaction",643,"Cytokine-cytokine receptor interaction ; Chemokine signaling pathway","CXCL13",1,"CXCL13",1,NA,0,NA,0,"CXCL13",1,NA,0,NA,0,1
+"82","CYLD",288,"Novel",1540,"RIG-I-like receptor signaling pathway ; Osteoclast differentiation","TUBA1A, RIPK1, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"83","DAD1",124,"Novel",1603,NA,"SEC61A1, PCNA, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"84","DCTN4",298,"Novel",51164,"Vasopressin-regulated water reabsorption","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"85","DDX3X",262,"Novel",1654,"RIG-I-like receptor signaling pathway","EIF3B, PRPF8, EIF4G1, EIF2S1, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"86","DNM1",334,"Novel",1759,"Endocytosis ; Fc gamma R-mediated phagocytosis ; Bacterial invasion of epithelial cells","SNX9, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"87","DNM1L",244,"Novel",10059,"Endocytosis ; Fc gamma R-mediated phagocytosis ; Bacterial invasion of epithelial cells","UBC, BCL2L1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"88","DNTT",405,"Novel",1791,"Hematopoietic cell lineage","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"89","DNTTIP1",414,"Novel",116092,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"90","DSG2",201,"Novel",1829,"Arrhythmogenic right ventricular cardiomyopathy (ARVC)","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"91","DUSP5",401,"MAPK signaling pathway",1847,"MAPK signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"92","DYNC1H1",167,"Novel",1778,"Phagosome ; Vasopressin-regulated water reabsorption","DYNLT3, UBC, YARS, CDC5L, SAP30BP",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"93","DYNC1I1",183,"Novel",1780,"Phagosome ; Vasopressin-regulated water reabsorption","DYNLL1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"94","DYNC1I2",365,"Novel",1781,"Phagosome ; Vasopressin-regulated water reabsorption","DYNLT3, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"95","DYNLL1",345,"Novel",8655,"Vasopressin-regulated water reabsorption","TRAF3IP3, UBC, DYNC1I1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"96","DYNLT3",188,"Novel",6990,NA,"DYNC1I2, DYNC1H1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"97","E2F3",109,"Novel",1871,"Pancreatic cancer ; Prostate cancer ; Cell cycle ; Chronic myeloid leukemia ; Melanoma","ACACB, MYBL2, CCNE1, MSH2",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"98","EDA",193,"Cytokine-cytokine receptor interaction",1896,"Cytokine-cytokine receptor interaction","EDAR",1,"EDAR",1,NA,0,NA,0,"EDAR",1,NA,0,NA,0,1
+"99","EDAR",380,"Cytokine-cytokine receptor interaction",10913,"Cytokine-cytokine receptor interaction","EDA",1,"EDA",1,NA,0,NA,0,"EDA",1,NA,0,NA,0,1
+"100","EEF2K",247,"Novel",29904,NA,"UBC, RAE1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"101","EFTUD2",94,"Novel",9343,"Spliceosome","BCAS2, IK, CDC5L, SNW1, SF3B1, PRPF8, RPL19, RPS2, XAB2, SNRPD3, UBC",11,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"102","EGFR",31,"MAPK signaling pathway",1956,"Regulation of actin cytoskeleton ; Cytokine-cytokine receptor interaction ; MAPK signaling pathway ; Focal adhesion ; Endocytosis ; Hepatitis C ; Pancreatic cancer ; GnRH signaling pathway ; Prostate cancer ; Epithelial cell signaling in Helicobacter pylori infection ; Gap junction ; Melanoma","SFN, RPS27A, HSPA5, TUBA1A, STAT1, PDGFRB, GAPDH, GAB2, HNRNPH1, PTK2B, CAMLG, CTNND1, PIK3R3, PTPN2, EPN1, LAMP1, PTPN6, LRIG1, PLSCR1, TLR2, STUB1, UBC, UBB, EPS8",24,"PDGFRB",1,"PIK3R3, TLR2",2,"PDGFRB",1,"PDGFRB",1,"TLR2, PIK3R3",2,"PDGFRB",1,4
+"103","EGR1",321,"Novel",1958,"Prion diseases","SP1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"104","EHMT1",322,"Novel",79813,"Lysine degradation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"105","EHMT2",208,"Novel",10919,"Lysine degradation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"106","EIF1",222,"Novel",10209,"RNA transport","EIF3B, RPS27A, UBC, EIF3J, EIF3I, RPS2, EIF3A, EIF2S2",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"107","EIF2AK2",50,"Novel",5610,"Hepatitis C","EIF2S1, STAT1, UBC, MAP3K7",4,NA,0,NA,0,"MAP3K7",1,NA,0,NA,0,"MAP3K7",1,1
+"108","EIF2B3",294,"Novel",8891,"RNA transport","EIF2S2, UBC, EIF2S1, EIF2S3",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"109","EIF2S1",55,"Novel",1965,"RNA transport ; Hepatitis C","EIF3I, EIF3B, EIF3A, EIF2S3, EIF2S2, DDX3X, EIF2B3, EIF2AK2, UBC",9,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"110","EIF2S2",89,"Novel",8894,"RNA transport","EIF1, EIF2B3, UBC, EIF3A, EIF2S3, EIF3B, EIF2S1",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"111","EIF2S3",88,"Novel",1968,"RNA transport","EIF2S2, EIF2B3, EIF3B, UBC, EIF2S1, EIF3I, EIF3A",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"112","EIF3A",87,"Novel",8661,"RNA transport","EIF2S3, EIF2S2, EIF4B, EIF4G2, EIF1, EIF3I, EIF3B, UBC, EIF2S1, EIF3J",10,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"113","EIF3B",82,"Novel",8662,"RNA transport","EIF3J, EIF3A, EIF2S3, EIF2S2, EIF4G1, EIF1, DDX3X, EIF4A1, EIF3I, EIF2S1, UBC",11,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"114","EIF3I",56,"Novel",8668,"RNA transport","EIF3B, EIF3J, EIF3A, EIF2S3, EIF1, EIF2S1, UBC",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"115","EIF3J",84,"Novel",8669,"RNA transport","EIF3A, EIF1, EIF3B, UBC, EIF3I",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"116","EIF4A1",310,"Novel",1973,"RNA transport","EIF4G1, UBC, EIF3B, EIF4B, EIF4G2",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"117","EIF4B",105,"Novel",1975,"RNA transport","EIF4G1, EIF4G2, EIF4A1, EIF3A, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"118","EIF4G1",117,"Novel",1981,"RNA transport","POLDIP3, EIF4G2, DDX3X, EIF4A1, EIF3B, UBC, EIF4B",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"119","EIF4G2",169,"Novel",1982,"RNA transport","EIF4A1, EIF4B, UBC, EIF3A, EIF4G1",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"120","ELF4",361,"Novel",2000,NA,"RUNX1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"121","ELMSAN1",412,"Novel",91748,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"122","ENDOG",348,"Novel",2021,"Apoptosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"123","EPAS1",147,"Novel",2034,"Renal cell carcinoma","ARNT, SP1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"124","EPN1",333,"Novel",29924,"Endocytosis","EGFR, CLTC, UBC",3,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"125","EPS8",28,"Novel",2059,NA,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"126","ERC1",387,"Novel",23085,NA,"IKBKB, UBC",2,NA,0,"IKBKB",1,"IKBKB",1,NA,0,NA,0,"IKBKB",1,1
+"127","EXOSC10",198,"Novel",5394,NA,"SUV39H2, SUV39H1, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"128","FAHD2B",418,"Novel",151313,NA,"PCNA",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"129","FBXW7",85,"Novel",55294,NA,"CCNE1, JUN, UBB, UBC",4,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"130","FGF8",382,"MAPK signaling pathway",2253,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Melanoma","FGFR3",1,NA,0,NA,0,"FGFR3",1,NA,0,NA,0,"FGFR3",1,1
+"131","FGF9",353,"MAPK signaling pathway",2254,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Melanoma","FGFR3",1,NA,0,NA,0,"FGFR3",1,NA,0,NA,0,"FGFR3",1,1
+"132","FGFR3",186,"MAPK signaling pathway",2261,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Endocytosis","FGF9, FGF8",2,NA,0,NA,0,"FGF9, FGF8",2,NA,0,NA,0,"FGF9, FGF8",2,2
+"133","FHL2",381,"Novel",2274,"Osteoclast differentiation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"134","FYTTD1",354,"Novel",84248,NA,"NXF1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"135","GAB2",215,"Novel",9846,"Osteoclast differentiation ; Fc gamma R-mediated phagocytosis ; Chronic myeloid leukemia ; Fc epsilon RI signaling pathway","EGFR",1,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"136","GAPDH",211,"Novel",2597,NA,"EGFR, UBC",2,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"137","GIT1",181,"Novel",28964,"Regulation of actin cytoskeleton ; Endocytosis ; Epithelial cell signaling in Helicobacter pylori infection","ARHGEF6, PXN",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"138","GNA11",389,"Chagas disease (American trypanosomiasis)",2767,"Chagas disease (American trypanosomiasis) ; Amoebiasis ; GnRH signaling pathway ; Long-term depression ; Gap junction","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"139","GNAI3",266,"Chagas disease (American trypanosomiasis)",2773,"Chagas disease (American trypanosomiasis) ; Toxoplasmosis ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Tight junction ; Long-term depression ; Gap junction ; Progesterone-mediated oocyte maturation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"140","GNAO1",271,"Chagas disease (American trypanosomiasis)",2775,"Chagas disease (American trypanosomiasis) ; Toxoplasmosis ; Long-term depression","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"141","GRIN2D",404,"Novel",2906,"Amyotrophic lateral sclerosis (ALS)","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"142","GSK3A",312,"Novel",2931,"Chemokine signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"143","GSTP1",286,"Novel",2950,"Prostate cancer","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"144","HADHA",316,"Novel",3030,"Lysine degradation ; Propanoate metabolism ; beta-Alanine metabolism","UBC, CSNK2A2",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"145","HCLS1",224,"Novel",3059,"Tight junction ; Shigellosis ; Bacterial invasion of epithelial cells ; Pathogenic Escherichia coli infection","SYK",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"146","HDAC2",35,"Novel",3066,"Cell cycle ; Chronic myeloid leukemia","SIN3A, MTA2, RELA, SP1, MORF4L1, PHF12, MBD2, CHD4, RUNX1, BCL11B, CREB1, ING1, SUZ12, SIN3B, MBD3, AIRE, KLF4, PHF21A, ELMSAN1, RERE, DNTTIP1, RREB1, UBC",23,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"147","HDAC4",34,"Novel",9759,NA,"SIN3A, SP1, UBE2I, ZBTB16, YWHAH, SFN, YWHAG",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"148","HIST1H1B",299,"Novel",3009,NA,"CCNE1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"149","HNRNPH1",235,"Novel",3187,NA,"EGFR, UBC, MIS12",3,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"150","HNRNPM",254,"Novel",4670,"Spliceosome","UBC, PRPF8, SF3B1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"151","HSP90B1",143,"Novel",7184,"NOD-like receptor signaling pathway ; Prostate cancer","APOB, CALR, UBC, PDLIM7, HSPA5, RAE1, P4HB",7,NA,0,"CALR",1,NA,0,NA,0,"CALR",1,NA,0,1
+"152","HSPA5",57,"Novel",3309,"Prion diseases","LDLR, HSP90B1, APOB, PRNP, EGFR, UBC",6,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"153","ICAM1",366,"Novel",3383,"Leukocyte transendothelial migration ; Rheumatoid arthritis ; Cell adhesion molecules (CAMs) ; African trypanosomiasis ; Malaria ; Natural killer cell mediated cytotoxicity","UBC, ITGAM",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"154","IFIH1",391,"Novel",64135,"RIG-I-like receptor signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"155","IK",267,"Novel",3550,NA,"XAB2, NDUFA1, UBC, THOC1, EFTUD2, RBM10, MFAP1, MSH2",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"156","IKBKB",44,"MAPK signaling pathway",3551,"Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Chemokine signaling pathway ; Hepatitis C ; RIG-I-like receptor signaling pathway ; Osteoclast differentiation ; Shigellosis ; Apoptosis ; Pancreatic cancer ; NOD-like receptor signaling pathway ; Prostate cancer ; Epithelial cell signaling in Helicobacter pylori infection ; T cell receptor signaling pathway ; Chronic myeloid leukemia ; Neurotrophin signaling pathway","MAP3K7, RELA, COPS5, CLTC, BCL3, TNFRSF1A, CNTN2, NFKBIB, ERC1, UBC, RIPK1",11,"TNFRSF1A",1,"TNFRSF1A, RELA",2,"TNFRSF1A, MAP3K7, RELA",3,"TNFRSF1A",1,NA,0,"TNFRSF1A, RELA, MAP3K7",3,4
+"157","IL1B",375,"MAPK signaling pathway",3553,"Cytokine-cytokine receptor interaction ; Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Leishmaniasis ; Amoebiasis ; Osteoclast differentiation ; Rheumatoid arthritis ; Apoptosis ; Hematopoietic cell lineage ; African trypanosomiasis ; NOD-like receptor signaling pathway ; Malaria ; Prion diseases","A2M",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"158","IL3",378,"Cytokine-cytokine receptor interaction",3562,"Cytokine-cytokine receptor interaction ; Apoptosis ; Hematopoietic cell lineage ; Jak-STAT signaling pathway ; Fc epsilon RI signaling pathway","IL3RA",1,"IL3RA",1,NA,0,NA,0,"IL3RA",1,NA,0,NA,0,1
+"159","IL3RA",191,"Cytokine-cytokine receptor interaction",3563,"Cytokine-cytokine receptor interaction ; Apoptosis ; Hematopoietic cell lineage ; Jak-STAT signaling pathway","IL3",1,"IL3",1,NA,0,NA,0,"IL3",1,NA,0,NA,0,1
+"160","ING1",265,"Novel",3621,NA,"UBC, PCNA, SIN3A, HDAC2",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"161","IRAK1",301,"Chagas disease (American trypanosomiasis)",3654,"Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leishmaniasis ; Apoptosis ; Neurotrophin signaling pathway","MYD88",1,NA,0,"MYD88",1,NA,0,NA,0,"MYD88",1,NA,0,1
+"162","IRF9",280,"Novel",10379,"Hepatitis C ; Osteoclast differentiation ; Jak-STAT signaling pathway","STAT1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"163","ISG15",108,"Novel",9636,"RIG-I-like receptor signaling pathway","ACACB, YARS, USP18, UBC, PCNA",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"164","ITGA1",368,"Novel",3672,"Regulation of actin cytoskeleton ; Focal adhesion ; Hematopoietic cell lineage ; ECM-receptor interaction ; Arrhythmogenic right ventricular cardiomyopathy (ARVC)","ITGB1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"165","ITGA5",359,"Novel",3678,"Regulation of actin cytoskeleton ; Focal adhesion ; Phagosome ; Shigellosis ; Hematopoietic cell lineage ; Bacterial invasion of epithelial cells ; ECM-receptor interaction ; Arrhythmogenic right ventricular cardiomyopathy (ARVC)","UBC, ITGB1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"166","ITGAM",189,"Novel",3684,"Regulation of actin cytoskeleton ; Leukocyte transendothelial migration ; Leishmaniasis ; Amoebiasis ; Phagosome ; Hematopoietic cell lineage ; Cell adhesion molecules (CAMs)","ICAM1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"167","ITGAV",231,"Novel",3685,"Regulation of actin cytoskeleton ; Focal adhesion ; Phagosome ; Cell adhesion molecules (CAMs) ; ECM-receptor interaction ; Arrhythmogenic right ventricular cardiomyopathy (ARVC)","ITGB1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"168","ITGB1",64,"Novel",3688,"Regulation of actin cytoskeleton ; Toxoplasmosis ; Leukocyte transendothelial migration ; Leishmaniasis ; Focal adhesion ; Phagosome ; Shigellosis ; Cell adhesion molecules (CAMs) ; Bacterial invasion of epithelial cells ; ECM-receptor interaction ; Pathogenic Escherichia coli infection ; Arrhythmogenic right ventricular cardiomyopathy (ARVC)","PXN, ITGAV, VCL, ITGA5, ITGB1BP1, ITGA1, UBC",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"169","ITGB1BP1",367,"Novel",9270,NA,"ITGB1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"170","JAM3",416,"Novel",83700,"Leukocyte transendothelial migration ; Tight junction ; Cell adhesion molecules (CAMs) ; Epithelial cell signaling in Helicobacter pylori infection","PARD3",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"171","JUN",62,"MAPK signaling pathway",3725,"Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Leishmaniasis ; Focal adhesion ; Osteoclast differentiation ; Rheumatoid arthritis ; GnRH signaling pathway ; Epithelial cell signaling in Helicobacter pylori infection ; T cell receptor signaling pathway ; Neurotrophin signaling pathway ; Renal cell carcinoma","UBE2I, FBXW7, COPS5, TAF12, TAF1, COPS2, RUNX1, ATF3, MED21, SPI1, RELA, SP1, PRKD1, UBC",14,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"172","KAT2B",97,"Novel",8850,NA,"TAF12, ASF1B, CNTN2, RELA, UBC",5,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"173","KLF4",315,"Novel",9314,NA,"SP1, UBC, HDAC2",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"174","KLHL8",221,"Novel",57563,NA,"PSMA3, UBC, PSMA2, COPS6, PSMA5, PSMA7, PSMA1",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"175","KRAS",216,"MAPK signaling pathway",3845,"Regulation of actin cytoskeleton ; MAPK signaling pathway ; Chemokine signaling pathway ; Tight junction ; Hepatitis C ; Pancreatic cancer ; GnRH signaling pathway ; Prostate cancer ; Long-term depression ; T cell receptor signaling pathway ; Chronic myeloid leukemia ; Gap junction ; Fc epsilon RI signaling pathway ; Melanoma ; Natural killer cell mediated cytotoxicity ; Neurotrophin signaling pathway ; VEGF signaling pathway ; Renal cell carcinoma ; Progesterone-mediated oocyte maturation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"176","LAMP1",339,"Novel",3916,"Phagosome","EGFR",1,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"177","LAT",27,"Novel",27040,"Fc gamma R-mediated phagocytosis ; T cell receptor signaling pathway ; Fc epsilon RI signaling pathway ; Natural killer cell mediated cytotoxicity","SYK, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"178","LDHB",396,"Novel",3945,"Propanoate metabolism","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"179","LDLR",141,"Novel",3949,"Toxoplasmosis ; Endocytosis ; Hepatitis C","APOB, MYLIP, HSPA5, UBC",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"180","LIG1",369,"Novel",3978,"Base excision repair ; DNA replication ; Mismatch repair","UBC, PCNA",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"181","LPXN",133,"Novel",9404,NA,"VCL",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"182","LRIG1",341,"Novel",26018,NA,"EGFR, UBC",2,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"183","LRP1",233,"Novel",4035,"Malaria","UBC, CALR, A2M",3,NA,0,"CALR",1,NA,0,NA,0,"CALR",1,NA,0,1
+"184","LSM4",76,"Novel",25804,"Spliceosome","LSM6, UBC, SNRPD3, PRPF8",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"185","LSM6",214,"Novel",11157,"Spliceosome","PRPF8, LSM4, SNRPD3",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"186","LUC7L",75,"Novel",55692,NA,"SNRPC, SNRPD3, PRPF8",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"187","LY96",415,"Novel",23643,"Toll-like receptor signaling pathway ; Toxoplasmosis ; Pathogenic Escherichia coli infection","TLR4",1,NA,0,"TLR4",1,NA,0,NA,0,"TLR4",1,NA,0,1
+"188","MAF1",227,"Novel",84232,NA,"CSNK2A2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"189","MAP2K6",212,"MAPK signaling pathway",5608,"MAPK signaling pathway ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Osteoclast differentiation ; Amyotrophic lateral sclerosis (ALS) ; GnRH signaling pathway ; Fc epsilon RI signaling pathway","RELA, UBC, MAP3K7",3,NA,0,"RELA",1,"MAP3K7, RELA",2,NA,0,NA,0,"RELA, MAP3K7",2,2
+"190","MAP3K3",207,"MAPK signaling pathway",4215,"MAPK signaling pathway ; GnRH signaling pathway ; Neurotrophin signaling pathway","MAP3K7, UBC",2,NA,0,NA,0,"MAP3K7",1,NA,0,NA,0,"MAP3K7",1,1
+"191","MAP3K7",45,"MAPK signaling pathway",6885,"MAPK signaling pathway ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leishmaniasis ; RIG-I-like receptor signaling pathway ; Osteoclast differentiation ; NOD-like receptor signaling pathway ; T cell receptor signaling pathway","EIF2AK2, RELA, TLR4, CLTC, MYD88, TIRAP, MAP3K3, MAP2K6, TNFRSF1A, CARD11, SMAD6, IKBKB, UBC, RIPK1",14,"TNFRSF1A",1,"TNFRSF1A, TLR4, RELA, MYD88, IKBKB",5,"TNFRSF1A, RELA, MAP2K6, MAP3K3, IKBKB",5,"TNFRSF1A",1,"TLR4, MYD88",2,"TNFRSF1A, RELA, MAP3K3, MAP2K6, IKBKB",5,8
+"192","MAP3K8",251,"MAPK signaling pathway",1326,"MAPK signaling pathway ; Toll-like receptor signaling pathway ; T cell receptor signaling pathway","RELA",1,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"193","MAPK13",326,"MAPK signaling pathway",5603,"Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leukocyte transendothelial migration ; Leishmaniasis ; Hepatitis C ; RIG-I-like receptor signaling pathway ; Osteoclast differentiation ; Shigellosis ; Amyotrophic lateral sclerosis (ALS) ; GnRH signaling pathway ; NOD-like receptor signaling pathway ; Epithelial cell signaling in Helicobacter pylori infection ; T cell receptor signaling pathway ; Fc epsilon RI signaling pathway ; Neurotrophin signaling pathway ; VEGF signaling pathway ; Progesterone-mediated oocyte maturation","MBP, MAPKAPK3",2,NA,0,NA,0,"MAPKAPK3",1,NA,0,NA,0,"MAPKAPK3",1,1
+"194","MAPKAPK3",173,"MAPK signaling pathway",7867,"MAPK signaling pathway ; VEGF signaling pathway","MAPK13, UBC",2,NA,0,"MAPK13",1,"MAPK13",1,NA,0,NA,0,"MAPK13",1,1
+"195","MARCKSL1",373,"Novel",65108,"Leishmaniasis ; Fc gamma R-mediated phagocytosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"196","MAX",196,"MAPK signaling pathway",4149,"MAPK signaling pathway","MXI1, MSH2",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"197","MBD2",161,"Novel",8932,NA,"MBD3, MTA2, HDAC2",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"198","MBD3",300,"Novel",53615,NA,"MBD2, MTA2, HDAC2, CHD4",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"199","MBP",174,"Novel",4155,NA,"MAPK13",1,NA,0,"MAPK13",1,"MAPK13",1,NA,0,NA,0,"MAPK13",1,1
+"200","MCM3AP",260,"Novel",8888,NA,"POLDIP3, THOC2, UBC, RAE1",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"201","MDM4",275,"Novel",4194,NA,"UBC, SFN, YWHAG",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"202","MED21",249,"Novel",9412,NA,"JUN, UBC",2,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"203","MFAP1",53,"Novel",4236,NA,"PRPF8, SNW1, SF3B1, XAB2, SF3B2, SNRPD3, RBM39, SF3B6, BCAS2, IK, PRPF38A, UBC",12,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"204","MIS12",112,"Novel",79003,NA,"BUB1B, HNRNPH1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"205","MORF4L1",90,"Novel",10933,NA,"PHF12, SIN3B, PALB2, SIN3A, UBC, HDAC2",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"206","MSH2",4,"Novel",4436,"Mismatch repair","PCNA, XPA, E2F3, ATR, MAX, POLE, IK, UBB, UBC",9,NA,0,NA,0,"MAX",1,NA,0,NA,0,"MAX",1,1
+"207","MTA2",38,"Novel",9219,NA,"MBD2, CHD4, MBD3, SIN3A, HDAC2, UBC",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"208","MUTYH",223,"Novel",4595,"Base excision repair","UBC, PCNA",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"209","MVB12A",293,"Novel",93343,"Endocytosis","TSG101, VPS37C, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"210","MVB12B",292,"Novel",89853,"Endocytosis","TSG101",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"211","MXI1",410,"Novel",4601,NA,"MAX",1,NA,0,NA,0,"MAX",1,NA,0,NA,0,"MAX",1,1
+"212","MYBL2",240,"Novel",4605,NA,"E2F3, CCNE1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"213","MYD88",163,"Chagas disease (American trypanosomiasis)",4615,"Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leishmaniasis ; Apoptosis ; African trypanosomiasis ; Malaria","TIRAP, IRAK1, TLR2, UBC, TLR4, MAP3K7",6,NA,0,"TLR4, TLR2, IRAK1",3,"MAP3K7",1,NA,0,"TLR4, TLR2, IRAK1",3,"MAP3K7",1,4
+"214","MYH7B",377,"Novel",57644,"Tight junction","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"215","MYLIP",395,"Novel",29116,NA,"UBC, LDLR",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"216","NDUFA1",58,"Novel",4694,NA,"SF3B2, RBM39, IK",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"217","NFKBIB",330,"Novel",4793,"Toxoplasmosis ; Chemokine signaling pathway ; Leishmaniasis ; RIG-I-like receptor signaling pathway ; Shigellosis ; NOD-like receptor signaling pathway ; T cell receptor signaling pathway ; Neurotrophin signaling pathway","IKBKB, RELA",2,NA,0,"RELA, IKBKB",2,"RELA, IKBKB",2,NA,0,NA,0,"RELA, IKBKB",2,2
+"218","NFKBIE",356,"Novel",4794,"T cell receptor signaling pathway ; Neurotrophin signaling pathway","RELA",1,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"219","NGFR",200,"Cytokine-cytokine receptor interaction",4804,"Cytokine-cytokine receptor interaction ; Neurotrophin signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"220","NIFK",68,"Novel",84365,NA,"SF3B1, PA2G4, RRP1, RPL19, RPS2, RRP9, UBC",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"221","NIPBL",100,"Novel",25836,NA,"RAD21",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"222","NPAS4",407,"Novel",266743,NA,"ARNT",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"223","NR4A1",305,"MAPK signaling pathway",3164,"MAPK signaling pathway","PSMD2, UBC, PSMC1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"224","NSFL1C",232,"Novel",55968,NA,"VCP, PSMD2, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"225","NUP155",351,"Novel",9631,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"226","NUP188",390,"Novel",23511,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"227","NUP43",261,"Novel",348995,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"228","NXF1",101,"Novel",10482,"RNA transport","SRSF1, RAE1, RANGAP1, RANBP2, FYTTD1, NXT1, UBC",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"229","NXT1",355,"Novel",29107,"RNA transport","NXF1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"230","OASL",309,"Novel",8638,NA,"ACACB, YARS",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"231","OTUD5",337,"Novel",55593,"RIG-I-like receptor signaling pathway","RPS27A",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"232","P4HB",103,"Novel",5034,NA,"CALR, HSP90B1, UBC",3,NA,0,"CALR",1,NA,0,NA,0,"CALR",1,NA,0,1
+"233","PA2G4",239,"Novel",5036,NA,"UBC, RAE1, NIFK",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"234","PAAF1",203,"Novel",80227,NA,"PSMD1, PSMC5, PSMC4, PSMD2, PSMD7, PSMD12, PSMD6, PSMD3, PSMD11, PSMC1, PSMC2",11,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"235","PABPC4",311,"Novel",8761,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"236","PABPC5",400,"Novel",140886,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"237","PAFAH1B3",398,"Novel",5050,"Ether lipid metabolism","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"238","PALB2",379,"Novel",79728,NA,"MORF4L1, RAD51, BRCA2",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"239","PARD3",102,"Novel",56288,"Chemokine signaling pathway ; Endocytosis ; Tight junction","CDH5, PARD6G, JAM3, YWHAH, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"240","PARD6G",358,"Novel",84552,"Endocytosis ; Tight junction","PARD3, CDC42, CDH5",3,NA,0,NA,0,"CDC42",1,NA,0,NA,0,"CDC42",1,1
+"241","PARP1",171,"Novel",142,"Base excision repair","POLB, UBC, UBE2I, RELA, PCNA, SUMO3",6,NA,0,"RELA",1,"RELA",1,NA,0,NA,0,"RELA",1,1
+"242","PCNA",36,"Novel",5111,"Cell cycle ; Base excision repair ; DNA replication ; Mismatch repair","RPS27A, UBE2I, ISG15, USP1, DAD1, CDC25C, PARP1, POLD4, UBE2V2, POLE, MUTYH, ING1, POLB, TBPL2, LIG1, POLD3, FAHD2B, SUMO3, UBC, MSH2, UBB",21,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"243","PDGFRA",277,"MAPK signaling pathway",5156,"Regulation of actin cytoskeleton ; Cytokine-cytokine receptor interaction ; MAPK signaling pathway ; Focal adhesion ; Endocytosis ; Prostate cancer ; Gap junction ; Melanoma","STAT1, PDGFRB, UBC",3,"PDGFRB",1,NA,0,"PDGFRB",1,"PDGFRB",1,NA,0,"PDGFRB",1,2
+"244","PDGFRB",148,"MAPK signaling pathway",5159,"Regulation of actin cytoskeleton ; Cytokine-cytokine receptor interaction ; MAPK signaling pathway ; Focal adhesion ; Prostate cancer ; Gap junction ; Melanoma","SHC2, PDGFRA, PIK3R3, STAT1, RPS27A, UBC, EGFR",7,"PDGFRA, EGFR",2,"PIK3R3",1,"PDGFRA, EGFR",2,"PDGFRA, EGFR",2,"PIK3R3",1,"PDGFRA, EGFR",2,5
+"245","PDIA3",285,"Novel",2923,NA,"CALR, UBC",2,NA,0,"CALR",1,NA,0,NA,0,"CALR",1,NA,0,1
+"246","PDLIM7",139,"Novel",9260,NA,"HSP90B1, RET, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"247","PFN1",243,"Novel",5216,"Regulation of actin cytoskeleton ; Shigellosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"248","PGAM2",303,"Novel",5224,NA,"UBB, SH3GLB1, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"249","PGAM5",80,"Novel",192111,NA,"BCL2L1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"250","PHF12",154,"Novel",57649,NA,"SIN3B, SIN3A, HDAC2, MORF4L1",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"251","PHF21A",360,"Novel",51317,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"252","PHF5A",237,"Novel",84844,"Spliceosome","UBC, SF3B6, SF3B1, SF3B2",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"253","PIK3R3",308,"Chagas disease (American trypanosomiasis)",8503,"Regulation of actin cytoskeleton ; Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Focal adhesion ; Amoebiasis ; Hepatitis C ; Osteoclast differentiation ; Fc gamma R-mediated phagocytosis ; Apoptosis ; Bacterial invasion of epithelial cells ; Pancreatic cancer ; Prostate cancer ; Jak-STAT signaling pathway ; T cell receptor signaling pathway ; Chronic myeloid leukemia ; Fc epsilon RI signaling pathway ; Melanoma ; Natural killer cell mediated cytotoxicity ; Neurotrophin signaling pathway ; VEGF signaling pathway ; Renal cell carcinoma ; Progesterone-mediated oocyte maturation","EGFR, PDGFRB",2,"PDGFRB, EGFR",2,NA,0,"PDGFRB, EGFR",2,"PDGFRB, EGFR",2,NA,0,"PDGFRB, EGFR",2,4
+"254","PIP5K1C",297,"Novel",23396,"Regulation of actin cytoskeleton ; Focal adhesion ; Endocytosis ; Fc gamma R-mediated phagocytosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"255","PLA2G4A",393,"MAPK signaling pathway",5321,"MAPK signaling pathway ; Toxoplasmosis ; Fc gamma R-mediated phagocytosis ; Ether lipid metabolism ; GnRH signaling pathway ; Long-term depression ; Fc epsilon RI signaling pathway ; VEGF signaling pathway ; Linoleic acid metabolism","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"256","PLEKHO2",402,"Cytokine-cytokine receptor interaction",80301,"Cytokine-cytokine receptor interaction","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"257","PLK1",99,"Novel",5347,"Cell cycle ; Progesterone-mediated oocyte maturation","CDC25C, BUB1B, RAD21, UBC",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"258","PLOD3",274,"Novel",8985,"Lysine degradation","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"259","PLRG1",67,"Novel",5356,"Spliceosome","SNW1, SF3B1, XAB2, SF3B2, SNRPD3, BCAS2, CCDC94, UBC, CDC5L, PRPF8",10,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"260","PLSCR1",342,"Novel",5359,NA,"EGFR, UBC",2,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"261","PMAIP1",364,"Novel",5366,NA,"UBC, BCL2L1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"262","POLB",318,"Novel",5423,"Base excision repair","PCNA, PARP1",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"263","POLD3",392,"Novel",10714,"Base excision repair ; DNA replication ; Mismatch repair","PCNA, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"264","POLD4",190,"Novel",57804,"Base excision repair ; DNA replication ; Mismatch repair","ALAS1, PCNA, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"265","POLDIP3",127,"Novel",84271,NA,"THOC2, MCM3AP, UBC, EIF4G1",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"266","POLE",218,"Novel",5426,"Base excision repair ; DNA replication","MSH2, PCNA, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"267","POMP",12,"Novel",51371,"Proteasome","PSMB4, PSMA2, PSMA6, PSMB2, PSMA5, PSMA1, PSMB5, PSMA3, PSMC2, PSMA4, PSMB1, PSMA7, UBC",13,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"268","PPIH",256,"Novel",10465,"Spliceosome","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"269","PPP2CB",206,"Chagas disease (American trypanosomiasis)",5516,"Chagas disease (American trypanosomiasis) ; Tight junction ; Hepatitis C ; Long-term depression","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"270","PRKAR2B",371,"Novel",5577,"Apoptosis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"271","PRKD1",60,"Novel",5587,NA,"JUN",1,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"272","PRNP",347,"Novel",5621,"Prion diseases","HSPA5",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"273","PRPF38A",296,"Novel",84950,"Spliceosome","RBM39, SRPK2, MFAP1, SRPK1, SRSF3",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"274","PRPF8",54,"Novel",10594,"Spliceosome","PLRG1, SNW1, SF3B1, XAB2, SF3B2, SNRPD3, LUC7L, LSM4, EFTUD2, LSM6, BCAS2, CD2BP2, HNRNPM, DDX3X, CDC5L, MFAP1, UBL5, UBC",18,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"275","PSMA1",21,"Novel",5682,"Proteasome","PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, KLHL8, PSMB2, PSMC5, PSMB1, PSMD2, PSMA5, PSMA6, PSMA7, PSMB4, PSMD7, PSMA2, PSMD1, UBC, PSMD11, PSMD3, POMP, PSMD12",24,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"276","PSMA2",15,"Novel",5683,"Proteasome","PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, KLHL8, VCP, PSMD1, PSMB1, PSMD12, PSMB4, UBC, PSMD11, PSMA7, PSMC5, POMP, PSMD2",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"277","PSMA3",25,"Novel",5684,"Proteasome","PSMC2, PSMD6, PSMA4, KLHL8, PSMD12, PSMB2, PSMD3, PSMC4, PSMD1, PSMA1, UBC, PSMA7, PSMB5, PSMA5, PSMA2, POMP, PSMD2, PSMD7, PSMB4, PSMD11, PSMC5, PSMA6, STUB1, PSMB1, PSMC1",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"278","PSMA4",204,"Novel",5685,"Proteasome","PSMC2, PSMC5, PSMB5, PSMA2, PSMD1, PSMD3, UBB, PSMA7, PSMB2, PSMD11, PSMD2, PSMD7, PSMA5, PSMA1, PSMB4, WDR5, PSMA3, POMP, PSMC1, PSMB1, UBC, PSMA6, PSMD6, PSMD12, WDR5B, PSMC4",26,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"279","PSMA5",18,"Novel",5686,"Proteasome","PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, CDX2, PSMA4, KLHL8, PSMA2, PSMD12, PSMB1, POMP, PSMB4, PSMD11, PSMA6, PSMC5, PSMD1, UBC, PSMD2, PSMA7, PSMB2",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"280","PSMA6",16,"Novel",5687,"Proteasome","PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, COPS5, COPS2, PSMA4, PSMD11, PSMC5, POMP, PSMD12, PSMA7, PSMB4, PSMD2, UBC, PSMA2, PSMB1, PSMD1",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"281","PSMA7",6,"Novel",5688,"Proteasome","PSMD2, PSMD11, PSMD1, PSMC5, POMP, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, KLHL8, UBC, PSMB1",24,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"282","PSMB1",5,"Novel",5689,"Proteasome","PSMA7, PSMD2, PSMD11, PSMD1, PSMC5, POMP, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, UBC",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"283","PSMB2",17,"Novel",5690,"Proteasome","PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, PSMD11, PSMD1, PSMD2, PSMB1, PSMA7, UBC, VCP, POMP, PSMA2, PSMD12, PSMB4, PSMC5, UBB, PSMA6",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"284","PSMB4",13,"Novel",5692,"Proteasome","PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PSMA4, PSMD2, PSMD1, POMP, PSMA7, SMAD1, UBC, PSMC5, PSMB1, PSMD11",24,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"285","PSMB5",24,"Novel",5693,"Proteasome","PSMA3, PSMC2, PSMD6, PSMA4, PSMB2, PSMC5, PSMA5, PSMB1, UBC, PSMA7, PSMD12, PSMD7, PSMB4, POMP, PSMD3, PSMD2, PSMD11, PSMC4, PSMA6, PSMC1, PSMA1, PSMA2, PSMD1",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"286","PSMC1",23,"Novel",5700,"Proteasome","PSMB5, PSMA3, PSMC2, SIN3A, PSMD6, COPS2, PAAF1, PSMA4, SIN3B, NR4A1, PSMC4, PSMD11, PSMA2, PSMD12, PSMD7, UBC, PSMD1, PSMD2, PSMB1, PSMA1, PSMB2, PSMD3, PSMB4, PSMA5, PSMA7, PSMA6, UBB, PSMC5",28,NA,0,NA,0,"NR4A1",1,NA,0,NA,0,"NR4A1",1,1
+"287","PSMC2",26,"Novel",5701,"Proteasome","SIN3A, PSMD6, PAAF1, PSMA4, UBQLN4, SIN3B, PSMA7, PSMA5, PSMD12, PSMA2, PSMD1, PSMB2, UBB, PSMD3, PSMD2, PSMD7, PSMB5, PSMA6, PSMC1, PSMC5, PSMD11, PSMA1, PSMB1, PSMC4, UBC, PSMA3, PSMB4, POMP",28,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"288","PSMC4",22,"Novel",5704,"Proteasome","PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, CDX2, PAAF1, PSMA4, PSMD2, PSMA1, PSMD3, UBC, PSMD12, PSMB4, PSMC5, PSMD1, PSMD7, PSMA7, PSMA5, PSMB1, PSMB2, PSMA6, PSMD11, PSMA2",24,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"289","PSMC5",11,"Novel",5705,"Proteasome","PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, SP1, COPS2, PAAF1, PSMA4, PSMD2, PSMD11, PSMD1, UBC, PSMA7, PSMB1",25,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"290","PSMD1",9,"Novel",5707,"Proteasome","PSMC5, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PAAF1, PSMA4, PSMD11, PSMD2, UBC, PSMA7, PSMB1",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"291","PSMD11",8,"Novel",5717,"Proteasome","PSMD1, PSMC5, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PAAF1, PSMA4, PSMD2, PSMA7, PSMB1, UBC",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"292","PSMD12",14,"Novel",5718,"Proteasome","PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, SIN3A, PSMD6, COPS5, PAAF1, PSMA4, SIN3B, PSMB1, PSMD1, PSMD11, PSMC5, UBC, PSMB4, PSMD2, PSMA7, VCP",27,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"293","PSMD2",7,"Novel",5708,"Proteasome","PSMD11, PSMD1, PSMC5, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, CDX2, PAAF1, PSMA4, NSFL1C, UBQLN4, TNFRSF1A, NR4A1, PSMB1, UBB, UBC, PSMA7",29,"TNFRSF1A",1,"TNFRSF1A",1,"TNFRSF1A, NR4A1",2,"TNFRSF1A",1,NA,0,"TNFRSF1A, NR4A1",2,3
+"294","PSMD3",20,"Novel",5709,"Proteasome","PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PAAF1, PSMA4, PSMB1, PSMD12, PSMA2, PSMA6, PSMD11, UBC, PSMD2, PSMC5, PSMD7, PSMB4, PSMA5, PSMD1, UBB, PSMA7, PSMB2",24,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"295","PSMD6",39,"Novel",9861,"Proteasome","PAAF1, PSMA4, PSMB2, PSMD2, PSMD11, PSMB4, UBC, PSMD1, PSMA7, PSMD12, PSMA6, PSMB1, PSMD7, PSMA2, PSMA1, PSMD3, PSMB5, PSMA3, PSMA5, PSMC2, PSMC1, PSMC4, PSMC5",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"296","PSMD7",19,"Novel",5713,"Proteasome","PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, PSMD6, PAAF1, PSMA4, PSMD11, PSMA7, PSMC5, PSMD1, PSMB2, PSMA6, PSMB4, PSMA5, PSMD2, PSMA2, PSMD12, UBC, PSMB1",23,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"297","PSMF1",331,"Novel",9491,"Proteasome","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"298","PTGES3",146,"Novel",10728,NA,"ARNT, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"299","PTK2B",259,"Novel",2185,"Leukocyte transendothelial migration ; Chemokine signaling pathway ; GnRH signaling pathway ; Natural killer cell mediated cytotoxicity","PXN, EGFR, UBC",3,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"300","PTMA",114,"Novel",5757,NA,"SRSF2, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"301","PTPN2",328,"Novel",5771,NA,"EGFR, STAT1",2,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"302","PTPN22",327,"Novel",26191,NA,"SHC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"303","PTPN6",340,"Novel",5777,"Leishmaniasis ; Jak-STAT signaling pathway ; T cell receptor signaling pathway ; Natural killer cell mediated cytotoxicity","EGFR",1,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"304","PXN",132,"Novel",5829,"Regulation of actin cytoskeleton ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Focal adhesion ; Bacterial invasion of epithelial cells ; VEGF signaling pathway","GIT1, VCL, ASAP2, PTK2B, UBC, ITGB1",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"305","RAB5A",149,"Novel",5868,"Endocytosis ; Amoebiasis ; Phagosome ; Vasopressin-regulated water reabsorption ; Amyotrophic lateral sclerosis (ALS)","RABGEF1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"306","RABGEF1",278,"Novel",27342,NA,"RAB5A, UBC, THOC1, UBB",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"307","RAD21",229,"Novel",5885,"Cell cycle","UBC, SNW1, PLK1, NIPBL",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"308","RAD51",77,"Novel",5888,"Pancreatic cancer","UBE2I, ATR, BRCA2, PALB2",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"309","RAE1",120,"Novel",8480,"RNA transport","HSP90B1, PA2G4, EEF2K, MCM3AP, UBC, COPS6, NXF1",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"310","RANBP2",350,"Novel",5903,"RNA transport","SUMO3, NXF1, UBC, RANGAP1, UBE2I",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"311","RANGAP1",184,"Novel",5905,"RNA transport","RANBP2, UBE2I, NXF1, UBC, SUMO3",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"312","RAP1A",194,"MAPK signaling pathway",5906,"MAPK signaling pathway ; Leukocyte transendothelial migration ; Chemokine signaling pathway ; Focal adhesion ; Neurotrophin signaling pathway ; Renal cell carcinoma","RAPGEF5, CDC42, UBC, BRAF",4,NA,0,NA,0,"CDC42, BRAF",2,NA,0,NA,0,"CDC42, BRAF",2,2
+"313","RAPGEF5",406,"Novel",9771,NA,"RAP1A",1,NA,0,NA,0,"RAP1A",1,NA,0,NA,0,"RAP1A",1,1
+"314","RBM10",74,"Novel",8241,NA,"SNRPC, IK",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"315","RBM39",96,"Novel",9584,NA,"SRPK2, SAP30BP, PRPF38A, UBC, MFAP1, NDUFA1",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"316","RBPJ",66,"Novel",3516,NA,"SNW1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"317","RELA",59,"MAPK signaling pathway",5970,"Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Chemokine signaling pathway ; Leishmaniasis ; Amoebiasis ; Hepatitis C ; RIG-I-like receptor signaling pathway ; Osteoclast differentiation ; Shigellosis ; Apoptosis ; Pancreatic cancer ; NOD-like receptor signaling pathway ; Prostate cancer ; Epithelial cell signaling in Helicobacter pylori infection ; T cell receptor signaling pathway ; Chronic myeloid leukemia ; Neurotrophin signaling pathway","SP1, JUN, KAT2B, STAT1, TAF1, PARP1, MAP2K6, BCL3, MAP3K8, NFKBIB, NFKBIE, CXCL8, UBC, IKBKB, HDAC2, MAP3K7",16,NA,0,"JUN, IKBKB",2,"MAP3K7, MAP2K6, JUN, IKBKB, MAP3K8",5,NA,0,NA,0,"MAP3K8, MAP3K7, MAP2K6, JUN, IKBKB",5,5
+"318","RERE",413,"Novel",473,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"319","RET",83,"Novel",5979,"Endocytosis","PDLIM7, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"320","RIPK1",43,"Novel",8737,"Toll-like receptor signaling pathway ; Hepatitis C ; RIG-I-like receptor signaling pathway ; Apoptosis","IKBKB, MAP3K7, CFLAR, TNFRSF1A, TICAM1, CYLD, RPS27A, UBC",8,"TNFRSF1A",1,"TICAM1, CFLAR, TNFRSF1A, IKBKB",4,"TNFRSF1A, MAP3K7, IKBKB",3,"TNFRSF1A",1,"TICAM1, CFLAR",2,"TNFRSF1A, MAP3K7, IKBKB",3,6
+"321","RPL19",48,"Novel",6143,NA,"NIFK, EFTUD2, RPS2, RPS27A, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"322","RPS2",46,"Novel",6187,NA,"RPL19, NIFK, EFTUD2, EIF1, UBC, RPS27A, UBB",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"323","RPS27A",42,"Novel",6233,NA,"RIPK1, RPS2, RPL19, STAT1, ACACB, PDGFRB, EIF1, CSF1R, OTUD5, PCNA, UBC, VCP, EGFR",13,"PDGFRB, EGFR, CSF1R",3,NA,0,"PDGFRB, EGFR",2,"PDGFRB, EGFR, CSF1R",3,NA,0,"PDGFRB, EGFR",2,5
+"324","RRAGA",346,"Novel",10670,NA,"ACACB",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"325","RREB1",419,"Novel",6239,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"326","RRP1",269,"Novel",8568,NA,"NIFK, CSNK2A2, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"327","RRP9",49,"Novel",9136,NA,"NIFK, THOC1, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"328","RUNX1",187,"Novel",861,"Chronic myeloid leukemia","ELF4, UBC, JUN, HDAC2, SUV39H1, YAP1",6,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"329","SAP30BP",165,"Novel",29115,NA,"DYNC1H1, THOC1, UBC, RBM39",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"330","SATB1",290,"Novel",6304,NA,"UBE2I",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"331","SEC61A1",246,"Novel",29927,"Phagosome","DAD1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"332","SERPINB1",270,"Novel",1992,"Amoebiasis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"333","SETMAR",420,"Novel",6419,"Lysine degradation","TOP2A",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"334","SF3B1",70,"Novel",23451,"Spliceosome","XAB2, SF3B2, SNRPD3, EFTUD2, SRSF1, SF3B6, PHF5A, HNRNPM, CCDC97, UBC, SNW1, NIFK, PLRG1, MFAP1, CDC5L, PRPF8",16,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"335","SF3B2",72,"Novel",10992,"Spliceosome","SNRPD3, SF3B6, PHF5A, SF3B1, NDUFA1, MFAP1, UBC, PRPF8, PLRG1, XAB2, THOC1, CDC5L",12,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"336","SF3B6",118,"Novel",51639,NA,"PHF5A, CCDC97, UBC, SF3B2, SF3B1, MFAP1",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"337","SFN",33,"Novel",2810,"Cell cycle","HDAC4, BRAF, CDC25B, MDM4, EGFR, UBC",6,"EGFR",1,NA,0,"EGFR, CDC25B, BRAF",3,"EGFR",1,NA,0,"EGFR, CDC25B, BRAF",3,4
+"338","SFPQ",276,"Novel",6421,NA,"UBC, SIN3A, CDC5L",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"339","SH3GLB1",164,"Novel",51100,"Endocytosis","PGAM2, SH3GLB2, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"340","SH3GLB2",399,"Novel",56904,"Endocytosis","SH3GLB1, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"341","SHC2",175,"Novel",25759,"Chemokine signaling pathway ; Focal adhesion ; Bacterial invasion of epithelial cells ; Chronic myeloid leukemia ; Natural killer cell mediated cytotoxicity ; Neurotrophin signaling pathway ; VEGF signaling pathway","PTPN22, PDGFRB",2,"PDGFRB",1,NA,0,"PDGFRB",1,"PDGFRB",1,NA,0,"PDGFRB",1,2
+"342","SIM1",408,"Novel",6492,NA,"ARNT",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"343","SIN3A",37,"Novel",25942,NA,"MTA2, MORF4L1, PHF12, COPS2, ZBTB16, ING1, SFPQ, PSMC2, PSMD12, UBC, PSMC1, HDAC4, HDAC2",13,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"344","SIN3B",291,"Novel",23309,NA,"UBC, PHF12, COPS2, PSMD12, PSMC1, HDAC2, MORF4L1, PSMC2",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"345","SLC2A1",394,"Novel",6513,"Renal cell carcinoma","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"346","SMAD1",10,"Novel",4086,NA,"PSMB4, SMAD4, YAP1, SMAD6, STUB1, UBC",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"347","SMAD4",126,"Novel",4089,"Pancreatic cancer ; Cell cycle ; Chronic myeloid leukemia","THOC2, SMAD6, SMAD1, COPS5, UBE2I, STUB1, SP1, UBC",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"348","SMAD6",323,"Novel",4091,"Endocytosis","SMAD4, MAP3K7, SMAD1, BMPR1B, UBC",5,"BMPR1B",1,NA,0,"MAP3K7",1,"BMPR1B",1,NA,0,"MAP3K7",1,2
+"349","SNRPC",213,"Novel",6631,"Spliceosome","SNRPD3, LUC7L, UBC, RBM10",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"350","SNRPD3",73,"Novel",6634,"Spliceosome","LUC7L, LSM4, EFTUD2, SNRPC, LSM6, MFAP1, SF3B2, SF3B1, PRPF8, UBC, CDC5L, PLRG1",12,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"351","SNW1",69,"Novel",22938,"Spliceosome","SF3B1, XAB2, EFTUD2, RAD21, CCDC94, RBPJ, CDC5L, MFAP1, PRPF8, PLRG1, UBC",11,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"352","SNX9",176,"Novel",51429,NA,"DNM1, CLTC, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"353","SP1",61,"Novel",6667,NA,"JUN, SMAD4, EPAS1, KLF4, EGR1, HDAC4, UBC, RELA, HDAC2, PSMC5",10,NA,0,"RELA, JUN",2,"RELA, JUN",2,NA,0,NA,0,"RELA, JUN",2,2
+"354","SPAG4",384,"Novel",6676,NA,"ACACB",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"355","SPATA25",363,"Novel",128497,NA,"BCL2L1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"356","SPI1",279,"Novel",6688,"Osteoclast differentiation","JUN",1,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"357","SRPK1",160,"Novel",6732,NA,"PRPF38A, SRSF2, SRSF3, SRSF1, UBC",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"358","SRPK2",159,"Novel",6733,NA,"PRPF38A, SRSF3, SRSF2, SRSF1, ACIN1, RBM39",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"359","SRRM1",226,"Novel",10250,"RNA transport","CDC5L",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"360","SRSF1",116,"Novel",6426,"Spliceosome","SRSF2, SRPK2, SRPK1, CLK1, CDC5L, NXF1, SF3B1, UBC",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"361","SRSF2",145,"Novel",6427,"Spliceosome","SRPK2, SRPK1, TRA2B, SRSF3, SRSF1, PTMA, UBC",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"362","SRSF3",113,"Novel",6428,"Spliceosome","TRA2B, SRSF2, SRPK2, SRPK1, PRPF38A, UBC",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"363","STAT1",121,"Novel",6772,"Toll-like receptor signaling pathway ; Toxoplasmosis ; Chemokine signaling pathway ; Leishmaniasis ; Hepatitis C ; Osteoclast differentiation ; Pancreatic cancer ; Jak-STAT signaling pathway","PDGFRB, PDGFRA, IRF9, PTPN2, UBC, EGFR, RELA, RPS27A, UBE2I, EIF2AK2",10,"PDGFRB, PDGFRA, EGFR",3,"RELA",1,"RELA, PDGFRB, PDGFRA, EGFR",4,"PDGFRB, PDGFRA, EGFR",3,NA,0,"RELA, PDGFRB, PDGFRA, EGFR",4,7
+"364","STMN1",370,"MAPK signaling pathway",3925,"MAPK signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"365","STUB1",1,"Novel",10273,NA,"VCP, UBB, SMAD1, PSMA3, EGFR, SMAD4, UBE2V2, UBC",8,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"366","STX18",245,"Novel",53407,"Phagosome","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"367","SUMO3",29,"Novel",6612,"RNA transport","PCNA, UBE2I, PARP1, RANGAP1, TOP2A, USPL1, RANBP2, UBC",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"368","SUN1",383,"Novel",23353,NA,"UBC, ACACB",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"369","SUV39H1",86,"Novel",6839,"Lysine degradation","RUNX1, EXOSC10, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"370","SUV39H2",417,"Novel",79723,"Lysine degradation","EXOSC10",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"371","SUZ12",272,"Novel",23512,NA,"HDAC2",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"372","SVIL",131,"Novel",6840,NA,"VCL",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"373","SYK",92,"Novel",6850,"Osteoclast differentiation ; Fc gamma R-mediated phagocytosis ; Fc epsilon RI signaling pathway ; Natural killer cell mediated cytotoxicity","TLR4, HCLS1, LAT, UBC",4,NA,0,"TLR4",1,NA,0,NA,0,"TLR4",1,NA,0,1
+"374","TACC3",385,"Novel",10460,"RNA transport","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"375","TAF1",136,"Novel",6872,NA,"ASF1B, ASF1A, TBPL2, JUN, RELA, UBC, TAF12",7,NA,0,"RELA, JUN",2,"RELA, JUN",2,NA,0,NA,0,"RELA, JUN",2,2
+"376","TAF12",98,"Novel",6883,NA,"TAF1, TBPL2, KAT2B, JUN",4,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"377","TBPL2",324,"Novel",387332,NA,"PCNA, TAF1, TAF12",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"378","TCIRG1",219,"Novel",10312,"Phagosome ; Rheumatoid arthritis ; Epithelial cell signaling in Helicobacter pylori infection","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"379","THOC1",47,"Novel",9984,"Spliceosome ; RNA transport","RRP9, SF3B2, USP13, THOC7, THOC2, SAP30BP, IK, RABGEF1",8,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"380","THOC2",134,"Novel",57187,"Spliceosome ; RNA transport","MCM3AP, ZMYM3, UBC, SMAD4, THOC7, THOC1, POLDIP3",7,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"381","THOC7",128,"Novel",80145,"RNA transport","THOC2, UBC, THOC1, USP13",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"382","THOP1",388,"Novel",7064,"African trypanosomiasis","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"383","TICAM1",287,"Chagas disease (American trypanosomiasis)",148022,"Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Hepatitis C","TLR4, RIPK1, UBC",3,NA,0,"TLR4",1,NA,0,NA,0,"TLR4",1,NA,0,1
+"384","TIRAP",179,"Novel",114609,"Toll-like receptor signaling pathway","TLR2, TLR4, MYD88, UBC, MAP3K7",5,NA,0,"TLR4, TLR2, MYD88",3,"MAP3K7",1,NA,0,"TLR4, TLR2, MYD88",3,"MAP3K7",1,4
+"385","TLR2",343,"Chagas disease (American trypanosomiasis)",7097,"Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leishmaniasis ; Amoebiasis ; Phagosome ; Rheumatoid arthritis ; Malaria","TIRAP, CXCR4, MYD88, EGFR, CD14",5,"CXCR4, EGFR",2,"MYD88",1,"EGFR, CD14",2,"CXCR4, EGFR",2,"MYD88",1,"EGFR, CD14",2,5
+"386","TLR4",140,"Chagas disease (American trypanosomiasis)",7099,"Chagas disease (American trypanosomiasis) ; Toll-like receptor signaling pathway ; Toxoplasmosis ; Leishmaniasis ; Amoebiasis ; Phagosome ; Rheumatoid arthritis ; Malaria ; Pathogenic Escherichia coli infection","MYD88, TIRAP, TICAM1, LY96, SYK, MAP3K7, UBC",7,NA,0,"TICAM1, MYD88",2,"MAP3K7",1,NA,0,"TICAM1, MYD88",2,"MAP3K7",1,3
+"387","TNFRSF1A",255,"MAPK signaling pathway",7132,"Cytokine-cytokine receptor interaction ; Chagas disease (American trypanosomiasis) ; MAPK signaling pathway ; Toxoplasmosis ; Hepatitis C ; Osteoclast differentiation ; Apoptosis ; Amyotrophic lateral sclerosis (ALS)","RIPK1, PSMD2, IKBKB, MAP3K7, UBC",5,NA,0,"IKBKB",1,"MAP3K7, IKBKB",2,NA,0,NA,0,"MAP3K7, IKBKB",2,2
+"388","TOLLIP",397,"Novel",54472,"Toll-like receptor signaling pathway","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"389","TOP2A",199,"Novel",7153,NA,"SETMAR, CSNK2A2, SUMO3, CDC5L, UBC, COPS5",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"390","TRA2B",115,"Novel",6434,"Spliceosome","SRSF2, SRSF3, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"391","TRAF3IP3",182,"Novel",80342,NA,"DYNLL1",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"392","TSG101",156,"Novel",7251,"Endocytosis","VPS37C, MVB12B, MVB12A, UBC, VPS36, UBB",6,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"393","TUBA1A",119,"Novel",7846,"Phagosome ; Gap junction ; Pathogenic Escherichia coli infection","TUBA4A, CYLD, UBC, EGFR, USP32",5,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"394","TUBA4A",238,"Novel",7277,"Phagosome ; Gap junction ; Pathogenic Escherichia coli infection","TUBA1A, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"395","UBB",3,"Novel",7314,NA,"MSH2, PSMD2, PSMB2, PSMD3, PSMC1, PSMC2, EGFR, PCNA, RPS2, FBXW7, ACACB, TSG101, YARS, PSMA4, RABGEF1, PGAM2, UBC, VCP, STUB1",19,"EGFR",1,NA,0,"EGFR",1,"EGFR",1,NA,0,"EGFR",1,2
+"396","UBC",0,"Novel",7316,NA,"STUB1, VCP, UBB, MSH2, PSMB1, PSMA7, PSMD2, PSMD11, PSMD1, SMAD1, PSMC5, POMP, PSMB4, PSMD12, PSMA2, PSMA6, PSMB2, PSMA5, PSMD7, PSMD3, PSMA1, PSMC4, PSMC1, PSMB5, PSMA3, PSMC2, LAT, SUMO3, YWHAG, EGFR, YWHAH, SFN, HDAC2, PCNA, SIN3A, MTA2, PSMD6, WDR5, RPS27A, RIPK1, IKBKB, MAP3K7, RPS2, RPL19, RRP9, EIF2AK2, CDC5L, UBL5, MFAP1, PRPF8, EIF2S1, EIF3I, HSPA5, RELA, SP1, JUN, CKS2, ITGB1, COPS6, PLRG1, NIFK, SNW1, SF3B1, XAB2, SF3B2, SNRPD3, LSM4, CCNB2, PGAM5, UBE2I, EIF3B, RET, EIF3J, FBXW7, SUV39H1, EIF3A, EIF2S3, EIF2S2, MORF4L1, CCNE1, SYK, COPS5, EFTUD2, CSNK2A2, RBM39, KAT2B, PLK1, NXF1, PARD3, P4HB, USP32, EIF4B, BRAF, CDC42, ISG15, CALR, SRSF3, PTMA, TRA2B, SRSF1, EIF4G1, SF3B6, TUBA1A, RAE1, STAT1, USP1, BCL2L1, DAD1, USP13, SMAD4, POLDIP3, THOC7, ACTA2, ACACB, PXN, THOC2, ATR, TAF1, CFL1, VPS36, PDLIM7, TLR4, LDLR, HSP90B1, ACIN1, SRSF2, PTGES3, PDGFRB, RAB5A, ASF1B, CDC25B, CDC25C, COPS2, TSG101, CLTC, SRPK1, CHD4, MYD88, SH3GLB1, SAP30BP, YARS, DYNC1H1, EIF4G2, YAP1, PARP1, MAPKAPK3, SNX9, BUB1B, TIRAP, CXCR4, RANGAP1, RUNX1, POLD4, RAP1A, EXOSC10, TOP2A, NGFR, DSG2, PSMA4, CCND2, PPP2CB, MAP3K3, EHMT2, ATF3, GAPDH, MAP2K6, SNRPC, KRAS, UBE2V2, POLE, TCIRG1, ATP6V1B2, KLHL8, EIF1, MUTYH, BCAS2, CHMP2A, RAD21, ITGAV, NSFL1C, LRP1, CFLAR, HNRNPH1, BCL3, PHF5A, TUBA4A, PA2G4, ARPC1B, PFN1, DNM1L, STX18, SEC61A1, EEF2K, YBX3, MED21, UBQLN4, HNRNPM, TNFRSF1A, PPIH, VCL, ASAP2, PTK2B, MCM3AP, NUP43, DDX3X, CREB1, CFL2, ING1, GNAI3, IK, RRP1, SERPINB1, GNAO1, APOB, PLOD3, MDM4, SFPQ, PDGFRA, RABGEF1, ZMYM3, BRSK2, CAPN2, PDIA3, GSTP1, TICAM1, CYLD, SIN3B, MVB12A, EIF2B3, CLTA, PIP5K1C, DCTN4, HIST1H1B, PGAM2, NR4A1, CTNND1, EIF4A1, PABPC4, GSK3A, CNTN2, KLF4, HADHA, ADRB2, CARD11, ASAP1, EHMT1, SMAD6, CSF1R, USP18, PSMF1, CLINT1, EPN1, DNM1, CCS, CACNA1C, LRIG1, PLSCR1, DYNLL1, ENDOG, RANBP2, NUP155, ITGA5, ELF4, PMAIP1, DYNC1I2, ICAM1, LIG1, STMN1, PRKAR2B, ALAS1, MARCKSL1, ALCAM, MYH7B, FHL2, SUN1, TACC3, UEVLD, ERC1, THOP1, GNA11, NUP188, IFIH1, POLD3, PLA2G4A, SLC2A1, MYLIP, LDHB, TOLLIP, PAFAH1B3, SH3GLB2, PABPC5, DUSP5, PLEKHO2, ALDH3A2, GRIN2D, DNTT",296,"PLEKHO2, CXCR4, TNFRSF1A, PDGFRB, PDGFRA, NGFR, EGFR, CSF1R",8,"TICAM1, CFLAR, TNFRSF1A, TLR4, RELA, PPP2CB, MYD88, JUN, IKBKB, GNAO1, GNAI3, GNA11, CALR",13,"MAPKAPK3, TNFRSF1A, MAP3K7, RELA, RAP1A, MAP2K6, PLA2G4A, PDGFRB, PDGFRA, MAP3K3, STMN1, KRAS, JUN, IKBKB, NR4A1, EGFR, DUSP5, CDC42, CDC25B, CACNA1C, BRAF",21,"PLEKHO2, CXCR4, TNFRSF1A, PDGFRB, PDGFRA, NGFR, EGFR, CSF1R",8,"TLR4, TICAM1, PPP2CB, MYD88, GNAO1, GNAI3, GNA11, CFLAR, CALR",9,"TNFRSF1A, STMN1, RELA, RAP1A, PLA2G4A, PDGFRB, PDGFRA, NR4A1, MAPKAPK3, MAP3K7, MAP3K3, MAP2K6, KRAS, JUN, IKBKB, EGFR, DUSP5, CDC42, CDC25B, CACNA1C, BRAF",21,38
+"397","UBE2I",81,"Novel",7329,"RNA transport","STAT1, SMAD4, PARP1, RANGAP1, ZBTB16, SATB1, RANBP2, UBC, HDAC4, SUMO3, JUN, PCNA, RAD51",13,NA,0,"JUN",1,"JUN",1,NA,0,NA,0,"JUN",1,1
+"398","UBE2V2",217,"Novel",7336,NA,"UBC, PCNA, STUB1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"399","UBL5",52,"Novel",59286,NA,"PRPF8, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"400","UBQLN4",252,"Novel",56893,NA,"PSMD2, UBC, PSMC2, ACACB",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"401","UEVLD",386,"Novel",55293,NA,"UBC, VPS36",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"402","USP1",122,"Novel",7398,NA,"VPS36, PCNA, UBC, WDR5",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"403","USP13",125,"Novel",8975,NA,"THOC7, THOC1, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"404","USP18",329,"Novel",11274,NA,"ISG15, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"405","USP32",104,"Novel",84669,NA,"TUBA1A, UBC",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"406","USPL1",302,"Novel",10208,NA,"SUMO3",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"407","VCL",257,"Novel",7414,"Regulation of actin cytoskeleton ; Leukocyte transendothelial migration ; Focal adhesion ; Amoebiasis ; Shigellosis ; Bacterial invasion of epithelial cells","SVIL, PXN, ITGB1, UBC, LPXN",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"408","VCP",2,"Novel",7415,NA,"UBB, PSMD12, PSMA2, PSMB2, RPS27A, NSFL1C, APOB, UBC, STUB1",9,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"409","VPS36",138,"Novel",51028,"Endocytosis","TSG101, UEVLD, UBC, USP1",4,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"410","VPS37C",157,"Novel",55048,"Endocytosis","MVB12A, TSG101",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"411","WDR5",40,"Novel",11091,NA,"USP1, PSMA4, UBC",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"412","WDR5B",41,"Novel",54554,NA,"PSMA4",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"413","XAB2",71,"Novel",56949,"Spliceosome","SF3B2, EFTUD2, CCDC94, IK, SNW1, CDC5L, PLRG1, UBC, PRPF8, SF3B1, MFAP1",11,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"414","XPA",78,"Novel",7507,NA,"ATR, MSH2",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"415","YAP1",170,"Novel",10413,NA,"RUNX1, UBC, SMAD1",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"416","YARS",166,"Novel",8565,NA,"DYNC1H1, OASL, UBC, ISG15, UBB",5,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"417","YBX3",248,"Novel",8531,"Tight junction","UBC",1,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"418","YWHAG",30,"Novel",7532,"Cell cycle ; Neurotrophin signaling pathway","YWHAH, HDAC4, BRAF, CDC25B, MDM4, UBC",6,NA,0,NA,0,"CDC25B, BRAF",2,NA,0,NA,0,"CDC25B, BRAF",2,2
+"419","YWHAH",32,"Novel",7533,"Cell cycle ; Neurotrophin signaling pathway","HDAC4, PARD3, BRAF, CDC25B, CDC25C, UBC, YWHAG",7,NA,0,NA,0,"CDC25B, BRAF",2,NA,0,NA,0,"CDC25B, BRAF",2,2
+"420","ZBTB16",250,"Novel",7704,NA,"UBE2I, HDAC4, SIN3A",3,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
+"421","ZMYM3",282,"Novel",9203,NA,"UBC, THOC2",2,NA,0,NA,0,NA,0,NA,0,NA,0,NA,0,0
