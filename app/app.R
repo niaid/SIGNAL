@@ -79,13 +79,28 @@ options(shiny.maxRequestSize = 3*1024^2)
                       choices = c("Human", "Mouse")
           ),
           selectInput(inputId = "pathway",
-                      label = "Select a pathway to enrich:",
-                      choices = c("KEGG")
+                      label = "Select a KEGG Database for Enrichment Analysis:",
+                      choices = c("Biological Processes", "Disease Pathways", "All Pathways")
           ),
-          selectInput(inputId = "network",
-                      label = "Select a PPI database to use:",
-                      choices = c("STRING high conf", "STRING medium conf")
+          checkboxGroupInput(inputId ="STRING_interaction_sources", 
+                       label = "Select Interaction Sources to Generate Network",
+                       choices = c(Neighborhood = "neighborhood",
+                                   Fusion = "fusion",
+                                   Cooccurence = "cooccurence",
+                                   Coexpression = "coexpression",
+                                   Experimental = "experimental",
+                                   Database = "database",
+                                   Textmining = "textmining"),
+                       inline = F
+                       , textOutput("txt")
           ),
+          selectInput(inputId = "interaction_confidence_cutoff",
+                      label = "Minimum Required Interaction Confidence:",
+                      choices = c("Low (>0.15)" = 150, 
+                                  "Medium (>0.4)" = 400,
+                                  "High (>0.7)" = 700,
+                                  "Highest (>0.9)" = 900)
+          ),            
           fileInput(inputId= "file1",
                     label = 'Choose an input file to upload',
                     # Restrict input file types to .txt and .csv files
@@ -437,25 +452,65 @@ options(shiny.maxRequestSize = 3*1024^2)
           source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
         }
 
-        # Set the network to be used based on user selection
-        network <- input$network
-
-        if(tolower(organism) == 'human'){
-          if(grepl("high", network)){
-            networkType <- 'hSTRINGppi.hi'
-          }
-          if(grepl("medium", network)){
-            networkType <- 'hSTRINGppi.med'
+        # Create the network iGraph to be used based on user selection
+        #Get Master CSV file
+        STRINGnetwork <- read.csv(paste0(dataDir, "Networks/String.", tolower(organism), ".filtered.entrez.csv"), stringsAsFactors = F)
+        #Get ui parameters
+        network_ConfidenceCutoff <- as.numeric(input$interaction_confidence_cutoff)
+        network_InteractionSources <- input$STRING_interaction_sources
+        
+        #Create Empty data frame
+        Selected_STRINGnetwork <- STRINGnetwork[FALSE, ]
+        
+        #Creaate filtered data frame according to user selection
+        if(length(network_InteractionSources) == 6){
+          Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
+                                                             | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
+                                                             | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
+                                                             | get(network_InteractionSources[4]) >= network_ConfidenceCutoff
+                                                             | get(network_InteractionSources[5]) >= network_ConfidenceCutoff
+                                                             | get(network_InteractionSources[6]) >= network_ConfidenceCutoff)
+        }else{
+          if(length(network_InteractionSources) == 5){
+            Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
+                                                               | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
+                                                               | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
+                                                               | get(network_InteractionSources[4]) >= network_ConfidenceCutoff
+                                                               | get(network_InteractionSources[5]) >= network_ConfidenceCutoff)
+          }else{
+            if(length(network_InteractionSources) == 4){
+              Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
+                                                                 | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
+                                                                 | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
+                                                                 | get(network_InteractionSources[4]) >= network_ConfidenceCutoff)
+            }else{
+              if(length(network_InteractionSources) == 3){
+                Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
+                                                                   | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
+                                                                   | get(network_InteractionSources[3]) >= network_ConfidenceCutoff)
+              }else{
+                if(length(network_InteractionSources) == 2){
+                  Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
+                                                                     | get(network_InteractionSources[2]) >= network_ConfidenceCutoff)
+                }else{
+                  if(length(network_InteractionSources) == 1){
+                    Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff)
+                  }else{
+                    print("Error: No Interaction Criteria selected for STRINGnetwork")
+                  }
+                }
+              }
+            }
           }
         }
-        else if(tolower(organism) == 'mouse'){
-          if(grepl("high", network)){
-            networkType <- 'mSTRINGppi.hi'
-          }
-          if(grepl("medium", network)){
-            networkType <- 'mSTRINGppi.med'
-          }
-        }
+        
+        
+        
+        #Create two column dataframes to feed into igraph
+        Selected_STRINGnetwork.entrez <- Selected_STRINGnetwork[, c("entrez1", "entrez2")]
+        #Create igraph
+        Selected_STRINGnetwork.igraph <- graph.data.frame(d = Selected_STRINGnetwork.entrez, directed = FALSE)
+        
 
         #message(networkType)
         use.only.commnected.components <- c('Yes')
@@ -523,9 +578,19 @@ options(shiny.maxRequestSize = 3*1024^2)
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         #pathway.type <- pathway.types[1]
         pathway.type <- input$pathway
-
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
-
+        
+        #Get appropiate pathway document suffix
+        if (pathway.type == 'Biological Processes'){
+          pathway.type <- 'BiologicalProcesses'
+        } 
+        if (pathway.type == 'Disease Pathways'){
+          pathway.type <- 'Disease'
+        } 
+        if (pathway.type == 'All Pathways'){
+          pathway.type <- 'All'
+        } 
+        
+        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
         # Get input file
         # siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
