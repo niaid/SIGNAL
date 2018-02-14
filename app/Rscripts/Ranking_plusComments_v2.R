@@ -87,16 +87,6 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #           Setting up Network Databases and input
   #############################################################
   
-  organism <- "Human"                                #remove for SHINY
-  CARDdirectory <- "~/Desktop/CARDcode/"            #remove for SHINY
-  setwd(CARDdirectory)                              #remove for SHINY
-  # interactions (as opposed to the others that combine other interaciton sources) 
-  if (tolower(organism) == "human") {
-    networkTypes <- c("hSTRINGhi", "hSTRINGmed", "hSTRINGppi.hi", "hSTRINGppi.med")               
-  } else if (tolower(organism) == "mouse") {
-    networkTypes <- c("mSTRINGhi", "mSTRINGmed", "mSTRINGppi.hi", "mSTRINGppi.med")
-  }
-  networkType <- networkTypes[c(3)] #**                          # Setting which network file to use.   #FIX For Getting input from SHINY UI
   
   use.only.commnected.components = "yes"
   show.dendogram <- TRUE
