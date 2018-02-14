@@ -8,12 +8,83 @@
 #############################################################
 # /usr/bin/Rscript NetworkAnalysis.R "" "mmu" "NB-network" -1.5 "yes" "yes" "yes" "walktrap" "spring" 1000 5
           
+library("igraph")
+set.seed(123)
 #############################################################
 #                   Load the Graphs
 #############################################################
 #rm(G,Graph)
 
-G <- Selected_STRINGnetwork.igraph
+if(tolower(organism) == "human") 
+{  
+  if(grepl("hSTRING.hi", networkType))
+  {
+    load(paste0(dataDir, "Networks/igraph.string.hu.hiConf.Rdata"))
+    
+    if(exists("G")) {
+      G <- graph.union(igraph.string.hu.hiConf,G)
+    } else {G <- igraph.string.hu.hiConf}
+  }
+  if(grepl("hSTRING.med", networkType))
+  {
+    #load("~/TRIAGE/app/data/Networks/igraph.string.hu.medConf.Rdata")
+    load(paste0(dataDir, "Networks/igraph.string.hu.medConf.Rdata"))
+    if(exists("G")) {
+      G <- graph.union(G,igraph.string.hu.medConf)
+    } else {G <- igraph.string.hu.medConf}
+  }
+  if(grepl("hSTRINGppi.hi", networkType))
+  {
+    #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.hiConf.Rdata")
+    load(paste0(dataDir, "Networks/igraph.stringPPI.hu.hiConf.Rdata"))
+    
+    if(exists("G")) {
+      G <- graph.union(igraph.stringPPI.hu.hiConf,G)
+    } else {G <- igraph.stringPPI.hu.hiConf}
+  }
+  if(grepl("hSTRINGppi.med", networkType))
+  {
+    #load("~/TRIAGE/app/data/Networks/igraph.stringPPI.hu.medConf.Rdata")
+    load(paste0(dataDir, "Networks/igraph.stringPPI.hu.medConf.Rdata"))
+
+    if(exists("G")) {
+      G <- graph.union(G,igraph.stringPPI.hu.medConf)
+    } else {G <- igraph.stringPPI.hu.medConf}
+  }
+
+} else if(tolower(organism) == "mouse")
+{
+  # cat('1')
+  # if(grepl("mSTRING.hi", networkType))
+  # {
+  #   cat('4')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.hiConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.hiConf,G)}
+  #   else {G <- igraph.string.mo.hiConf}
+  # }
+  # else if(grep("mSTRING.med", networkType))
+  # {
+  #   cat('2')
+  #   load("~/TRIAGE/app/data/Networks/igraph.string.mo.medConf.Rdata")
+  #   if(exists("G")) {G <- graph.union(igraph.string.mo.medConf,G)}
+  #   else {G <- igraph.string.med.medConf}
+  # }
+  if(grepl("mSTRINGppi.hi", networkType))
+  {
+    cat('4')
+    load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.hiConf.Rdata")
+    if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
+    else {G <- igraph.stringPPI.mo.hiConf}
+  }
+  else if(grepl("mSTRINGppi.med", networkType))
+  {
+    cat('2')
+    load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")
+    if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.medConf,G)}
+    else {G <- igraph.stringPPI.mo.medConf}
+  }
+  
+}
 message("Networks Loaded")
 #############################################################
 #            PageRank Algorithm to All Genes

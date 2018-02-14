@@ -79,28 +79,13 @@ options(shiny.maxRequestSize = 3*1024^2)
                       choices = c("Human", "Mouse")
           ),
           selectInput(inputId = "pathway",
-                      label = "Select a KEGG Database for Enrichment Analysis:",
-                      choices = c("Biological Processes", "Disease Pathways", "All Pathways")
+                      label = "Select a pathway to enrich:",
+                      choices = c("KEGG")
           ),
-          checkboxGroupInput(inputId ="STRING_interaction_sources", 
-                       label = "Select Interaction Sources to Generate Network",
-                       choices = c(Neighborhood = "neighborhood",
-                                   Fusion = "fusion",
-                                   Cooccurence = "cooccurence",
-                                   Coexpression = "coexpression",
-                                   Experimental = "experimental",
-                                   Database = "database",
-                                   Textmining = "textmining"),
-                       inline = F
-                       , textOutput("txt")
+          selectInput(inputId = "network",
+                      label = "Select a PPI database to use:",
+                      choices = c("STRING high conf", "STRING medium conf")
           ),
-          selectInput(inputId = "interaction_confidence_cutoff",
-                      label = "Minimum Required Interaction Confidence:",
-                      choices = c("Low (>0.15)" = 150, 
-                                  "Medium (>0.4)" = 400,
-                                  "High (>0.7)" = 700,
-                                  "Highest (>0.9)" = 900)
-          ),            
           fileInput(inputId= "file1",
                     label = 'Choose an input file to upload',
                     # Restrict input file types to .txt and .csv files
@@ -326,7 +311,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           return(NULL)
 
         data2 <- read.csv(inFile2$datapath)
-        pulldown_types <- colnames(data2)
+        pulldown_types <- c("", colnames(data2))
 
         selectInput("cutoff_type", "Cutoff Types", pulldown_types)
       })
@@ -345,47 +330,22 @@ options(shiny.maxRequestSize = 3*1024^2)
         ## Check if input file and relevant paremater selected
         ## if not, show an error message
         if(is.null(input$file1)){
-          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No input file selected!</font><h3>")))
+          showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>No input file selected!</font><h3>")))
+          return(NULL)
         }
-        else if(is.null(input$cutoff_type)){
-          showModal(modalDialog(title="User Input Errors", HTML("<h3><font color=red>No 'Cutoff Types' selected!</font><h3>")))
+        if(input$cutoff_type == ""){
+          showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>No 'Cutoff Type' selected!</font><h3>")))
+          return(NULL)
         }
-        else{
-          # Both cutoff values are required
-          req(input$cutoff_valueH)
-          req(input$cutoff_valueM)
-          
-          # ## Open the modal when button clicked
-          # values$modal_closed <- FALSE
-          # 
-          # showModal(modalDialog(
-          #   title = "Info Needed to Access Results",
-          #   size = "s",
-          #   textInput("userName", "User Name", placeholder = "your name"),
-          #   textInput("userEmail", "User Email Address", placeholder = "your email address"),
-          # 
-          #   ## This footer replaces the default "Dismiss" button with 'footer = modalButton("Submit")'
-          #   footer = actionButton("submit_modal",label = "Submit")
-          # ))
-        }
-      # })
-      # 
-      # 
-      # ## This event is triggered by the actionButton inside the modalDialog
-      # #  It closes the modal, and by setting values$modal_closed <- T, it
-      # #  triggers values$userInfo to update.
-      # 
-      # observeEvent(input$submit_modal,{
         
-        # values$modal_closed <- TRUE
-        # 
-        # if(isValidEmail(input$userEmail)){
-        #   removeModal()
-        # }
-        # else{
-        #   #reset("userEmail")
-        #   session$reload()
-        # }
+        # Both cutoff values are required
+        if(input$cutoff_valueH == ""){
+          showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>Please enter 'High-conf Cutoff Value'!</font><h3>")))
+          req(input$cutoff_valueH)
+        }else if(input$cutoff_valueM == ""){
+          showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>Please enter 'Med-conf Cutoff Value'!</font><h3>")))
+          req(input$cutoff_valueM)
+        }
       
         ## Upon job submission, switch to 'status' tab
         # message("switching to status tab")
@@ -452,65 +412,25 @@ options(shiny.maxRequestSize = 3*1024^2)
           source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
         }
 
-        # Create the network iGraph to be used based on user selection
-        #Get Master CSV file
-        STRINGnetwork <- read.csv(paste0(dataDir, "Networks/String.", tolower(organism), ".filtered.entrez.csv"), stringsAsFactors = F)
-        #Get ui parameters
-        network_ConfidenceCutoff <- as.numeric(input$interaction_confidence_cutoff)
-        network_InteractionSources <- input$STRING_interaction_sources
-        
-        #Create Empty data frame
-        Selected_STRINGnetwork <- STRINGnetwork[FALSE, ]
-        
-        #Creaate filtered data frame according to user selection
-        if(length(network_InteractionSources) == 6){
-          Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
-                                                             | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
-                                                             | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
-                                                             | get(network_InteractionSources[4]) >= network_ConfidenceCutoff
-                                                             | get(network_InteractionSources[5]) >= network_ConfidenceCutoff
-                                                             | get(network_InteractionSources[6]) >= network_ConfidenceCutoff)
-        }else{
-          if(length(network_InteractionSources) == 5){
-            Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
-                                                               | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
-                                                               | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
-                                                               | get(network_InteractionSources[4]) >= network_ConfidenceCutoff
-                                                               | get(network_InteractionSources[5]) >= network_ConfidenceCutoff)
-          }else{
-            if(length(network_InteractionSources) == 4){
-              Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
-                                                                 | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
-                                                                 | get(network_InteractionSources[3]) >= network_ConfidenceCutoff
-                                                                 | get(network_InteractionSources[4]) >= network_ConfidenceCutoff)
-            }else{
-              if(length(network_InteractionSources) == 3){
-                Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
-                                                                   | get(network_InteractionSources[2]) >= network_ConfidenceCutoff
-                                                                   | get(network_InteractionSources[3]) >= network_ConfidenceCutoff)
-              }else{
-                if(length(network_InteractionSources) == 2){
-                  Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff
-                                                                     | get(network_InteractionSources[2]) >= network_ConfidenceCutoff)
-                }else{
-                  if(length(network_InteractionSources) == 1){
-                    Selected_STRINGnetwork <- STRINGnetwork %>% filter(get(network_InteractionSources[1]) >= network_ConfidenceCutoff)
-                  }else{
-                    print("Error: No Interaction Criteria selected for STRINGnetwork")
-                  }
-                }
-              }
-            }
+        # Set the network to be used based on user selection
+        network <- input$network
+
+        if(tolower(organism) == 'human'){
+          if(grepl("high", network)){
+            networkType <- 'hSTRINGppi.hi'
+          }
+          if(grepl("medium", network)){
+            networkType <- 'hSTRINGppi.med'
           }
         }
-        
-        
-        
-        #Create two column dataframes to feed into igraph
-        Selected_STRINGnetwork.entrez <- Selected_STRINGnetwork[, c("entrez1", "entrez2")]
-        #Create igraph
-        Selected_STRINGnetwork.igraph <- graph.data.frame(d = Selected_STRINGnetwork.entrez, directed = FALSE)
-        
+        else if(tolower(organism) == 'mouse'){
+          if(grepl("high", network)){
+            networkType <- 'mSTRINGppi.hi'
+          }
+          if(grepl("medium", network)){
+            networkType <- 'mSTRINGppi.med'
+          }
+        }
 
         #message(networkType)
         use.only.commnected.components <- c('Yes')
@@ -578,19 +498,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         #pathway.type <- pathway.types[1]
         pathway.type <- input$pathway
-        
-        #Get appropiate pathway document suffix
-        if (pathway.type == 'Biological Processes'){
-          pathway.type <- 'BiologicalProcesses'
-        } 
-        if (pathway.type == 'Disease Pathways'){
-          pathway.type <- 'Disease'
-        } 
-        if (pathway.type == 'All Pathways'){
-          pathway.type <- 'All'
-        } 
-        
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
+
+        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
+
         # Get input file
         # siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
@@ -632,7 +542,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
 
-          outPrefix <- paste("KEGG", iteration, sep = "_")
+          outPrefix <- paste(pathway.type, iteration, sep = "_")
 
           # 1) Contraction - [Pathway Analysis]
           message(getwd())
