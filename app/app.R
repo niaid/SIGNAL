@@ -632,7 +632,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
 
-          outPrefix <- paste(pathway.type, iteration, sep = "_")
+          outPrefix <- paste("KEGG", iteration, sep = "_")
 
           # 1) Contraction - [Pathway Analysis]
           message(getwd())
