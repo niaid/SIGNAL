@@ -73,6 +73,9 @@ options(shiny.maxRequestSize = 3*1024^2)
       sidebarLayout(
 
         sidebarPanel(
+          # Background color of sidebar panel
+          #tags$style(".well {background-color:rgb(1, 81, 154); color: white;}"),
+
           # Parameters to be selected
           selectInput(inputId = "organism",
                       label = "Select your organism:",
@@ -88,6 +91,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           ),
           fileInput(inputId= "file1",
                     label = 'Choose an input file to upload',
+                    buttonLabel = "Browse...",
                     # Restrict input file types to .txt and .csv files
                     accept=c("txt/csv", "text/comma-separated-values,text/plain", ".csv")
           ),
@@ -107,22 +111,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         mainPanel(
           tabsetPanel(id = "inTabset",
             tabPanel(title = "Input", value = "contents",
-                     htmlOutput("inputErrors"),
+                     htmlOutput("spacer1"),
                      dataTableOutput("contents")
-                     # textOutput("organism"),
-                     # textOutput("pathway"),
-                     # textOutput("network"),
-                     # textOutput("cutoff_type"),
-                     # textOutput("cutoff_valueH"),
-                     # textOutput("cutoff_valueM")
             ),
-            # tabPanel(title = "Status", value = "status",
-            #          tags$pre(id = "status")
-            # ),
             tabPanel(title = "Enriched Pathways", value = "enrichedPathways",
+                     htmlOutput("spacer2"),
                      dataTableOutput("enrichedPathways")
             ),
             tabPanel(title = "Gene Hits", value = "geneList",
+                     htmlOutput("spacer3"),
                      tabsetPanel(id = 'geneList',
                         # Display Gene hits 
                         tabPanel(title="Lists of Gene Hits", value="geneHits",
@@ -143,7 +140,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                      dataTableOutput("myNetworkGraph")
             ),
             tabPanel(title = "PathNet", value = "graphViews",
-
+                htmlOutput("spacer4"),
                 tabsetPanel(id = 'igraphViews',
                       ## Display in igrap
                       tabPanel(title="1st Dimension Network", value="graphView1",
@@ -157,6 +154,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                 )
             ),
             tabPanel(title = "NetworkD3", value = "networkViews",
+                htmlOutput("spacer5"),
                 tabsetPanel(id = 'networkD3Views',
                       ## Display in networkD3
                       tabPanel(title="1st Dimension D3 Network", value="networkView1",
@@ -174,10 +172,12 @@ options(shiny.maxRequestSize = 3*1024^2)
                 )
             ),
             tabPanel(title = "Download", value = "downloads",
+                     htmlOutput("spacer6"),
                      htmlOutput("downloadFiles"),
                      downloadButton('downloadButton', 'Download all files')
             ),
             tabPanel(title = "Help", value = "helpUs",
+              htmlOutput("spacer7"),
               tabsetPanel(id = 'helpTab',
                   tabPanel(title = "Contact us", value = "contactUS",
                       uiOutput("contactUS")),
@@ -199,6 +199,29 @@ options(shiny.maxRequestSize = 3*1024^2)
     ##################################################
     # Define server logic required to draw a histogram
     server <- function(session, input, output) {
+      
+      # Add spacers in the tab panel
+      output$spacer1 <- renderUI({
+        HTML("<BR><BR>")
+      })
+      output$spacer2 <- renderUI({
+        HTML("<BR><BR>")
+      })
+      output$spacer3 <- renderUI({
+        HTML("<BR>")
+      })
+      output$spacer4 <- renderUI({
+        HTML("<BR>")
+      })      
+      output$spacer5 <- renderUI({
+        HTML("<BR>")
+      })  
+      output$spacer6 <- renderUI({
+        HTML("<BR>")
+      })  
+      output$spacer7 <- renderUI({
+        HTML("<BR>")
+      })        
       
       # Read in the input fie
       output$contents <- renderDataTable({
@@ -313,7 +336,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         data2 <- read.csv(inFile2$datapath)
         pulldown_types <- c("", colnames(data2))
 
-        selectInput("cutoff_type", "Cutoff Types", pulldown_types)
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
       })
 
       # # These user information (userName and userEmail) will collected after the modal is closed/submitted
