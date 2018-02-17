@@ -582,9 +582,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == 1]
 
           # 2) Expansion - [Network Analysis]
-          system.time(
-            source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
-          )
+          source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
           nName2 <- paste0("Network.class.iteration", iteration)
@@ -703,14 +701,16 @@ options(shiny.maxRequestSize = 3*1024^2)
               myGeneSet <- pathEnrich[i,7]
               myGenes <- unlist(strsplit(as.character(myGeneSet), ', '))
               myOriginalHits <- paste(unlist(originalHits), collapse=', ')
-              myBlueGene <- NULL
-              myBlueGeneID <- NULL
-              myBlueGeneLabels <- NULL
-              myBlueGeneIDs <- NULL
-              myRedGene <- NULL
-              myRedGeneID <- NULL
-              myRedGeneLabels <- NULL
-              myRedGeneIDs <- NULL
+              myBlueGene <- "" 
+              myBlueGeneID <- ""
+              myBlueGeneLabel <- ""
+              myBlueGeneLabels <- ""
+              myBlueGeneIDs <- ""
+              myRedGene <- ""
+              myRedGeneID <- ""
+              myRedGeneLabel <- ""
+              myRedGeneLabels <- ""
+              myRedGeneIDs <- ""
 
 
               for(j in 1:length(myGenes))
@@ -718,19 +718,17 @@ options(shiny.maxRequestSize = 3*1024^2)
                 # Color the genes on the original hit list BLUE
                 if(grepl(myGenes[j], myOriginalHits) ){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
-                  myBlueGeneID <- siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])]
+                  myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
                   myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
                   myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))
-                  #print(paste(myBlueGeneID, myGenes[j], sep =  " "))
                 }else{
                   # Color the genes on the original hit list RED
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
-                  myRedGeneID <- siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])]
-                  myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red\n"))
+                  myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
+                  myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
                   myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
                   myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))
-                  #print(paste(myRedGeneID, myGenes[j], sep = " "))
                 }
               }
 
