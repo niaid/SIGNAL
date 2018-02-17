@@ -574,8 +574,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           kName1 <- paste0("KEGG.class.iteration", iteration)
           kName2 <- paste0("KEGG.", iteration)
           names(siRNA.Score)[names(siRNA.Score) == "temp"] <- kName1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- 1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- 0.5
+          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- as.numeric(input$cutoff_valueH)
+          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] >= input$cutoff_valueM)] <- as.numeric(input$cutoff_valueM)
           names(siRNA.Score)[names(siRNA.Score) == "KEGG"] <- kName2
 
           hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == 1]
@@ -804,8 +804,8 @@ options(shiny.maxRequestSize = 3*1024^2)
             # enriched data => newSubset
             # dataframe => geneHitsByIterations 
             cutoffType <- input$cutoff_type
-            cutoffHigh <- input$cutoff_valueH
-            cutoffMid <- input$cutoff_valueM
+            cutoffHigh <- as.numeric(input$cutoff_valueH)
+            cutoffMid <- as.numeric(input$cutoff_valueM)
             numHighConf <- 0
             numMidConf <- 0
             
