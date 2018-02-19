@@ -1253,7 +1253,12 @@ options(shiny.maxRequestSize = 3*1024^2)
 
     ## User documentation
     output$documentation <- renderUI({
-      HTML("User documentation here")
+      tags$iframe(
+        seamless="seamless",
+        src="UserGuide_V1.html",
+        height=700, 
+        width=800
+      ) 
     })    
     
     ## Change log
