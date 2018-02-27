@@ -1216,7 +1216,6 @@ options(shiny.maxRequestSize = 3*1024^2)
       )
 
       message("Download content completed")
-
     })
 
     # Contact us by sending email to triage@niaid.nih.gov
