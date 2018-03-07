@@ -312,7 +312,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(mapped_genes,data$EntrezID)
-          xx <- as.list(x[overlappingGenes])
+          xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL)
 
