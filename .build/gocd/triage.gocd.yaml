@@ -106,7 +106,7 @@ pipelines:
 
   triage_deploy_prod:
     group: LSB_triage
-    label_template: ${triage_build_pipeline}
+    label_template: ${triage_deploy_qa_pipeline}
     locking: on
     materials:
       triage_deploy_qa_pipeline:
@@ -118,6 +118,7 @@ pipelines:
       REGISTRY_PASS: Eq1ailPp4vUXP+LYw3Zg62MQEcwCvlALis2i1hryHBF4OXZs9e7xLS7LSroMiMKw+LnKyHhQ4JultE37H/wytCVM2+rT90XdVhin7ljhK9c=
     stages:
       - Deploy_AWS_App:
+          approval: manual
           fetch_materials: yes
           keep_artifacts: yes
           artifacts:
