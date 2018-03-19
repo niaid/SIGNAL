@@ -72,14 +72,14 @@ if(tolower(organism) == "human")
   if(grepl("mSTRINGppi.hi", networkType))
   {
     cat('4')
-    load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.hiConf.Rdata")
+    load(paste0(dataDir, "Networks/igraph.stringPPI.mo.hiConf.Rdata"))
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.hiConf,G)}
     else {G <- igraph.stringPPI.mo.hiConf}
   }
   else if(grepl("mSTRINGppi.med", networkType))
   {
     cat('2')
-    load("~/TRIAGE/app/data/Networks/igraph.stringPPI.mo.medConf.Rdata")
+    load(paste0(dataDir, "Networks/igraph.stringPPI.mo.medConf.Rdata"))
     if(exists("G")) {G <- graph.union(igraph.stringPPI.mo.medConf,G)}
     else {G <- igraph.stringPPI.mo.medConf}
   }

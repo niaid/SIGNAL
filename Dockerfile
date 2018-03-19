@@ -32,7 +32,7 @@ RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-
     R -e "install.packages('gridExtra', dep=T, repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('crosstalk', dep=T, repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('htmltools', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e 'source("http://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE);'  && \
+    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE); biocLite("AnnotationDbi", ask=FALSE);'  && \
     apk del .build-dependencies
 
 # Make all files inside the directory 'app' available to the container

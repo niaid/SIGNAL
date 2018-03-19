@@ -45,29 +45,55 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # setwd(Database.dir)                                              #This was a list of "canonical" TLR genes that was provided to me (By Iain Fraser)
   #Ian.tlr.canon <- read.csv("TLR128.csv", stringsAsFactors = F)
   
-  # setwd(KEGGdir)
-  pathwayFile <- c(paste0(dataDir, "Pathways/KEGGHuman.csv"))
-  message(pathwayFile)
-  #KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
-  KEGGhuman <- read.csv(file=pathwayFile, stringsAsFactors = F)
+  if (tolower(organism) == "human"){
+    # setwd(KEGGdir)
+    pathwayFile <- c(paste0(dataDir, "Pathways/KEGGHuman.csv"))
+    message(pathwayFile)
+    #KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
+    KEGGhuman <- read.csv(file=pathwayFile, stringsAsFactors = F)
+    
+    #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
+    #Get TLR Canonical Genes
+    #TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
+    path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]
+    TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
+    TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
+    
+    #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
+    path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]
+    PROTpathway.genes <- filter(KEGGhuman, PathwayName == path2_name)
+    PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
   
-  #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
-  #Get TLR Canonical Genes
-  #TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
-  path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]
-  TLRpathway.genes <- filter(KEGGhuman, PathwayName == path1_name)
-  TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
-  
-  #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
-  path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]
-  PROTpathway.genes <- filter(KEGGhuman, PathwayName == path2_name)
-  PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
+    #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
+    path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]
+    SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path3_name)
+    SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
+  }else if(tolower(organism) == "mouse"){
+    
+    # setwd(KEGGdir)
+    pathwayFile <- c(paste0(dataDir, "Pathways/KEGGMouse.csv"))
+    message(pathwayFile)
+    #KEGGhuman <- read.csv("KEGGHuman.csv", stringsAsFactors = F)
+    KEGGmouse <- read.csv(file=pathwayFile, stringsAsFactors = F)
+    
+    #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
+    #Get TLR Canonical Genes
+    #TLRpathway.genes.matrix <- matrix(na.omit(Ian.tlr.canon$Human.EntrezGene.ID))
+    path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]
+    TLRpathway.genes <- filter(KEGGmouse, PathwayName == path1_name)
+    TLRpathway.genes.matrix <- matrix(TLRpathway.genes$EntrezID)
+    
+    #PROTpathway.genes <- filter(KEGGhuman, PathwayName == "Proteasome")
+    path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]
+    PROTpathway.genes <- filter(KEGGmouse, PathwayName == path2_name)
+    PROTpathway.genes.matrix <- matrix(PROTpathway.genes$EntrezID)
+    
+    #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
+    path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]
+    SPLICEpathway.genes <- filter(KEGGmouse, PathwayName == path3_name)
+    SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)    
+  }
 
-  #SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == "Spliceosome")
-  path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]
-  SPLICEpathway.genes <- filter(KEGGhuman, PathwayName == path3_name)
-  SPLICEpathway.genes.matrix <- matrix(SPLICEpathway.genes$EntrezID)
-  
   #Get IAM hits                                                    # Getting the TRIAGE output - name is hardcoded -I was working with Human TNF screen.
   # setwd(HitsDir)
   #HuTNFanno <- read.csv("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/TRIAGEinput_HuTNF_CSAfdr_5percCO_hSTRINGppi.hi_TRIGEouput_ALL.csv", stringsAsFactors = F)
@@ -113,6 +139,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #           Setting up Network Databases and input
   #############################################################
   
+
   #organism <- "Human"
   
   #setwd(CARDdirectory)                                # Selecting which network to use, h/m human/mouse, hi/med hi confidence/medium confidence, ppi = Protein-Protein 

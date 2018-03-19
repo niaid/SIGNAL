@@ -28,6 +28,8 @@ pipelines:
                 source: triage-tag_only.txt
             - build:
                 source: .build/qa
+            - build:
+                source: .build/prod
           tasks:
             - fetch:
                 run_if: manual
@@ -40,7 +42,7 @@ pipelines:
                 docker_pipeline -m true -g true -o $(cat shiny1-alpine3-full.txt) &&
                 export IMAGE_NAME="${IMAGE_REPO}/${IMAGE_NAME}" &&
                 export IMAGE_REPO="monarch-pre-prod" &&
-                export REGISTRY_PASS=${ART_PROMOTE_KEY} &&  
+                export REGISTRY_PASS=${ART_PROMOTE_KEY} &&
                 export IMAGE_TAG=${GO_PIPELINE_LABEL} &&
                 promote monarch-prod
 
@@ -67,6 +69,10 @@ pipelines:
                 source: qa/qa-apply.html
             - build:
                 source: qa/.terraform/terraform.tfstate
+            - build:
+                source: prod
+            - build:
+                source: triage-tag_only.txt
           tabs:
             QA_plan:  qa-plan.html
             QA_apply: qa-apply.html
@@ -85,8 +91,63 @@ pipelines:
                 job: Build
                 is_file: no
                 source: qa
+            - fetch:
+                run_if: passed
+                pipeline: triage_build
+                stage: Build
+                job: Build
+                is_file: no
+                source: prod
             - script: >
                 /bin/git init &&
                 export TF_VAR_tag=$(cat triage-tag_only.txt) &&
                 d-tfw --plan -e qa &&
                 d-tfw --apply -e qa
+
+  triage_deploy_prod:
+    group: LSB_triage
+    label_template: ${triage_deploy_qa_pipeline}
+    locking: on
+    materials:
+      triage_deploy_qa_pipeline:
+        pipeline: triage_deploy_qa
+        stage: Deploy_AWS_App
+    environment_variables:
+      REGISTRY_USER: songj11
+    secure_variables:
+      REGISTRY_PASS: Eq1ailPp4vUXP+LYw3Zg62MQEcwCvlALis2i1hryHBF4OXZs9e7xLS7LSroMiMKw+LnKyHhQ4JultE37H/wytCVM2+rT90XdVhin7ljhK9c=
+    stages:
+      - Deploy_AWS_App:
+          approval: manual
+          fetch_materials: yes
+          keep_artifacts: yes
+          artifacts:
+            - build:
+                source: prod/prod-plan.html
+            - build:
+                source: prod/prod-apply.html
+            - build:
+                source: prod/.terraform/terraform.tfstate
+          tabs:
+            Prod_plan:  prod-plan.html
+            Prod_apply: prod-apply.html
+          tasks:
+            - fetch:
+                run_if: passed
+                pipeline: triage_deploy_qa
+                stage: Deploy_AWS_App
+                job: Deploy_AWS_App
+                is_file: yes
+                source: triage-tag_only.txt
+            - fetch:
+                run_if: passed
+                pipeline: triage_deploy_qa
+                stage: Deploy_AWS_App
+                job: Deploy_AWS_App
+                is_file: no
+                source: prod
+            - script: >
+                /bin/git init &&
+                export TF_VAR_tag=$(cat triage-tag_only.txt) &&
+                d-tfw --plan -e prod &&
+                d-tfw --apply -e prod
