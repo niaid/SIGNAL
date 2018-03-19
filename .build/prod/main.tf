@@ -49,7 +49,6 @@ module "triage" {
   log_bucket                   = "${data.terraform_remote_state.stack.log_bucket_id}"
   internal_zone_id             = "${data.terraform_remote_state.stack.internal_zone_id}"
   external_zone_id             = "${data.terraform_remote_state.stack.external_zone_id}"
-  ssl_certificate_id           = "${data.terraform_remote_state.stack.default_ssl_cert_id}"
   vpc_id                       = "${data.terraform_remote_state.stack.vpc_id}"
   env_vars                     = "${var.env_vars}"
   use_public_ssl_cert          = "${var.use_public_ssl_cert}"
