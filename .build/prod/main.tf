@@ -54,6 +54,7 @@ module "triage" {
   use_public_ssl_cert          = "${var.use_public_ssl_cert}"
   alert_recipients             = "${var.alert_recipients}"
   url_to_monitor               = "${var.url_to_monitor}"
+  monitor                      = "true"
 }
 
 module "remote_state" {
