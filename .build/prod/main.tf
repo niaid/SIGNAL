@@ -4,6 +4,9 @@ variable "name"                   { }
 variable "region"                 { }
 variable "environment"            { }
 variable "allowed_account_ids"    { }
+variable "use_public_ssl_cert"    { }
+variable "url_to_monitor"         { }
+variable "alert_recipients"       { }
 variable "env_vars"               {
   default = "[]"
 }
@@ -49,6 +52,9 @@ module "triage" {
   ssl_certificate_id           = "${data.terraform_remote_state.stack.default_ssl_cert_id}"
   vpc_id                       = "${data.terraform_remote_state.stack.vpc_id}"
   env_vars                     = "${var.env_vars}"
+  use_public_ssl_cert          = "${var.use_public_ssl_cert}"
+  alert_recipients             = "${var.alert_recipients}"
+  url_to_monitor               = "${var.url_to_monitor}"
 }
 
 module "remote_state" {
