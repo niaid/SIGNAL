@@ -242,7 +242,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         if (is.null(inFile))
           return(NULL)
 
-        data <- read.csv(inFile$datapath, stringsAsFactors = F,header=TRUE)
+        data <- read.csv(inFile$datapath, stringsAsFactors = TRUE, header=TRUE)
         
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$GeneSymbol)){
@@ -739,28 +739,26 @@ options(shiny.maxRequestSize = 3*1024^2)
 
               for(j in 1:length(myGenes))
               {
-                # Color the genes on the original hit list BLUE
+                # Color the genes that ARE on the original hit list BLUE
                 if(grepl(myGenes[j], myOriginalHits) ){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
                   myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
                   myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
-                  myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))
-                }else{
-                  # Color the genes on the original hit list RED
+                  myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))                  
+                }else{ # Color the genes that are NOT on the original hit list RED
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
                   myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
                   myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
-                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))
-                }
+                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))                }
               }
 
               # Add hyperlink to KEGG pathway database
               pathwayName <- pathEnrich[i,][1]
               pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
-              myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
+              myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myRedGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myBlueGeneLabels, " ", ""), sep = "")
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
 
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)

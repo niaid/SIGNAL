@@ -289,8 +289,13 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   }
   
   GraphEdgesHitNumber <- data.frame(source,target)
-  
-  GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
+
+  if(length(tempGenes)){
+    GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
+  }else{  # IF NO network data found!
+    showModal(modalDialog(title="No network connections found!", HTML("<h4><font color=red>Please try different pathway combinations.</font><h4>")))
+    req(length(tempGenes) > 0)
+  }
   
   ###############################################################################
   #                 Add back GeneSymbol and Hit Designation to output
