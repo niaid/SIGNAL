@@ -44,7 +44,7 @@ module "triage" {
   environment                  = "${data.terraform_remote_state.stack.environment}"
   cluster                      = "${data.terraform_remote_state.stack.cluster}"
   iam_role                     = "${data.terraform_remote_state.stack.iam_role}"
-  security_groups              = "${data.terraform_remote_state.stack.nih_external_elb}"
+  security_groups              = "${data.terraform_remote_state.stack.external_elb}}"
   subnet_ids                   = "${data.terraform_remote_state.stack.external_subnets}"
   log_bucket                   = "${data.terraform_remote_state.stack.log_bucket_id}"
   internal_zone_id             = "${data.terraform_remote_state.stack.internal_zone_id}"
