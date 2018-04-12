@@ -242,7 +242,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         if (is.null(inFile))
           return(NULL)
 
-        data <- read.csv(inFile$datapath, stringsAsFactors = TRUE, header=TRUE)
+        data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
         
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$GeneSymbol)){
@@ -271,18 +271,17 @@ options(shiny.maxRequestSize = 3*1024^2)
             library('org.Hs.eg.db')
             x <- org.Hs.egSYMBOL2EG
           } else if(input$organism == "Mouse"){
-            library('org.Mm.eg.db')
+            library('org.Mm.eg.db') 
             x <- org.Mm.egSYMBOL2EG
           }
+          
           mapped_genes <- mappedkeys(x)
-          # Change the GeneSymbols in the input file to UPPERCASE
-          #overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(toupper(data$GeneSymbol)))
           overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
+
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL)
+          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors=FALSE)
           numGeneInInput <- nrow(data)
-          # Change the GeneSymbols in the input file to UPPERCASE
           #data$GeneSymbol <- toupper(data$GeneSymbol)
           tempData <- merge(x=data, y=y, by="GeneSymbol")
           data <- tempData
@@ -312,9 +311,10 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(mapped_genes,data$EntrezID)
+          
           xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL)
+          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors=FALSE)
 
           tempData <- merge(x=data, y=y, by="EntrezID", all.x = TRUE)
           data <- tempData
@@ -327,14 +327,25 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
         for (i in 1:nrow(data)){
           if(grepl('-', data$GeneSymbol[i])){
-            data$GeneSymbol[i] <- data$EntrezID[i]
+            data$GeneSymbol[i] <- as.character(data$EntrezID[i])
           }else if(is.na(data$GeneSymbol[i])){
-            data$GeneSymbol[i] <- data$EntrezID[i]
+            data$GeneSymbol[i] <- as.character(data$EntrezID[i])
           }
         }
+
+        # Make sure the EntrezIDs are integers
+        data$EntrezID <- as.integer(data$EntrezID)
+        data <- data[order(data$EntrezID),]
+        
+        # Move the GeneSymbol as the first column
+        siRNA.Score <- data %>%
+          dplyr::select(GeneSymbol, everything())
         
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
+        
+        View(siRNA.Score)
+        message(str(siRNA.Score))
         
         # display the input file dimension
         datatable(data, rownames = FALSE, options = list(paging=TRUE))
@@ -604,8 +615,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == input$cutoff_valueH]
 
           # 2) Expansion - [Network Analysis]
-    message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
-    
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
@@ -667,18 +676,14 @@ options(shiny.maxRequestSize = 3*1024^2)
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
 
         completed <- TRUE
-      #},
-      # message = function(m) {
-      #   shinyjs::html(id = "status", html = m$message, add = TRUE)
-      # })
 
-      ## Switch to 'Enriched Pathways' tab adn display partial results
-      observe({
-        if(completed) {
-          updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
+        ## Switch to 'Enriched Pathways' tab and display partial results
+        observe({
+          if(completed) {
+            updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
 
-          output$enrichedPathways <- renderDataTable({
-            options = list(autoWidth = TRUE, scrollX = TRUE,
+            output$enrichedPathways <- renderDataTable({
+              options = list(autoWidth = TRUE, scrollX = TRUE,
                            columnDefs = list(list(width = '200px', targets = c(4,5))))
 
             # Used to add hyperlink to KEGG pathway
@@ -742,23 +747,36 @@ options(shiny.maxRequestSize = 3*1024^2)
                 # Color the genes that ARE on the original hit list BLUE
                 if(grepl(myGenes[j], myOriginalHits) ){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
-                  myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
-                  myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
-                  myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
-                  myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))                  
+                  # Take only one EntrezID if there are duplicated GeneSymbols
+                  myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])][1])
+                  
+                  # If myBlueGeneID is not empty (length==0)
+                  if(length(myRedGeneID)){
+                    myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
+                    myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
+                    myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))   
+                  }
                 }else{ # Color the genes that are NOT on the original hit list RED
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
-                  myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
+                  # Take only one EntrezID if there are duplicated GeneSymbols
+                  myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])][1])
+                  
+                  # If myRedGeneID is not empty (length==0)
+                  if(length(myRedGeneID)){
+          message("**", myRedGeneID)
                   myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
                   myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
-                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))                }
+                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel)) 
+                  }
+                }
               }
 
               # Add hyperlink to KEGG pathway database
               pathwayName <- pathEnrich[i,][1]
               pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
-              myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myRedGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myBlueGeneLabels, " ", ""), sep = "")
+              myGeneLabels <- paste(mapperHeader, "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), stri_replace_all_fixed(myBlueGeneLabels, " ", ""), sep = "")
+        message("***", myGeneLabels)
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
 
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
