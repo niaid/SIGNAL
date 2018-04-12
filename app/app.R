@@ -344,9 +344,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
         
-        View(siRNA.Score)
-        message(str(siRNA.Score))
-        
         # display the input file dimension
         datatable(data, rownames = FALSE, options = list(paging=TRUE))
       })
@@ -666,8 +663,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         ## Save the results into utput files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
 
-        message(getwd(), "#####")
-
         write.csv(out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv")
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
@@ -763,7 +758,6 @@ options(shiny.maxRequestSize = 3*1024^2)
                   
                   # If myRedGeneID is not empty (length==0)
                   if(length(myRedGeneID)){
-          message("**", myRedGeneID)
                   myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
                   myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
                   myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel)) 
@@ -776,7 +770,6 @@ options(shiny.maxRequestSize = 3*1024^2)
               pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
               myGeneLabels <- paste(mapperHeader, "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), stri_replace_all_fixed(myBlueGeneLabels, " ", ""), sep = "")
-        message("***", myGeneLabels)
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
 
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
