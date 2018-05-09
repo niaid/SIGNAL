@@ -1,0 +1,35 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","Lysosome",0,0,0,122,13,2,"LIPA, ACP5","NPC2, CLTA, CTSB, CTSH, CTSZ, GM2A, IGF2R, ATP6AP1, PPT1, LGMN, CD63",0.13
+"2","NOD-like receptor signaling pathway",0,0.001,0.003,165,12,6,"NAMPT, GBP1, IL1B, NFKB1, CCL5, TXN","GABARAP, CTSB, GBP2, OAS2, OAS3, STAT1",0.286
+"3","NF-kappa B signaling pathway",0,0.001,0.004,93,9,8,"ICAM1, IL1B, CCL4L1, NFKB1, NFKB2, PTGS2, TRAF1, CD40","DDX58",0.493
+"4","Hematopoietic cell lineage",0,0.001,0.004,94,9,4,"IL1A, IL1B, TFRC, CD36","ITGAM, CD1A, CD1C, CD9, CD44",0.27
+"5","Ferroptosis",0,0.002,0.009,40,6,5,"ACSL1, ACSL4, FTH1, HMOX1, TFRC","FTL",0.492
+"6","Phagosome",0,0.004,0.025,147,10,3,"MRC1, TFRC, CD36","CD209, HLA-A, HLA-B, ITGAM, ITGB2, NCF2, ATP6AP1",0.184
+"7","Osteoclast differentiation",0,0.006,0.04,126,9,5,"IL1A, IL1B, NFKB1, NFKB2, ACP5","LCP2, NCF2, STAT1, SQSTM1",0.313
+"8","Toll-like receptor signaling pathway",0,0.006,0.056,104,8,5,"IL1B, CCL4L1, NFKB1, CCL5, CD40","IRF5, CCL3, STAT1",0.351
+"9","Necroptosis",0,0.006,0.057,162,10,4,"FTH1, IL1A, IL1B, STAT5A","FTL, PLA2G4A, EIF2AK2, STAT1, CAMK2D, SQSTM1",0.231
+"10","Cell adhesion molecules (CAMs)",0,0.007,0.067,135,9,3,"CD274, ICAM1, CD40","GLG1, HLA-A, HLA-B, ITGAM, ITGB2, PECAM1",0.2
+"11","Endocytosis",0,0.008,0.085,237,12,2,"EHD1, TFRC","CLTA, DAB2, EHD4, HLA-A, HLA-B, IGF2R, PML, SRC, CBL, SNX3",0.109
+"12","HIF-1 signaling pathway",0.001,0.018,0.219,98,7,4,"HMOX1, NFKB1, PFKFB3, TFRC","HK2, TCEB2, CAMK2D",0.321
+"13","Complement and coagulation cascades",0.001,0.027,0.352,78,6,2,"SERPINB2, PLAUR","ITGAM, ITGAX, ITGB2, VTN",0.205
+"14","TNF signaling pathway",0.002,0.028,0.388,108,7,7,"ICAM1, IL1B, NFKB1, PTGS2, CCL5, CCL20, TRAF1","",0.532
+"15","Tryptophan metabolism",0.003,0.044,0.66,37,4,3,"IL4I1, IDO1, KYNU","KMO",0.429
+"16","Cytosolic DNA-sensing pathway",0.003,0.048,0.773,63,5,4,"IL1B, CCL4L1, NFKB1, CCL5","DDX58",0.44
+"17","Natural killer cell mediated cytotoxicity",0.003,0.05,0.852,124,7,1,"ICAM1","FCER1G, HLA-A, HLA-B, ITGB2, LCP2, CD48",0.1
+"18","AGE-RAGE signaling pathway in diabetic complications",0.004,0.06,1,98,6,5,"ICAM1, IL1A, IL1B, NFKB1, STAT5A","STAT1",0.447
+"19","Type I diabetes mellitus",0.005,0.06,1,43,4,2,"IL1A, IL1B","HLA-A, HLA-B",0.297
+"20","Antigen processing and presentation",0.005,0.065,1,71,5,1,"CD74","CTSB, HLA-A, HLA-B, LGMN",0.135
+"21","PPAR signaling pathway",0.006,0.065,1,72,5,4,"FABP5, ACSL1, ACSL4, CD36","FABP4",0.435
+"22","Chemokine signaling pathway",0.008,0.089,1,181,8,4,"CCL4L1, NFKB1, CCL5, CCL20","HCK, CCL3, SRC, STAT1",0.272
+"23","Mineral absorption",0.008,0.092,1,51,4,3,"FTH1, HMOX1, MT2A","FTL",0.414
+"24","Antifolate resistance",0.011,0.109,1,29,3,2,"IL1B, NFKB1","GGH",0.385
+"25","Fructose and mannose metabolism",0.014,0.138,1,32,3,2,"PFKFB3, FBP2","HK2",0.38
+"26","Fatty acid biosynthesis",0.017,0.163,1,13,2,2,"ACSL1, ACSL4","",0.577
+"27","Alanine, aspartate and glutamate metabolism",0.018,0.163,1,35,3,3,"IL4I1, GFPT1, GLS","",0.543
+"28","Adipocytokine signaling pathway",0.024,0.203,1,69,4,4,"ACSL1, ACSL4, NFKB1, CD36","",0.529
+"29","RIG-I-like receptor signaling pathway",0.024,0.203,1,69,4,3,"NFKB1, IFIH1, ISG15","DDX58",0.404
+"30","Prolactin signaling pathway",0.025,0.205,1,70,4,2,"NFKB1, STAT5A","SRC, STAT1",0.279
+"31","Leukocyte transendothelial migration",0.026,0.211,1,106,5,1,"ICAM1","ITGAM, ITGB2, NCF2, PECAM1",0.124
+"32","Fatty acid metabolism",0.032,0.251,1,44,3,2,"ACSL1, ACSL4","PPT1",0.367
+"33","Cellular senescence",0.039,0.296,1,158,6,2,"IL1A, NFKB1","HLA-A, HLA-B, ZFP36L1, SQSTM1",0.186
+"34","ErbB signaling pathway",0.044,0.323,1,84,4,1,"STAT5A","SRC, CAMK2D, CBL",0.149
