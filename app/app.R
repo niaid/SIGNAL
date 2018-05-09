@@ -1,3 +1,5 @@
+# TRIAGE app
+# edits May 8, 2018
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
@@ -94,12 +96,32 @@ options(shiny.maxRequestSize = 3*1024^2)
                       choices = c("Human", "Mouse")
           ),
           selectInput(inputId = "pathway",
-                      label = "Select a pathway to enrich:",
-                      choices = c("KEGG")
+                      label = "Select a Database for Enrichment Analysis:",
+                      choices = c("KEGG: Biological Processes", "KEGG: Disease Pathways", "KEGG: All Pathways")
           ),
           selectInput(inputId = "network",
-                      label = "Select a PPI database to use:",
-                      choices = c("STRING high conf", "STRING medium conf")
+                      label = "Select Interactions for Network Analysis:",
+                      choices = c("Experimental & Database", "Advanced Options")
+          ),
+          conditionalPanel(condition = "input.network == 'Advanced Options'",
+                           checkboxGroupInput(inputId ="STRING_interaction_sources", 
+                                              label = "Select One or More Interaction Sources:",
+                                              choices = c(Neighborhood = "neighborhood",
+                                                          Fusion = "fusion",
+                                                          Cooccurence = "cooccurence",
+                                                          Coexpression = "coexpression",
+                                                          Experimental = "experimental",
+                                                          Database = "database",
+                                                          Textmining = "textmining"),
+                                              inline = F
+                                              , textOutput("txt"))
+          ),
+          selectInput(inputId = "interaction_confidence_cutoff",
+                      label = "Interaction Confidence for Network Analysis:",
+                      choices = c("Low (>0.15)" = 150, 
+                                  "Medium (>0.4)" = 400,
+                                  "High (>0.7)" = 700),
+                      selected = 400
           ),
           fileInput(inputId= "file1",
                     label = 'Choose an input file to upload',
@@ -130,16 +152,18 @@ options(shiny.maxRequestSize = 3*1024^2)
                      htmlOutput("spacer2"),
                      dataTableOutput("enrichedPathways")
             ),
-            tabPanel(title = "Gene Hits", value = "geneList",
+            tabPanel(title = "Gene Hits", value = "triageHits",
                      htmlOutput("spacer3"),
-                     tabsetPanel(id = 'geneList',
-                        # Display Gene hits 
-                        tabPanel(title="Lists of Gene Hits", value="geneHits",
-                         dataTableOutput("geneList")),
-                        
-                        # Diplay number of gene hits by iteration
-                        tabPanel(title="Gene Hits By Iteration", value="geneHitsByIteration",
-                                 plotOutput("geneHitsByIteration"))
+                     tabsetPanel(id = 'triageHits',
+                                 #TRIAGE Hits table
+                                 tabPanel(title = "TRIAGE Gene Hits", value = "triageHits",
+                                          dataTableOutput("triageHits")),
+                                 tabPanel(title = "Gene Hits By Iteration", value="geneList",
+                                          dataTableOutput("geneList")),
+                                 tabPanel(title="Graph: Gene Hits By Iteration", value="geneHitsByIteration",
+                                          plotOutput("geneHitsByIteration")),
+                                 tabPanel(title = "Pathway Enrichments", value = "pathwayEnrich.cond",
+                                          dataTableOutput("pathwayEnrich.cond"))
                      )
             ),
             tabPanel(title = "Network", value = "myNetworkGraph",
@@ -155,24 +179,26 @@ options(shiny.maxRequestSize = 3*1024^2)
                 htmlOutput("spacer4"),
                 tabsetPanel(id = 'igraphViews',
                       ## Display in igrap
-                      tabPanel(title="1st Dimension Network", value="graphView1",
+                      tabPanel(title="1st Degree Network", value="graphView1",
                                htmlOutput("graphLegend1"),
                                htmlOutput("graphView1i", width = "100%", height = "700px")
                       ),
-                      tabPanel(title="2nd Dimension Network", value="graphView2",
+                      tabPanel(title="2nd Degree Network", value="graphView2",
                                htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
-                      )
+                      ),
+                      tabPanel(title = "PathNet Table", value = "PathNetTable",
+                               dataTableOutput("PathNetTable"))
                 )
             ),
             tabPanel(title = "NetworkD3", value = "networkViews",
                 htmlOutput("spacer5"),
                 tabsetPanel(id = 'networkD3Views',
                       ## Display in networkD3
-                      tabPanel(title="1st Dimension D3 Network", value="networkView1",
+                      tabPanel(title="1st Degree D3 Network", value="networkView1",
                                forceNetworkOutput("networkView1D3", width = "100%", height = "700px")),
 
-                      tabPanel(title="2nd Dimension D3 Network", value="networkView2",
+                      tabPanel(title="2nd Degree D3 Network", value="networkView2",
                               forceNetworkOutput("networkView2D3", width = "100%", height = "700px"))
 
                       # # Display in visNetwork
@@ -271,16 +297,16 @@ options(shiny.maxRequestSize = 3*1024^2)
             library('org.Hs.eg.db')
             x <- org.Hs.egSYMBOL2EG
           } else if(input$organism == "Mouse"){
-            library('org.Mm.eg.db') 
+            library('org.Mm.eg.db')
             x <- org.Mm.egSYMBOL2EG
           }
           
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
-
+          
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors=FALSE)
+          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors = FALSE)
           numGeneInInput <- nrow(data)
           #data$GeneSymbol <- toupper(data$GeneSymbol)
           tempData <- merge(x=data, y=y, by="GeneSymbol")
@@ -311,10 +337,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(mapped_genes,data$EntrezID)
-          
           xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors=FALSE)
+          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors = FALSE)
 
           tempData <- merge(x=data, y=y, by="EntrezID", all.x = TRUE)
           data <- tempData
@@ -326,13 +351,19 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
         for (i in 1:nrow(data)){
-          if(grepl('-', data$GeneSymbol[i])){
-            data$GeneSymbol[i] <- as.character(data$EntrezID[i])
-          }else if(is.na(data$GeneSymbol[i])){
-            data$GeneSymbol[i] <- as.character(data$EntrezID[i])
+          if(is.na(data$GeneSymbol[i])){
+            data$GeneSymbol[i] <- data$EntrezID[i]
           }
         }
-
+        # # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
+        # for (i in 1:nrow(data)){
+        #   if(grepl('-', data$GeneSymbol[i])){
+        #     data$GeneSymbol[i] <- data$EntrezID[i]
+        #   }else if(is.na(data$GeneSymbol[i])){
+        #     data$GeneSymbol[i] <- data$EntrezID[i]
+        #   }
+        # }
+        
         # Make sure the EntrezIDs are integers
         data$EntrezID <- as.integer(data$EntrezID)
         data <- data[order(data$EntrezID),]
@@ -465,25 +496,60 @@ options(shiny.maxRequestSize = 3*1024^2)
           source("~/TRIAGE/app/Rscripts/pathway_iteration.R", local = TRUE)
         }
 
-        # Set the network to be used based on user selection
-        network <- input$network
-
-        if(tolower(organism) == 'human'){
-          if(grepl("high", network)){
-            networkType <- 'hSTRINGppi.hi'
+        # Create the network iGraph to be used based on user selection
+        #Get ui parameters
+        input_netowrk <<- input$network
+        network_ConfidenceCutoff <<- as.numeric(input$interaction_confidence_cutoff)
+        network_InteractionSources <<- input$STRING_interaction_sources
+        
+        if(input_netowrk == "Experimental & Database") 
+          {
+          load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+          load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+          G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
+          { 
+            if(network_ConfidenceCutoff <= 400)
+              {
+              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+              G <<- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
+              }
+            if(network_ConfidenceCutoff <= 150)
+              {
+              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
+              }
+            }
+          } else if(input_netowrk == "Advanced Options")
+          {
+            for (i in 1:length(network_InteractionSources)) {
+              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
+              if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph")))}
+              else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph"))}
+              }
+            {
+              if(network_ConfidenceCutoff <= 400)
+                {
+                for (i in 1:length(network_InteractionSources)) {
+                  load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
+                }
+                }
+              if(network_ConfidenceCutoff <= 150)
+                {
+                for (i in 1:length(network_InteractionSources)) {
+                  load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
+                }
+              }
+            }
           }
-          if(grepl("medium", network)){
-            networkType <- 'hSTRINGppi.med'
-          }
-        }
-        else if(tolower(organism) == 'mouse'){
-          if(grepl("high", network)){
-            networkType <- 'mSTRINGppi.hi'
-          }
-          if(grepl("medium", network)){
-            networkType <- 'mSTRINGppi.med'
-          }
-        }
+        ##Push graph to global environment
+        #G <<- G
+        
+        #Selected_STRINGnetwork.igraph <- G
+        message("Networks Loaded")
 
         #message(networkType)
         use.only.commnected.components <- c('Yes')
@@ -537,23 +603,33 @@ options(shiny.maxRequestSize = 3*1024^2)
         #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
         inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
 
-        outputFileName <- paste0(inputFilePrefix, "_", networkType, "_TRIGEouput_ALL.csv")
+        outputFileName <- paste0(inputFilePrefix, "_", "_TRIAGEouput_ALL.csv")
 
         # 1) Seed Pathway Analysis
         # if('SHINY_SERVER' %in% env_names){
         #   setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
         # }
         # else{
-        #   setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
+        #   setwd("~/TRIAGEpublic/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
         # }
 
         # Pathway types
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         #pathway.type <- pathway.types[1]
         pathway.type <- input$pathway
-
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/", pathway.type, organism, ".csv"))
-
+        
+        #Get appropiate pathway document suffix
+        if (pathway.type == 'KEGG: Biological Processes'){
+          pathway.type <- 'BiologicalProcesses'
+        } 
+        if (pathway.type == 'KEGG: Disease Pathways'){
+          pathway.type <- 'Disease'
+        } 
+        if (pathway.type == 'KEGG: All Pathways'){
+          pathway.type <- 'All'
+        } 
+        
+        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
         # Get input file
         # siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
@@ -595,7 +671,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
 
-          outPrefix <- paste(pathway.type, iteration, sep = "_")
+          outPrefix <- paste("KEGG", iteration, sep = "_")
 
           # 1) Contraction - [Pathway Analysis]
           message(getwd())
@@ -612,6 +688,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == input$cutoff_valueH]
 
           # 2) Expansion - [Network Analysis]
+    message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
+    
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
@@ -621,9 +699,17 @@ options(shiny.maxRequestSize = 3*1024^2)
           siRNA.Score[[nName1]][siRNA.Score$EntrezID %in% gNames2] <- "Yes"
           siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
 
-          if(iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) {
-            dupCols <- (ncol(siRNA.Score)-1):ncol(siRNA.Score)
-            siRNA.Score <- siRNA.Score[, -dupCols]
+          
+          
+          
+          #if(iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) {
+          if((iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) 
+             || (iteration >= 5 
+                 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-2)]]) 
+                 && identical(siRNA.Score[[paste0("Network.class.iteration", iteration-1)]], siRNA.Score[[paste0("Network.class.iteration", iteration-3)]])
+                 && (length(siRNA.Score$EntrezID[siRNA.Score[[nName2]]== 1]) > length(siRNA.Score$EntrezID[siRNA.Score[[paste0("Network.class.iteration", iteration-1)]] == 1])))) { 
+           #dupCols <- (ncol(siRNA.Score)-1):ncol(siRNA.Score)      #This just shaves off the last two columns 
+            #siRNA.Score <- siRNA.Score[, -dupCols]
             counter <- FALSE
           }
 
@@ -640,6 +726,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         iterationNum <<- iteration - 1
         enrichFileName <- paste0(outPrefix,".Enrichment_", iterationNum, ".csv")
         pathEnrich <- read.csv(enrichFileName, stringsAsFactors = FALSE)
+        
 
         pathEnrich <- pathEnrich[pathEnrich$pVal < pval_threshold, ]
 
@@ -656,12 +743,14 @@ options(shiny.maxRequestSize = 3*1024^2)
         tempDF <- Reduce(function(x, y) merge(x, y, by = "GeneSymbol", all = T), tempL)
 
         samp <- tempDF[, 2:ncol(tempDF)]
-        pathVector <- sapply(seq(nrow(samp)), function(i) unlist(paste(samp[i, which(!is.na(samp[i, ]))], collapse = " ; ")))
+        pathVector <- sapply(seq(nrow(samp)), function(i) unlist(paste(samp[i, which(!is.na(samp[i, ]))], collapse = ", "))) #Switched to comma seperator from " ; " 
 
         pathDF <- data.frame(GeneSymbol = tempDF$GeneSymbol, Pathway = pathVector, stringsAsFactors = F)
 
-        ## Save the results into utput files in the TRIAGEoutputFiles folder
+        ## Save the results into output files in the TRIAGEoutputFiles folder
         out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
+
+        message(getwd(), "#####")
 
         write.csv(out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv")
@@ -671,14 +760,288 @@ options(shiny.maxRequestSize = 3*1024^2)
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
 
         completed <- TRUE
+      #},
+      # message = function(m) {
+      #   shinyjs::html(id = "status", html = m$message, add = TRUE)
+      # })
+        
+        
+      ###################################
+      ### Generate Condensed Output Files
+      ###################################
+      
+      TRIAGEoutput <- read.csv(outputFileName, stringsAsFactors = F)
+        cutoffType <<- input$cutoff_type
+        cutoffHigh <<- as.numeric(input$cutoff_valueH)
+        cutoffMed <<- as.numeric(input$cutoff_valueM)
+        
+        #################
+        # Set High and Low confidence Label and TRIAGE Label
+        ##################
+        
+        #Set confidence catgeor
+        TRIAGEoutput <- TRIAGEoutput %>%
+          mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffHigh, "HighConf",
+                                             ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffMed & get(cutoffType, as.environment(TRIAGEoutput)) < cutoffHigh,"MedConf",
+                                                    "")))
+        
+        FinalIterationNetworkColumn <- paste0("Network.class.iteration", iterationNum)
+        
+        TRIAGEoutput <- TRIAGEoutput %>%
+          mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == 1, 
+                                    "Yes",
+                                    ""))
+        ################
+        # Generate Matrices for TRIAGE Hits, high conf hits, med conf hits
+        #Get filtered TRIAGEhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
+        
+        TRIAGEhits <- filter(TRIAGEoutput, TRIAGEhit == "Yes")
+        TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
+        
+        # Get filtered TRIAGE High/Med Conf
+        TRIAGEhits.highConf <- filter(TRIAGEoutput, TRIAGEhit == "Yes" 
+                                      & ConfidenceCategory == "HighConf")
+        TRIAGEhits.highConf.matrix <- matrix(TRIAGEhits.highConf$EntrezID)
+        TRIAGEhits.highConf.matrix.GS <- matrix(TRIAGEhits.highConf$GeneSymbol)
+        
+        TRIAGEhits.medConf <- filter(TRIAGEoutput, TRIAGEhit == "Yes" 
+                                     & ConfidenceCategory == "MedConf")
+        TRIAGEhits.medConf.matrix <- matrix(TRIAGEhits.medConf$EntrezID)
+        TRIAGEhits.medConf.matrix.GS <- matrix(TRIAGEhits.medConf$GeneSymbol)
+        
+        #numTotal variabale to be used in GeneList tab to generate graph
+        
+        numTotal  <<- length(TRIAGEhits.highConf.matrix) + length(TRIAGEhits.medConf.matrix)
+        
+        #############################################################     # Using the methods from CARD (only swithced to EntrezID over GeneSymbol)
+        #            PageRank Algorithm to All Genes
+        #############################################################               
+        # AVERAGE DUPLICATED ROWS
+        siRNA.Score <- TRIAGEhits[which(!is.na(TRIAGEhits$EntrezID)),]    
+        OverallDegree <- degree(G)
+        Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
+        Graph <- induced.subgraph(G,Screen_Genes.for.network.analysis)
+        
+        #############################################################
+        #            Select sub-graphs from hit genes
+        #############################################################
+        Subset_Genes.for.network.analysis <- Screen_Genes.for.network.analysis
+        
+        SubGraph <- induced.subgraph(Graph,Subset_Genes.for.network.analysis)
+        
+        # if(tolower(use.only.commnected.components) == "yes"){
+        #   SubGraph <- induced.subgraph(SubGraph,names(which(degree(SubGraph) > 0)))
+        # }
+        
+        #############################################################
+        #            Calculation of Node properties
+        #############################################################
+        Temp.Articulation <- V(SubGraph)$name[articulation.points(SubGraph)]
+        Articulation <- rep(0, length(V(SubGraph)$name))
+        Articulation[match(Temp.Articulation, (V(SubGraph)$name))] <- 1
+        
+        siRNA.Score.Formatted <- siRNA.Score
+        
+        gNames <- V(SubGraph)$name
+        ###############################################################################
+        #                 Create Network for D3 Rendering for Hit Genes
+        ###############################################################################
+        GraphEdgesHitNames <- get.data.frame(SubGraph, what = "edges")
+        GraphEdgesHitNames <- GraphEdgesHitNames[!duplicated(GraphEdgesHitNames), ]
+        source <- target <- rep(NA, nrow(GraphEdgesHitNames))
+        tempGenes <- union(GraphEdgesHitNames$from,GraphEdgesHitNames$to)
+        for(i in 1:length(tempGenes)){
+          source[which(GraphEdgesHitNames$from == tempGenes[i])] <- i-1
+          target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
+        }
+        
+        GraphEdgesHitNumber <- data.frame(source,target)
+        
+        
+        GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
+        
+        
+        ###############################################################################
+        #                 Add back GeneSymbol and Hit Designation to output
+        ###############################################################################
+        GraphNodesHit <- merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")], 
+                               by.x = "EntrezID", by.y = "EntrezID", all.x = T)
+        
+        #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
+        
+        ############# EDGE INFO and NODE INFO are sent to GLOBAL ENVIRONMENT to be used by RANKING
+        
+        EdgeInfo <<- GraphEdgesHitNumber
+        NodeInfo <<- GraphNodesHit
+        
+        ######################################
+        
+        #Add GeneSymbols to Edge dataframe                                              
+        Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
+        
+        names(Edge.source)[names(Edge.source)=="GeneSymbol"] <- "source.ID"
+        
+        Edge.target <- merge(Edge.source, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
+        
+        names(Edge.target)[names(Edge.target)=="GeneSymbol"] <- "target.ID"
+        
+        #####
+        #Merge TRIAGEhits to NodeInfo
+        Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
+                                  TRIAGEhits, 
+                                  by.x = "GeneSymbol", by.y = "GeneSymbol", all.y = T)
+        ###################
+        ######Create Data frame with Pathway interactome
+        #Convert Target values to pathways
+        EdgeInfo.TargetPathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
+                                         by.x = "target", by.y = "GeneMappingID", all.x = T)
+        #Remove NAs
+        EdgeInfo.TargetPathways <- na.omit(EdgeInfo.TargetPathways)
+        
+        #Aggregate
+        EdgeInfo.TargetPathways_Sum <- EdgeInfo.TargetPathways %>% 
+          group_by(source) %>% summarise(Pathway = toString(Pathway))
+        
+        
+        
+        #Convert Source values to pathways
+        EdgeInfo.SourcePathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
+                                         by.x = "source", by.y = "GeneMappingID", all.x = T)
+        #Remove NAs
+        EdgeInfo.SourcePathways <- na.omit(EdgeInfo.SourcePathways)
+        
+        #Aggregate
+        EdgeInfo.SourcePathways_Sum <- EdgeInfo.SourcePathways %>% 
+          group_by(target) %>% summarise(Pathway = toString(Pathway))
+        
+        
+        
+        ########## Combine data frames
+        #Align column names and stack data frames                                                         #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
+        colnames(EdgeInfo.SourcePathways_Sum) <- c("source", "Pathway")
+        EdgePathways_stacked <- rbind(EdgeInfo.TargetPathways_Sum, EdgeInfo.SourcePathways_Sum)
+        
+        
+        #Aggregate
+        EdgePathways_stacked_Sum <- EdgePathways_stacked %>% 
+          group_by(source) %>% summarise(Pathway = toString(Pathway))
+        
+        ##Add counts to pathways (number of genes in list that are part of each pathway)
+        EdgePathways_stacked_Sum$Pathway.counts <- NA
+        
+        for (i in 1:length(EdgePathways_stacked_Sum$Pathway)) {
+          temp.string <- unlist(strsplit(EdgePathways_stacked_Sum$Pathway[i], ", "))
+          for (j in 1:length(temp.string)) {
+            name.j <- temp.string[j]
+            count.j <- length(grep(name.j, temp.string, fixed = T))
+            out <- paste0(name.j, " (", count.j, ")")
+            EdgePathways_stacked_Sum$Pathway.counts[i] <-  ifelse(j == 1, out, paste(out, EdgePathways_stacked_Sum$Pathway.counts[i], sep = ", ")) 
+          }
+        }
+        
+        ########Remove Duplicates of Pathway names
+        
+        EdgePathways_stacked_Sum$NetworkGenePathways <- sapply(strsplit(EdgePathways_stacked_Sum$Pathway.counts, ", ", fixed = TRUE), function(x) 
+          paste(unique(x), collapse = ", "))
+        
+        ###########Order from pathway with highest number of genes to lowest
+        for (k in 1:length(EdgePathways_stacked_Sum$Pathway)) {
+          pathway.string <- unlist(strsplit(EdgePathways_stacked_Sum$NetworkGenePathways[k], ", "))
+          pathway.values <- as.numeric(gsub("[\\(\\)]", "", regmatches(pathway.string, gregexpr("\\(.*?\\)", pathway.string))))
+          names(pathway.values) <- order(pathway.values, decreasing = T)
+          EdgePathways_stacked_Sum$NetworkGenePathways[k] <- paste(pathway.string[as.numeric(names(pathway.values))], collapse = ", ")
+        }
+        
+        
+        #######Add in entrezID for source genemappings
+        EdgePathways_stacked_EntrezID <- merge(Scores_and_nodes[, c("GeneMappingID", "EntrezID")], EdgePathways_stacked_Sum,
+                                               by.x = "GeneMappingID", by.y = "source",
+                                               all.y = T)
+        
+        #######Add to triage Out put file
+        TRIAGEoutput <- merge(TRIAGEoutput, EdgePathways_stacked_EntrezID[, c("EntrezID", "NetworkGenePathways")],
+                              by.x = "EntrezID", by.y = "EntrezID",
+                              all.x = T)
+        
+        ##########################
+        # Add interacting genes to output files
+        
+        
+        #Aggregate the edges to be summarised to each genemap ID                                            #pulling together all genes that interactect with a specifc gene and putting them in one row seprated by comma
+        Edge_source_summary <- aggregate(target.ID ~ source.ID, data = Edge.target, paste, collapse = ", ")
+        Edge_target_summary <- aggregate(source.ID ~ target.ID, data = Edge.target, paste, collapse = ", ")
+        
+        
+        #Align column names and stack data frames                                                         #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
+        colnames(Edge_target_summary) <- c("source.ID", "target.ID")
+        Edge_summary_stacked <- rbind(Edge_source_summary, Edge_target_summary)
+        
+        #Aggregate stacked data to get unique values
+        Edge_summary <- aggregate(target.ID ~ source.ID, data = Edge_summary_stacked, paste, collapse = ", ")
+        
+        #Update Names                                                                                     #Now a dataframe is being created where each gene selected by TRIAGE (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
+        colnames(Edge_summary) <- c("GeneSymbol", "InteractingGenes")
+        
+        #Merge with scores 
+        TRIAGEoutput <- merge(TRIAGEoutput, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
+        
+        ####################
+        ### Create Condensed Output File
+        TRIAGEoutput.condensed <- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
 
-        ## Switch to 'Enriched Pathways' tab and display partial results
-        observe({
-          if(completed) {
-            updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
+        ########################
+        ######## Pathway Output
+        #########################
+        FinalEnrichment.df <- pathEnrich
+        
+        
+        #Genrate columns with high confidence and med confidence (based on input) genes of each pathway.
+        FinalEnrichment.df$HighScoreGenes <- NA
+        FinalEnrichment.df$HighScoreGenesNames <- NA
+        FinalEnrichment.df$MedScoreGenesNames <- NA
+        
+        for (i in 1:length(FinalEnrichment.df$Genes)) {
+          temp.path.string <- unlist(strsplit(FinalEnrichment.df$HitGeneNames[i], ", "))
+          out.HC <- paste(intersect(temp.path.string, TRIAGEhits.highConf.matrix.GS),collapse = ", ")
+          out.HC.count <- length(intersect(temp.path.string, TRIAGEhits.highConf.matrix.GS))
+          out.MC <- paste(intersect(temp.path.string, TRIAGEhits.medConf.matrix.GS),collapse = ", ")
+          FinalEnrichment.df$HighScoreGenes[i] <- out.HC.count
+          FinalEnrichment.df$HighScoreGenesNames[i] <- out.HC
+          FinalEnrichment.df$MedScoreGenesNames[i] <- out.MC
+        }
+        
+        
+        ########### Generate Enrichment Score
+        
+        FinalEnrichment.df$EnrichScore <- NA
+        
+        for (i in 1:length(FinalEnrichment.df$Pathway)) {
+          GeneHitGeneRatio <- FinalEnrichment.df$HitGenes[i] / FinalEnrichment.df$Genes[i]
+          HighConfHitGeneRation <-  FinalEnrichment.df$HighScoreGenes[i] / FinalEnrichment.df$HitGenes[i]
+          FinalEnrichment.df$EnrichScore[i] <- round(((GeneHitGeneRatio + HighConfHitGeneRation) / 2), 3)
+        }
+        
+        
+        FinalEnrichment.condensed <- FinalEnrichment.df[, c("Pathway", "pVal", "pValFDR", "pValBonferroni", "Genes", "HitGenes", "HighScoreGenes", "HighScoreGenesNames", "MedScoreGenesNames", "EnrichScore")]
+        ############# Write files to new Directory
+        downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
+        dir.create(downloadDir)
+        setwd(downloadDir)
+        
+        TRIAGE.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
+        Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
+        
+        write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
+        write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
 
-            output$enrichedPathways <- renderDataTable({
-              options = list(autoWidth = TRUE, scrollX = TRUE,
+      ######################
+      ## Switch to 'Enriched Pathways' tab and display partial results
+      observe({
+        if(completed) {
+          updateTabsetPanel(session, "inTabset", selected = "enrichedPathways")
+
+          output$enrichedPathways <- renderDataTable({
+            options = list(autoWidth = TRUE, scrollX = TRUE,
                            columnDefs = list(list(width = '200px', targets = c(4,5))))
 
             # Used to add hyperlink to KEGG pathway
@@ -739,29 +1102,20 @@ options(shiny.maxRequestSize = 3*1024^2)
 
               for(j in 1:length(myGenes))
               {
-                # Color the genes that ARE on the original hit list BLUE
+                # Color the genes on the original hit list BLUE
                 if(grepl(myGenes[j], myOriginalHits) ){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
-                  # Take only one EntrezID if there are duplicated GeneSymbols
-                  myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])][1])
-                  
-                  # If myBlueGeneID is not empty (length==0)
-                  if(length(myRedGeneID)){
-                    myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
-                    myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
-                    myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))   
-                  }
-                }else{ # Color the genes that are NOT on the original hit list RED
+                  myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
+                  myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
+                  myBlueGeneLabels <- paste(myBlueGeneLabels, myBlueGeneLabel, sep="\n")
+                  myBlueGeneIDs <- capture.output(cat(myBlueGeneIDs, myBlueGeneLabel))
+                }else{
+                  # Color the genes on the original hit list RED
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
-                  # Take only one EntrezID if there are duplicated GeneSymbols
-                  myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])][1])
-                  
-                  # If myRedGeneID is not empty (length==0)
-                  if(length(myRedGeneID)){
+                  myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
                   myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
-                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel)) 
-                  }
+                  myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))
                 }
               }
 
@@ -769,7 +1123,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               pathwayName <- pathEnrich[i,][1]
               pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
-              myGeneLabels <- paste(mapperHeader, "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), stri_replace_all_fixed(myBlueGeneLabels, " ", ""), sep = "")
+              myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
 
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
@@ -786,127 +1140,114 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
 
       # Create the 'Gene List' tab
-      output$geneList <- renderUI({
-          updateTabsetPanel(session, "inTabset", selected = "geneList")
-
-          output$geneList <- renderDataTable({
-            # Select only the hit genes in any iteration
-            # number of columns to check based on the number of iterations
-            numConditions <- NULL
-
-            for (i in 1:(iteration - 1))
-            {
-              if (i == (iteration - 1)){
-                numConditions <- paste(numConditions, "siRNA.Score$KEGG.class.iteration", i, " > ", as.numeric(input$cutoff_valueM), sep="")
-              }
-              else{
-                numConditions <- paste(numConditions, "siRNA.Score$KEGG.class.iteration", i, " > ", as.numeric(input$cutoff_valueM), " | ", sep="")
-              }
+      # output$geneHits <- renderUI({
+      #   updateTabsetPanel(session, "inTabset", selected = "geneHits")
+        
+        output$triageHits <- renderDataTable({
+          dat <- datatable(TRIAGEoutput.condensed, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
+                                                                                    , columnDefs = list(list(width = '200px'
+                                                                                                             , length = '400px'
+                                                                                                             , targets = c(4,5,6)
+                                                                                                             ,render = JS(
+                                                                                                               "function(data, type, row, meta) {"
+                                                                                                               ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                                                                               ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                                                                               ,"}"))))) 
+          return(dat)
+        })
+        
+        
+        output$geneList <- renderDataTable({
+            EnrichColumns.index <- NULL
+            TRIAGErenamed <- TRIAGEoutput
+            
+             
+            for (i in 1:iterationNum){
+              pathColumn <- which(colnames(TRIAGErenamed) == paste0("KEGG.class.iteration", i))
+              netColumn <- which(colnames(TRIAGErenamed) == paste0("Network.class.iteration", i))
+              colnames(TRIAGErenamed)[pathColumn] <- paste0("PathwayEnrichment", i)
+              colnames(TRIAGErenamed)[netColumn] <- paste0("NetworkEnrichment", i)
+              EnrichColumns.index <- c(EnrichColumns.index, pathColumn, netColumn)
             }
             
-            #print(numConditions)
-            subSet <- subset(siRNA.Score, eval(parse(text = numConditions)))
-
-            # Add a new row of "Total" of hit genes in each iteration
-            totalRow <- subSet[1,]
-
-            for (k in 1:length(totalRow)) {
-
-              if(grepl("KEGG.class.iteration", colnames(totalRow)[k])) {
-
-                # Get the subset of the dataframe with column value equal to 1
-                subSet1 <- subset(subSet, subSet[[colnames(totalRow)[k]]] == input$cutoff_valueH)
-                totalRow[1,colnames(totalRow)[k]] <- length(subSet1[[colnames(totalRow)[k]]])
-              }
-              else{
-                totalRow[1,k] <- NA
-              }
-            }
-            totalRow[1,"GeneSymbol"] <- "Total"
-
-            # The table of gene hits in the enriched pathways by iterations
-            newSubset <- rbind(totalRow, subSet)
-            # Create a dataframe of geneHits for total, high-conf, med-conf cross multiple iterations of the enrichment
-            # The gene hit counts are ONLY from the enriched pathways met with pVal cutoff (0.05)
-            #             Total      Hign-Conf    Med-conf
-            # Original      x            x           x
-            # Iteration1    x            x           x
-            # Iteration2    x            x           x
-            # ........      x            x           x
-            # original input data => siRNA.Score
-            # enriched data => newSubset
-            # dataframe => geneHitsByIterations 
-            cutoffType <- input$cutoff_type
-            cutoffHigh <- as.numeric(input$cutoff_valueH)
-            cutoffMed <- as.numeric(input$cutoff_valueM)
-            numHighConf <- 0
-            numMedConf <- 0
+            TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
+            Iteration.index <- c(which(colnames(TRIAGEiterations) == cutoffType), grep('NetworkEnrichment', names(TRIAGEiterations)))
             
-            # Count the high-conf, med-conf, and total numbers of genes in the input data
-            for(i in 1:length(siRNA.Score[,cutoffType])){
-              if((!is.na(siRNA.Score[i, cutoffType])) & (siRNA.Score[i, cutoffType] >= cutoffHigh)){
-                numHighConf = numHighConf + 1
-              }else if((!is.na(siRNA.Score[i, cutoffType])) & (siRNA.Score[i,cutoffType] >= cutoffMed)){
-                numMedConf= numMedConf + 1
-              }
-            }
-            numTotal <<- numHighConf + numMedConf
             
-            # Create the dataframe
-            geneHitsByIterations <<- rbind( c('Total', 'High-conf', 'Med-conf'), c(numTotal, numHighConf, numMedConf))
-
-            # Count the high-conf, med-conf, and total numbers of genes in the enriched pathways
-            for(j in 1:iterationNum){
-              # Get column names for each iteration
-              iterationCol <- paste0("KEGG.class.iteration",j)
-
-              # total number of 'hit' genes in each iteration
-              totalCount <- sum(siRNA.Score[,iterationCol] >= cutoffMed, na.rm=TRUE)
-              
-              # number of 'hit' genes from the 'high-conf' gene set in the input data
-              highCount <- sum(siRNA.Score[,iterationCol] >= cutoffHigh, na.rm=TRUE)
-              
-              # number of 'hit' gene from the 'med-conf' gene set in the input data
-              medCount <- sum(siRNA.Score[,iterationCol] < cutoffHigh & siRNA.Score[,iterationCol] >= cutoffMed, na.rm=TRUE)
-              
-              geneHitsByIterations <- rbind(geneHitsByIterations, c(totalCount, highCount, medCount))
+            totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
+            colnames(totalRow) <- colnames(TRIAGEiterations)
+            hitsDataFrame <- data.frame(matrix(0, length(Iteration.index), 4))
+            colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
+            
+            
+            for (l in 1:length(Iteration.index)){
+              totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh))
+              totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh & TRIAGEiterations$ConfidenceCategory == "HighConf"))
+              totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+              totalRow[1, Iteration.index[l]] <- totalHits
+              hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
             }
-            # Use row#1 as the header 
-            colnames(geneHitsByIterations) = geneHitsByIterations[1, ]
-            geneHitsByIterations = geneHitsByIterations[-1, ]
-            # Use 'Iteration' column with row index number
-            #geneHitsByIterations <- cbind(0:(nrow(geneHitsByIterations) - 1), geneHitsByIterations)
-            geneHitsByIterations <- cbind(0:(nrow(geneHitsByIterations) - 1), geneHitsByIterations)
-            colnames(geneHitsByIterations)[1] <- "Iteration"
+            
+            totalRow[1,1] <- "Total"
+            View(hitsDataFrame) #for testing 
+            TRIAGEiterations <- rbind(totalRow, TRIAGEiterations)
+            
             
             # View the dataframe 
-            geneHitsToPlot <<- data.frame(geneHitsByIterations)
-      
+            geneHitsToPlot <<- data.frame(hitsDataFrame)
+            head(geneHitsToPlot) #for testing
             # Highlight the 'Total' row using formatStyle()
-             dat <- datatable(newSubset, rownames = FALSE, options = list(paging=TRUE)) %>%
+            dat <- datatable(TRIAGEiterations, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
+                                                                                , columnDefs = list(list(width = '200px'
+                                                                                                         , length = '400px'
+                                                                                                         , targets = c((length(TRIAGEiterations)-2), (length(TRIAGEiterations)-1))
+                                                                                                         ,render = JS(
+                                                                                                           "function(data, type, row, meta) {"
+                                                                                                           ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                                                                           ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                                                                           ,"}"))))) %>%
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
-              return(dat)
+            return(dat)
           })
-          message("completed geneList tab")
+          #message("completed geneList tab")
           
           # Create plots how the numbers of gene hits by iteration
           output$geneHitsByIteration <- renderPlot({
-            geneHitsToPlot.melted <- melt(geneHitsToPlot, id.vars = "Iteration")
-
-            ggplot(data = geneHitsToPlot.melted, aes(x = as.numeric(Iteration) - 1, y = as.numeric(value), group = variable, color = variable)) +
+            hitsDataFrame.melt <- melt(geneHitsToPlot, id.vars="Iteration")
+            
+            ggplot(data = hitsDataFrame.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
-              scale_colour_discrete("") + scale_shape_manual("") + annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/3, ymax=numTotal*2/3) + 
+              scale_colour_discrete("") + scale_shape_manual("") + 
+              annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/3, ymax=numTotal*2/3) + 
               theme(
                 axis.text=element_text(size=12),
                 axis.title=element_text(size=14,face="bold")
               )
-              
-              #theme(axis.title.x = element_text(size = rel(1.8)) + theme(axis.title.y = element_text(size = rel(1.8))
-              #ggtitle("Gene Enrichment By Iteration") + theme_bw() + theme(plot.title = element_text(hjust=0.5))
-          })         
-      })
-
+            
+            #theme(axis.title.x = element_text(size = rel(1.8)) + theme(axis.title.y = element_text(size = rel(1.8))
+            #ggtitle("Gene Enrichment By Iteration") + theme_bw() + theme(plot.title = element_text(hjust=0.5))
+          })
+          
+          output$pathwayEnrich.cond <- renderDataTable({
+            dat <- datatable(FinalEnrichment.condensed, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
+                                                                                      , columnDefs = list(list(width = '200px'
+                                                                                                               , length = '400px'
+                                                                                                               , targets = c(7,8)
+                                                                                                               ,render = JS(
+                                                                                                                 "function(data, type, row, meta) {"
+                                                                                                                 ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                                                                                 ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                                                                                 ,"}"))))) #%>%
+              #formatStyle("EnrichScore", background = styleColorBar(c(0,1), 'lightblue')) 
+            return(dat)
+          })
+          #})
+      
+      
+      
+      ################################
       # Create the 'Network Graph' tab
+      ################################    
       output$myNetworkGraph <- renderUI({
         message("Inside NetworkGraph")
         updateTabsetPanel(session, "inTabset", selected = "myNetworkGraph")
@@ -941,6 +1282,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         output$myNetworkGraph = renderDataTable({
           datatable(cbind(Pick=shinyInput(checkboxInput,"srows_",nrow(sigPathways),value=NULL,width=1), sigPathways[, colnames(sigPathways), drop=FALSE]),
                   options = list(orderClasses = TRUE,
+                                 ordering = F,
                                  lengthMenu = c(2, 12, 18),
                                  paging = FALSE,
 
@@ -973,7 +1315,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             progress1$set(message = "Generating network graph....", value = 0.3)
             
             message(selectedRows)
-            source(paste0(scriptDir, "Ranking_plusComments_v2.R"), local = TRUE)
+            source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             progress1$inc(1/2)
             Generate_NetworkGraph(selectedRows, organism)
             progress1$inc(1)
@@ -981,8 +1323,8 @@ options(shiny.maxRequestSize = 3*1024^2)
             #############
             ## PathNet ##
             #############
-            saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html", selfcontained = TRUE)
-            saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html", selfcontained = TRUE)
+            saveEdgebundle(Chimera1, paste0(PathNetName.output, "1Degree.html"), selfcontained = TRUE)
+            saveEdgebundle(Chimera2, paste0(PathNetName.output, "2Degree.html"), selfcontained = TRUE)
             
             # Remove existing html file in www folder
             Sys.chmod(wwwDir, mode = "0777")
@@ -995,10 +1337,10 @@ options(shiny.maxRequestSize = 3*1024^2)
             #output$graphView1i <- renderEdgebundle({
             output$graphView1i <- renderUI({
               
-              file.copy("Chimera_STRINGHi_against_selectedPathways_1st.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html"), overwrite = TRUE)
+              file.copy(paste0(PathNetName.output, "1Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "1Degree.html")), overwrite = TRUE)
               tags$iframe(
                 seamless="seamless",
-                src="Chimera_STRINGHi_against_selectedPathways_1st.hits.html",
+                src=paste0(PathNetName.output, "1Degree.html"),
                 scrolling = 'no',
                 height=700, 
                 width=700
@@ -1013,14 +1355,27 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             output$graphView2i <- renderUI({
               # Copy HTML files to www directory for display in iframe
-              file.copy("Chimera_STRINGHi_against_selectedPathways_2nd.hits.html", paste0(wwwDir, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html"), overwrite = TRUE)
+              file.copy(paste0(PathNetName.output, "2Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "2Degree.html")), overwrite = TRUE)
               tags$iframe(
                 seamless="seamless",
-                src="Chimera_STRINGHi_against_selectedPathways_2nd.hits.html",
+                src=paste0(PathNetName.output, "2Degree.html"),
                 scrolling = 'no',
                 height=700, 
                 width=700
               )              
+            })
+            
+            output$PathNetTable <- renderDataTable({
+              dat <- datatable(Scores_nodes_and_edges, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
+                                                                                           , columnDefs = list(list(width = '200px'
+                                                                                                                    , length = '400px'
+                                                                                                                    , targets = c(4:(length(Scores_nodes_and_edges)-1))
+                                                                                                                    ,render = JS(
+                                                                                                                      "function(data, type, row, meta) {"
+                                                                                                                      ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                                                                                      ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                                                                                      ,"}")))))
+              return(dat)
             })
             
             ################
@@ -1090,7 +1445,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               forceNetwork(Links = g11_links, Nodes = g11_nodes,
                            Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
                            Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE) %>%
-                saveNetwork(file = 'Chimera_STRINGHi_against_selectedPathways_1st.D3.html')
+                saveNetwork(file = paste0(PathNetName.output, "1Degree.D3.html"))
               
               # Create force directed network plot
               forceNetwork(Links = g11_links, Nodes = g11_nodes,
@@ -1162,7 +1517,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               forceNetwork(Links = g22_links, Nodes = g22_nodes,
                            Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
                            Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE) %>%                            
-                saveNetwork(file = 'Chimera_STRINGHi_against_selectedPathways_2nd.D3.html')
+                saveNetwork(file = paste0(PathNetName.output, "2Degree.D3.html"))
               
               # Create force directed network plot
               forceNetwork(Links = g22_links, Nodes = g22_nodes,

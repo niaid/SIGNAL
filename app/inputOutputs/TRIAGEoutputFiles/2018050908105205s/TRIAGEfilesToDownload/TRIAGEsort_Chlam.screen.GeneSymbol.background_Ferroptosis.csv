@@ -1,0 +1,80 @@
+"","EntrezID","GeneSymbol","GeneMappingID","ConfidenceCategory","Group","Pathway","Allnet.count","Ntwrk.all","NtwrkCount.Ferroptosis","Ntwrk.Ferroptosis","NtwrkCount.NA","Ntwrk.NA","NtwrkCount.NA","Ntwrk.NA","Total_Path_Hits.net.count"
+"1",2180,"ACSL1",46,"HighConf","Ferroptosis","Ferroptosis, PPAR signaling pathway, Fatty acid biosynthesis, Adipocytokine signaling pathway, Fatty acid metabolism",1,"PPT1",0,NA,0,"",0,"",0
+"2",2182,"ACSL4",48,"HighConf","Ferroptosis","Ferroptosis, PPAR signaling pathway, Fatty acid biosynthesis, Adipocytokine signaling pathway, Fatty acid metabolism",1,"PPT1",0,NA,0,"",0,"",0
+"3",817,"CAMK2D",66,"MedConf","Novel","Necroptosis, HIF-1 signaling pathway, ErbB signaling pathway",1,"STAT1",0,NA,0,"",0,"",0
+"4",867,"CBL",0,"MedConf","Novel","Endocytosis, ErbB signaling pathway",5,"STAT5A, LCP2, CLTA, HLA-A, FCER1G",0,NA,0,"",0,"",0
+"5",948,"CD36",72,"HighConf","Novel","Hematopoietic cell lineage, Phagosome, PPAR signaling pathway, Adipocytokine signaling pathway",2,"CD9, FABP4",0,NA,0,"",0,"",0
+"6",958,"CD40",58,"HighConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway, Cell adhesion molecules (CAMs)",3,"TRAF1, STAT5A, NFKB1",0,NA,0,"",0,"",0
+"7",960,"CD44",33,"MedConf","Novel","Hematopoietic cell lineage",11,"MT2A, HLA-B, ICAM1, HLA-A, GBP1, GBP2, GLG1, OAS3, OAS2, PML, IRF5",0,NA,0,"",0,"",0
+"8",967,"CD63",3,"MedConf","Novel","Lysosome",1,"CD9",0,NA,0,"",0,"",0
+"9",972,"CD74",70,"HighConf","Novel","Antigen processing and presentation",3,"CLTA, CTSB, LGMN",0,NA,0,"",0,"",0
+"10",975,"CD81",2,"MedConf","Novel",NA,1,"CD9",0,NA,0,"",0,"",0
+"11",928,"CD9",26,"MedConf","Novel","Hematopoietic cell lineage",3,"CD36, CD63, CD81",0,NA,0,"",0,"",0
+"12",1211,"CLTA",23,"MedConf","Novel","Lysosome, Endocytosis",3,"CD74, CBL, NCF2",0,NA,0,"",0,"",0
+"13",1471,"CST3",43,"HighConf","Novel",NA,2,"TGFBI, CTSB",0,NA,0,"",0,"",0
+"14",1476,"CSTB",71,"MedConf","Novel",NA,1,"CTSB",0,NA,0,"",0,"",0
+"15",1508,"CTSB",24,"MedConf","Novel","Lysosome, NOD-like receptor signaling pathway, Antigen processing and presentation",3,"CST3, CD74, CSTB",0,NA,0,"",0,"",0
+"16",23586,"DDX58",37,"MedConf","Novel","NF-kappa B signaling pathway, Cytosolic DNA-sensing pathway, RIG-I-like receptor signaling pathway",2,"IFIH1, ISG15",0,NA,0,"",0,"",0
+"17",10938,"EHD1",13,"HighConf","Novel","Endocytosis",1,"EHD4",0,NA,0,"",0,"",0
+"18",30844,"EHD4",65,"MedConf","Novel","Endocytosis",1,"EHD1",0,NA,0,"",0,"",0
+"19",5610,"EIF2AK2",10,"MedConf","Novel","Necroptosis",1,"STAT1",0,NA,0,"",0,"",0
+"20",2167,"FABP4",27,"MedConf","Novel","PPAR signaling pathway",1,"CD36",0,NA,0,"",0,"",0
+"21",8789,"FBP2",77,"HighConf","Novel","Fructose and mannose metabolism",2,"HK2, PFKFB3",0,NA,0,"",0,"",0
+"22",2207,"FCER1G",55,"MedConf","Novel","Natural killer cell mediated cytotoxicity",3,"CBL, PLA2G4A, LCP2",0,NA,0,"",0,"",0
+"23",2495,"FTH1",18,"HighConf","Ferroptosis","Ferroptosis, Necroptosis, Mineral absorption",1,"FTL",1,"FTL",0,"",0,"",1
+"24",2512,"FTL",68,"MedConf","Ferroptosis","Ferroptosis, Necroptosis, Mineral absorption",1,"FTH1",1,"FTH1",0,"",0,"",1
+"25",11337,"GABARAP",56,"MedConf","Novel","NOD-like receptor signaling pathway",1,"SQSTM1",0,NA,0,"",0,"",0
+"26",2633,"GBP1",52,"HighConf","Novel","NOD-like receptor signaling pathway",10,"GBP2, PML, IRF5, CD44, HLA-B, OAS3, HLA-A, ICAM1, OAS2, MT2A",0,NA,0,"",0,"",0
+"27",2634,"GBP2",57,"MedConf","Novel","NOD-like receptor signaling pathway",17,"HLA-A, IFIT1, GBP1, IFIT3, MT2A, CD44, HLA-B, ISG15, IFIT2, MX1, OAS3, PML, ISG20, ICAM1, IRF5, MX2, OAS2",0,NA,0,"",0,"",0
+"28",2673,"GFPT1",31,"HighConf","Novel","Alanine, aspartate and glutamate metabolism",2,"HK2, GLS",0,NA,0,"",0,"",0
+"29",2734,"GLG1",74,"MedConf","Novel","Cell adhesion molecules (CAMs)",1,"CD44",0,NA,0,"",0,"",0
+"30",2744,"GLS",73,"HighConf","Novel","Alanine, aspartate and glutamate metabolism",1,"GFPT1",0,NA,0,"",0,"",0
+"31",3099,"HK2",49,"MedConf","Novel","HIF-1 signaling pathway, Fructose and mannose metabolism",3,"FBP2, GFPT1, PFKFB3",0,NA,0,"",0,"",0
+"32",3105,"HLA-A",51,"MedConf","Novel","Phagosome, Cell adhesion molecules (CAMs), Endocytosis, Natural killer cell mediated cytotoxicity, Type I diabetes mellitus, Antigen processing and presentation, Cellular senescence",19,"GBP1, ISG20, MX2, GBP2, IRF5, CBL, MX1, MT2A, OAS3, IFIT2, PML, ISG15, OAS2, LCP2, IFIT1, CD44, IFIT3, ICAM1, HLA-B",0,NA,0,"",0,"",0
+"33",3106,"HLA-B",35,"MedConf","Novel","Phagosome, Cell adhesion molecules (CAMs), Endocytosis, Natural killer cell mediated cytotoxicity, Type I diabetes mellitus, Antigen processing and presentation, Cellular senescence",17,"ICAM1, IFIT3, IFIT2, MX1, HLA-A, GBP1, ISG20, MX2, GBP2, MT2A, PML, ISG15, CD44, OAS2, IRF5, IFIT1, OAS3",0,NA,0,"",0,"",0
+"34",3383,"ICAM1",36,"HighConf","Novel","NF-kappa B signaling pathway, Cell adhesion molecules (CAMs), TNF signaling pathway, Natural killer cell mediated cytotoxicity, AGE-RAGE signaling pathway in diabetic complications, Leukocyte transendothelial migration",14,"HLA-A, GBP1, GBP2, IRF5, PML, NFKB1, ITGAX, MT2A, ITGAM, HLA-B, ITGB2, OAS2, CD44, OAS3",0,NA,0,"",0,"",0
+"35",64135,"IFIH1",75,"HighConf","Novel","RIG-I-like receptor signaling pathway",1,"DDX58",0,NA,0,"",0,"",0
+"36",3434,"IFIT1",17,"HighConf","Novel",NA,13,"OAS3, OAS2, IRF5, HLA-B, IFIT3, IFIT2, MX1, HLA-A, ISG20, MX2, GBP2, ISG15, STAT1",0,NA,0,"",0,"",0
+"37",3433,"IFIT2",40,"HighConf","Novel",NA,12,"MX1, HLA-A, ISG20, MX2, GBP2, ISG15, OAS2, IFIT1, OAS3, IRF5, HLA-B, IFIT3",0,NA,0,"",0,"",0
+"38",3437,"IFIT3",39,"HighConf","Novel",NA,12,"IFIT2, MX1, HLA-A, ISG20, MX2, GBP2, OAS2, OAS3, IRF5, IFIT1, HLA-B, ISG15",0,NA,0,"",0,"",0
+"39",3552,"IL1A",41,"HighConf","Novel","Hematopoietic cell lineage, Osteoclast differentiation, Necroptosis, AGE-RAGE signaling pathway in diabetic complications, Type I diabetes mellitus, Cellular senescence",2,"IL1RN, IL1B",0,NA,0,"",0,"",0
+"40",3553,"IL1B",38,"HighConf","Novel","NOD-like receptor signaling pathway, NF-kappa B signaling pathway, Hematopoietic cell lineage, Osteoclast differentiation, Toll-like receptor signaling pathway, Necroptosis, TNF signaling pathway, Cytosolic DNA-sensing pathway, AGE-RAGE signaling pathway in diabetic complications, Type I diabetes mellitus, Antifolate resistance",6,"IL1A, IL1RN, IRF5, SQSTM1, NFKB2, NFKB1",0,NA,0,"",0,"",0
+"41",3557,"IL1RN",76,"HighConf","Novel",NA,2,"IL1A, IL1B",0,NA,0,"",0,"",0
+"42",3663,"IRF5",30,"MedConf","Novel","Toll-like receptor signaling pathway",18,"CD44, MT2A, HLA-B, ICAM1, IL1B, IFIT3, IFIT2, MX1, HLA-A, GBP1, ISG20, MX2, GBP2, PML, OAS3, OAS2, ISG15, IFIT1",0,NA,0,"",0,"",0
+"43",9636,"ISG15",14,"HighConf","Novel","RIG-I-like receptor signaling pathway",14,"STAT1, IFIT1, OAS3, OAS2, IRF5, HLA-B, DDX58, IFIT3, IFIT2, MX1, HLA-A, ISG20, MX2, GBP2",0,NA,0,"",0,"",0
+"44",3669,"ISG20",53,"HighConf","Novel",NA,12,"MX2, GBP2, IFIT2, IRF5, OAS3, IFIT1, MX1, IFIT3, HLA-B, OAS2, ISG15, HLA-A",0,NA,0,"",0,"",0
+"45",3684,"ITGAM",21,"MedConf","Novel","Hematopoietic cell lineage, Phagosome, Cell adhesion molecules (CAMs), Complement and coagulation cascades, Leukocyte transendothelial migration",6,"ITGB2, ICAM1, TGFBI, ITGAX, NFKB1, PLAUR",0,NA,0,"",0,"",0
+"46",3687,"ITGAX",19,"MedConf","Novel","Complement and coagulation cascades",3,"ITGAM, ITGB2, ICAM1",0,NA,0,"",0,"",0
+"47",3689,"ITGB2",32,"MedConf","Novel","Phagosome, Cell adhesion molecules (CAMs), Complement and coagulation cascades, Natural killer cell mediated cytotoxicity, Leukocyte transendothelial migration",6,"ICAM1, TGFBI, PLAUR, ITGAM, ITGAX, NFKB1",0,NA,0,"",0,"",0
+"48",8564,"KMO",64,"MedConf","Novel","Tryptophan metabolism",1,"KYNU",0,NA,0,"",0,"",0
+"49",8942,"KYNU",12,"HighConf","Novel","Tryptophan metabolism",2,"SMS, KMO",0,NA,0,"",0,"",0
+"50",3937,"LCP2",20,"MedConf","Novel","Osteoclast differentiation, Natural killer cell mediated cytotoxicity",3,"HLA-A, FCER1G, CBL",0,NA,0,"",0,"",0
+"51",5641,"LGMN",42,"MedConf","Novel","Lysosome, Antigen processing and presentation",1,"CD74",0,NA,0,"",0,"",0
+"52",4502,"MT2A",34,"HighConf","Novel","Mineral absorption",10,"HLA-B, ICAM1, HLA-A, GBP1, GBP2, CD44, OAS3, PML, OAS2, IRF5",0,NA,0,"",0,"",0
+"53",4599,"MX1",50,"HighConf","Novel",NA,12,"HLA-A, ISG20, MX2, GBP2, OAS3, OAS2, IRF5, ISG15, HLA-B, IFIT1, IFIT2, IFIT3",0,NA,0,"",0,"",0
+"54",4600,"MX2",54,"HighConf","Novel",NA,12,"GBP2, IFIT3, IFIT1, IRF5, OAS2, IFIT2, HLA-B, MX1, HLA-A, ISG20, ISG15, OAS3",0,NA,0,"",0,"",0
+"55",4688,"NCF2",22,"MedConf","Novel","Phagosome, Osteoclast differentiation, Leukocyte transendothelial migration",1,"CLTA",0,NA,0,"",0,"",0
+"56",23385,"NCSTN",59,"MedConf","Novel",NA,2,"STAT5A, NFKB1",0,NA,0,"",0,"",0
+"57",4790,"NFKB1",6,"HighConf","Novel","NOD-like receptor signaling pathway, NF-kappa B signaling pathway, Osteoclast differentiation, Toll-like receptor signaling pathway, HIF-1 signaling pathway, TNF signaling pathway, Cytosolic DNA-sensing pathway, AGE-RAGE signaling pathway in diabetic complications, Chemokine signaling pathway, Antifolate resistance, Adipocytokine signaling pathway, RIG-I-like receptor signaling pathway, Prolactin signaling pathway, Cellular senescence",10,"REL, NFKB2, ITGAM, ITGB2, ICAM1, IL1B, CD40, NCSTN, TRAF1, SQSTM1",0,NA,0,"",0,"",0
+"58",4791,"NFKB2",8,"HighConf","Novel","NF-kappa B signaling pathway, Osteoclast differentiation",3,"IL1B, NFKB1, REL",0,NA,0,"",0,"",0
+"59",4939,"OAS2",29,"MedConf","Novel","NOD-like receptor signaling pathway",17,"IRF5, CD44, MT2A, HLA-B, ICAM1, IFIT3, IFIT2, MX1, HLA-A, GBP1, ISG20, MX2, GBP2, ISG15, OAS3, IFIT1, PML",0,NA,0,"",0,"",0
+"60",4940,"OAS3",28,"MedConf","Novel","NOD-like receptor signaling pathway",17,"OAS2, IRF5, CD44, MT2A, HLA-B, ICAM1, IFIT3, IFIT2, MX1, HLA-A, GBP1, ISG20, MX2, GBP2, ISG15, PML, IFIT1",0,NA,0,"",0,"",0
+"61",5209,"PFKFB3",44,"HighConf","Novel","HIF-1 signaling pathway, Fructose and mannose metabolism",2,"HK2, FBP2",0,NA,0,"",0,"",0
+"62",5321,"PLA2G4A",47,"MedConf","Novel","Necroptosis",3,"FCER1G, PTGS2, PLD3",0,NA,0,"",0,"",0
+"63",5329,"PLAUR",9,"HighConf","Novel","Complement and coagulation cascades",4,"ITGAM, ITGB2, VTN, SERPINB2",0,NA,0,"",0,"",0
+"64",23646,"PLD3",45,"HighConf","Novel",NA,1,"PLA2G4A",0,NA,0,"",0,"",0
+"65",5371,"PML",4,"MedConf","Novel","Endocytosis",10,"OAS3, OAS2, IRF5, CD44, MT2A, HLA-B, ICAM1, HLA-A, GBP1, GBP2",0,NA,0,"",0,"",0
+"66",5538,"PPT1",78,"MedConf","Novel","Lysosome, Fatty acid metabolism",2,"ACSL1, ACSL4",2,"ACSL4, ACSL1",0,"",0,"",2
+"67",5743,"PTGS2",25,"HighConf","Novel","NF-kappa B signaling pathway, TNF signaling pathway",1,"PLA2G4A",0,NA,0,"",0,"",0
+"68",5770,"PTPN1",62,"MedConf","Novel",NA,2,"STAT5A, TXN",0,NA,0,"",0,"",0
+"69",5771,"PTPN2",67,"HighConf","Novel",NA,1,"STAT1",0,NA,0,"",0,"",0
+"70",5966,"REL",7,"HighConf","Novel",NA,2,"NFKB2, NFKB1",0,NA,0,"",0,"",0
+"71",5055,"SERPINB2",61,"HighConf","Novel","Complement and coagulation cascades",1,"PLAUR",0,NA,0,"",0,"",0
+"72",6611,"SMS",63,"MedConf","Novel",NA,1,"KYNU",0,NA,0,"",0,"",0
+"73",8878,"SQSTM1",1,"MedConf","Novel","Osteoclast differentiation, Necroptosis, Cellular senescence",3,"NFKB1, IL1B, GABARAP",0,NA,0,"",0,"",0
+"74",6772,"STAT1",15,"MedConf","Novel","NOD-like receptor signaling pathway, Osteoclast differentiation, Toll-like receptor signaling pathway, Necroptosis, AGE-RAGE signaling pathway in diabetic complications, Chemokine signaling pathway, Prolactin signaling pathway",6,"IFIT1, CAMK2D, PTPN2, ISG15, STAT5A, EIF2AK2",0,NA,0,"",0,"",0
+"75",6776,"STAT5A",11,"HighConf","Novel","Necroptosis, AGE-RAGE signaling pathway in diabetic complications, Prolactin signaling pathway, ErbB signaling pathway",5,"STAT1, CD40, NCSTN, PTPN1, CBL",0,NA,0,"",0,"",0
+"76",7045,"TGFBI",69,"HighConf","Novel",NA,3,"ITGAM, ITGB2, CST3",0,NA,0,"",0,"",0
+"77",7185,"TRAF1",5,"HighConf","Novel","NF-kappa B signaling pathway, TNF signaling pathway",2,"NFKB1, CD40",0,NA,0,"",0,"",0
+"78",7295,"TXN",16,"HighConf","Novel","NOD-like receptor signaling pathway",1,"PTPN1",0,NA,0,"",0,"",0
+"79",7448,"VTN",60,"MedConf","Novel","Complement and coagulation cascades",1,"PLAUR",0,NA,0,"",0,"",0

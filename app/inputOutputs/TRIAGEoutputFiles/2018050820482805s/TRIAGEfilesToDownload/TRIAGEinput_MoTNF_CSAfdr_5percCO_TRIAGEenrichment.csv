@@ -1,0 +1,60 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","Spliceosome",0,0,0,117,27,12,"Hnrnpa1, Hspa8, Sart1, Srsf3, Snrpd1, Dhx8, Prpf19, Isy1, Sf3a1, Sf3a3, Lsm8, Sf3b1","Sf3b3, Sf3b4, U2af1, Dhx15, Eftud2, Alyref, Thoc1, Sf3b2, Plrg1, Sf3b6, Lsm7, Snrnp27, Crnkl1, Snrpg, Phf5a",0.338
+"2","RNA transport",0,0,0,141,30,17,"Tpr, Tgs1, Eif2b4, Kpnb1, Ran, Nup214, Eif2s3x, Nup98, Eif3b, Nxf1, Eif3g, Nup210, Eif3i, Eif3c, Pabpc6, Trnt1, Pop7","Nup107, Eef1a1, Eif3a, Eif4ebp1, Eif3e, Nup50, Alyref, Thoc1, Prmt5, Eif3d, Eif3f, Gemin2, Nmd3",0.39
+"3","MAPK signaling pathway",0,0,0,242,33,13,"Grb2, Hras, Hspa8, Il1r1, Nfatc1, Nfatc3, Nfkb1, Pdgfb, Ppp5c, Relb, Traf2, Map3k7, Tab2","Cacna1d, Cacna1s, Cacna2d1, Cacnb4, Fasl, Fgf10, Fgf18, Fgf8, Fos, Mef2c, Prkca, Rasgrp1, Tnf, Trp53, Gadd45g, Map2k7, Map3k12, Fgf21, Cacna2d2, Rapgef2",0.265
+"4","Ribosome",0,0,0,122,29,16,"Rplp0, Fau, Rpsa, Rpl37a, Rps17, Rps29, Rps4x, Rpl13a, Uba52, Rpl23a, Rps3, Rpl3, Rpl11, Rps13, Mrps18a, Rps27a","Mrpl10, Rpl31, Rpl19, Rpl32, Rpl7, Rps24, Rps5, Rps7, Rps8, Rps15a, Rps11, Rpl4, Mrpl32",0.395
+"5","NF-kappa B signaling pathway",0,0,0.001,87,17,9,"Il1r1, Myd88, Nfkb1, Relb, Tlr4, Traf2, Map3k7, Irak4, Tab2","Tirap, Bcl2a1a, Cflar, Ly96, Ptgs2, Cxcl2, Tnf, Tnfrsf13c",0.362
+"6","Apoptosis",0,0,0.001,130,22,8,"Bax, Ctsk, Hras, Mcl1, Nfkb1, Traf2, Pmaip1, Htra2","Actg1, Bcl2a1a, Casp12, Cflar, Fasl, Fos, Itpr1, Ptpn13, Tnf, Trp53, Tuba1a, Parp3, Gadd45g, Ctsf",0.266
+"7","Cellular senescence",0,0.002,0.017,170,23,10,"Calm2, Hipk2, Hras, Igfbp3, Mdm2, Mybl2, Nfatc1, Nfatc3, Nfkb1, Sirt1","Fbxw11, Cacna1d, Cdk1, Eif4ebp1, H2-T22, Hus1, Itpr1, Rbl2, Lin52, Trp53, Gadd45g, Nbn, Calm4",0.285
+"8","Toll-like receptor signaling pathway",0,0.002,0.018,96,16,9,"Ctsk, Ifnb1, Myd88, Nfkb1, Stat1, Tlr4, Map3k7, Irak4, Tab2","Tirap, Cd80, Cd86, Fos, Ly96, Tnf, Map2k7",0.365
+"9","Osteoclast differentiation",0,0.003,0.025,119,18,13,"Ctsk, Grb2, Ifnb1, Il1r1, Nfatc1, Nfkb1, Relb, Spi1, Stat1, Tec, Traf2, Map3k7, Tab2","Fos, Mitf, Tnfrsf11b, Tnf, Map2k7",0.437
+"10","Oxytocin signaling pathway",0,0.003,0.026,141,20,7,"Calm2, Gnas, Hras, Nfatc1, Nfatc3, Prkab1, Src","Actg1, Cacna1d, Cacna1s, Cacna2d1, Cacnb4, Fos, Itpr1, Mef2c, Prkca, Ptgs2, Mylk3, Cacna2d2, Calm4",0.246
+"11","NOD-like receptor signaling pathway",0,0.003,0.034,155,21,11,"Ifi204, Ifnb1, Myd88, Nfkb1, Stat1, Tlr4, Traf2, Card6, Map3k7, Irak4, Tab2","Sharpin, Casp4, Casp12, Itpr1, Nfkbib, Cxcl2, Tnf, Gbp7, Gabarapl1, Atg12",0.33
+"12","Biosynthesis of unsaturated fatty acids",0.001,0.015,0.174,28,7,1,"Acaa1a","Acot3, Acot4, Scd1, Acot5, Acaa1b, Fads2",0.196
+"13","Longevity regulating pathway",0.001,0.017,0.227,86,13,7,"Bax, Hras, Nfkb1, Prkab1, Creb3l3, Creb3l1, Sirt1","Eif4ebp1, Stk11, Trp53, Rps6kb1, Rptor, Sesn3",0.345
+"14","IL-17 signaling pathway",0.001,0.019,0.283,88,13,5,"Elavl1, Nfkb1, Traf2, Map3k7, Tab2","Cebpb, Fos, Il17a, Il17rc, Ptgs2, Cxcl2, Tnf, Hsp90b1",0.266
+"15","cAMP signaling pathway",0.001,0.019,0.283,181,21,9,"Adora1, Atp1b3, Calm2, Gnas, Nfatc1, Nfkb1, Creb3l3, Creb3l1, Ep300","Adora2a, Cacna1d, Cacna1s, Crebbp, Drd5, Fos, Gli1, Gli3, Tnni3, Grin3a, Hcar1, Calm4",0.272
+"16","Endocytosis",0.002,0.025,0.397,237,25,13,"Ap2m1, Dnm2, Hras, Hspa8, Mdm2, Cyth3, Src, Rab11fip3, Chmp1a, Ap2b1, Chmp4b, Smurf1, Arfgef2","Arf1, Capza3, Cav1, Clta, Cxcr4, H2-T22, Tsg101, Snf8, Vps28, Psd2, Smap1",0.313
+"17","AMPK signaling pathway",0.002,0.029,0.488,116,15,9,"Acaca, Fasn, Elavl1, Prkab1, Creb3l3, Map3k7, Creb3l1, Ppp2r2d, Sirt1","Eif4ebp1, Scd1, Stk11, Rps6kb1, Rptor",0.365
+"18","Adrenergic signaling in cardiomyocytes",0.002,0.031,0.588,130,16,7,"Atp1b3, Calm2, Gnas, Creb3l3, Tpm1, Creb3l1, Ppp2r2d","Cacna1d, Cacna1s, Cacna2d1, Cacnb4, Prkca, Tnni3, Cacna2d2, Calm4",0.28
+"19","Inflammatory mediator regulation of TRP channels",0.002,0.031,0.611,107,14,6,"Calm2, Gnas, Htr2b, Il1r1, Src, Cyp2c65","Cyp2c37, Itpr1, P2ry2, Prkca, Cyp2c70, Cyp2c44, Trpv3, Calm4",0.28
+"20","cGMP-PKG signaling pathway",0.002,0.031,0.621,155,18,8,"Adora1, Atp1b3, Calm2, Mef2b, Nfatc1, Nfatc3, Creb3l3, Creb3l1","Atp2a1, Cacna1d, Cacna1s, Itpr1, Mef2c, Nppb, Oprd1, Mylk3, Calm4",0.28
+"21","Necroptosis",0.003,0.041,0.864,135,16,8,"Bax, Ifnb1, Stat1, Tlr4, Traf2, Chmp1a, Usp21, Chmp4b","Sharpin, Cflar, Fasl, Glul, Tnf, Parp3, Hist3h2a, H2afz",0.309
+"22","Thyroid hormone signaling pathway",0.004,0.041,0.936,112,14,9,"Atp1b3, Kat2a, Hdac2, Hras, Mdm2, Src, Stat1, Med14, Ep300","Actg1, Crebbp, Prkca, Trp53, Med17",0.384
+"23","Estrogen signaling pathway",0.004,0.041,0.951,89,12,8,"Calm2, Gnas, Grb2, Hras, Hspa8, Src, Creb3l3, Creb3l1","Fos, Itpr1, Hsp90b1, Calm4",0.401
+"24","PI3K-Akt signaling pathway",0.004,0.041,0.98,322,30,11,"Grb2, Hras, Ifnb1, Mcl1, Mdm2, Nfkb1, Pdgfb, Creb3l3, Tlr4, Creb3l1, Ppp2r2d","Cd19, Col4a4, Efna5, Eif4ebp1, Fasl, Fgf10, Fgf18, Fgf8, Gng4, Prkca, Rbl2, Stk11, Hsp90b1, Trp53, Tcl1b1, Lpar5, Fgf21, Rps6kb1, Rptor",0.23
+"25","GnRH signaling pathway",0.004,0.041,1,79,11,5,"Calm2, Gnas, Grb2, Hras, Src","Cacna1d, Cacna1s, Itpr1, Prkca, Map2k7, Calm4",0.297
+"26","Fatty acid metabolism",0.004,0.041,1,47,8,4,"Acaca, Acaa1a, Fasn, Acsl3","Hadh, Scd1, Acaa1b, Fads2",0.335
+"27","B cell receptor signaling pathway",0.005,0.042,1,69,10,7,"Grb2, Hras, Inpp5d, Inppl1, Nfatc1, Nfatc3, Nfkb1","Cd19, Fos, Nfkbib",0.422
+"28","TNF signaling pathway",0.005,0.042,1,103,13,6,"Nfkb1, Creb3l3, Traf2, Map3k7, Creb3l1, Tab2","Cebpb, Cflar, Fos, Ptgs2, Cxcl2, Tnf, Map2k7",0.294
+"29","FoxO signaling pathway",0.005,0.043,1,128,15,6,"Grb2, Hras, Mdm2, Prkab1, Ep300, Sirt1","Crebbp, Fasl, Rag1, Rbl2, Stk11, Gadd45g, Foxo4, Gabarapl1, Atg12",0.259
+"30","Serotonergic synapse",0.005,0.043,1,116,14,4,"Gnas, Hras, Htr2b, Cyp2c65","Cacna1d, Cacna1s, Cyp2c37, Gabrb1, Gng4, Itpr1, Prkca, Ptgs2, Cyp2c70, Cyp2c44",0.203
+"31","Melanogenesis",0.006,0.048,1,94,12,6,"Calm2, Gnas, Hras, Creb3l3, Creb3l1, Ep300","Crebbp, Mitf, Prkca, Wnt7b, Wnt8b, Calm4",0.314
+"32","Pyrimidine metabolism",0.006,0.049,1,83,11,7,"Polr2a, Rrm1, Rrm2, Pole3, Polr2g, Pold3, Polr2d","Upb1, Polr2b, Uckl1, Pold4",0.384
+"33","Aldosterone synthesis and secretion",0.009,0.069,1,76,10,4,"Calm2, Gnas, Creb3l3, Creb3l1","Prkd2, Cacna1d, Cacna1s, Itpr1, Prkca, Calm4",0.266
+"34","Relaxin signaling pathway",0.009,0.069,1,124,14,7,"Gnas, Grb2, Hras, Nfkb1, Src, Creb3l3, Creb3l1","Col4a4, Fos, Gng4, Prkca, Rln1, Rxfp3, Map2k7",0.306
+"35","T cell receptor signaling pathway",0.01,0.069,1,100,12,7,"Grb2, Hras, Nfatc1, Nfatc3, Nfkb1, Tec, Map3k7","Fos, Nfkbib, Rasgrp1, Tnf, Map2k7",0.352
+"36","Fatty acid biosynthesis",0.011,0.075,1,9,3,3,"Acaca, Fasn, Acsl3","",0.667
+"37","GABAergic synapse",0.011,0.075,1,78,10,1,"Src","Cacna1d, Cacna1s, Gabra3, Gabrb1, Gabrr2, Glul, Gng4, Prkca, Gabarapl1",0.114
+"38","p53 signaling pathway",0.011,0.075,1,66,9,5,"Bax, Igfbp3, Mdm2, Rrm2, Pmaip1","Cdk1, Trp53, Gadd45g, Sesn3",0.346
+"39","Glucagon signaling pathway",0.013,0.079,1,92,11,8,"Acaca, Calm2, Gnas, Prkab1, Creb3l3, Creb3l1, Ep300, Sirt1","Crebbp, Itpr1, Calm4",0.423
+"40","Insulin secretion",0.013,0.079,1,80,10,5,"Atp1b3, Gnas, Creb3l3, Stx1a, Creb3l1","Cacna1d, Cacna1s, Gip, Prkca, Abcc8",0.312
+"41","Gap junction",0.013,0.079,1,80,10,6,"Gnas, Grb2, Hras, Htr2b, Pdgfb, Src","Cdk1, Itpr1, Prkca, Tuba1a",0.362
+"42","Neurotrophin signaling pathway",0.013,0.079,1,116,13,6,"Bax, Calm2, Grb2, Hras, Nfkb1, Irak4","Fasl, Gab1, Nfkbib, Trp53, Sh2b2, Map2k7, Calm4",0.287
+"43","Insulin signaling pathway",0.015,0.085,1,131,14,9,"Acaca, Calm2, Fasn, Grb2, Hras, Inppl1, Prkab1, Prkar1a, Exoc7","Eif4ebp1, Sh2b2, Rps6kb1, Rptor, Calm4",0.375
+"44","Fc gamma R-mediated phagocytosis",0.016,0.089,1,82,10,3,"Dnm2, Inpp5d, Inppl1","Marcks, Prkca, Rps6kb1, Wasf1, Dock2",0.211
+"45","Rap1 signaling pathway",0.018,0.099,1,202,19,7,"Calm2, Cnr1, Gnas, Hras, Id1, Pdgfb, Src","Prkd2, Actg1, Adora2a, Efna5, Fgf10, Fgf18, Fgf8, Prkca, Lpar5, Fgf21, Rapgef2, Calm4",0.231
+"46","Endocrine and other factor-regulated calcium reabsorption",0.018,0.099,1,49,7,5,"Ap2m1, Atp1b3, Dnm2, Gnas, Ap2b1","Clta, Prkca",0.429
+"47","Dopaminergic synapse",0.019,0.099,1,122,13,5,"Calm2, Gnas, Creb3l3, Creb3l1, Ppp2r2d","Cacna1d, Drd5, Fos, Gng4, Itpr1, Prkca, Caly, Calm4",0.246
+"48","Intestinal immune network for IgA production",0.02,0.105,1,39,6,2,"Tnfrsf17, Tnfsf13","Cd80, Cd86, Cxcr4, Tnfrsf13c",0.244
+"49","Hedgehog signaling pathway",0.025,0.123,1,41,6,2,"Sufu, Smurf1","Fbxw11, Gli1, Gli2, Gli3",0.24
+"50","EGFR tyrosine kinase inhibitor resistance",0.025,0.123,1,76,9,5,"Bax, Grb2, Hras, Pdgfb, Src","Eif4ebp1, Gab1, Prkca, Rps6kb1",0.337
+"51","Sphingolipid signaling pathway",0.025,0.123,1,114,12,7,"Adora1, Bax, Hras, Nfkb1, Traf2, Ppp2r2d, S1pr5","Nsmaf, Oprd1, Prkca, Tnf, Trp53",0.344
+"52","RIG-I-like receptor signaling pathway",0.026,0.123,1,64,8,4,"Ifnb1, Nfkb1, Traf2, Map3k7","Nfkbib, Tnf, Azi2, Atg12",0.312
+"53","RNA polymerase",0.027,0.128,1,21,4,3,"Polr2a, Polr2g, Polr2d","Polr2b",0.47
+"54","Proteasome",0.028,0.131,1,42,6,4,"Psme4, Psmc5, Psme3, Psmd8","Psmb1, Psme1",0.405
+"55","Ras signaling pathway",0.035,0.158,1,217,19,6,"Calm2, Grb2, Hras, Nfkb1, Pdgfb, Rgl1","Efna5, Fasl, Fgf10, Fgf18, Fgf8, Gab1, Gng4, Prkca, Rasgrp1, Foxo4, Shoc2, Fgf21, Calm4",0.202
+"56","Cardiac muscle contraction",0.041,0.182,1,70,8,2,"Atp1b3, Tpm1","Cacna1d, Cacna1s, Cacna2d1, Cacnb4, Tnni3, Cacna2d2",0.182
+"57","Longevity regulating pathway - multiple species",0.042,0.184,1,58,7,5,"Hdac2, Hras, Hspa8, Prkab1, Sirt1","Rps6kb1, Rptor",0.417
+"58","Phospholipase D signaling pathway",0.043,0.185,1,137,13,7,"Grm2, Dnm2, Gnas, Grb2, Hras, Pdgfb, Cyth3","Arf1, Gab1, Prkca, Lpar5",0.317
+"59","Arachidonic acid metabolism",0.047,0.2,1,72,8,3,"Tbxas1, Ptges, Cyp2c65","Cyp2c37, Ptgis, Ptgs2, Cyp2c70, Cyp2c44",0.243

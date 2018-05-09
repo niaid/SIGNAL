@@ -1,0 +1,371 @@
+"","EntrezID","GeneSymbol","GeneMappingID","ConfidenceCategory","Group","Pathway","Allnet.count","Ntwrk.all","NtwrkCount.Spliceosome","Ntwrk.Spliceosome","NtwrkCount.NA","Ntwrk.NA","NtwrkCount.NA","Ntwrk.NA","Total_Path_Hits.net.count"
+"1",113868,"Acaa1a",177,"HighConf","Novel","Biosynthesis of unsaturated fatty acids, Fatty acid metabolism",1,"Hadh",0,NA,0,"",0,"",0
+"2",235674,"Acaa1b",178,"MedConf","Novel","Biosynthesis of unsaturated fatty acids, Fatty acid metabolism",1,"Hadh",0,NA,0,"",0,"",0
+"3",107476,"Acaca",66,"HighConf","Novel","AMPK signaling pathway, Fatty acid metabolism, Fatty acid biosynthesis, Glucagon signaling pathway, Insulin signaling pathway",6,"Fasn, Prkab1, Rad23a, AI314180, Nedd8, Rps27a",0,NA,0,"",0,"",0
+"4",59289,"Ackr2",340,"MedConf","Novel",NA,2,"Sh2b2, Actg1",0,NA,0,"",0,"",0
+"5",11465,"Actg1",141,"MedConf","Novel","Apoptosis, Oxytocin signaling pathway, Thyroid hormone signaling pathway, Rap1 signaling pathway",7,"Sh2b2, Wasf1, Ackr2, Grb2, Prkca, Ctnna1, Msn",0,NA,0,"",0,"",0
+"6",11487,"Adam10",263,"MedConf","Novel",NA,1,"Rps27a",0,NA,0,"",0,"",0
+"7",11539,"Adora1",213,"HighConf","Novel","cAMP signaling pathway, cGMP-PKG signaling pathway, Sphingolipid signaling pathway",13,"Cxcl2, Hcar1, Sstr3, Cxcr4, Cnr1, Tas2r120, S1pr5, Grm2, Lpar5, Rxfp3, Ccl6, P2ry12, Oprd1",0,NA,0,"",0,"",0
+"8",11540,"Adora2a",366,"MedConf","Novel","cAMP signaling pathway, Rap1 signaling pathway",4,"Gip, Drd5, Glp2r, Vip",0,NA,0,"",0,"",0
+"9",11549,"Adra1a ,Adra1a",215,"MedConf","Novel",NA,12,"Grpr, Htr2b, Ffar3, Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, P2ry10, Lpar5, Ccl6",0,NA,0,"",0,"",0
+"10",230249,"AI314180",309,"MedConf","Novel",NA,4,"Psmb1, Psmc5, Psme4, Acaca",0,NA,0,"",0,"",0
+"11",19378,"Aldh1a2",364,"HighConf","Novel",NA,5,"Cyp2c37, Cyp2c44, Cyp2c70, Cyp2c65, Ugt1a2",0,NA,0,"",0,"",0
+"12",21681,"Alyref",159,"MedConf","Spliceosome","Spliceosome, RNA transport",27,"Srsf3, Nxf1, Pabpn1, Nup210, Thoc1, Tpr, Polr2g, Hnrnpd, Sf3a1, Sf3a3, Polr2d, Nup98, Phf5a, Eftud2, Nup214, Nup107, Sf3b2, Gtf2f1, Hnrnph1, Sf3b1, Sf3b3, U2af1, Snrpd1, Nup50, Sf3b6, Sf3b4, Polr2b",13,"U2af1, Thoc1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2",0,"",0,"",13
+"13",11765,"Ap1g1",49,"HighConf","Novel",NA,4,"Dnm2, Hspa8, Clta, Arf1",1,"Hspa8",0,"",0,"",1
+"14",71770,"Ap2b1",106,"HighConf","Novel","Endocytosis, Endocrine and other factor-regulated calcium reabsorption",3,"Ap2m1, Clta, Grb2",0,NA,0,"",0,"",0
+"15",11773,"Ap2m1",110,"HighConf","Novel","Endocytosis, Endocrine and other factor-regulated calcium reabsorption",3,"Clta, Grb2, Ap2b1",0,NA,0,"",0,"",0
+"16",11789,"Apc",102,"MedConf","Novel",NA,4,"Mapre1, Ptgs2, Ctnna1, Trp53",0,NA,0,"",0,"",0
+"17",213827,"Arcn1",184,"HighConf","Novel",NA,3,"Copb1, Arf1, Copa",0,NA,0,"",0,"",0
+"18",11840,"Arf1",307,"MedConf","Novel","Endocytosis, Phospholipase D signaling pathway",6,"Ap1g1, Copa, Copb1, Clta, Dnm2, Arcn1",0,NA,0,"",0,"",0
+"19",99371,"Arfgef2",353,"HighConf","Novel","Endocytosis",2,"Tubg1, Tuba1a",0,NA,0,"",0,"",0
+"20",52666,"Arhgef25",234,"HighConf","Novel",NA,11,"Tac2, P2ry10, Lpar5, Ffar3, Ccl6, Htr2b, Uts2, Grpr, Npffr1, Adra1a ,Adra1a, P2ry2",0,NA,0,"",0,"",0
+"21",246103,"Atxn7",331,"MedConf","Novel",NA,1,"Kat2a",0,NA,0,"",0,"",0
+"22",12010,"B2m",52,"HighConf","Novel",NA,3,"Irf8, Stat1, Ifi30",0,NA,0,"",0,"",0
+"23",12028,"Bax",286,"HighConf","Novel","Apoptosis, Longevity regulating pathway, Necroptosis, p53 signaling pathway, Neurotrophin signaling pathway, EGFR tyrosine kinase inhibitor resistance, Sphingolipid signaling pathway",2,"Trp53, Mcl1",0,NA,0,"",0,"",0
+"24",12156,"Bmp2",105,"MedConf","Novel",NA,2,"Smurf1, Smad6",0,NA,0,"",0,"",0
+"25",57261,"Brd4",111,"MedConf","Novel",NA,4,"Tceb1, Supt5, Cdk9, Psmc5",0,NA,0,"",0,"",0
+"26",215051,"Bud13",298,"HighConf","Novel",NA,4,"Prpf19, Sf3b2, Sf3b1, Sart1",4,"Sf3b2, Sf3b1, Sart1, Prpf19",0,"",0,"",4
+"27",12289,"Cacna1d",212,"MedConf","Novel","MAPK signaling pathway, Cellular senescence, Oxytocin signaling pathway, cAMP signaling pathway, Adrenergic signaling in cardiomyocytes, cGMP-PKG signaling pathway, GnRH signaling pathway, Serotonergic synapse, Aldosterone synthesis and secretion, GABAergic synapse, Insulin secretion, Dopaminergic synapse, Cardiac muscle contraction",8,"Rasgrp1, Htr2b, Ppp2r2d, Calm4, Cacnb4, Cacna2d2, Ccdc109b, Gng4",0,NA,0,"",0,"",0
+"28",12292,"Cacna1s",207,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, cAMP signaling pathway, Adrenergic signaling in cardiomyocytes, cGMP-PKG signaling pathway, GnRH signaling pathway, Serotonergic synapse, Aldosterone synthesis and secretion, GABAergic synapse, Insulin secretion, Cardiac muscle contraction",4,"Rasgrp1, Htr2b, Ppp2r2d, Gng4",0,NA,0,"",0,"",0
+"29",12293,"Cacna2d1",365,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, Adrenergic signaling in cardiomyocytes, Cardiac muscle contraction",2,"Ppp2r2d, Rasgrp1",0,NA,0,"",0,"",0
+"30",56808,"Cacna2d2",245,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, Adrenergic signaling in cardiomyocytes, Cardiac muscle contraction",5,"Ccdc109b, Cacna1d, Rasgrp1, Ppp2r2d, Cacnb4",0,NA,0,"",0,"",0
+"31",12298,"Cacnb4",244,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, Adrenergic signaling in cardiomyocytes, Cardiac muscle contraction",5,"Cacna2d2, Ccdc109b, Rasgrp1, Ppp2r2d, Cacna1d",0,NA,0,"",0,"",0
+"32",80796,"Calm4",241,"MedConf","Novel","Cellular senescence, Oxytocin signaling pathway, cAMP signaling pathway, Adrenergic signaling in cardiomyocytes, Inflammatory mediator regulation of TRP channels, cGMP-PKG signaling pathway, Estrogen signaling pathway, GnRH signaling pathway, Melanogenesis, Aldosterone synthesis and secretion, Glucagon signaling pathway, Neurotrophin signaling pathway, Insulin signaling pathway, Rap1 signaling pathway, Dopaminergic synapse, Ras signaling pathway",4,"Mylk3, Hras, Itpr1, Cacna1d",0,NA,0,"",0,"",0
+"33",230099,"Car9",271,"MedConf","Novel",NA,2,"Crebbp, Ep300",0,NA,0,"",0,"",0
+"34",12389,"Cav1",0,"MedConf","Novel","Endocytosis",2,"Src, Dnm2",0,NA,0,"",0,"",0
+"35",66815,"Ccdc109b",362,"HighConf","Novel",NA,3,"Cacna2d2, Cacnb4, Cacna1d",0,NA,0,"",0,"",0
+"36",52132,"Ccdc97",299,"MedConf","Novel",NA,2,"Sf3b1, Sf3b6",2,"Sf3b6, Sf3b1",0,"",0,"",2
+"37",20305,"Ccl6",206,"MedConf","Novel",NA,24,"Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Adra1a ,Adra1a, Grpr, Htr2b, Ffar3, Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, Hcar1, P2ry10, Cnr1, Lpar5, S1pr5, Rxfp3, Cxcr4, Sstr3",0,NA,0,"",0,"",0
+"38",12478,"Cd19",314,"MedConf","Novel","PI3K-Akt signaling pathway, B cell receptor signaling pathway",1,"Grb2",0,NA,0,"",0,"",0
+"39",12519,"Cd80",274,"MedConf","Novel","Toll-like receptor signaling pathway, Intestinal immune network for IgA production",2,"Src, Cd86",0,NA,0,"",0,"",0
+"40",12524,"Cd86",169,"MedConf","Novel","Toll-like receptor signaling pathway, Intestinal immune network for IgA production",3,"Cd80, Src, Grb2",0,NA,0,"",0,"",0
+"41",107995,"Cdc20",114,"MedConf","Novel",NA,17,"Psme1, Pafah1b1, Cdk1, Nup107, Incenp, Cdca8, Cenpt, Mapre1, Cenpu, Spdl1, Rps27a, Psme3, Nup98, Psme4, Psmc5, Psmb1, Nuf2",0,NA,0,"",0,"",0
+"42",52276,"Cdca8",151,"MedConf","Novel",NA,10,"Cenpt, Mapre1, Cenpu, Spdl1, Cdc20, Nup98, Incenp, Nup107, Nuf2, Pafah1b1",0,NA,0,"",0,"",0
+"43",12534,"Cdk1",144,"MedConf","Novel","Cellular senescence, p53 signaling pathway, Gap junction",20,"Tuba1a, Mapre1, Rrm2, Tubg1, Mybl2, Sfi1, Gadd45g, Smc2, Slk, Cdc20, Ezh2, Rbl2, Rps27a, Pafah1b1, Psmb1, Psme1, Prkca, Psme4, Psmc5, Psme3",0,NA,0,"",0,"",0
+"44",107951,"Cdk9",62,"HighConf","Novel",NA,8,"Gtf2f1, Psmc5, Brd4, Tceb1, Polr2b, Polr2g, Supt5, Polr2d",0,NA,0,"",0,"",0
+"45",12606,"Cebpa",101,"HighConf","Novel",NA,9,"Tnf, Med25, Cebpb, Med21, Ep300, Med17, Med14, Rps27a, Crebbp",0,NA,0,"",0,"",0
+"46",12608,"Cebpb",261,"MedConf","Novel","IL-17 signaling pathway, TNF signaling pathway",10,"Crebbp, Tnf, Cebpa, Nfkb1, Med14, Ep300, Med25, Med21, Med17, Rps27a",0,NA,0,"",0,"",0
+"47",320394,"Cenpt",179,"MedConf","Novel",NA,10,"Mapre1, Cenpu, Spdl1, Nup98, Nuf2, Incenp, Cdca8, Pafah1b1, Nup107, Cdc20",0,NA,0,"",0,"",0
+"48",71876,"Cenpu",250,"MedConf","Novel",NA,10,"Spdl1, Mapre1, Pafah1b1, Cenpt, Nup98, Cdc20, Nuf2, Incenp, Cdca8, Nup107",0,NA,0,"",0,"",0
+"49",12626,"Cetn3",334,"MedConf","Novel",NA,1,"Tpr",0,NA,0,"",0,"",0
+"50",12633,"Cflar",289,"MedConf","Novel","NF-kappa B signaling pathway, Apoptosis, Necroptosis, TNF signaling pathway",2,"Traf2, Fasl",0,NA,0,"",0,"",0
+"51",107932,"Chd4",160,"MedConf","Novel",NA,2,"Hdac2, Mbd2",0,NA,0,"",0,"",0
+"52",75608,"Chmp4b",260,"HighConf","Novel","Endocytosis, Necroptosis",4,"Snf8, Rps27a, Vps28, Tsg101",0,NA,0,"",0,"",0
+"53",12757,"Clta",248,"MedConf","Novel","Endocytosis, Endocrine and other factor-regulated calcium reabsorption",8,"Arf1, Copa, Ap1g1, Ap2m1, Dnm2, Hspa8, Grb2, Ap2b1",1,"Hspa8",0,"",0,"",1
+"54",104625,"Cnot6",187,"HighConf","Novel",NA,1,"Pabpc6",0,NA,0,"",0,"",0
+"55",12801,"Cnr1",203,"HighConf","Novel","Rap1 signaling pathway",14,"Lpar5, Sstr3, Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, S1pr5, Rxfp3, Cxcr4, Gng4",0,NA,0,"",0,"",0
+"56",12847,"Copa",138,"MedConf","Novel",NA,5,"Ddost, Arcn1, Copb1, Clta, Arf1",0,NA,0,"",0,"",0
+"57",70349,"Copb1",188,"MedConf","Novel",NA,3,"Arf1, Copa, Arcn1",0,NA,0,"",0,"",0
+"58",26427,"Creb3l1",270,"HighConf","Novel","Longevity regulating pathway, cAMP signaling pathway, AMPK signaling pathway, Adrenergic signaling in cardiomyocytes, cGMP-PKG signaling pathway, Estrogen signaling pathway, PI3K-Akt signaling pathway, TNF signaling pathway, Melanogenesis, Aldosterone synthesis and secretion, Relaxin signaling pathway, Glucagon signaling pathway, Insulin secretion, Dopaminergic synapse",3,"Crebbp, Ep300, Prkca",0,NA,0,"",0,"",0
+"59",208677,"Creb3l3",269,"HighConf","Novel","Longevity regulating pathway, cAMP signaling pathway, AMPK signaling pathway, Adrenergic signaling in cardiomyocytes, cGMP-PKG signaling pathway, Estrogen signaling pathway, PI3K-Akt signaling pathway, TNF signaling pathway, Melanogenesis, Aldosterone synthesis and secretion, Relaxin signaling pathway, Glucagon signaling pathway, Insulin secretion, Dopaminergic synapse",3,"Ep300, Prkca, Crebbp",0,NA,0,"",0,"",0
+"60",12914,"Crebbp",7,"MedConf","Novel","cAMP signaling pathway, Thyroid hormone signaling pathway, FoxO signaling pathway, Melanogenesis, Glucagon signaling pathway",29,"Trp53, Mdm2, Med21, Med14, Med17, Hspa8, Myd88, Cebpa, Kat2a, Stat1, Tnf, Foxo4, Ifnb1, Nfyb, Med25, Tgs1, Hist2h2be, Hist1h2bb, Cebpb, Hey1, Creb3l3, Creb3l1, Car9, Rgl1, Spdl1, Pex11a, Tead2, Grhl1, Ep300",1,"Hspa8",0,"",0,"",1
+"61",66877,"Crnkl1",293,"MedConf","Spliceosome","Spliceosome",10,"Sf3b2, Snrpd1, Sf3b3, Plrg1, Sf3a3, Dhx8, Isy1, Sf3a1, Prpf19, Sf3b1",10,"Snrpd1, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Prpf19, Plrg1, Isy1, Dhx8",0,"",0,"",10
+"62",12385,"Ctnna1",1,"MedConf","Novel",NA,3,"Apc, Actg1, Mef2c",0,NA,0,"",0,"",0
+"63",56464,"Ctsf",368,"MedConf","Novel","Apoptosis",1,"Ifi30",0,NA,0,"",0,"",0
+"64",20310,"Cxcl2",214,"MedConf","Novel","NF-kappa B signaling pathway, NOD-like receptor signaling pathway, IL-17 signaling pathway, TNF signaling pathway",13,"Hcar1, Grm2, Lpar5, Cxcr4, Tas2r120, Cnr1, Adora1, Sstr3, P2ry12, Oprd1, S1pr5, Ccl6, Rxfp3",0,NA,0,"",0,"",0
+"65",12767,"Cxcr4",142,"MedConf","Novel","Endocytosis, Intestinal immune network for IgA production",14,"Rxfp3, S1pr5, Cnr1, Lpar5, Sstr3, Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Grk5 ,Grk5, Hcar1",0,NA,0,"",0,"",0
+"66",13096,"Cyp2c37",217,"MedConf","Novel","Inflammatory mediator regulation of TRP channels, Serotonergic synapse, Arachidonic acid metabolism",7,"Cyp2c65, Cyp2c44, Ugt1a2, Gsta4, Aldh1a2, Cyp2c70, Ptgs2",0,NA,0,"",0,"",0
+"67",226143,"Cyp2c44",219,"MedConf","Novel","Inflammatory mediator regulation of TRP channels, Serotonergic synapse, Arachidonic acid metabolism",7,"Ugt1a2, Gsta4, Aldh1a2, Ptgs2, Cyp2c65, Cyp2c37, Cyp2c70",0,NA,0,"",0,"",0
+"68",72303,"Cyp2c65",218,"HighConf","Novel","Inflammatory mediator regulation of TRP channels, Serotonergic synapse, Arachidonic acid metabolism",7,"Cyp2c44, Ugt1a2, Gsta4, Aldh1a2, Cyp2c37, Ptgs2, Cyp2c70",0,NA,0,"",0,"",0
+"69",226105,"Cyp2c70",216,"MedConf","Novel","Inflammatory mediator regulation of TRP channels, Serotonergic synapse, Arachidonic acid metabolism",7,"Cyp2c37, Cyp2c65, Cyp2c44, Ugt1a2, Gsta4, Aldh1a2, Ptgs2",0,NA,0,"",0,"",0
+"70",13200,"Ddost",153,"MedConf","Novel",NA,23,"Rpl23a, Ssr4, Rps3, Rps24, Rps27a, Rpl32, Rpl7, Rps11, Rpl37a, Rpl4, Rplp0, Rps17, Rpl13a, Rpl11, Rps4x, Rps8, Copa, Rpl19, Rps29, Rpl3, Rps5, Rpn2, Rpl31",0,NA,0,"",0,"",0
+"71",94223,"Dgcr8",301,"MedConf","Novel",NA,4,"Ran, Polr2g, Polr2b, Polr2d",0,NA,0,"",0,"",0
+"72",13204,"Dhx15",329,"MedConf","Spliceosome","Spliceosome",1,"Tfip11",0,NA,0,"",0,"",0
+"73",217207,"Dhx8",29,"HighConf","Spliceosome","Spliceosome",5,"Prpf19, Eftud2, Crnkl1, Plrg1, Isy1",5,"Prpf19, Plrg1, Isy1, Eftud2, Crnkl1",0,"",0,"",5
+"74",110082,"Dnah5",333,"MedConf","Novel",NA,3,"Dynll2, Tpr, Dync1li1",0,NA,0,"",0,"",0
+"75",13430,"Dnm2",51,"HighConf","Novel","Endocytosis, Fc gamma R-mediated phagocytosis, Endocrine and other factor-regulated calcium reabsorption, Phospholipase D signaling pathway",6,"Hspa8, Grb2, Clta, Arf1, Cav1, Ap1g1",1,"Hspa8",0,"",0,"",1
+"76",94176,"Dock2",275,"MedConf","Novel","Fc gamma R-mediated phagocytosis",1,"Src",0,NA,0,"",0,"",0
+"77",13492,"Drd5",242,"MedConf","Novel","cAMP signaling pathway, Dopaminergic synapse",4,"Gip, Adora2a, Glp2r, Vip",0,NA,0,"",0,"",0
+"78",235661,"Dync1li1",129,"MedConf","Novel",NA,4,"Dynll2, Tpr, Tuba1a, Dnah5",0,NA,0,"",0,"",0
+"79",68097,"Dynll2",130,"HighConf","Novel",NA,3,"Tpr, Dnah5, Dync1li1",0,NA,0,"",0,"",0
+"80",13627,"Eef1a1",136,"MedConf","Novel","RNA transport",20,"Rpl23a, Rpl11, Rpl37a, Rps27a, Rpl7, Rps8, Rpl4, Rplp0, Rpl31, Rps5, Rps3, Rps29, Rps24, Rpl19, Rps11, Rpl3, Rpl13a, Rps17, Rpl32, Rps4x",0,NA,0,"",0,"",0
+"81",20624,"Eftud2",39,"MedConf","Spliceosome","Spliceosome",21,"Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Pabpn1, Sf3a1, Dhx8, Sf3b4, Sf3b3, Sf3b1, Fau, Sf3b2, Sf3a3, Sf3b6, Snrpd1",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Dhx8, Alyref",0,"",0,"",13
+"82",112405,"Egln1",336,"MedConf","Novel",NA,2,"Tceb1, Prkca",0,NA,0,"",0,"",0
+"83",13667,"Eif2b4",50,"HighConf","Novel","RNA transport",1,"Eif2s3x",0,NA,0,"",0,"",0
+"84",26905,"Eif2s3x",265,"HighConf","Novel","RNA transport",20,"Eif3e, Eif3b, Eif2b4, Rps29, Rps27a, Rpl13a, Eif3a, Rps8, Rps3, Rps24, Eif3c, Eif3i, Rps17, Eif3d, Eif3f, Rps5, Pabpc6, Rps4x, Rps11, Eif3g",0,NA,0,"",0,"",0
+"85",13669,"Eif3a",77,"MedConf","Novel","RNA transport",19,"Eif3c, Eif3b, Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps4x, Rps27a, Rps8, Rps17, Rps3, Rps5, Rps29, Eif3d, Eif3f, Eif3i, Rps24, Rpl13a",0,NA,0,"",0,"",0
+"86",27979,"Eif3b",80,"HighConf","Novel","RNA transport",20,"Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps17, Rps27a, Eif3i, Rps3, Rps5, Rps4x, Eif3f, Eif3c, Pwp2, Rps24, Rpl13a, Eif3a, Eif3d, Rps8, Rps29",0,NA,0,"",0,"",0
+"87",56347,"Eif3c",79,"HighConf","Novel","RNA transport",19,"Eif3b, Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps3, Rps24, Rps8, Rps27a, Rps17, Eif3f, Eif3a, Eif3i, Rps4x, Rpl13a, Eif3d, Rps5, Rps29",0,NA,0,"",0,"",0
+"88",55944,"Eif3d",75,"MedConf","Novel","RNA transport",19,"Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps4x, Rps29, Rps8, Rps5, Rps17, Eif3f, Rps27a, Rpl13a, Rps3, Rps24",0,NA,0,"",0,"",0
+"89",16341,"Eif3e",81,"MedConf","Novel","RNA transport",19,"Rps11, Eif3g, Pabpc6, Eif2s3x, Rps24, Rps3, Eif3i, Eif3a, Rps5, Rps17, Rps27a, Eif3b, Rpl13a, Eif3c, Rps8, Rps4x, Eif3d, Eif3f, Rps29",0,NA,0,"",0,"",0
+"90",66085,"Eif3f",74,"MedConf","Novel","RNA transport",19,"Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps4x, Rpl13a, Rps5, Rps27a, Rps24, Rps8, Rps3, Rps29, Rps17",0,NA,0,"",0,"",0
+"91",53356,"Eif3g",154,"HighConf","Novel","RNA transport",20,"Pabpc6, Eif2s3x, Rps5, Eif3f, Pwp2, Rps4x, Eif3c, Eif3i, Rps29, Rps3, Rps11, Rps24, Rps8, Eif3b, Rps27a, Eif3d, Eif3a, Eif3e, Rpl13a, Rps17",0,NA,0,"",0,"",0
+"92",54709,"Eif3i",76,"HighConf","Novel","RNA transport",19,"Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eif3g, Pabpc6, Eif2s3x, Rps17, Rps27a, Eif3f, Rps4x, Rpl13a, Rps8, Rps5, Rps29, Eif3d, Rps3, Rps24",0,NA,0,"",0,"",0
+"93",13685,"Eif4ebp1",166,"MedConf","Novel","RNA transport, Cellular senescence, Longevity regulating pathway, AMPK signaling pathway, PI3K-Akt signaling pathway, Insulin signaling pathway, EGFR tyrosine kinase inhibitor resistance",1,"Rptor",0,NA,0,"",0,"",0
+"94",15568,"Elavl1",135,"HighConf","Novel","IL-17 signaling pathway, AMPK signaling pathway",4,"Prkab1, Tnfsf13, Prkca, Nup214",0,NA,0,"",0,"",0
+"95",328572,"Ep300",4,"HighConf","Novel","cAMP signaling pathway, Thyroid hormone signaling pathway, FoxO signaling pathway, Melanogenesis, Glucagon signaling pathway",24,"Crebbp, Trp53, Mdm2, Med21, Med14, Il17a, Med17, Hspa8, Myd88, Cebpa, Nfkb1, Kat2a, Stat1, Tnf, Ifnb1, Med25, Tgs1, Nr1d1, Cebpb, Spi1, Hey1, Creb3l3, Creb3l1, Car9",1,"Hspa8",0,"",0,"",1
+"96",225363,"Etf1",192,"MedConf","Novel",NA,21,"Pabpc6, Rpl23a, Rpl7, Rpl31, Rps5, Rpl32, Rps8, Rps4x, Rpl3, Rps27a, Rpl4, Rpl13a, Rpl37a, Rps29, Rplp0, Rps11, Rpl19, Rps24, Rps17, Rps3, Rpl11",0,NA,0,"",0,"",0
+"97",14055,"Ezh1",124,"HighConf","Novel",NA,2,"Hdac2, Ezh2",0,NA,0,"",0,"",0
+"98",14056,"Ezh2",73,"MedConf","Novel",NA,3,"Ezh1, Cdk1, Hdac2",0,NA,0,"",0,"",0
+"99",14103,"Fasl",85,"MedConf","Novel","MAPK signaling pathway, Apoptosis, Necroptosis, PI3K-Akt signaling pathway, FoxO signaling pathway, Neurotrophin signaling pathway, Ras signaling pathway",2,"Foxo4, Cflar",0,NA,0,"",0,"",0
+"100",14104,"Fasn",139,"HighConf","Novel","AMPK signaling pathway, Fatty acid metabolism, Fatty acid biosynthesis, Insulin signaling pathway",2,"Nfyb, Acaca",0,NA,0,"",0,"",0
+"101",14109,"Fau",13,"HighConf","Novel","Ribosome",21,"Eftud2, Rps5, Rps3, Rps8, Rps4x, Rps7, Rps24, Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Rpl23a, Trip12, Rps13, Rpl4, Rps27a, Rpl19",1,"Eftud2",0,"",0,"",1
+"102",103583,"Fbxw11",104,"MedConf","Novel","Cellular senescence, Hedgehog signaling pathway",5,"Ogt, Gli3, Sun2, Gli2, Gli1",0,NA,0,"",0,"",0
+"103",233080,"Ffar3",229,"HighConf","Novel",NA,12,"Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, P2ry10, Grpr, Lpar5, Adra1a ,Adra1a, Ccl6, Htr2b",0,NA,0,"",0,"",0
+"104",14165,"Fgf10",199,"MedConf","Novel","MAPK signaling pathway, PI3K-Akt signaling pathway, Rap1 signaling pathway, Ras signaling pathway",3,"Fgf8, Fgf18, Ptf1a",0,NA,0,"",0,"",0
+"105",14172,"Fgf18",358,"MedConf","Novel","MAPK signaling pathway, PI3K-Akt signaling pathway, Rap1 signaling pathway, Ras signaling pathway",2,"Fgf8, Fgf10",0,NA,0,"",0,"",0
+"106",14179,"Fgf8",200,"MedConf","Novel","MAPK signaling pathway, PI3K-Akt signaling pathway, Rap1 signaling pathway, Ras signaling pathway",2,"Fgf18, Fgf10",0,NA,0,"",0,"",0
+"107",14281,"Fos",335,"MedConf","Novel","MAPK signaling pathway, Apoptosis, Toll-like receptor signaling pathway, Osteoclast differentiation, Oxytocin signaling pathway, IL-17 signaling pathway, cAMP signaling pathway, Estrogen signaling pathway, B cell receptor signaling pathway, TNF signaling pathway, Relaxin signaling pathway, T cell receptor signaling pathway, Dopaminergic synapse",2,"Tnf, Prkca",0,NA,0,"",0,"",0
+"108",54601,"Foxo4",155,"MedConf","Novel","FoxO signaling pathway, Ras signaling pathway",4,"Prkab1, Crebbp, Stk11, Fasl",0,NA,0,"",0,"",0
+"109",14388,"Gab1",272,"MedConf","Novel","Neurotrophin signaling pathway, EGFR tyrosine kinase inhibitor resistance, Ras signaling pathway, Phospholipase D signaling pathway",2,"Src, Grb2",0,NA,0,"",0,"",0
+"110",57436,"Gabarapl1",252,"MedConf","Novel","NOD-like receptor signaling pathway, FoxO signaling pathway, GABAergic synapse",2,"Gabra3, Gabrb1",0,NA,0,"",0,"",0
+"111",14396,"Gabra3",253,"MedConf","Novel","GABAergic synapse",2,"Gabrb1, Gabarapl1",0,NA,0,"",0,"",0
+"112",14400,"Gabrb1",369,"MedConf","Novel","Serotonergic synapse, GABAergic synapse",2,"Gabarapl1, Gabra3",0,NA,0,"",0,"",0
+"113",23882,"Gadd45g",343,"MedConf","Novel","MAPK signaling pathway, Apoptosis, Cellular senescence, FoxO signaling pathway, p53 signaling pathway",1,"Cdk1",0,NA,0,"",0,"",0
+"114",66603,"Gemin2",40,"MedConf","Novel","RNA transport",10,"Nup50, Nup214, Tpr, Nup107, Tgs1, Prmt5, Nup210, Snrpd1, Snrpg, Nup98",2,"Snrpg, Snrpd1",0,"",0,"",2
+"115",14607,"Gip",243,"MedConf","Novel","Insulin secretion",5,"Adora2a, Vip, Pax6, Glp2r, Drd5",0,NA,0,"",0,"",0
+"116",14632,"Gli1",322,"MedConf","Novel","cAMP signaling pathway, Hedgehog signaling pathway",2,"Fbxw11, Sufu",0,NA,0,"",0,"",0
+"117",14633,"Gli2",321,"MedConf","Novel","Hedgehog signaling pathway",2,"Sufu, Fbxw11",0,NA,0,"",0,"",0
+"118",14634,"Gli3",319,"MedConf","Novel","cAMP signaling pathway, Hedgehog signaling pathway",2,"Fbxw11, Sufu",0,NA,0,"",0,"",0
+"119",93896,"Glp2r",240,"MedConf","Novel",NA,4,"Drd5, Gip, Adora2a, Vip",0,NA,0,"",0,"",0
+"120",14706,"Gng4",158,"MedConf","Novel","PI3K-Akt signaling pathway, Serotonergic synapse, Relaxin signaling pathway, GABAergic synapse, Dopaminergic synapse, Ras signaling pathway",5,"Cnr1, Lpar5, Cacna1s, Cacna1d, Prkca",0,NA,0,"",0,"",0
+"121",71520,"Grap",316,"HighConf","Novel",NA,2,"Grb10, Prkca",0,NA,0,"",0,"",0
+"122",14783,"Grb10",94,"MedConf","Novel",NA,2,"Prkca, Grap",0,NA,0,"",0,"",0
+"123",14784,"Grb2",86,"HighConf","Novel","MAPK signaling pathway, Osteoclast differentiation, Estrogen signaling pathway, PI3K-Akt signaling pathway, GnRH signaling pathway, B cell receptor signaling pathway, FoxO signaling pathway, Relaxin signaling pathway, T cell receptor signaling pathway, Gap junction, Neurotrophin signaling pathway, Insulin signaling pathway, EGFR tyrosine kinase inhibitor resistance, Ras signaling pathway, Phospholipase D signaling pathway",20,"Ap2b1, Ap2m1, Inpp5d, Prkca, Actg1, Cd86, Itpr1, Sh2b2, Clta, Spry2, Gab1, Tnk2, Hcst, Inppl1, Tec, Cd19, Hras, Src, Rps27a, Dnm2",0,NA,0,"",0,"",0
+"124",195733,"Grhl1",282,"MedConf","Novel",NA,2,"Crebbp, Tgs1",0,NA,0,"",0,"",0
+"125",14773,"Grk5 ,Grk5",231,"HighConf","Novel",NA,12,"P2ry2, Npffr1, Tac2, P2ry10, Ffar3, Grpr, Lpar5, Uts2, Adra1a ,Adra1a, Htr2b, Cxcr4, Ccl6",0,NA,0,"",0,"",0
+"126",108068,"Grm2",208,"HighConf","Novel","Phospholipase D signaling pathway",13,"P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, S1pr5, Rxfp3, Ccl6, Lpar5, Cxcr4, Sstr3, Cnr1",0,NA,0,"",0,"",0
+"127",14829,"Grpr",227,"MedConf","Novel",NA,12,"Htr2b, Ffar3, Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, P2ry10, Adra1a ,Adra1a, Lpar5, Ccl6",0,NA,0,"",0,"",0
+"128",14860,"Gsta4",363,"MedConf","Novel",NA,4,"Cyp2c37, Cyp2c65, Cyp2c44, Cyp2c70",0,NA,0,"",0,"",0
+"129",71828,"Gtf2a1l",317,"MedConf","Novel",NA,2,"Nfyb, Psmc5",0,NA,0,"",0,"",0
+"130",98053,"Gtf2f1",63,"MedConf","Novel",NA,23,"U2af1, Phf5a, Hnrnph1, Hnrnpd, Tceb1, Alyref, Srsf3, Pabpn1, Sf3b4, Sf3b1, Sf3b2, Sf3a3, Eftud2, Cdk9, Med21, Snrpd1, Polr2b, Sf3b3, Supt5, Polr2d, Sf3b6, Polr2g, Sf3a1",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"131",51788,"H2afz",109,"MedConf","Novel","Necroptosis",4,"Hdac2, Hist2h2be, Hist1h2bb, Hist1h2bg",0,NA,0,"",0,"",0
+"132",15107,"Hadh",355,"MedConf","Novel","Fatty acid metabolism",3,"Oxct2a, Acaa1b, Acaa1a",0,NA,0,"",0,"",0
+"133",243270,"Hcar1",341,"MedConf","Novel","cAMP signaling pathway",13,"Cnr1, Cxcr4, Tas2r120, Ccl6, Grm2, Rxfp3, Cxcl2, Sstr3, P2ry12, Oprd1, S1pr5, Lpar5, Adora1",0,NA,0,"",0,"",0
+"134",23900,"Hcst",311,"HighConf","Novel",NA,1,"Grb2",0,NA,0,"",0,"",0
+"135",15182,"Hdac2",162,"HighConf","Novel","Thyroid hormone signaling pathway, Longevity regulating pathway - multiple species",10,"Hist2h2be, Hist1h2bb, Hist1h2bg, Mbd2, Hist3h2a, H2afz, Ezh1, Sox2, Chd4, Ezh2",0,NA,0,"",0,"",0
+"136",15213,"Hey1",268,"MedConf","Novel",NA,2,"Ep300, Crebbp",0,NA,0,"",0,"",0
+"137",15258,"Hipk2",287,"HighConf","Novel","Cellular senescence",1,"Trp53",0,NA,0,"",0,"",0
+"138",319178,"Hist1h2bb",256,"HighConf","Novel",NA,5,"Hist3h2a, Hdac2, Crebbp, Hist2h2be, H2afz",0,NA,0,"",0,"",0
+"139",319181,"Hist1h2bg",257,"MedConf","Novel",NA,3,"Hist3h2a, H2afz, Hdac2",0,NA,0,"",0,"",0
+"140",319190,"Hist2h2be",255,"MedConf","Novel",NA,5,"Hist1h2bb, Hist3h2a, Hdac2, H2afz, Crebbp",0,NA,0,"",0,"",0
+"141",319162,"Hist3h2a",350,"MedConf","Novel","Necroptosis",4,"Hist1h2bb, Hdac2, Hist1h2bg, Hist2h2be",0,NA,0,"",0,"",0
+"142",11991,"Hnrnpd",145,"HighConf","Novel",NA,27,"Alyref, Srsf3, Pabpc6, Pabpn1, Sf3a3, Snrpd1, Rps27a, Gtf2f1, U2af1, Hspa8, Sf3b3, Sf3a1, Psmb1, Psme3, Psme1, Polr2d, Hnrnph1, Psmc5, Phf5a, Sf3b6, Eftud2, Polr2g, Sf3b4, Sf3b1, Psme4, Polr2b, Sf3b2",14,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Hspa8, Eftud2, Alyref",0,"",0,"",14
+"143",59013,"Hnrnph1",137,"MedConf","Novel",NA,19,"Hnrnpd, Alyref, Srsf3, Pabpn1, Sf3b1, Sf3b6, Sf3a1, Gtf2f1, Polr2b, Sf3a3, Sf3b2, Sf3b4, Polr2d, Polr2g, Snrpd1, Eftud2, Phf5a, U2af1, Sf3b3",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"144",15461,"Hras",6,"HighConf","Novel","MAPK signaling pathway, Apoptosis, Cellular senescence, Oxytocin signaling pathway, Longevity regulating pathway, Endocytosis, Thyroid hormone signaling pathway, Estrogen signaling pathway, PI3K-Akt signaling pathway, GnRH signaling pathway, B cell receptor signaling pathway, FoxO signaling pathway, Serotonergic synapse, Melanogenesis, Relaxin signaling pathway, T cell receptor signaling pathway, Gap junction, Neurotrophin signaling pathway, Insulin signaling pathway, Rap1 signaling pathway, EGFR tyrosine kinase inhibitor resistance, Sphingolipid signaling pathway, Ras signaling pathway, Longevity regulating pathway - multiple species, Phospholipase D signaling pathway",8,"Grb2, Prkca, Rasgrp1, Calm4, Zhx2, Rgl1, Rapgef2, Src",0,NA,0,"",0,"",0
+"145",15481,"Hspa8",72,"HighConf","Spliceosome","Spliceosome, MAPK signaling pathway, Endocytosis, Estrogen signaling pathway, Longevity regulating pathway - multiple species",17,"Psmc5, Psme3, Psmb1, Psme4, Lrrk2 ,Lrrk2, Psme1, Hnrnpd, Stx1a, Pabpc6, Clta, Ep300, Prpf19, Sirt1, Crebbp, Rps27a, Dnm2, Ap1g1",1,"Prpf19",0,"",0,"",1
+"146",15526,"Hspa9",48,"MedConf","Novel",NA,2,"Tlr4, Trp53",0,NA,0,"",0,"",0
+"147",15559,"Htr2b",228,"HighConf","Novel","Inflammatory mediator regulation of TRP channels, Serotonergic synapse, Gap junction",14,"Ffar3, Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, P2ry10, Cacna1d, Ccl6, Grpr, Adra1a ,Adra1a, Lpar5, Cacna1s",0,NA,0,"",0,"",0
+"148",64704,"Htra2",290,"HighConf","Novel","Apoptosis",1,"Traf2",0,NA,0,"",0,"",0
+"149",65972,"Ifi30",249,"MedConf","Novel",NA,4,"Ctsf, Stat1, Irf8, B2m",0,NA,0,"",0,"",0
+"150",15977,"Ifnb1",156,"HighConf","Novel","Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, Necroptosis, PI3K-Akt signaling pathway, RIG-I-like receptor signaling pathway",5,"Il21r, Il11ra1, Ep300, Crebbp, Stat1",0,NA,0,"",0,"",0
+"151",16157,"Il11ra1",346,"HighConf","Novel",NA,2,"Il24, Ifnb1",0,NA,0,"",0,"",0
+"152",16171,"Il17a",46,"MedConf","Novel","IL-17 signaling pathway",2,"Rorc, Ep300",0,NA,0,"",0,"",0
+"153",16177,"Il1r1",90,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Osteoclast differentiation, Inflammatory mediator regulation of TRP channels",3,"Irak4, Il1rn, Myd88",0,NA,0,"",0,"",0
+"154",16181,"Il1rn",315,"MedConf","Novel",NA,1,"Il1r1",0,NA,0,"",0,"",0
+"155",60504,"Il21r",173,"MedConf","Novel",NA,2,"Il24, Ifnb1",0,NA,0,"",0,"",0
+"156",93672,"Il24",225,"MedConf","Novel",NA,2,"Il11ra1, Il21r",0,NA,0,"",0,"",0
+"157",16319,"Incenp",150,"HighConf","Novel",NA,10,"Cdca8, Cenpt, Mapre1, Cenpu, Spdl1, Nup107, Cdc20, Nup98, Nuf2, Pafah1b1",0,NA,0,"",0,"",0
+"158",16331,"Inpp5d",118,"HighConf","Novel","B cell receptor signaling pathway, Fc gamma R-mediated phagocytosis",2,"Inppl1, Grb2",0,NA,0,"",0,"",0
+"159",16332,"Inppl1",312,"HighConf","Novel","B cell receptor signaling pathway, Insulin signaling pathway, Fc gamma R-mediated phagocytosis",2,"Inpp5d, Grb2",0,NA,0,"",0,"",0
+"160",266632,"Irak4",170,"HighConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway, NOD-like receptor signaling pathway, Neurotrophin signaling pathway",6,"Ppp2r2d, Tirap, Tab2, Myd88, Il1r1, Map3k7",0,NA,0,"",0,"",0
+"161",15900,"Irf8",99,"HighConf","Novel",NA,3,"Stat1, Ifi30, B2m",0,NA,0,"",0,"",0
+"162",57905,"Isy1",28,"HighConf","Spliceosome","Spliceosome",4,"Dhx8, Prpf19, Crnkl1, Plrg1",4,"Prpf19, Plrg1, Dhx8, Crnkl1",0,"",0,"",4
+"163",16434,"Itpa",305,"MedConf","Novel",NA,6,"Uckl1, Pold3, Polr2b, Polr2g, Pole3, Polr2d",0,NA,0,"",0,"",0
+"164",16438,"Itpr1",175,"MedConf","Novel","Apoptosis, Cellular senescence, Oxytocin signaling pathway, NOD-like receptor signaling pathway, Inflammatory mediator regulation of TRP channels, cGMP-PKG signaling pathway, Estrogen signaling pathway, GnRH signaling pathway, Serotonergic synapse, Aldosterone synthesis and secretion, Glucagon signaling pathway, Gap junction, Dopaminergic synapse",8,"Ppp2r2d, Calm4, Ppp1r10, Shoc2, Stx1a, Prkca, Grb2, Rps27a",0,NA,0,"",0,"",0
+"165",14534,"Kat2a",127,"HighConf","Novel","Thyroid hormone signaling pathway",6,"Wdr5, Atxn7, Med17, Ep300, Crebbp, Med14",0,NA,0,"",0,"",0
+"166",16211,"Kpnb1",300,"HighConf","Novel","RNA transport",2,"Nup98, Ran",0,NA,0,"",0,"",0
+"167",217708,"Lin52",326,"MedConf","Novel","Cellular senescence",1,"Rbl2",0,NA,0,"",0,"",0
+"168",381810,"Lpar5",204,"MedConf","Novel","PI3K-Akt signaling pathway, Rap1 signaling pathway, Phospholipase D signaling pathway",25,"Sstr3, Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Adra1a ,Adra1a, Grpr, Htr2b, Ffar3, Uts2, Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, Hcar1, P2ry10, Gng4, Cnr1, Rxfp3, Cxcr4, S1pr5",0,NA,0,"",0,"",0
+"169",66725,"Lrrk2 ,Lrrk2",119,"MedConf","Novel",NA,2,"Msn, Hspa8",1,"Hspa8",0,"",0,"",1
+"170",66094,"Lsm7",304,"MedConf","Spliceosome","Spliceosome",1,"Lsm8",1,"Lsm8",0,"",0,"",1
+"171",76522,"Lsm8",36,"HighConf","Spliceosome","Spliceosome",2,"Lsm7, Sart1",2,"Sart1, Lsm7",0,"",0,"",2
+"172",17087,"Ly96",310,"MedConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway",1,"Tlr4",0,NA,0,"",0,"",0
+"173",26400,"Map2k7",125,"MedConf","Novel","MAPK signaling pathway, Toll-like receptor signaling pathway, Osteoclast differentiation, GnRH signaling pathway, TNF signaling pathway, Relaxin signaling pathway, T cell receptor signaling pathway, Neurotrophin signaling pathway",3,"Map3k12, Map3k7, Tab2",0,NA,0,"",0,"",0
+"174",26404,"Map3k12",330,"MedConf","Novel","MAPK signaling pathway",1,"Map2k7",0,NA,0,"",0,"",0
+"175",26409,"Map3k7",47,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, IL-17 signaling pathway, AMPK signaling pathway, TNF signaling pathway, T cell receptor signaling pathway, RIG-I-like receptor signaling pathway",8,"Tlr4, Tab2, Myd88, Map2k7, Irak4, Prkab1, Rps27a, Traf2",0,NA,0,"",0,"",0
+"176",13589,"Mapre1",180,"MedConf","Novel",NA,15,"Tubg1, Cenpu, Spdl1, Sfi1, Incenp, Cdca8, Nuf2, Nup107, Apc, Pafah1b1, Cdk1, Cdc20, Cenpt, Nup98, Tuba1a",0,NA,0,"",0,"",0
+"177",17118,"Marcks",337,"MedConf","Novel","Fc gamma R-mediated phagocytosis",1,"Prkca",0,NA,0,"",0,"",0
+"178",17191,"Mbd2",348,"HighConf","Novel",NA,2,"Hdac2, Chd4",0,NA,0,"",0,"",0
+"179",17210,"Mcl1",33,"HighConf","Novel","Apoptosis, PI3K-Akt signaling pathway",3,"Bax, Pmaip1, Rps27a",0,NA,0,"",0,"",0
+"180",17246,"Mdm2",25,"HighConf","Novel","Cellular senescence, Endocytosis, Thyroid hormone signaling pathway, PI3K-Akt signaling pathway, FoxO signaling pathway, p53 signaling pathway",6,"Rps7, Rpl11, Trp53, Ep300, Rps27a, Crebbp",0,NA,0,"",0,"",0
+"181",26896,"Med14",45,"HighConf","Novel","Thyroid hormone signaling pathway",12,"Med17, Cebpa, Kat2a, Tnf, Med25, Tgs1, Cebpb, Polr2b, Ep300, Polr2d, Crebbp, Med21",0,NA,0,"",0,"",0
+"182",234959,"Med17",64,"MedConf","Novel","Thyroid hormone signaling pathway",11,"Cebpa, Tfip11, Kat2a, Tnf, Med25, Tgs1, Cebpb, Ep300, Crebbp, Med21, Med14",0,NA,0,"",0,"",0
+"183",108098,"Med21",42,"HighConf","Novel",NA,10,"Med14, Gtf2f1, Med17, Cebpa, Tnf, Med25, Tgs1, Cebpb, Crebbp, Ep300",0,NA,0,"",0,"",0
+"184",75613,"Med25",183,"MedConf","Novel",NA,9,"Tgs1, Cebpb, Tnf, Med21, Med14, Med17, Ep300, Cebpa, Crebbp",0,NA,0,"",0,"",0
+"185",17260,"Mef2c",198,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, cGMP-PKG signaling pathway",4,"Nfatc3, Nfatc1, Ctnna1, Myog",0,NA,0,"",0,"",0
+"186",17350,"Mlh1",131,"MedConf","Novel",NA,1,"Pole3",0,NA,0,"",0,"",0
+"187",17698,"Msn",140,"HighConf","Novel",NA,2,"Actg1, Lrrk2 ,Lrrk2",0,NA,0,"",0,"",0
+"188",17865,"Mybl2",325,"HighConf","Novel","Cellular senescence",2,"Rbl2, Cdk1",0,NA,0,"",0,"",0
+"189",17874,"Myd88",89,"HighConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway, NOD-like receptor signaling pathway",10,"Il1r1, Nfkb1, Irak4, Tlr4, Tirap, Nfkbib, Crebbp, Tab2, Map3k7, Ep300",0,NA,0,"",0,"",0
+"190",17901,"Myl1",254,"MedConf","Novel",NA,2,"Tpm1, Tnni3",0,NA,0,"",0,"",0
+"191",213435,"Mylk3",367,"MedConf","Novel","Oxytocin signaling pathway, cGMP-PKG signaling pathway",1,"Calm4",0,NA,0,"",0,"",0
+"192",17928,"Myog",196,"HighConf","Novel",NA,2,"Mef2c, Rps27a",0,NA,0,"",0,"",0
+"193",27354,"Nbn",288,"MedConf","Novel","Cellular senescence",1,"Trp53",0,NA,0,"",0,"",0
+"194",18002,"Nedd8",35,"MedConf","Novel",NA,2,"Acaca, Trp53",0,NA,0,"",0,"",0
+"195",18018,"Nfatc1",357,"HighConf","Novel","MAPK signaling pathway, Cellular senescence, Osteoclast differentiation, Oxytocin signaling pathway, cAMP signaling pathway, cGMP-PKG signaling pathway, B cell receptor signaling pathway, T cell receptor signaling pathway",2,"Nfatc3, Mef2c",0,NA,0,"",0,"",0
+"196",18021,"Nfatc3",226,"HighConf","Novel","MAPK signaling pathway, Cellular senescence, Oxytocin signaling pathway, cGMP-PKG signaling pathway, B cell receptor signaling pathway, T cell receptor signaling pathway",2,"Nfatc1, Mef2c",0,NA,0,"",0,"",0
+"197",18033,"Nfkb1",103,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Apoptosis, Cellular senescence, Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, Longevity regulating pathway, IL-17 signaling pathway, cAMP signaling pathway, PI3K-Akt signaling pathway, B cell receptor signaling pathway, TNF signaling pathway, Relaxin signaling pathway, T cell receptor signaling pathway, Neurotrophin signaling pathway, Sphingolipid signaling pathway, RIG-I-like receptor signaling pathway, Ras signaling pathway",9,"Tnf, Ppp2r2d, Cebpb, Relb, Rps27a, Ep300, Nfkbib, Tlr4, Myd88",0,NA,0,"",0,"",0
+"198",18036,"Nfkbib",83,"MedConf","Novel","NOD-like receptor signaling pathway, B cell receptor signaling pathway, T cell receptor signaling pathway, Neurotrophin signaling pathway, RIG-I-like receptor signaling pathway",2,"Myd88, Nfkb1",0,NA,0,"",0,"",0
+"199",18045,"Nfyb",174,"HighConf","Novel",NA,5,"Tgs1, Gtf2a1l, Fasn, Crebbp, Psmc5",0,NA,0,"",0,"",0
+"200",237362,"Npffr1",233,"MedConf","Novel",NA,12,"Arhgef25, Tac2, P2ry10, P2ry2, Ffar3, Grk5 ,Grk5, Ccl6, Adra1a ,Adra1a, Lpar5, Htr2b, Uts2, Grpr",0,NA,0,"",0,"",0
+"201",217166,"Nr1d1",237,"HighConf","Novel",NA,6,"Nr6a1, Nrbp1, Rorc, Ep300, Nr1h2, Nr1h3",0,NA,0,"",0,"",0
+"202",22260,"Nr1h2",121,"HighConf","Novel",NA,5,"Nr1h3, Rorc, Nr1d1, Nr6a1, Nrbp1",0,NA,0,"",0,"",0
+"203",22259,"Nr1h3",122,"HighConf","Novel",NA,5,"Rorc, Nr1d1, Nr6a1, Nrbp1, Nr1h2",0,NA,0,"",0,"",0
+"204",14536,"Nr6a1",238,"MedConf","Novel",NA,6,"Nrbp1, Sox2, Nr1h3, Nr1d1, Rorc, Nr1h2",0,NA,0,"",0,"",0
+"205",192292,"Nrbp1",328,"HighConf","Novel",NA,5,"Nr1d1, Rorc, Nr1h3, Nr6a1, Nr1h2",0,NA,0,"",0,"",0
+"206",66566,"Ntpcr",306,"HighConf","Novel",NA,5,"Polr2b, Polr2d, Rrm2, Rrm1, Polr2g",0,NA,0,"",0,"",0
+"207",66977,"Nuf2",92,"MedConf","Novel",NA,10,"Cdc20, Pafah1b1, Nup107, Incenp, Cdca8, Cenpt, Mapre1, Cenpu, Spdl1, Nup98",0,NA,0,"",0,"",0
+"208",103468,"Nup107",148,"MedConf","Novel","RNA transport",18,"Incenp, Cdca8, Alyref, Cenpt, Mapre1, Nxf1, Cenpu, Spdl1, Nup210, Pafah1b1, Nup50, Cdc20, Tpr, Nup214, Gemin2, Nuf2, Nup98, Snrpd1",2,"Snrpd1, Alyref",0,"",0,"",2
+"209",54563,"Nup210",297,"HighConf","Novel","RNA transport",9,"Tpr, Alyref, Nup50, Nup98, Gemin2, Nxf1, Nup107, Nup214, Snrpd1",2,"Snrpd1, Alyref",0,"",0,"",2
+"210",227720,"Nup214",112,"HighConf","Novel","RNA transport",11,"Tpr, Elavl1, Nup107, Alyref, Nxf1, Nup210, Tnfsf13, Gemin2, Nup50, Nup98, Snrpd1",2,"Snrpd1, Alyref",0,"",0,"",2
+"211",18141,"Nup50",67,"MedConf","Novel","RNA transport",9,"Nup214, Tpr, Nup107, Alyref, Nxf1, Nup210, Nup98, Snrpd1, Gemin2",2,"Snrpd1, Alyref",0,"",0,"",2
+"212",269966,"Nup98",23,"HighConf","Novel","RNA transport",19,"Gemin2, Nup50, Nuf2, Nup214, Cdc20, Pafah1b1, Tpr, Nup107, Incenp, Cdca8, Alyref, Cenpt, Mapre1, Nxf1, Cenpu, Spdl1, Nup210, Kpnb1, Snrpd1",2,"Snrpd1, Alyref",0,"",0,"",2
+"213",53319,"Nxf1",189,"HighConf","Novel","RNA transport",9,"Nup210, Tpr, Nup107, Nup50, Nup98, Alyref, Nup214, Srsf3, U2af1",3,"U2af1, Srsf3, Alyref",0,"",0,"",3
+"214",108155,"Ogt",117,"HighConf","Novel",NA,2,"Wdr5, Fbxw11",0,NA,0,"",0,"",0
+"215",18386,"Oprd1",210,"MedConf","Novel","cGMP-PKG signaling pathway, Sphingolipid signaling pathway",13,"Tas2r120, Adora1, Cxcl2, Hcar1, S1pr5, Sstr3, P2ry12, Grm2, Cxcr4, Ccl6, Lpar5, Cnr1, Rxfp3",0,NA,0,"",0,"",0
+"216",64059,"Oxct2a",195,"MedConf","Novel",NA,1,"Hadh",0,NA,0,"",0,"",0
+"217",78826,"P2ry10",361,"MedConf","Novel",NA,12,"Ffar3, Tac2, Grpr, Ccl6, Htr2b, Lpar5, P2ry2, Grk5 ,Grk5, Uts2, Arhgef25, Adra1a ,Adra1a, Npffr1",0,NA,0,"",0,"",0
+"218",70839,"P2ry12",209,"MedConf","Novel",NA,13,"Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, Cxcr4, S1pr5, Sstr3, Cnr1, Lpar5, Grm2, Ccl6, Rxfp3",0,NA,0,"",0,"",0
+"219",18442,"P2ry2",232,"MedConf","Novel","Inflammatory mediator regulation of TRP channels",12,"Npffr1, Arhgef25, Tac2, P2ry10, Grpr, Htr2b, Grk5 ,Grk5, Lpar5, Ffar3, Uts2, Ccl6, Adra1a ,Adra1a",0,NA,0,"",0,"",0
+"220",67543,"Pabpc6",223,"HighConf","Novel","RNA transport",38,"Eif2s3x, Eif3f, Rps29, Eif3e, Eif3a, Rpl19, Psmb1, Etf1, Rpl31, Rps3, Rps8, Rpl23a, Rpl11, Rplp0, Psme4, Rpl13a, Rps17, Rpl4, Psme1, Rps4x, Eif3c, Rps27a, Eif3i, Rpl32, Rps11, Hnrnpd, Hspa8, Psmc5, Eif3b, Rps5, Eif3g, Cnot6, Eif3d, Rpl7, Rpl3, Rpl37a, Psme3, Rps24",1,"Hspa8",0,"",0,"",1
+"221",54196,"Pabpn1",296,"HighConf","Novel",NA,19,"Sf3b1, Snrpd1, Sf3a3, Polr2g, Eftud2, Alyref, Sf3b4, Hnrnph1, Polr2d, Sf3b6, Srsf3, Polr2b, Phf5a, Gtf2f1, Sf3b2, Hnrnpd, U2af1, Sf3b3, Sf3a1",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"222",18472,"Pafah1b1",128,"HighConf","Novel",NA,14,"Cdk1, Nup107, Incenp, Cdca8, Tuba1a, Cenpt, Mapre1, Tubg1, Cenpu, Spdl1, Sfi1, Cdc20, Nuf2, Nup98",0,NA,0,"",0,"",0
+"223",18508,"Pax6",182,"MedConf","Novel",NA,1,"Gip",0,NA,0,"",0,"",0
+"224",18631,"Pex11a",280,"MedConf","Novel",NA,2,"Crebbp, Tgs1",0,NA,0,"",0,"",0
+"225",18673,"Phb",285,"MedConf","Novel",NA,1,"Trp53",0,NA,0,"",0,"",0
+"226",68479,"Phf5a",108,"MedConf","Spliceosome","Spliceosome",20,"Hnrnph1, Hnrnpd, Alyref, Srsf3, Pabpn1, Polr2b, Sf3b3, Snrpd1, Eftud2, Sf3b1, Sf3b2, U2af1, Gtf2f1, Sf3b4, Sf3b6, Sf3a3, Polr2g, Sart1, Sf3a1, Polr2d",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Sart1, Eftud2, Alyref",0,"",0,"",13
+"227",53317,"Plrg1",27,"MedConf","Spliceosome","Spliceosome",10,"Isy1, Dhx8, Prpf19, Sf3b3, Tfip11, Crnkl1, Sf3a3, Sf3a1, Sf3b2, Sf3b1",9,"Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Prpf19, Isy1, Dhx8, Crnkl1",0,"",0,"",9
+"228",58801,"Pmaip1",303,"HighConf","Novel","Apoptosis, p53 signaling pathway",1,"Mcl1",0,NA,0,"",0,"",0
+"229",67967,"Pold3",100,"HighConf","Novel","Pyrimidine metabolism",2,"Pole3, Itpa",0,NA,0,"",0,"",0
+"230",59001,"Pole3",181,"HighConf","Novel","Pyrimidine metabolism",4,"Itpa, Rev3l, Mlh1, Pold3",0,NA,0,"",0,"",0
+"231",231329,"Polr2b",41,"MedConf","Novel","Pyrimidine metabolism, RNA polymerase",26,"Polr2g, Polr2d, Med14, Cdk9, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Tceb1, Alyref, Srsf3, Pabpn1, Dgcr8, Itpa, Ntpcr, Sf3a1, Sf3b1, Sf3b2, Supt5, Snrpd1, Sf3b4, Sf3b6, Sf3b3, Eftud2, Sf3a3",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"232",69241,"Polr2d",44,"HighConf","Novel","Pyrimidine metabolism, RNA polymerase",26,"Med14, Cdk9, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Tceb1, Alyref, Srsf3, Pabpn1, Dgcr8, Itpa, Ntpcr, Eftud2, Snrpd1, Sf3b1, Sf3b2, Sf3b3, Sf3b4, Sf3a3, Sf3b6, Polr2b, Supt5, Sf3a1, Polr2g",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"233",67710,"Polr2g",43,"HighConf","Novel","Pyrimidine metabolism, RNA polymerase",25,"Polr2d, Cdk9, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Tceb1, Alyref, Srsf3, Pabpn1, Dgcr8, Itpa, Ntpcr, Snrpd1, Polr2b, Sf3b3, Sf3b2, Sf3a1, Sf3b4, Sf3b1, Supt5, Eftud2, Sf3b6, Sf3a3",13,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"234",52040,"Ppp1r10",251,"MedConf","Novel",NA,3,"Shoc2, Ppp2r2d, Itpr1",0,NA,0,"",0,"",0
+"235",52432,"Ppp2r2d",236,"HighConf","Novel","AMPK signaling pathway, Adrenergic signaling in cardiomyocytes, PI3K-Akt signaling pathway, Dopaminergic synapse, Sphingolipid signaling pathway",11,"Cacnb4, Cacna2d2, Ppp1r10, Shoc2, Cacna2d1, Irak4, Itpr1, Nfkb1, Cacna1d, Cacna1s, Tnni3",0,NA,0,"",0,"",0
+"236",19079,"Prkab1",176,"HighConf","Novel","Oxytocin signaling pathway, Longevity regulating pathway, AMPK signaling pathway, FoxO signaling pathway, Glucagon signaling pathway, Insulin signaling pathway, Longevity regulating pathway - multiple species",6,"Rptor, Acaca, Foxo4, Elavl1, Map3k7, Stk11",0,NA,0,"",0,"",0
+"237",18750,"Prkca",133,"MedConf","Novel","MAPK signaling pathway, Oxytocin signaling pathway, Adrenergic signaling in cardiomyocytes, Inflammatory mediator regulation of TRP channels, Thyroid hormone signaling pathway, PI3K-Akt signaling pathway, GnRH signaling pathway, Serotonergic synapse, Melanogenesis, Aldosterone synthesis and secretion, Relaxin signaling pathway, GABAergic synapse, Insulin secretion, Gap junction, Fc gamma R-mediated phagocytosis, Rap1 signaling pathway, Endocrine and other factor-regulated calcium reabsorption, Dopaminergic synapse, EGFR tyrosine kinase inhibitor resistance, Sphingolipid signaling pathway, Ras signaling pathway, Phospholipase D signaling pathway",17,"Elavl1, Actg1, Cdk1, Gng4, Itpr1, Creb3l3, Creb3l1, Tec, Grap, Fos, Egln1, Marcks, Prkd2, Hras, Src, Grb2, Grb10",0,NA,0,"",0,"",0
+"238",101540,"Prkd2",338,"MedConf","Novel","Aldosterone synthesis and secretion, Rap1 signaling pathway",1,"Prkca",0,NA,0,"",0,"",0
+"239",27374,"Prmt5",295,"MedConf","Novel","RNA transport",3,"Snrpd1, Snrpg, Gemin2",2,"Snrpg, Snrpd1",0,"",0,"",2
+"240",28000,"Prpf19",30,"HighConf","Spliceosome","Spliceosome",18,"Sf3b3, Sf3b4, Snrpg, Sf3b6, Hspa8, Tfip11, Crnkl1, Prpf39, Bud13, Sf3a3, Sf3b2, Snrpd1, Dhx8, Sart1, Plrg1, Sf3a1, Sf3b1, Isy1",15,"Snrpg, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Sart1, Plrg1, Isy1, Hspa8, Dhx8, Crnkl1",0,"",0,"",15
+"241",328110,"Prpf39",294,"MedConf","Novel",NA,6,"Sf3a3, Sf3b2, Prpf19, Snrpd1, Sart1, Sf3b3",6,"Snrpd1, Sf3b3, Sf3b2, Sf3a3, Sart1, Prpf19",0,"",0,"",6
+"242",19170,"Psmb1",97,"MedConf","Novel","Proteasome",14,"Psme4, Cdc20, Smurf1, Psme1, Cdk1, Hnrnpd, Tnks, Pabpc6, Rnf146, AI314180, Psme3, Psmc5, Hspa8, Rps27a",1,"Hspa8",0,"",0,"",1
+"243",19184,"Psmc5",95,"HighConf","Novel","Proteasome",19,"Psme3, Psmb1, Psme4, Brd4, Cdc20, Smurf1, Psme1, Cdk1, Hnrnpd, Tnks, Nfyb, Pabpc6, Rnf146, Trip12, AI314180, Gtf2a1l, Hspa8, Rps27a, Cdk9",1,"Hspa8",0,"",0,"",1
+"244",19186,"Psme1",126,"MedConf","Novel","Proteasome",14,"Cdk1, Hnrnpd, Tnf, Tnks, Pabpc6, Rnf146, Cdc20, Hspa8, Psme4, Psmc5, Psmb1, Rps27a, Psme3, Smurf1",1,"Hspa8",0,"",0,"",1
+"245",19192,"Psme3",96,"HighConf","Novel","Proteasome",14,"Psmb1, Psme4, Cdc20, Smurf1, Psme1, Cdk1, Hnrnpd, Tnf, Tnks, Pabpc6, Rnf146, Hspa8, Rps27a, Psmc5",1,"Hspa8",0,"",0,"",1
+"246",103554,"Psme4",98,"HighConf","Novel","Proteasome",14,"Cdc20, Smurf1, Psme1, Cdk1, Hnrnpd, Tnks, Pabpc6, Rnf146, AI314180, Rps27a, Psmc5, Psme3, Hspa8, Psmb1",1,"Hspa8",0,"",0,"",1
+"247",19213,"Ptf1a",359,"MedConf","Novel",NA,1,"Fgf10",0,NA,0,"",0,"",0
+"248",64292,"Ptges",247,"HighConf","Novel","Arachidonic acid metabolism",3,"Tbxas1, Ptgs2, Ptgis",0,NA,0,"",0,"",0
+"249",19223,"Ptgis",246,"MedConf","Novel","Arachidonic acid metabolism",3,"Ptges, Tbxas1, Ptgs2",0,NA,0,"",0,"",0
+"250",19225,"Ptgs2",193,"MedConf","Novel","NF-kappa B signaling pathway, Oxytocin signaling pathway, IL-17 signaling pathway, TNF signaling pathway, Serotonergic synapse, Arachidonic acid metabolism",9,"Cyp2c70, Cyp2c37, Cyp2c65, Cyp2c44, Ptgis, Ptges, Tbxas1, Apc, Trp53",0,NA,0,"",0,"",0
+"251",110816,"Pwp2",78,"MedConf","Novel",NA,2,"Eif3b, Eif3g",0,NA,0,"",0,"",0
+"252",19358,"Rad23a",308,"MedConf","Novel",NA,1,"Acaca",0,NA,0,"",0,"",0
+"253",19384,"Ran",24,"HighConf","Novel","RNA transport",2,"Kpnb1, Dgcr8",0,NA,0,"",0,"",0
+"254",76089,"Rapgef2",278,"MedConf","Novel","MAPK signaling pathway, Rap1 signaling pathway",1,"Hras",0,NA,0,"",0,"",0
+"255",19419,"Rasgrp1",221,"MedConf","Novel","MAPK signaling pathway, T cell receptor signaling pathway, Ras signaling pathway",6,"Cacnb4, Cacna2d2, Cacna2d1, Cacna1d, Cacna1s, Hras",0,NA,0,"",0,"",0
+"256",19651,"Rbl2",116,"MedConf","Novel","Cellular senescence, PI3K-Akt signaling pathway, FoxO signaling pathway",4,"Cdk1, Mybl2, Lin52, Rps27a",0,NA,0,"",0,"",0
+"257",19698,"Relb",318,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Osteoclast differentiation",1,"Nfkb1",0,NA,0,"",0,"",0
+"258",19714,"Rev3l",171,"MedConf","Novel",NA,1,"Pole3",0,NA,0,"",0,"",0
+"259",19731,"Rgl1",277,"HighConf","Novel","Ras signaling pathway",3,"Hras, Crebbp, Tgs1",0,NA,0,"",0,"",0
+"260",68031,"Rnf146",266,"HighConf","Novel",NA,7,"Psmc5, Tnks, Psme3, Psme4, Psmb1, Rps27a, Psme1",0,NA,0,"",0,"",0
+"261",19885,"Rorc",168,"MedConf","Novel",NA,6,"Nr1d1, Nr6a1, Nrbp1, Nr1h2, Nr1h3, Il17a",0,NA,0,"",0,"",0
+"262",67025,"Rpl11",9,"HighConf","Novel","Ribosome",27,"Rpl37a, Rplp0, Rpl19, Rpl7, Trp53, Mdm2, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rps27a, Rpl4",0,NA,0,"",0,"",0
+"263",22121,"Rpl13a",70,"HighConf","Novel","Ribosome",35,"Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rps4x, Rpl4, Rpl32, Rps5, Rpl19, Rps17, Rpl37a, Rps27a, Fau, Rpl7, Rpl31, Rps3, Rps24, Rps8, Rps29, Rplp0, Rpl11",0,NA,0,"",0,"",0
+"264",19921,"Rpl19",12,"MedConf","Novel","Ribosome",26,"Fau, Rpl7, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rpl4, Rpl37a, Rpl11, Rps27a, Rplp0",0,NA,0,"",0,"",0
+"265",268449,"Rpl23a",191,"HighConf","Novel","Ribosome",26,"Etf1, Pabpc6, Ssr4, Rps4x, Rpl19, Rps5, Rps11, Rpl4, Rpl7, Ddost, Rpl37a, Rpn2, Rps3, Rpl3, Rpl32, Rpl11, Rps29, Rps17, Rps24, Rps8, Rplp0, Eef1a1, Rpl31, Fau, Rpl13a, Rps27a",0,NA,0,"",0,"",0
+"266",27367,"Rpl3",71,"HighConf","Novel","Ribosome",26,"Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rps4x, Rpl4, Rpl32, Rps24, Rps5, Rps17, Rpl13a, Rpl37a, Rpl19, Rps27a, Rpl11, Rps29, Rpl7, Fau, Rpl31, Rplp0, Rps3, Rps8",0,NA,0,"",0,"",0
+"267",114641,"Rpl31",69,"MedConf","Novel","Ribosome",26,"Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rpl7, Rpl19, Rps4x, Fau, Rps5, Rpl32, Rps17, Rpl4, Rpl37a, Rps24, Rps27a, Rps8, Rps29, Rps3, Rplp0, Rpl11",0,NA,0,"",0,"",0
+"268",19951,"Rpl32",68,"MedConf","Novel","Ribosome",26,"Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rpl37a, Rps5, Rps8, Fau, Rps17, Rpl19, Rpl7, Rps24, Rps29, Rps4x, Rpl4, Rps3, Rplp0, Rps27a, Rpl11",0,NA,0,"",0,"",0
+"269",19981,"Rpl37a",10,"HighConf","Novel","Ribosome",25,"Rplp0, Rpl19, Rpl7, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rps27a, Rpl11, Rpl4",0,NA,0,"",0,"",0
+"270",67891,"Rpl4",8,"MedConf","Novel","Ribosome",26,"Rpl11, Rpl37a, Rplp0, Rpl19, Fau, Rpl7, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rps27a",0,NA,0,"",0,"",0
+"271",19989,"Rpl7",14,"MedConf","Novel","Ribosome",25,"Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rpl37a, Rplp0, Rpl11, Rpl4, Rps27a, Rpl19",0,NA,0,"",0,"",0
+"272",11837,"Rplp0",11,"HighConf","Novel","Ribosome",25,"Rpl19, Rpl7, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpl32, Rpl31, Rpl13a, Rpl3, Rps11, Eef1a1, Rpn2, Ddost, Rpl23a, Etf1, Pabpc6, Ssr4, Rpl11, Rpl37a, Rps27a, Rpl4",0,NA,0,"",0,"",0
+"273",20014,"Rpn2",147,"MedConf","Novel",NA,22,"Ddost, Rpl23a, Ssr4, Rplp0, Rps11, Rps3, Rps4x, Rps24, Rps27a, Rpl11, Rpl32, Rps5, Rpl7, Rps17, Rpl3, Rpl37a, Rpl4, Rpl13a, Rps29, Rps8, Rpl19, Rpl31",0,NA,0,"",0,"",0
+"274",27207,"Rps11",84,"MedConf","Novel","Ribosome",37,"Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rpl4, Rpl19, Eif3b, Eif3e, Rps17, Rpl31, Rpl3, Eif3i, Rps27a, Rplp0, Rps5, Rpl37a, Rpl11, Rps7, Rps24, Rps3, Rpsa, Eif3d, Eif3f, Rps29, Eif3a, Rps4x, Eif3c, Rpl13a, Rps8, Rpl7, Fau, Rpl32",0,NA,0,"",0,"",0
+"275",68052,"Rps13",284,"HighConf","Novel","Ribosome",1,"Fau",0,NA,0,"",0,"",0
+"276",20068,"Rps17",59,"HighConf","Novel","Ribosome",37,"Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rpl19, Rpl37a, Fau, Rpl4, Rps5, Rpl11, Rplp0, Rps8, Rpl7, Rps24, Rps27a, Rps3, Rps4x, Rps7",0,NA,0,"",0,"",0
+"277",20088,"Rps24",58,"MedConf","Novel","Ribosome",37,"Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rps3, Rpl19, Rplp0, Rpl37a, Rps27a, Rps7, Fau, Rps5, Rpl7, Rps4x, Rpl11, Rps8, Rpl4",0,NA,0,"",0,"",0
+"278",78294,"Rps27a",2,"HighConf","Novel","Ribosome",73,"Rpl4, Rpl11, Rpl37a, Rplp0, Rpl19, Fau, Rpl7, Trp53, Traf2, Mdm2, Mcl1, Map3k7, Rps5, Rps3, Rps8, Rps4x, Rps24, Rps17, Rps29, Rpsa, Acaca, Rpl32, Rpl31, Rpl13a, Rpl3, Hspa8, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Grb2, Tab2, Psmc5, Psme3, Psmb1, Psme4, Cebpa, Nfkb1, Sox2, Cdc20, Vps28, Rbl2, Smurf1, Psme1, Tsg101, Eef1a1, Stat1, Cdk1, Hnrnpd, Tceb1, Rpn2, Ddost, Eif3g, Snf8, Tnks, Itpr1, Rpl23a, Etf1, Myog, Pabpc6, Tardbp, Spry2, Chmp4b, Cebpb, Rspo2, Adam10, Ssr4, Eif2s3x, Rnf146",1,"Hspa8",0,"",0,"",1
+"279",20090,"Rps29",60,"HighConf","Novel","Ribosome",35,"Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rpl37a, Rps17, Rpl19, Rplp0, Fau, Rps8, Rpl7, Rps5, Rps4x, Rps24, Rpl4, Rps27a, Rps3, Rpl11",0,NA,0,"",0,"",0
+"280",27050,"Rps3",54,"HighConf","Novel","Ribosome",37,"Rps8, Rps4x, Rps7, Rps24, Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rpl11, Rpl7, Rps5, Fau, Rpl19, Rps27a, Rpl4, Rplp0, Rpl37a",0,NA,0,"",0,"",0
+"281",20102,"Rps4x",56,"HighConf","Novel","Ribosome",37,"Rps7, Rps24, Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rpl11, Rplp0, Fau, Rps5, Rpl19, Rps3, Rps8, Rpl4, Rps27a, Rpl37a, Rpl7",0,NA,0,"",0,"",0
+"282",20103,"Rps5",53,"MedConf","Novel","Ribosome",37,"Rps3, Rps8, Rps4x, Rps7, Rps24, Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Fau, Rpl11, Rps27a, Rpl19, Rplp0, Rpl4, Rpl7, Rpl37a",0,NA,0,"",0,"",0
+"283",72508,"Rps6kb1",26,"MedConf","Novel","Longevity regulating pathway, AMPK signaling pathway, PI3K-Akt signaling pathway, Insulin signaling pathway, Fc gamma R-mediated phagocytosis, EGFR tyrosine kinase inhibitor resistance, Longevity regulating pathway - multiple species",1,"Rptor",0,NA,0,"",0,"",0
+"284",20115,"Rps7",57,"MedConf","Novel","Ribosome",9,"Rps24, Rps17, Rps11, Fau, Rps5, Rps4x, Rps3, Rps8, Mdm2",0,NA,0,"",0,"",0
+"285",20116,"Rps8",55,"MedConf","Novel","Ribosome",37,"Rps4x, Rps7, Rps24, Rps17, Rps29, Rpsa, Rpl32, Rpl31, Rpl13a, Rpl3, Eif3f, Eif3d, Eif3i, Eif3a, Eif3c, Eif3b, Eif3e, Rps11, Eef1a1, Rpn2, Ddost, Eif3g, Rpl23a, Etf1, Pabpc6, Ssr4, Eif2s3x, Rps5, Rplp0, Rps3, Rpl4, Rps27a, Rpl37a, Rpl19, Rpl11, Fau, Rpl7",0,NA,0,"",0,"",0
+"286",16785,"Rpsa",61,"HighConf","Novel","Ribosome",9,"Rps11, Rps3, Rps17, Rps5, Rps8, Rps24, Fau, Rps4x, Rps27a",0,NA,0,"",0,"",0
+"287",74370,"Rptor",302,"MedConf","Novel","Longevity regulating pathway, AMPK signaling pathway, PI3K-Akt signaling pathway, Insulin signaling pathway, Longevity regulating pathway - multiple species",3,"Eif4ebp1, Rps6kb1, Prkab1",0,NA,0,"",0,"",0
+"288",20133,"Rrm1",65,"HighConf","Novel","Pyrimidine metabolism",2,"Rrm2, Ntpcr",0,NA,0,"",0,"",0
+"289",20135,"Rrm2",185,"HighConf","Novel","Pyrimidine metabolism, p53 signaling pathway",3,"Ntpcr, Rrm1, Cdk1",0,NA,0,"",0,"",0
+"290",239405,"Rspo2",262,"MedConf","Novel",NA,1,"Rps27a",0,NA,0,"",0,"",0
+"291",239336,"Rxfp3",157,"MedConf","Novel","Relaxin signaling pathway",13,"S1pr5, Cnr1, Lpar5, Sstr3, Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, Cxcr4",0,NA,0,"",0,"",0
+"292",94226,"S1pr5",202,"HighConf","Novel","Sphingolipid signaling pathway",13,"Cnr1, Lpar5, Sstr3, Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, Cxcr4, Rxfp3",0,NA,0,"",0,"",0
+"293",20227,"Sart1",21,"HighConf","Spliceosome","Spliceosome",11,"Sf3b2, Prpf19, Sf3b3, Sf3b4, Lsm8, Phf5a, Prpf39, Bud13, Sf3a3, Sf3a1, Sf3b1",9,"Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Prpf19, Phf5a, Lsm8",0,"",0,"",9
+"294",67465,"Sf3a1",20,"HighConf","Spliceosome","Spliceosome",23,"Sart1, Sf3b2, Plrg1, Prpf19, Sf3b3, Sf3b4, Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Crnkl1, Pabpn1, Snrpd1, Sf3b1, Sf3a3",16,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sart1, Prpf19, Plrg1, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",16
+"295",75062,"Sf3a3",19,"HighConf","Spliceosome","Spliceosome",25,"Sf3a1, Sart1, Sf3b2, Plrg1, Prpf19, Sf3b3, Sf3b4, Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Tfip11, Hnrnph1, Hnrnpd, Alyref, Srsf3, Crnkl1, Prpf39, Pabpn1, Sf3b1, Snrpd1",16,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a1, Sart1, Prpf19, Plrg1, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",16
+"296",81898,"Sf3b1",18,"HighConf","Spliceosome","Spliceosome",25,"Sf3a3, Sf3a1, Sart1, Sf3b2, Plrg1, Prpf19, Sf3b3, Sf3b4, Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Crnkl1, Pabpn1, Bud13, Ccdc97, Snrpd1",16,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3a3, Sf3a1, Sart1, Prpf19, Plrg1, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",16
+"297",319322,"Sf3b2",22,"MedConf","Spliceosome","Spliceosome",25,"Plrg1, Prpf19, Sf3b3, Sf3b4, Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Crnkl1, Prpf39, Pabpn1, Bud13, Sf3a3, Sf3b1, Snrpd1, Sf3a1, Sart1",16,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b1, Sf3a3, Sf3a1, Sart1, Prpf19, Plrg1, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",16
+"298",101943,"Sf3b3",31,"MedConf","Spliceosome","Spliceosome",25,"Sf3b4, Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Tfip11, Hnrnph1, Hnrnpd, Alyref, Srsf3, Crnkl1, Prpf39, Pabpn1, Sf3a1, Sart1, Snrpd1, Sf3a3, Sf3b1, Plrg1, Sf3b2, Prpf19",16,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Sart1, Prpf19, Plrg1, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",16
+"299",107701,"Sf3b4",34,"MedConf","Spliceosome","Spliceosome",21,"Sf3b6, Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Pabpn1, Prpf19, Snrpd1, Sf3b3, Sf3b2, Sart1, Sf3a1, Sf3b1, Sf3a3",14,"U2af1, Srsf3, Snrpd1, Sf3b6, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Sart1, Prpf19, Phf5a, Eftud2, Alyref",0,"",0,"",14
+"300",66055,"Sf3b6",38,"MedConf","Spliceosome","Spliceosome",21,"Eftud2, Polr2b, Polr2g, Polr2d, Gtf2f1, U2af1, Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Pabpn1, Ccdc97, Sf3a3, Sf3b2, Prpf19, Sf3b4, Sf3b1, Snrpd1, Sf3a1, Sf3b3",13,"U2af1, Srsf3, Snrpd1, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Prpf19, Phf5a, Eftud2, Alyref",0,"",0,"",13
+"301",78887,"Sfi1",332,"MedConf","Novel",NA,5,"Cdk1, Tubg1, Mapre1, Pafah1b1, Tuba1a",0,NA,0,"",0,"",0
+"302",23921,"Sh2b2",190,"MedConf","Novel","Neurotrophin signaling pathway, Insulin signaling pathway",4,"Ackr2, Grb2, Src, Actg1",0,NA,0,"",0,"",0
+"303",56392,"Shoc2",354,"MedConf","Novel","Ras signaling pathway",3,"Ppp2r2d, Itpr1, Ppp1r10",0,NA,0,"",0,"",0
+"304",93759,"Sirt1",3,"HighConf","Novel","Cellular senescence, Longevity regulating pathway, AMPK signaling pathway, FoxO signaling pathway, Glucagon signaling pathway, Longevity regulating pathway - multiple species",2,"Trp53, Hspa8",1,"Hspa8",0,"",0,"",1
+"305",20874,"Slk",345,"HighConf","Novel",NA,1,"Cdk1",0,NA,0,"",0,"",0
+"306",17130,"Smad6",323,"HighConf","Novel",NA,2,"Bmp2, Smurf1",0,NA,0,"",0,"",0
+"307",14211,"Smc2",344,"MedConf","Novel",NA,1,"Cdk1",0,NA,0,"",0,"",0
+"308",75788,"Smurf1",120,"HighConf","Novel","Endocytosis, Hedgehog signaling pathway",8,"Psme1, Smad6, Psmc5, Psmb1, Psme4, Rps27a, Psme3, Bmp2",0,NA,0,"",0,"",0
+"309",27681,"Snf8",163,"MedConf","Novel","Endocytosis",4,"Chmp4b, Tsg101, Vps28, Rps27a",0,NA,0,"",0,"",0
+"310",20641,"Snrpd1",17,"HighConf","Spliceosome","Spliceosome",32,"Sf3b1, Sf3a3, Sf3a1, Sf3b2, Nup98, Prpf19, Sf3b3, Sf3b4, Snrpg, Sf3b6, Eftud2, Gemin2, Polr2b, Polr2g, Polr2d, Gtf2f1, Nup50, U2af1, Phf5a, Nup214, Tpr, Hnrnph1, Hnrnpd, Nup107, Alyref, Srsf3, Tgs1, Crnkl1, Prpf39, Prmt5, Pabpn1, Nup210",15,"U2af1, Srsf3, Snrpg, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Prpf19, Phf5a, Eftud2, Crnkl1, Alyref",0,"",0,"",15
+"311",68011,"Snrpg",37,"MedConf","Spliceosome","Spliceosome",4,"Gemin2, Prmt5, Snrpd1, Prpf19",2,"Snrpd1, Prpf19",0,"",0,"",2
+"312",20674,"Sox2",113,"MedConf","Novel",NA,3,"Hdac2, Nr6a1, Rps27a",0,NA,0,"",0,"",0
+"313",70385,"Spdl1",279,"MedConf","Novel",NA,11,"Mapre1, Incenp, Nup107, Pafah1b1, Cdc20, Crebbp, Cenpu, Cdca8, Cenpt, Nup98, Nuf2",0,NA,0,"",0,"",0
+"314",20375,"Spi1",267,"HighConf","Novel","Osteoclast differentiation",1,"Ep300",0,NA,0,"",0,"",0
+"315",24064,"Spry2",259,"MedConf","Novel",NA,3,"Src, Grb2, Rps27a",0,NA,0,"",0,"",0
+"316",20779,"Src",5,"HighConf","Novel","Oxytocin signaling pathway, Endocytosis, Inflammatory mediator regulation of TRP channels, Thyroid hormone signaling pathway, Estrogen signaling pathway, GnRH signaling pathway, Relaxin signaling pathway, GABAergic synapse, Gap junction, Rap1 signaling pathway, EGFR tyrosine kinase inhibitor resistance",12,"Hras, Grb2, Prkca, Stat1, Cd86, Sh2b2, Spry2, Gab1, Tnk2, Cd80, Dock2, Cav1",0,NA,0,"",0,"",0
+"317",20383,"Srsf3",165,"HighConf","Spliceosome","Spliceosome",20,"Nxf1, Pabpn1, Alyref, Polr2g, Hnrnpd, Sf3b6, Hnrnph1, Snrpd1, Polr2d, U2af1, Sf3a1, Sf3a3, Sf3b4, Sf3b2, Gtf2f1, Sf3b1, Polr2b, Sf3b3, Eftud2, Phf5a",12,"U2af1, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",12
+"318",20832,"Ssr4",264,"HighConf","Novel",NA,22,"Ddost, Rpl31, Rps5, Rpl19, Rps29, Rpn2, Rps27a, Rpl3, Rpl7, Rpl4, Rps17, Rps4x, Rpl32, Rpl37a, Rpl23a, Rps3, Rps11, Rplp0, Rpl11, Rps24, Rps8, Rpl13a",0,NA,0,"",0,"",0
+"319",20607,"Sstr3",205,"MedConf","Novel",NA,13,"Ccl6, Grm2, P2ry12, Oprd1, Tas2r120, Adora1, Cxcl2, Hcar1, Rxfp3, Lpar5, Cnr1, Cxcr4, S1pr5",0,NA,0,"",0,"",0
+"320",20846,"Stat1",143,"HighConf","Novel","Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, Necroptosis, Thyroid hormone signaling pathway",9,"Ifnb1, Ifi30, Usp18, Src, Rps27a, B2m, Irf8, Crebbp, Ep300",0,NA,0,"",0,"",0
+"321",20869,"Stk11",107,"MedConf","Novel","Longevity regulating pathway, AMPK signaling pathway, PI3K-Akt signaling pathway, FoxO signaling pathway",2,"Foxo4, Prkab1",0,NA,0,"",0,"",0
+"322",20907,"Stx1a",149,"HighConf","Novel","Insulin secretion",3,"Itpr1, Stxbp2, Hspa8",1,"Hspa8",0,"",0,"",1
+"323",20911,"Stxbp2",93,"MedConf","Novel",NA,1,"Stx1a",0,NA,0,"",0,"",0
+"324",24069,"Sufu",164,"HighConf","Novel","Hedgehog signaling pathway",3,"Gli3, Gli2, Gli1",0,NA,0,"",0,"",0
+"325",223697,"Sun2",320,"MedConf","Novel",NA,1,"Fbxw11",0,NA,0,"",0,"",0
+"326",20924,"Supt5",32,"HighConf","Novel",NA,7,"Polr2b, Polr2g, Polr2d, Cdk9, Gtf2f1, Brd4, Tceb1",0,NA,0,"",0,"",0
+"327",68652,"Tab2",88,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, IL-17 signaling pathway, TNF signaling pathway",6,"Myd88, Map2k7, Irak4, Rps27a, Map3k7, Traf2",0,NA,0,"",0,"",0
+"328",21334,"Tac2",235,"MedConf","Novel",NA,12,"P2ry10, Lpar5, Ccl6, Ffar3, Grpr, Grk5 ,Grk5, Htr2b, Uts2, Arhgef25, Adra1a ,Adra1a, P2ry2, Npffr1",0,NA,0,"",0,"",0
+"329",230908,"Tardbp",258,"HighConf","Novel",NA,1,"Rps27a",0,NA,0,"",0,"",0
+"330",387348,"Tas2r120",211,"MedConf","Novel",NA,13,"Adora1, Cxcl2, Hcar1, Sstr3, Grm2, P2ry12, Cxcr4, Cnr1, Lpar5, S1pr5, Ccl6, Oprd1, Rxfp3",0,NA,0,"",0,"",0
+"331",21371,"Tbca",351,"HighConf","Novel",NA,1,"Tuba1a",0,NA,0,"",0,"",0
+"332",66411,"Tbcb",352,"MedConf","Novel",NA,1,"Tuba1a",0,NA,0,"",0,"",0
+"333",21391,"Tbxas1",356,"HighConf","Novel","Arachidonic acid metabolism",3,"Ptgis, Ptges, Ptgs2",0,NA,0,"",0,"",0
+"334",67923,"Tceb1",146,"MedConf","Novel",NA,9,"Egln1, Rps27a, Polr2g, Polr2d, Cdk9, Polr2b, Gtf2f1, Brd4, Supt5",0,NA,0,"",0,"",0
+"335",21677,"Tead2",281,"MedConf","Novel",NA,2,"Tgs1, Crebbp",0,NA,0,"",0,"",0
+"336",21682,"Tec",313,"HighConf","Novel","Osteoclast differentiation, T cell receptor signaling pathway",2,"Grb2, Prkca",0,NA,0,"",0,"",0
+"337",54723,"Tfip11",123,"MedConf","Novel",NA,6,"Dhx15, Med17, Sf3a3, Plrg1, Prpf19, Sf3b3",5,"Sf3b3, Sf3a3, Prpf19, Plrg1, Dhx15",0,"",0,"",5
+"338",116940,"Tgs1",222,"HighConf","Novel","RNA transport",13,"Rgl1, Pex11a, Tead2, Grhl1, Ep300, Med14, Med25, Med17, Crebbp, Snrpd1, Gemin2, Nfyb, Med21",1,"Snrpd1",0,"",0,"",1
+"339",225160,"Thoc1",347,"MedConf","Spliceosome","Spliceosome, RNA transport",1,"Alyref",1,"Alyref",0,"",0,"",1
+"340",117149,"Tirap",87,"MedConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway",3,"Myd88, Irak4, Tlr4",0,NA,0,"",0,"",0
+"341",21898,"Tlr4",82,"HighConf","Novel","NF-kappa B signaling pathway, Toll-like receptor signaling pathway, NOD-like receptor signaling pathway, Necroptosis, PI3K-Akt signaling pathway",6,"Tirap, Myd88, Nfkb1, Ly96, Map3k7, Hspa9",0,NA,0,"",0,"",0
+"342",21926,"Tnf",152,"MedConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Apoptosis, Toll-like receptor signaling pathway, Osteoclast differentiation, NOD-like receptor signaling pathway, IL-17 signaling pathway, Necroptosis, TNF signaling pathway, T cell receptor signaling pathway, Sphingolipid signaling pathway, RIG-I-like receptor signaling pathway",13,"Med25, Cebpb, Fos, Psme1, Cebpa, Med14, Med21, Ep300, Med17, Crebbp, Traf2, Nfkb1, Psme3",0,NA,0,"",0,"",0
+"343",72049,"Tnfrsf13c",291,"MedConf","Novel","NF-kappa B signaling pathway, Intestinal immune network for IgA production",1,"Traf2",0,NA,0,"",0,"",0
+"344",21935,"Tnfrsf17",186,"HighConf","Novel","Intestinal immune network for IgA production",1,"Tnfsf13",0,NA,0,"",0,"",0
+"345",21941,"Tnfrsf8",292,"MedConf","Novel",NA,1,"Traf2",0,NA,0,"",0,"",0
+"346",69583,"Tnfsf13",324,"HighConf","Novel","Intestinal immune network for IgA production",3,"Elavl1, Nup214, Tnfrsf17",0,NA,0,"",0,"",0
+"347",51789,"Tnk2",273,"MedConf","Novel",NA,2,"Src, Grb2",0,NA,0,"",0,"",0
+"348",21951,"Tnks",167,"HighConf","Novel",NA,7,"Rnf146, Psmb1, Psme3, Rps27a, Psmc5, Psme4, Psme1",0,NA,0,"",0,"",0
+"349",21954,"Tnni3",201,"MedConf","Novel","cAMP signaling pathway, Adrenergic signaling in cardiomyocytes, Cardiac muscle contraction",3,"Ppp2r2d, Myl1, Tpm1",0,NA,0,"",0,"",0
+"350",22003,"Tpm1",360,"HighConf","Novel","Adrenergic signaling in cardiomyocytes, Cardiac muscle contraction",2,"Tnni3, Myl1",0,NA,0,"",0,"",0
+"351",108989,"Tpr",132,"HighConf","Novel","RNA transport",13,"Nup107, Alyref, Nxf1, Nup210, Dnah5, Cetn3, Nup214, Dync1li1, Snrpd1, Dynll2, Nup98, Gemin2, Nup50",2,"Snrpd1, Alyref",0,"",0,"",2
+"352",22030,"Traf2",16,"HighConf","Novel","MAPK signaling pathway, NF-kappa B signaling pathway, Apoptosis, Osteoclast differentiation, NOD-like receptor signaling pathway, IL-17 signaling pathway, Necroptosis, TNF signaling pathway, Sphingolipid signaling pathway, RIG-I-like receptor signaling pathway",8,"Map3k7, Tab2, Tnf, Cflar, Htra2, Tnfrsf13c, Tnfrsf8, Rps27a",0,NA,0,"",0,"",0
+"353",14897,"Trip12",283,"MedConf","Novel",NA,2,"Psmc5, Fau",0,NA,0,"",0,"",0
+"354",22059,"Trp53",15,"MedConf","Novel","MAPK signaling pathway, Apoptosis, Cellular senescence, Longevity regulating pathway, Thyroid hormone signaling pathway, PI3K-Akt signaling pathway, p53 signaling pathway, Neurotrophin signaling pathway, Sphingolipid signaling pathway",14,"Mdm2, Nedd8, Hspa9, Apc, Ptgs2, Phb, Bax, Hipk2, Nbn, Rps27a, Rpl11, Sirt1, Ep300, Crebbp",0,NA,0,"",0,"",0
+"355",22088,"Tsg101",134,"MedConf","Novel","Endocytosis",4,"Snf8, Chmp4b, Vps28, Rps27a",0,NA,0,"",0,"",0
+"356",22142,"Tuba1a",172,"MedConf","Novel","Apoptosis, Gap junction",9,"Mapre1, Tubg1, Sfi1, Tbca, Tbcb, Arfgef2, Pafah1b1, Dync1li1, Cdk1",0,NA,0,"",0,"",0
+"357",103733,"Tubg1",224,"MedConf","Novel",NA,6,"Sfi1, Arfgef2, Tuba1a, Cdk1, Mapre1, Pafah1b1",0,NA,0,"",0,"",0
+"358",108121,"U2af1",91,"MedConf","Spliceosome","Spliceosome",20,"Phf5a, Hnrnph1, Hnrnpd, Alyref, Srsf3, Nxf1, Pabpn1, Eftud2, Sf3b1, Snrpd1, Sf3b4, Polr2b, Sf3a3, Polr2d, Sf3a1, Sf3b6, Sf3b3, Sf3b2, Gtf2f1, Polr2g",12,"Srsf3, Snrpd1, Sf3b6, Sf3b4, Sf3b3, Sf3b2, Sf3b1, Sf3a3, Sf3a1, Phf5a, Eftud2, Alyref",0,"",0,"",12
+"359",68556,"Uckl1",194,"MedConf","Novel","Pyrimidine metabolism",1,"Itpa",0,NA,0,"",0,"",0
+"360",22236,"Ugt1a2",220,"MedConf","Novel",NA,5,"Aldh1a2, Cyp2c65, Cyp2c70, Cyp2c44, Cyp2c37",0,NA,0,"",0,"",0
+"361",24110,"Usp18",342,"HighConf","Novel",NA,1,"Stat1",0,NA,0,"",0,"",0
+"362",24111,"Uts2",230,"MedConf","Novel",NA,12,"Grk5 ,Grk5, P2ry2, Npffr1, Arhgef25, Tac2, P2ry10, Ffar3, Adra1a ,Adra1a, Grpr, Lpar5, Ccl6, Htr2b",0,NA,0,"",0,"",0
+"363",22353,"Vip",239,"MedConf","Novel",NA,4,"Glp2r, Drd5, Gip, Adora2a",0,NA,0,"",0,"",0
+"364",66914,"Vps28",115,"MedConf","Novel","Endocytosis",4,"Tsg101, Snf8, Chmp4b, Rps27a",0,NA,0,"",0,"",0
+"365",83767,"Wasf1",339,"MedConf","Novel","Fc gamma R-mediated phagocytosis",1,"Actg1",0,NA,0,"",0,"",0
+"366",140858,"Wdr5",327,"HighConf","Novel",NA,2,"Kat2a, Ogt",0,NA,0,"",0,"",0
+"367",68151,"Wls",197,"MedConf","Novel",NA,2,"Wnt8b, Wnt7b",0,NA,0,"",0,"",0
+"368",22422,"Wnt7b",161,"MedConf","Novel","Melanogenesis",2,"Wls, Wnt8b",0,NA,0,"",0,"",0
+"369",22423,"Wnt8b",349,"MedConf","Novel","Melanogenesis",2,"Wls, Wnt7b",0,NA,0,"",0,"",0
+"370",387609,"Zhx2",276,"MedConf","Novel",NA,1,"Hras",0,NA,0,"",0,"",0
