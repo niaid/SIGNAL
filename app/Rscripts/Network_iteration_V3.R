@@ -34,9 +34,9 @@ Graph <- induced.subgraph(G, Screen_Genes.for.network.analysis)
 findHitGenes <- function(x,Threshold, Direction, siRNAnumber = NULL){ # Function to find hit genes from a data.frame
   message(Direction)
   if(Direction == "Greater_than"){
-    hit.Genes <- x$EntrezID[which(x[[proxyScore]] > Threshold)]   # Here gene symvols are used but in Network analysis gene IDs are used
+    hit.Genes <- x$EntrezID[which(x[[proxyScore]] >= Threshold)]   # Here gene symvols are used but in Network analysis gene IDs are used
   } else if(Direction == "Less_than"){
-    hit.Genes <- x$EntrezID[which(x[[proxyScore]] < Threshold)]
+    hit.Genes <- x$EntrezID[which(x[[proxyScore]] <= Threshold)]
   } else if(Direction == "Both"){
     hit.Genes <- x$EntrezID[union(which(x[[proxyScore]] > Threshold), which(x[[proxyScore]] < -1*Threshold))]
   }
@@ -69,8 +69,11 @@ gNames <- V(SubGraph)$name
 #############################################################
 #                   Indirect Connection
 #############################################################
-NetworkConnectivityThreshold <- 1
-NetworkScoreThreshold <- 0.4
+# NetworkConnectivityThreshold <- 1
+# NetworkScoreThreshold <- 0.4
+
+NetworkConnectivityThreshold <- cutoffHigh
+NetworkScoreThreshold <- cutoffMed
 
 tempPeripheralGenes <- PeripheralGenes <- NULL
 hit.Genes.Network <- intersect(hit.Genes, V(Graph)$name)

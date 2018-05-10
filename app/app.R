@@ -718,6 +718,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # }        
         
         proxyScore <- input$cutoff_type
+<<<<<<< HEAD
         
         ## To include background genes 
         includeBackground <- input$includeBackground
@@ -739,6 +740,11 @@ options(shiny.maxRequestSize = 3*1024^2)
           siRNA.Score <- rbindlist(myList, fill = TRUE)
         }
         
+=======
+        cutoffType <<- input$cutoff_type
+        cutoffHigh <<- as.numeric(input$cutoff_valueH)
+        cutoffMed <<- as.numeric(input$cutoff_valueM)
+>>>>>>> 5fc81720417765bec413e1e245cf4d5b1885b3bb
         iteration <- 1
         counter <- TRUE
 
@@ -796,7 +802,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           names(siRNA.Score)[names(siRNA.Score) == "temp1"] <- nName1
           names(siRNA.Score)[names(siRNA.Score) == "temp2"] <- nName2
           siRNA.Score[[nName1]][siRNA.Score$EntrezID %in% gNames2] <- "Yes"
-          siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
+          # siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
+          siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] >= input$cutoff_valueM] <- input$cutoff_valueH
 
           
           
@@ -887,7 +894,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         FinalIterationNetworkColumn <- paste0("Network.class.iteration", iterationNum)
         
         TRIAGEoutput <- TRIAGEoutput %>%
-          mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == 1, 
+          mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == cutoffHigh, 
                                     "Yes",
                                     ""))
         ################
@@ -1286,6 +1293,10 @@ options(shiny.maxRequestSize = 3*1024^2)
             }
             
             totalRow[1,1] <- "Total"
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 5fc81720417765bec413e1e245cf4d5b1885b3bb
             TRIAGEiterations <- rbind(totalRow, TRIAGEiterations)
             
             # View the dataframe 
