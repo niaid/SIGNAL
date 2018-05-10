@@ -1,5 +1,5 @@
 # TRIAGE app
-# edits May 8, 2018
+# edits May 9, 2018
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
@@ -135,7 +135,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          actionButton("goButton", "Analyze my data",
+          checkboxInput("includeBackground", "Include background genes"),
+          bsPopover("includeBackground", "To include all remaining genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
@@ -259,7 +260,18 @@ options(shiny.maxRequestSize = 3*1024^2)
       })  
       output$spacer7 <- renderUI({
         HTML("<BR>")
-      })        
+      })    
+      
+      # Global environmental variables
+      envs <- Sys.getenv()
+      env_names <- names(envs)
+      
+      ## Set up dataDir
+      if('SHINY_SERVER_VERSION' %in% env_names){
+        dataDir <- '/srv/shiny-server/data/'
+      }else{
+        dataDir <- "~/TRIAGE/app/data/"
+      }  
       
       # Read in the input fie
       output$contents <- renderDataTable({
@@ -278,7 +290,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$EntrezID)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated EntrezIDs were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
-        # }        
+        # } 
+        
+        ## Complete list of 19191 protein-encoding genes in human genome
+        ## ftp://ftp.ncbi.nlm.nih.gov/refseq/M_musculus/Mus_musculus.gene_info.gz
+        humanGenes <- read.table(file=paste0(dataDir, "HGNC_19191_genes_with_protein_product_EntrezID_geneSymbole_lookup.txt"), sep="\t", header=TRUE)
+        
+        ## Complete list of 23504 genes (mRNAs and ncRNAs) in mouse genome
+        ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
+        mouseGenes <- read.table(file=paste0(dataDir, "Mus_musculus_23504_genes_EntrezID_geneSymbol_lookup.txt"), sep="\t", header=TRUE)
         
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
@@ -287,7 +307,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             title=HTML("<h3><font color=#ff0000>Input file format error!</font></h3>"),
             HTML("Your input file does not contain a required column named 'EntrezID' or 'GeneSymbol'. <br>Please fix your input file and try again!"),
             easyClose = TRUE
-            ))
+          ))
           Sys.sleep(5)
           session$reload()
         }else if(("GeneSymbol" %in% colnames(data)) & !("EntrezID" %in% colnames(data))) {
@@ -296,33 +316,50 @@ options(shiny.maxRequestSize = 3*1024^2)
           if(input$organism == "Human"){
             library('org.Hs.eg.db')
             x <- org.Hs.egSYMBOL2EG
+            backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
-            library('org.Mm.eg.db')
+            library('org.Mm.eg.db') 
             x <- org.Mm.egSYMBOL2EG
+            backgroundGenes <- mouseGenes
           }
           
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
           
+          
+          # If no overlapping genes found, catch and handle the error
+          if(length(overlappingGenes) == 0){
+            showModal(modalDialog(
+              title=HTML("<h3><font color=#ff0000>Organism - Gene Set MISMATCH!</font></h3>"),
+              HTML("The organism you selected and the organism from which the input data generated do not match. Please select the correct organism or a different input file, then try again"),
+              easyClose = TRUE
+            ))
+          }
+          
+          # Get background genes that are not in the input data 
+          df_backgroundGenes <<- backgroundGenes[!backgroundGenes$GeneSymbol %in% data$GeneSymbol,]
+          
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors = FALSE)
+          y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors=FALSE)
           numGeneInInput <- nrow(data)
-          #data$GeneSymbol <- toupper(data$GeneSymbol)
-          tempData <- merge(x=data, y=y, by="GeneSymbol")
-          data <- tempData
+          
+          if(length(overlappingGenes) > 0){
+            tempData <- merge(x=data, y=y, by="GeneSymbol")
+            data <- tempData
+          }
           numGeneWithEntrezID <- nrow(data)
           
           # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
           if((numGeneInInput - numGeneWithEntrezID) > 0){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
-                                                    HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
+                                  HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
           }
           
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           rm(tempData,x,y,xx)
-
+          
           message("Input file has a 'GeneSymbol' column!")
         }
         else if(("EntrezID" %in% colnames(data)) & !("GeneSymbol" %in% colnames(data))){
@@ -331,22 +368,59 @@ options(shiny.maxRequestSize = 3*1024^2)
           if(input$organism == "Human"){
             library('org.Hs.eg.db')
             x <- org.Hs.egSYMBOL
+            backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
             library('org.Mm.eg.db')
             x <- org.Mm.egSYMBOL
+            backgroundGenes <- mouseGenes
           }
+          
+          #mapped_genes <- as.integer(mappedkeys(x))
           mapped_genes <- mappedkeys(x)
-          overlappingGenes <- intersect(mapped_genes,data$EntrezID)
+          overlappingGenes <- intersect(mapped_genes, data$EntrezID)
+          
+          # If no overlapping genes found, catch and handle the error
+          if(length(overlappingGenes) == 0){
+            showModal(modalDialog(
+              title=HTML("<h3><font color=#ff0000>Organism - Gene Set MISMATCH!</font></h3>"),
+              HTML("The organism you selected and the organism from which the input data were generated do not match. Please select the correct organism or a different input file, then try again"),
+              easyClose = TRUE
+            ))
+          }
+          
+          # Get background genes that are not in the input data 
+          df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
+          
           xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
-          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors = FALSE)
-
-          tempData <- merge(x=data, y=y, by="EntrezID", all.x = TRUE)
-          data <- tempData
+          y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors=FALSE)
+          
+          if(length(overlappingGenes) > 0){
+            # Create a dataframe of the input data with both EntrezID and GeneSymbol
+            tempData <- merge(x=data, y=y, by="EntrezID")
+            data <- tempData
+          }
+          
+          # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           
           rm(tempData,x,y,xx)
           message("Input file has a 'EntrezID' column!")
+          
+          # Having both EntrezID and GeneSymbol 
+        }else{ 
+          if(input$organism == "Human"){  
+            backgroundGenes <- humanGenes
+          } else if(input$organism == "Mouse"){
+            backgroundGenes <- mouseGenes
+          }
+          
+          # Get background genes that are not in the input data 
+          df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
+          
+          # Switch/reorder 'EntrezID' to the FIRST column
+          data = data[, c(ncol(data), 1:(ncol(data) - 1))]
+          message("Input file has both 'EntrezID' and 'GeneSymbol' columns!")
         }
         
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
@@ -368,9 +442,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         data$EntrezID <- as.integer(data$EntrezID)
         data <- data[order(data$EntrezID),]
         
-        # Move the GeneSymbol as the first column
-        siRNA.Score <- data %>%
-          dplyr::select(GeneSymbol, everything())
+        # # Move the GeneSymbol as the first column
+        # siRNA.Score <- data %>%
+        #   dplyr::select(GeneSymbol, everything())
         
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
@@ -431,17 +505,27 @@ options(shiny.maxRequestSize = 3*1024^2)
           showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>Please enter 'Med-conf Cutoff Value'!</font><h3>")))
           req(input$cutoff_valueM)
         }
-      
+
+        # Once cutoff-type selected and two cutoff values entered
+        # Remove duplicate EntrezID rows based on the cutoff values
+        if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
+          # sort the dataframe in decending order
+          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'],-siRNA.Score[,input$cutoff_type]),]
+          # remove the duplicated EntrezID row that has a smaller value in cutoff_type column 
+          siRNA.Score = siRNA.Score[!duplicated(siRNA.Score$EntrezID),]
+        }else{
+          # sort the dataframe in acending order
+          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'], siRNA.Score[,input$cutoff_type]),]
+          # remove the duplicated EntrezID row that has a larger value in cutoff_type column 
+          siRNA.Score = siRNA.Score[!duplicated(siRNA.Score$EntrezID),]
+        }
+        
         ## Upon job submission, switch to 'status' tab
         # message("switching to status tab")
         # updateTabsetPanel(session, "inTabset", selected = "status")
 
         #withCallingHandlers({
         #   shinyjs::html("status", "")
-
-        # Global environmental variables
-        envs <- Sys.getenv()
-        env_names <- names(envs)
 
         ## Show progress bar
         # Create a Progress object
@@ -471,12 +555,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
         }
 
-        if('SHINY_SERVER_VERSION' %in% env_names){
-          dataDir <- '/srv/shiny-server/data/'
-        }else{
-          dataDir <- "~/TRIAGE/app/data/"
-        }
-
         # To keep a copy of html files for iframe to access
         if('SHINY_SERVER_VERSION' %in% env_names){
           wwwDir <<- '/srv/shiny-server/www/'
@@ -504,27 +582,27 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         if(input_netowrk == "Experimental & Database") 
           {
-          load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-          load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+          load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+          load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
           G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
           { 
             if(network_ConfidenceCutoff <= 400)
               {
-              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
               G <<- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
               }
             if(network_ConfidenceCutoff <= 150)
               {
-              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
               G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
               }
             }
           } else if(input_netowrk == "Advanced Options")
           {
             for (i in 1:length(network_InteractionSources)) {
-              load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
               if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph")))}
               else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph"))}
               }
@@ -532,14 +610,14 @@ options(shiny.maxRequestSize = 3*1024^2)
               if(network_ConfidenceCutoff <= 400)
                 {
                 for (i in 1:length(network_InteractionSources)) {
-                  load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+                  load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
                   G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
                 }
                 }
               if(network_ConfidenceCutoff <= 150)
                 {
                 for (i in 1:length(network_InteractionSources)) {
-                  load(paste0("~/TRIAGEpublic/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+                  load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
                   G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
                 }
               }
@@ -610,7 +688,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         #   setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
         # }
         # else{
-        #   setwd("~/TRIAGEpublic/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
+        #   setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
         # }
 
         # Pathway types
@@ -640,6 +718,27 @@ options(shiny.maxRequestSize = 3*1024^2)
         # }        
         
         proxyScore <- input$cutoff_type
+        
+        ## To include background genes 
+        includeBackground <- input$includeBackground
+        if(includeBackground){
+          # To add a value to cutoffType and the value should be based on values of the two cutoff_values
+          if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
+            backgroundValue = as.numeric(input$cutoff_valueM) -  (as.numeric(input$cutoff_valueM)/10)
+            df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
+          }else{
+            backgroundValue = as.numeric(input$cutoff_valueM) +  (as.numeric(input$cutoff_valueM)/10)
+            df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
+          }
+          
+          # change the name the cutoff_type from 'proxScore' to what it stands in the original data
+          names(df_background)[names(df_background) == 'proxyScore'] <- input$cutoff_type
+          
+          # combined input data and background data
+          myList <- list(siRNA.Score, df_background)
+          siRNA.Score <- rbindlist(myList, fill = TRUE)
+        }
+        
         iteration <- 1
         counter <- TRUE
 
@@ -1156,7 +1255,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           return(dat)
         })
         
-        
         output$geneList <- renderDataTable({
             EnrichColumns.index <- NULL
             TRIAGErenamed <- TRIAGEoutput
@@ -1176,9 +1274,8 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
             colnames(totalRow) <- colnames(TRIAGEiterations)
-            hitsDataFrame <- data.frame(matrix(0, length(Iteration.index), 4))
+            hitsDataFrame <<- data.frame(matrix(0, length(Iteration.index), 4))
             colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
-            
             
             for (l in 1:length(Iteration.index)){
               totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh))
@@ -1189,36 +1286,33 @@ options(shiny.maxRequestSize = 3*1024^2)
             }
             
             totalRow[1,1] <- "Total"
-            View(hitsDataFrame) #for testing 
             TRIAGEiterations <- rbind(totalRow, TRIAGEiterations)
-            
             
             # View the dataframe 
             geneHitsToPlot <<- data.frame(hitsDataFrame)
-            head(geneHitsToPlot) #for testing
+            
             # Highlight the 'Total' row using formatStyle()
-            dat <- datatable(TRIAGEiterations, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
-                                                                                , columnDefs = list(list(width = '200px'
-                                                                                                         , length = '400px'
-                                                                                                         , targets = c((length(TRIAGEiterations)-2), (length(TRIAGEiterations)-1))
-                                                                                                         ,render = JS(
-                                                                                                           "function(data, type, row, meta) {"
-                                                                                                           ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
-                                                                                                           ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
-                                                                                                           ,"}"))))) %>%
+            dat <- datatable(TRIAGEiterations, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F, 
+                                                                                columnDefs = list(list(width = '200px', length = '400px',
+                                                                                                         targets = c((length(TRIAGEiterations)-2), (length(TRIAGEiterations)-1)),
+                                                                                                         render = JS(
+                                                                                                           "function(data, type, row, meta) {",
+                                                                                                           "return type === 'display' && typeof data === 'string' && data.length > 30 ?",
+                                                                                                           "'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;",
+                                                                                                           "}"))))) %>%
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
             return(dat)
           })
           #message("completed geneList tab")
-          
-          # Create plots how the numbers of gene hits by iteration
+               
+          # Create plots showing the numbers of gene hits by iteration
           output$geneHitsByIteration <- renderPlot({
-            hitsDataFrame.melt <- melt(geneHitsToPlot, id.vars="Iteration")
+            geneHitsToPlot.melt <- melt(geneHitsToPlot, id.vars = "Iteration")
             
-            ggplot(data = hitsDataFrame.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
+            ggplot(data = geneHitsToPlot.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
               scale_colour_discrete("") + scale_shape_manual("") + 
-              annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/3, ymax=numTotal*2/3) + 
+              annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/2, ymax=numTotal) + 
               theme(
                 axis.text=element_text(size=12),
                 axis.title=element_text(size=14,face="bold")
@@ -1431,9 +1525,9 @@ options(shiny.maxRequestSize = 3*1024^2)
                 if(g11_nodes[i, 'group'] == 1){
                   g11_links[nrow(g11_links) + 1,] <- c((index1-1), (i-1))
                 }else if(g11_nodes[i, 'group'] == 3){
-                  g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
-                }else if(g11_nodes[i, 'group'] == 2){
                   g11_links[nrow(g11_links) + 1,] <- c((index3-1), (i-1))
+                }else if(g11_nodes[i, 'group'] == 2){
+                  g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
                 }
               }
               
@@ -1503,9 +1597,9 @@ options(shiny.maxRequestSize = 3*1024^2)
                 if(g22_nodes[i, 'group'] == 1){
                   g22_links[nrow(g22_links) + 1,] <- c((index1-1), (i-1))
                 }else if(g22_nodes[i, 'group'] == 3){
-                  g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
-                }else if(g22_nodes[i, 'group'] == 2){
                   g22_links[nrow(g22_links) + 1,] <- c((index3-1), (i-1))
+                }else if(g22_nodes[i, 'group'] == 2){
+                  g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
                 }
               }      
               

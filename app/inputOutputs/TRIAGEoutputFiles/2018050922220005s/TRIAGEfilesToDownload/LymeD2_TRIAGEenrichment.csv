@@ -1,0 +1,17 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","Protein digestion and absorption",0,0,0,86,7,2,"Col3a1, Col5a1","Col12a1, Col14a1, Col5a2, Col1a1, Eln",0.184
+"2","ECM-receptor interaction",0,0.001,0.001,79,6,1,"Tnn","Col1a1, Lamb1, Thbs2, Thbs4, Itga11",0.121
+"3","Focal adhesion",0,0.007,0.021,186,7,1,"Tnn","Col1a1, Igf1, Lamb1, Thbs2, Thbs4, Itga11",0.09
+"4","PI3K-Akt signaling pathway",0.001,0.034,0.136,332,8,2,"Il4ra, Tnn","Col1a1, Igf1, Lamb1, Thbs2, Thbs4, Itga11",0.137
+"5","Relaxin signaling pathway",0.001,0.04,0.202,128,5,4,"Col3a1, Mmp13, Mmp2, Nos2","Col1a1",0.42
+"6","Complement and coagulation cascades",0.001,0.062,0.37,86,4,4,"Bdkrb1, Cfi, Masp1, Kng2","",0.523
+"7","IL-17 signaling pathway",0.002,0.065,0.456,91,4,4,"Cxcl10, Mmp13, Mmp3, Cxcl5","",0.522
+"8","HIF-1 signaling pathway",0.002,0.072,0.621,99,4,2,"Nos2, Timp1","Hif1a, Igf1",0.27
+"9","AGE-RAGE signaling pathway in diabetic complications",0.003,0.072,0.644,100,4,3,"Col3a1, Mmp2, Nox4","Col1a1",0.395
+"10","Cytokine-cytokine receptor interaction",0.003,0.076,0.756,251,6,6,"Ccr5, Cxcl10, Il11, Il4ra, Ccl8, Cxcl5","",0.512
+"11","TNF signaling pathway",0.003,0.077,0.851,108,4,3,"Bcl3, Cxcl10, Mmp3","Mmp14",0.394
+"12","Cytosolic DNA-sensing pathway",0.005,0.103,1,60,3,2,"Cxcl10, Il33","Zbp1",0.358
+"13","Chemokine signaling pathway",0.018,0.342,1,174,4,4,"Ccr5, Cxcl10, Ccl8, Cxcl5","",0.511
+"14","Valine, leucine and isoleucine biosynthesis",0.023,0.41,1,4,1,1,"Bcat1","",0.625
+"15","Arginine and proline metabolism",0.031,0.523,1,48,2,2,"Nos2, P4ha3","",0.521
+"16","Caffeine metabolism",0.034,0.536,1,6,1,1,"Uox","",0.583

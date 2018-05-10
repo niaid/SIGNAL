@@ -1,0 +1,33 @@
+"","EntrezID","GeneSymbol","GeneMappingID","ConfidenceCategory","Group","Pathway","Allnet.count","Ntwrk.all","NtwrkCount.Protein digestion and absorption","Ntwrk.Protein digestion and absorption","NtwrkCount.ECM-receptor interaction","Ntwrk.ECM-receptor interaction","NtwrkCount.NA","Ntwrk.NA","Total_Path_Hits.net.count"
+"1",11609,"Agtr2",8,"HighConf","Novel",NA,7,"Cxcl10, Cxcl5, Bdkrb1, Saa1, Saa2, Ccr5, Kng2",0,NA,0,NA,0,"",0
+"2",12061,"Bdkrb1",4,"HighConf","Novel","Complement and coagulation cascades",8,"Saa1, Kng2, Agtr2, Cxcl10, Cxcl5, Tacr1, Saa2, Ccr5",0,NA,0,NA,0,"",0
+"3",20307,"Ccl8",31,"HighConf","Novel","Cytokine-cytokine receptor interaction, Chemokine signaling pathway",1,"Ccr5",0,NA,0,NA,0,"",0
+"4",12774,"Ccr5",2,"HighConf","Novel","Cytokine-cytokine receptor interaction, Chemokine signaling pathway",8,"Saa2, Bdkrb1, Saa1, Kng2, Agtr2, Cxcl10, Cxcl5, Ccl8",0,NA,0,NA,0,"",0
+"5",12816,"Col12a1",21,"MedConf","Protein digestion and absorption","Protein digestion and absorption",5,"Col3a1, Col5a1, Col1a1, Col5a2, Col14a1",4,"Col5a2, Col5a1, Col3a1, Col14a1",1,"Col1a1",0,"",5
+"6",12818,"Col14a1",19,"MedConf","Protein digestion and absorption","Protein digestion and absorption",9,"Col5a2, Col12a1, Col3a1, Col5a1, Mmp10, Mmp3, Mmp2, Mmp13, Col1a1",4,"Col5a2, Col5a1, Col3a1, Col12a1",1,"Col1a1",0,"",5
+"7",12842,"Col1a1",18,"MedConf","ECM-receptor interaction","Protein digestion and absorption, ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway, Relaxin signaling pathway, AGE-RAGE signaling pathway in diabetic complications",7,"Col14a1, Col5a2, Col12a1, Col3a1, Col5a1, P3h1, Itga11",5,"Col5a2, Col5a1, Col3a1, Col14a1, Col12a1",1,"Itga11",0,"",6
+"8",12825,"Col3a1",22,"HighConf","Protein digestion and absorption","Protein digestion and absorption, Relaxin signaling pathway, AGE-RAGE signaling pathway in diabetic complications",7,"Col5a1, P3h1, Itga11, Col14a1, Col1a1, Col12a1, Col5a2",4,"Col5a2, Col5a1, Col14a1, Col12a1",2,"Itga11, Col1a1",0,"",6
+"9",12831,"Col5a1",26,"HighConf","Protein digestion and absorption","Protein digestion and absorption",6,"Col1a1, Col14a1, Col3a1, Itga11, Col5a2, Col12a1",4,"Col5a2, Col3a1, Col14a1, Col12a1",2,"Itga11, Col1a1",0,"",6
+"10",12832,"Col5a2",20,"MedConf","Protein digestion and absorption","Protein digestion and absorption",6,"Col12a1, Col3a1, Col5a1, Col1a1, Itga11, Col14a1",4,"Col5a1, Col3a1, Col14a1, Col12a1",2,"Itga11, Col1a1",0,"",6
+"11",15945,"Cxcl10",9,"HighConf","Novel","IL-17 signaling pathway, Cytokine-cytokine receptor interaction, TNF signaling pathway, Cytosolic DNA-sensing pathway, Chemokine signaling pathway",7,"Cxcl5, Kng2, Bdkrb1, Saa2, Saa1, Ccr5, Agtr2",0,NA,0,NA,0,"",0
+"12",20311,"Cxcl5",24,"HighConf","Novel","IL-17 signaling pathway, Cytokine-cytokine receptor interaction, Chemokine signaling pathway",7,"Agtr2, Bdkrb1, Saa2, Saa1, Kng2, Cxcl10, Ccr5",0,NA,0,NA,0,"",0
+"13",14456,"Gas6",1,"MedConf","Novel",NA,2,"Timp1, Kng2",0,NA,0,NA,0,"",0
+"14",16156,"Il11",25,"HighConf","Novel","Cytokine-cytokine receptor interaction",1,"Il4ra",0,NA,0,NA,0,"",0
+"15",16190,"Il4ra",0,"HighConf","Novel","PI3K-Akt signaling pathway, Cytokine-cytokine receptor interaction",2,"Socs1, Il11",0,NA,0,NA,0,"",0
+"16",319480,"Itga11",16,"MedConf","ECM-receptor interaction","ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway",8,"Col1a1, Col5a2, Col3a1, Col5a1, Tnn, Lamb1, Thbs2, Thbs4",3,"Col5a2, Col5a1, Col3a1",5,"Tnn, Thbs4, Thbs2, Lamb1, Col1a1",0,"",8
+"17",385643,"Kng2",7,"HighConf","Novel","Complement and coagulation cascades",10,"Agtr2, Cxcl10, Cxcl5, Tacr1, Gas6, Saa1, Bdkrb1, Ccr5, Timp1, Saa2",0,NA,0,NA,0,"",0
+"18",16777,"Lamb1",14,"MedConf","ECM-receptor interaction","ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway",2,"Itga11, Mmp14",0,NA,1,"Itga11",0,"",1
+"19",17384,"Mmp10",11,"HighConf","Novel",NA,5,"Mmp3, Mmp13, Col14a1, Mmp14, Mmp2",1,"Col14a1",0,NA,0,"",1
+"20",17386,"Mmp13",17,"HighConf","Novel","Relaxin signaling pathway, IL-17 signaling pathway",5,"Col14a1, Mmp14, Mmp10, Mmp3, Mmp2",1,"Col14a1",0,NA,0,"",1
+"21",17387,"Mmp14",30,"MedConf","Novel","TNF signaling pathway",5,"Mmp2, Mmp10, Mmp13, Lamb1, Mmp3",0,NA,1,"Lamb1",0,"",1
+"22",17390,"Mmp2",10,"HighConf","Novel","Relaxin signaling pathway, AGE-RAGE signaling pathway in diabetic complications",5,"Mmp10, Mmp3, Mmp13, Col14a1, Mmp14",1,"Col14a1",0,NA,0,"",1
+"23",17392,"Mmp3",13,"HighConf","Novel","IL-17 signaling pathway, TNF signaling pathway",5,"Mmp13, Col14a1, Mmp14, Mmp2, Mmp10",1,"Col14a1",0,NA,0,"",1
+"24",56401,"P3h1",28,"MedConf","Novel",NA,2,"Col3a1, Col1a1",1,"Col3a1",1,"Col1a1",0,"",2
+"25",20208,"Saa1",6,"HighConf","Novel",NA,8,"Kng2, Agtr2, Cxcl10, Cxcl5, Tacr1, Saa2, Bdkrb1, Ccr5",0,NA,0,NA,0,"",0
+"26",20209,"Saa2",3,"HighConf","Novel",NA,8,"Bdkrb1, Saa1, Kng2, Agtr2, Cxcl10, Cxcl5, Tacr1, Ccr5",0,NA,0,NA,0,"",0
+"27",12703,"Socs1",23,"MedConf","Novel",NA,1,"Il4ra",0,NA,0,NA,0,"",0
+"28",21336,"Tacr1",29,"MedConf","Novel",NA,4,"Saa1, Saa2, Bdkrb1, Kng2",0,NA,0,NA,0,"",0
+"29",21826,"Thbs2",15,"MedConf","ECM-receptor interaction","ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway",2,"Itga11, Thbs4",0,NA,2,"Thbs4, Itga11",0,"",2
+"30",21828,"Thbs4",12,"MedConf","ECM-receptor interaction","ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway",2,"Thbs2, Itga11",0,NA,2,"Thbs2, Itga11",0,"",2
+"31",21857,"Timp1",5,"HighConf","Novel","HIF-1 signaling pathway",2,"Kng2, Gas6",0,NA,0,NA,0,"",0
+"32",329278,"Tnn",27,"HighConf","ECM-receptor interaction","ECM-receptor interaction, Focal adhesion, PI3K-Akt signaling pathway",1,"Itga11",0,NA,1,"Itga11",0,"",1
