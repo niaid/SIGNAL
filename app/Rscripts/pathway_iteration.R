@@ -45,6 +45,7 @@ ComputeEnrichment <- function(pathway, hits, non.hits, file.name, siRNA.Score, i
   }
   
   tempPathwayGenes <- matrix("Missing",nrow(siRNA.Score))
+  print(head(tempPathwayGenes))
   message("sigPathways")
   message(sigPathways, "\n")  
   message(file.name)
