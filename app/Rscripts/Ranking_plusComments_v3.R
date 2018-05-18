@@ -244,19 +244,29 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "Ntwrk.path3_.hits"] <- paste0("Ntwrk.", path3_name)
   names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path3_hits.net.count"] <- paste0("NtwrkCount.", path3_name)
   
+  #Character strings of pathways names removing spaces and non-alpha numeric chracters
+  names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
+                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name))
+                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
+  
+  names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
+                                      , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
+  
+  names.SelectedPathways_1 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)))
   
   if(length(selectedRows) == 3){
-    RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", path1_name, path2_name, path3_name, ".csv")
+    RankingFileName.output <- paste0("TRIAGEsort_" , inputFilePrefix, "_", names.SelectedPathways_3, ".csv")
   }
   if(length(selectedRows) == 2){
-    RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", path1_name, path2_name, ".csv")
+    RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", names.SelectedPathways_2, ".csv")
   }
   if(length(selectedRows) == 1){
-    RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", path1_name, ".csv")
+    RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", names.SelectedPathways_1, ".csv")
   }
 
   Scores_nodes_and_edges <<- Scores_nodes_and_edges
   #message(TRIAGE.output, "**")
+  setwd(downloadDir)
   write.csv(Scores_nodes_and_edges, RankingFileName.output)
   
   ############################################################################### Add visualization ##############################################################################
@@ -471,13 +481,13 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
   #Creating name for Chimera plots, now called PathNet
   if(length(selectedRows) == 3){
-    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", path1_name, path2_name, path3_name)
+    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_3)
   }
   if(length(selectedRows) == 2){
-    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", path1_name, path2_name)
+    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_2)
   }
   if(length(selectedRows) == 1){
-    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", path1_name)
+    PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_1)
   }
   
   if(grepl('shiny', outputDir)){

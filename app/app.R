@@ -1,5 +1,5 @@
 # TRIAGE app
-# edits May 9, 2018
+# edits May 15, 2018
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
@@ -8,7 +8,7 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+options(scipen = 999)
 library(shiny)
 library(shinyjs)
 library(shinyBS)
@@ -34,6 +34,10 @@ library(gridExtra)
 library(crosstalk)
 library(htmltools)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
+
+#setting
+#override scientific notation to avoid numeric mis assignments
+options(scipen = 999)
 
 # global variables
 organism <- NULL
@@ -135,8 +139,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          checkboxInput("includeBackground", "Include background genes"),
-          bsPopover("includeBackground", "To include all remaining genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
+          checkboxInput("includeBackground", "Add genome background"),
+          bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
@@ -192,24 +196,24 @@ options(shiny.maxRequestSize = 3*1024^2)
                                dataTableOutput("PathNetTable"))
                 )
             ),
-            tabPanel(title = "NetworkD3", value = "networkViews",
-                htmlOutput("spacer5"),
-                tabsetPanel(id = 'networkD3Views',
-                      ## Display in networkD3
-                      tabPanel(title="1st Degree D3 Network", value="networkView1",
-                               forceNetworkOutput("networkView1D3", width = "100%", height = "700px")),
-
-                      tabPanel(title="2nd Degree D3 Network", value="networkView2",
-                              forceNetworkOutput("networkView2D3", width = "100%", height = "700px"))
-
-                      # # Display in visNetwork
-                      # tabPanel(title="1st Dimension visNet", value="networkView3",
-                      #          visNetworkOutput("networkView3vis", width = "100%", height = "700px")),
-                      # 
-                      # tabPanel(title="2nd Dimension visNet", value="graphView4",
-                      #          visNetworkOutput("networkView4vis", width = "100%", height = "700px"))
-                )
-            ),
+            # tabPanel(title = "NetworkD3", value = "networkViews",
+            #     htmlOutput("spacer5"),
+            #     tabsetPanel(id = 'networkD3Views',
+            #           ## Display in networkD3
+            #           tabPanel(title="1st Degree D3 Network", value="networkView1",
+            #                    forceNetworkOutput("networkView1D3", width = "100%", height = "700px")),
+            # 
+            #           tabPanel(title="2nd Degree D3 Network", value="networkView2",
+            #                   forceNetworkOutput("networkView2D3", width = "100%", height = "700px"))
+            # 
+            #           # # Display in visNetwork
+            #           # tabPanel(title="1st Dimension visNet", value="networkView3",
+            #           #          visNetworkOutput("networkView3vis", width = "100%", height = "700px")),
+            #           # 
+            #           # tabPanel(title="2nd Dimension visNet", value="graphView4",
+            #           #          visNetworkOutput("networkView4vis", width = "100%", height = "700px"))
+            #     )
+            # ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("spacer6"),
                      htmlOutput("downloadFiles"),
@@ -442,16 +446,20 @@ options(shiny.maxRequestSize = 3*1024^2)
         data$EntrezID <- as.integer(data$EntrezID)
         data <- data[order(data$EntrezID),]
         
-        # # Move the GeneSymbol as the first column
-        # siRNA.Score <- data %>%
-        #   dplyr::select(GeneSymbol, everything())
+
         
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
         
+        data <- data %>%
+          dplyr::select(GeneSymbol, everything())
+        
         # display the input file dimension
         datatable(data, rownames = FALSE, options = list(paging=TRUE))
       })
+      
+      # # Move the GeneSymbol as the first column
+
 
       output$cutoffTypes <- renderUI({
         inFile2 <- input$file1
@@ -719,34 +727,56 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         proxyScore <- input$cutoff_type
         
+        
+        #########################################
+        ########## Create data tier of gene lists
+        #########################################
+        #Ensure cutoff column is as numeric
+        siRNA.Score <- 
+        
+        #Depending on the differnce between the high conf cutoff and the mid conf cutoff assign criteria based on "greater than" or "less than"
+        if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
+          siRNA.Score <- siRNA.Score %>%
+            mutate(ConfidenceCategory = ifelse(get(proxyScore, as.environment(siRNA.Score)) >= input$cutoff_valueH, "HighConf",
+                                               ifelse(get(proxyScore, as.environment(siRNA.Score)) >= input$cutoff_valueM & get(proxyScore, as.environment(siRNA.Score)) < input$cutoff_valueH,"MedConf",
+                                                      "LowConf")))
+        }else{
+          siRNA.Score <- siRNA.Score %>%
+            mutate(ConfidenceCategory = ifelse(get(proxyScore, as.environment(siRNA.Score)) <= input$cutoff_valueH, "HighConf",
+                                               ifelse(get(proxyScore, as.environment(siRNA.Score)) <= input$cutoff_valueM & get(proxyScore, as.environment(siRNA.Score)) > input$cutoff_valueH,"MedConf",
+                                                      "LowConf")))
+        }
+        
         ## To include background genes 
         includeBackground <- input$includeBackground
+        # if(includeBackground){
+        #   # To add a value to cutoffType and the value should be based on values of the two cutoff_values
+        #   if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
+        #     backgroundValue = as.numeric(input$cutoff_valueM) -  (as.numeric(input$cutoff_valueM)/10)
+        #     df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
+        #   }else{
+        #     backgroundValue = as.numeric(input$cutoff_valueM) +  (as.numeric(input$cutoff_valueM)/10)
+        #     df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
+        #   }
+        #   
+        #   # change the name the cutoff_type from 'proxScore' to what it stands in the original data
+        #   names(df_background)[names(df_background) == 'proxyScore'] <- input$cutoff_type
         if(includeBackground){
-          # To add a value to cutoffType and the value should be based on values of the two cutoff_values
-          if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
-            backgroundValue = as.numeric(input$cutoff_valueM) -  (as.numeric(input$cutoff_valueM)/10)
-            df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
-          }else{
-            backgroundValue = as.numeric(input$cutoff_valueM) +  (as.numeric(input$cutoff_valueM)/10)
-            df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
-          }
-          
-          # change the name the cutoff_type from 'proxScore' to what it stands in the original data
-          names(df_background)[names(df_background) == 'proxyScore'] <- input$cutoff_type
-          
+          df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, ConfidenceCategory = rep("Background", nrow(df_backgroundGenes)))
           # combined input data and background data
           myList <- list(siRNA.Score, df_background)
           siRNA.Score <- rbindlist(myList, fill = TRUE)
         }
 
         cutoffType <<- input$cutoff_type
+        proxyScore <- "ConfidenceCategory"
         cutoffHigh <<- as.numeric(input$cutoff_valueH)
         cutoffMed <<- as.numeric(input$cutoff_valueM)
         iteration <- 1
         counter <- TRUE
 
         # Get a copy of the original list of high-confidence genes
-        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score[[proxyScore]] >= input$cutoff_valueH]
+        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score$ConfidenceCategory == "HighConf"]
 
         # Check to see if the genes from the input file match the genes from the pathwayData
         # No match in case the input genes are from Mouse, but the genes from the pathwayData are from Human
@@ -769,7 +799,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           # Pause for 0.1 seconds to simulate a long computation.
           Sys.sleep(0.1)
           
-          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] >= input$cutoff_valueH]
+          Hits <- siRNA.Score$EntrezID[siRNA.Score[[proxyScore]] == "HighConf"]
 
           nonHits <- setdiff(siRNA.Score$EntrezID, Hits)
 
@@ -782,12 +812,12 @@ options(shiny.maxRequestSize = 3*1024^2)
           kName1 <- paste0("KEGG.class.iteration", iteration)
           kName2 <- paste0("KEGG.", iteration)
           names(siRNA.Score)[names(siRNA.Score) == "temp"] <- kName1
-          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] >= as.numeric(input$cutoff_valueM))] <- as.numeric(input$cutoff_valueH)
-          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] >= as.numeric(input$cutoff_valueM))] <- as.numeric(input$cutoff_valueM)
+          siRNA.Score[[kName1]][siRNA.Score$KEGG == "Yes" & (siRNA.Score[[proxyScore]] %in% c("MedConf", "HighConf"))] <- "HighConf"
+          siRNA.Score[[kName1]][siRNA.Score$KEGG != "Yes" & (siRNA.Score[[proxyScore]] %in% c("MedConf", "HighConf"))] <- "MedConf"
           names(siRNA.Score)[names(siRNA.Score) == "KEGG"] <- kName2
 
-          hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == input$cutoff_valueH]
-          myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == input$cutoff_valueH]
+          hit.Genes <- siRNA.Score$EntrezID[siRNA.Score[[kName1]] == "HighConf"]
+          myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == "HighConf"]
 
           # 2) Expansion - [Network Analysis]
     message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
@@ -800,7 +830,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           names(siRNA.Score)[names(siRNA.Score) == "temp2"] <- nName2
           siRNA.Score[[nName1]][siRNA.Score$EntrezID %in% gNames2] <- "Yes"
           # siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
-          siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] >= input$cutoff_valueM] <- input$cutoff_valueH
+          siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] %in% c("MedConf", "HighConf")] <- "HighConf"
 
           
           
@@ -882,16 +912,16 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Set High and Low confidence Label and TRIAGE Label
         ##################
         
-        #Set confidence catgeor
-        TRIAGEoutput <- TRIAGEoutput %>%
-          mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffHigh, "HighConf",
-                                             ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffMed & get(cutoffType, as.environment(TRIAGEoutput)) < cutoffHigh,"MedConf",
-                                                    "")))
+        # #Set confidence catgeor
+        # TRIAGEoutput <- TRIAGEoutput %>%
+        #   mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffHigh, "HighConf",
+        #                                      ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffMed & get(cutoffType, as.environment(TRIAGEoutput)) < cutoffHigh,"MedConf",
+        #                                             "")))
         
         FinalIterationNetworkColumn <- paste0("Network.class.iteration", iterationNum)
         
         TRIAGEoutput <- TRIAGEoutput %>%
-          mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == cutoffHigh, 
+          mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == "HighConf", 
                                     "Yes",
                                     ""))
         ################
@@ -1136,6 +1166,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
+        write.csv(out, file = outputFileName, row.names = F)
 
       ######################
       ## Switch to 'Enriched Pathways' tab and display partial results
@@ -1206,7 +1237,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               for(j in 1:length(myGenes))
               {
                 # Color the genes on the original hit list BLUE
-                if(grepl(myGenes[j], myOriginalHits) ){
+                if(grepl(paste0(myGenes[j], ","), myOriginalHits) ){
                   myBlueGene <- paste(myBlueGene, fontBlue(myGenes[j]), sep = ",")
                   myBlueGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myBlueGeneLabel <- capture.output(cat(myBlueGeneID, "\t#abebc6,blue\t#abebc6,blue"))
@@ -1273,7 +1304,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             }
             
             TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
-            Iteration.index <- c(which(colnames(TRIAGEiterations) == cutoffType), grep('NetworkEnrichment', names(TRIAGEiterations)))
+            Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
             
             
             totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
@@ -1282,9 +1313,9 @@ options(shiny.maxRequestSize = 3*1024^2)
             colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
             
             for (l in 1:length(Iteration.index)){
-              totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh))
-              totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh & TRIAGEiterations$ConfidenceCategory == "HighConf"))
-              totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == cutoffHigh & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+              totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
+              totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
+              totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
               totalRow[1, Iteration.index[l]] <- totalHits
               hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
             }
@@ -1380,6 +1411,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         output$myNetworkGraph = renderDataTable({
           datatable(cbind(Pick=shinyInput(checkboxInput,"srows_",nrow(sigPathways),value=NULL,width=1), sigPathways[, colnames(sigPathways), drop=FALSE]),
                   options = list(orderClasses = TRUE,
+                                 bFilter = 0,
                                  ordering = F,
                                  lengthMenu = c(2, 12, 18),
                                  paging = FALSE,
@@ -1476,174 +1508,174 @@ options(shiny.maxRequestSize = 3*1024^2)
               return(dat)
             })
             
-            ################
-            ## D3 Network ##
-            ################
-            # Display in D3 (1st dimension)
-            output$networkView1D3 <- renderForceNetwork({
-              # build the two data frames - 'links' and 'nodes'
-              g11_links <- g11_d3$links
-              g11.links.original <<- g11_links
-              g11_nodes <- NodeInfo1
-
-              # delete unneeded data columns
-              g11_nodes$ID <- NULL
-              g11_nodes$GeneMappingID <- NULL
-              # add column names
-              colnames(g11_nodes) <- c("name", "group")
-              g11.nodes.original <<- g11_nodes
-
-              # Add pathway name as new nodes (with spacd removed - gsub) 
-              # and get the indices of the pathway nodes to update the corresponding links
-              if(length(selectedRows) == 3){
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-                index1 <<- nrow(g11_nodes)
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
-                index2 <<- nrow(g11_nodes)
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
-                index3 <<- nrow(g11_nodes)
-                # Add Nodesize column
-                g11_nodes$nodesize <- 1
-                g11_nodes[index1, 'nodesize'] <- 20
-                g11_nodes[index2, 'nodesize'] <- 20
-                g11_nodes[index3, 'nodesize'] <- 20
-              }else if(length(selectedRows) == 2){
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-                index1 <<- nrow(g11_nodes)
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
-                index2 <<- nrow(g11_nodes)
-                # Add Nodesize column
-                g11_nodes$nodesize <- 1
-                g11_nodes[index1, 'nodesize'] <- 20
-                g11_nodes[index2, 'nodesize'] <- 20
-              }else if(length(selectedRows) == 1){
-                g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-                index1 <<- nrow(g11_nodes)
-                # Add Nodesize column
-                g11_nodes$nodesize <- 1
-                g11_nodes[index1, 'nodesize'] <- 20
-              }
-
-              # # Update the g11_links with the added pathway nodes
-              for (i in 1:(index1 - 1)){
-                if(g11_nodes[i, 'group'] == 1){
-                  g11_links[nrow(g11_links) + 1,] <- c((index1-1), (i-1))
-                }else if(g11_nodes[i, 'group'] == 3){
-                  g11_links[nrow(g11_links) + 1,] <- c((index3-1), (i-1))
-                }else if(g11_nodes[i, 'group'] == 2){
-                  g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
-                }
-              }
-              
-              # Create a copy of network nodes and links for visNetwork
-              visNodes11 <<- g11_nodes
-              visLinks11 <<- g11_links
-
-              # Save to a html file
-              forceNetwork(Links = g11_links, Nodes = g11_nodes,
-                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE) %>%
-                saveNetwork(file = paste0(PathNetName.output, "1Degree.D3.html"))
-              
-              # Create force directed network plot
-              forceNetwork(Links = g11_links, Nodes = g11_nodes,
-                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE)
-
-              # Add a search box for D3 network
-            })
-                        
-            ## Display in D3 (2nd dimension)
-            output$networkView2D3 <- renderForceNetwork({
-              # build the two data frames - 'links' and 'nodes'
-              g22_links <- g22_d3$links
-              g22.links.original <<- g22_links
-              g22_nodes <- NodeInfo2
-              # delete unneeded data columns
-              g22_nodes$ID <- NULL
-              g22_nodes$GeneMappingID <- NULL
-              # add column names
-              colnames(g22_nodes) <- c("name", "group")
-              g22.nodes.original <<- g22_nodes
-              
-              # Add pathway nodes and get the indices for the pathway nodes
-              if(length(selectedRows) == 3){
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-                index1 <<- nrow(g22_nodes)
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
-                index2 <<- nrow(g22_nodes)
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
-                index3 <<- nrow(g22_nodes)
-                # Add Nodesize column
-                g22_nodes$nodesize <- 1
-                g22_nodes[index1, 'nodesize'] <- 20
-                g22_nodes[index2, 'nodesize'] <- 20
-                g22_nodes[index3, 'nodesize'] <- 20
-              }else if(length(selectedRows) == 2){
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-                index1 <<- nrow(g22_nodes)
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
-                index2 <<- nrow(g22_nodes)
-                # Add Nodesize column
-                g22_nodes$nodesize <- 1
-                g22_nodes[index1, 'nodesize'] <- 20
-                g22_nodes[index2, 'nodesize'] <- 20
-              }else if(length(selectedRows) == 1){
-                g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-                index1 <<- nrow(g22_nodes)
-                # Add Nodesize column
-                g22_nodes$nodesize <- 1
-                g22_nodes[index1, 'nodesize'] <- 20
-              }
-              
-              # Update the g11_links with the added pathway nodes
-              for (i in 1:(index1 - 1)){
-                if(g22_nodes[i, 'group'] == 1){
-                  g22_links[nrow(g22_links) + 1,] <- c((index1-1), (i-1))
-                }else if(g22_nodes[i, 'group'] == 3){
-                  g22_links[nrow(g22_links) + 1,] <- c((index3-1), (i-1))
-                }else if(g22_nodes[i, 'group'] == 2){
-                  g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
-                }
-              }      
-              
-              # Create a copy of network nodes and links for visNetwork
-              visNodes22 <<- g22_nodes
-              visLinks22 <<- g22_links
-
-              # Save to a html file
-              forceNetwork(Links = g22_links, Nodes = g22_nodes,
-                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE) %>%                            
-                saveNetwork(file = paste0(PathNetName.output, "2Degree.D3.html"))
-              
-              # Create force directed network plot
-              forceNetwork(Links = g22_links, Nodes = g22_nodes,
-                           Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-                           Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE)
-              
-              # Add a search box for D3 network
-            })
-            
-            
-            ################
-            ## visNetwork ##
-            ################
-            
-            # output$networkView3vis <- renderVisNetwork({
+            # ################
+            # ## D3 Network ##
+            # ################
+            # # Display in D3 (1st dimension)
+            # output$networkView1D3 <- renderForceNetwork({
+            #   # build the two data frames - 'links' and 'nodes'
+            #   g11_links <- g11_d3$links
+            #   g11.links.original <<- g11_links
+            #   g11_nodes <- NodeInfo1
+            # 
+            #   # delete unneeded data columns
+            #   g11_nodes$ID <- NULL
+            #   g11_nodes$GeneMappingID <- NULL
+            #   # add column names
+            #   colnames(g11_nodes) <- c("name", "group")
+            #   g11.nodes.original <<- g11_nodes
+            # 
+            #   # Add pathway name as new nodes (with spacd removed - gsub) 
+            #   # and get the indices of the pathway nodes to update the corresponding links
+            #   if(length(selectedRows) == 3){
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
+            #     index1 <<- nrow(g11_nodes)
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
+            #     index2 <<- nrow(g11_nodes)
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
+            #     index3 <<- nrow(g11_nodes)
+            #     # Add Nodesize column
+            #     g11_nodes$nodesize <- 1
+            #     g11_nodes[index1, 'nodesize'] <- 20
+            #     g11_nodes[index2, 'nodesize'] <- 20
+            #     g11_nodes[index3, 'nodesize'] <- 20
+            #   }else if(length(selectedRows) == 2){
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
+            #     index1 <<- nrow(g11_nodes)
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
+            #     index2 <<- nrow(g11_nodes)
+            #     # Add Nodesize column
+            #     g11_nodes$nodesize <- 1
+            #     g11_nodes[index1, 'nodesize'] <- 20
+            #     g11_nodes[index2, 'nodesize'] <- 20
+            #   }else if(length(selectedRows) == 1){
+            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
+            #     index1 <<- nrow(g11_nodes)
+            #     # Add Nodesize column
+            #     g11_nodes$nodesize <- 1
+            #     g11_nodes[index1, 'nodesize'] <- 20
+            #   }
+            # 
+            #   # # Update the g11_links with the added pathway nodes
+            #   for (i in 1:(index1 - 1)){
+            #     if(g11_nodes[i, 'group'] == 1){
+            #       g11_links[nrow(g11_links) + 1,] <- c((index1-1), (i-1))
+            #     }else if(g11_nodes[i, 'group'] == 3){
+            #       g11_links[nrow(g11_links) + 1,] <- c((index3-1), (i-1))
+            #     }else if(g11_nodes[i, 'group'] == 2){
+            #       g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
+            #     }
+            #   }
+            #   
+            #   # Create a copy of network nodes and links for visNetwork
+            #   visNodes11 <<- g11_nodes
+            #   visLinks11 <<- g11_links
+            # 
+            #   # Save to a html file
+            #   forceNetwork(Links = g11_links, Nodes = g11_nodes,
+            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE) %>%
+            #     saveNetwork(file = paste0(PathNetName.output, "1Degree.D3.html"))
+            #   
             #   # Create force directed network plot
-            #   visNetwork(g11_vis$nodes, g11_vis$edges)
+            #   forceNetwork(Links = g11_links, Nodes = g11_nodes,
+            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE)
+            # 
+            #   # Add a search box for D3 network
             # })
-            # output$networkView4vis <- renderVisNetwork({
+            #             
+            # ## Display in D3 (2nd dimension)
+            # output$networkView2D3 <- renderForceNetwork({
+            #   # build the two data frames - 'links' and 'nodes'
+            #   g22_links <- g22_d3$links
+            #   g22.links.original <<- g22_links
+            #   g22_nodes <- NodeInfo2
+            #   # delete unneeded data columns
+            #   g22_nodes$ID <- NULL
+            #   g22_nodes$GeneMappingID <- NULL
+            #   # add column names
+            #   colnames(g22_nodes) <- c("name", "group")
+            #   g22.nodes.original <<- g22_nodes
+            #   
+            #   # Add pathway nodes and get the indices for the pathway nodes
+            #   if(length(selectedRows) == 3){
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
+            #     index1 <<- nrow(g22_nodes)
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
+            #     index2 <<- nrow(g22_nodes)
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
+            #     index3 <<- nrow(g22_nodes)
+            #     # Add Nodesize column
+            #     g22_nodes$nodesize <- 1
+            #     g22_nodes[index1, 'nodesize'] <- 20
+            #     g22_nodes[index2, 'nodesize'] <- 20
+            #     g22_nodes[index3, 'nodesize'] <- 20
+            #   }else if(length(selectedRows) == 2){
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
+            #     index1 <<- nrow(g22_nodes)
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
+            #     index2 <<- nrow(g22_nodes)
+            #     # Add Nodesize column
+            #     g22_nodes$nodesize <- 1
+            #     g22_nodes[index1, 'nodesize'] <- 20
+            #     g22_nodes[index2, 'nodesize'] <- 20
+            #   }else if(length(selectedRows) == 1){
+            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
+            #     index1 <<- nrow(g22_nodes)
+            #     # Add Nodesize column
+            #     g22_nodes$nodesize <- 1
+            #     g22_nodes[index1, 'nodesize'] <- 20
+            #   }
+            #   
+            #   # Update the g11_links with the added pathway nodes
+            #   for (i in 1:(index1 - 1)){
+            #     if(g22_nodes[i, 'group'] == 1){
+            #       g22_links[nrow(g22_links) + 1,] <- c((index1-1), (i-1))
+            #     }else if(g22_nodes[i, 'group'] == 3){
+            #       g22_links[nrow(g22_links) + 1,] <- c((index3-1), (i-1))
+            #     }else if(g22_nodes[i, 'group'] == 2){
+            #       g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
+            #     }
+            #   }      
+            #   
+            #   # Create a copy of network nodes and links for visNetwork
+            #   visNodes22 <<- g22_nodes
+            #   visLinks22 <<- g22_links
+            # 
+            #   # Save to a html file
+            #   forceNetwork(Links = g22_links, Nodes = g22_nodes,
+            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE) %>%                            
+            #     saveNetwork(file = paste0(PathNetName.output, "2Degree.D3.html"))
+            #   
             #   # Create force directed network plot
-            #   visNetwork(g22_vis$nodes, g22_vis$edges)
-            # })
-          
-            # Switch tab
-            updateTabsetPanel(session, "inTabset", selected = "networkViews")
-            ########################################        
-
-            # Switch tab
+            #   forceNetwork(Links = g22_links, Nodes = g22_nodes,
+            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
+            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE)
+            #   
+            #   # Add a search box for D3 network
+            #})
+            
+            
+            # ################
+            # ## visNetwork ##
+            # ################
+            # 
+            # # output$networkView3vis <- renderVisNetwork({
+            # #   # Create force directed network plot
+            # #   visNetwork(g11_vis$nodes, g11_vis$edges)
+            # # })
+            # # output$networkView4vis <- renderVisNetwork({
+            # #   # Create force directed network plot
+            # #   visNetwork(g22_vis$nodes, g22_vis$edges)
+            # # })
+            # 
+            # # Switch tab
+            # updateTabsetPanel(session, "inTabset", selected = "networkViews")
+            # ########################################        
+            # 
+            # # Switch tab
             updateTabsetPanel(session, "inTabset", selected = "graphViews")
           }
         })

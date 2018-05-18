@@ -31,15 +31,8 @@ Graph <- induced.subgraph(G, Screen_Genes.for.network.analysis)
 ########################################################################################################
 #                               Identifying hit genes and apply off-target filters
 ########################################################################################################
-findHitGenes <- function(x,Threshold, Direction, siRNAnumber = NULL){ # Function to find hit genes from a data.frame
-  message(Direction)
-  if(Direction == "Greater_than"){
-    hit.Genes <- x$EntrezID[which(x[[proxyScore]] >= Threshold)]   # Here gene symvols are used but in Network analysis gene IDs are used
-  } else if(Direction == "Less_than"){
-    hit.Genes <- x$EntrezID[which(x[[proxyScore]] <= Threshold)]
-  } else if(Direction == "Both"){
-    hit.Genes <- x$EntrezID[union(which(x[[proxyScore]] > Threshold), which(x[[proxyScore]] < -1*Threshold))]
-  }
+findHitGenes <- function(x, siRNAnumber = NULL){ # Function to find hit genes from a data.frame
+  hit.Genes <- x$EntrezID[which(x[[proxyScore]] %in% c("MedConf", "HighConf"))]   # Here gene symvols are used but in Network analysis gene IDs are used
   if(!is.null(siRNAnumber)){
     tempTable <- table(hit.Genes)
     hit.Genes <- names(tempTable[which(tempTable >= siRNAnumber)])
@@ -72,8 +65,8 @@ gNames <- V(SubGraph)$name
 # NetworkConnectivityThreshold <- 1
 # NetworkScoreThreshold <- 0.4
 
-NetworkConnectivityThreshold <- cutoffHigh
-NetworkScoreThreshold <- cutoffMed
+# NetworkConnectivityThreshold <- cutoffHigh
+# NetworkScoreThreshold <- cutoffMed
 
 tempPeripheralGenes <- PeripheralGenes <- NULL
 hit.Genes.Network <- intersect(hit.Genes, V(Graph)$name)
@@ -87,9 +80,9 @@ for(i in 1:length(hit.Genes.Network)){
   PeripheralGenes <- c(tempPeripheralGenes, PeripheralGenes)
 }
 PeripheralGenesFrequency <- table(PeripheralGenes)
-PeripheralGenesSelected <- names(PeripheralGenesFrequency[PeripheralGenesFrequency >= NetworkConnectivityThreshold])
+PeripheralGenesSelected <- names(PeripheralGenesFrequency[PeripheralGenesFrequency >= 1])
 
-tempGenes <- findHitGenes(siRNA.Score.Formatted, NetworkScoreThreshold, "Greater_than")
+tempGenes <- findHitGenes(siRNA.Score.Formatted)
 if(length(tempGenes) > 0) {
   PeripheralGenesSelected <- intersect(PeripheralGenesSelected, tempGenes)
 }

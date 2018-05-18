@@ -1,0 +1,39 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","NOD-like receptor signaling pathway",0,0,0,166,12,6,"NAMPT, GBP1, IL1B, NFKB1, CCL5, TXN","GABARAP, CTSB, GBP2, OAS2, OAS3, STAT1",0.286
+"2","NF-kappa B signaling pathway",0,0,0,93,9,8,"ICAM1, IL1B, CCL4L1, NFKB1, NFKB2, PTGS2, TRAF1, CD40","DDX58",0.493
+"3","Hematopoietic cell lineage",0,0,0,94,9,4,"IL1A, IL1B, TFRC, CD36","ITGAM, CD1A, CD1C, CD9, CD44",0.27
+"4","Ferroptosis",0,0,0.002,40,6,5,"ACSL1, ACSL4, FTH1, HMOX1, TFRC","FTL",0.492
+"5","Phagosome",0,0.001,0.003,147,10,3,"MRC1, TFRC, CD36","CD209, HLA-A, HLA-B, ITGAM, ITGB2, NCF2, ATP6AP1",0.184
+"6","Osteoclast differentiation",0,0.001,0.006,127,9,5,"IL1A, IL1B, NFKB1, NFKB2, ACP5","LCP2, NCF2, STAT1, SQSTM1",0.313
+"7","Necroptosis",0,0.001,0.007,162,10,4,"FTH1, IL1A, IL1B, STAT5A","FTL, PLA2G4A, EIF2AK2, STAT1, CAMK2D, SQSTM1",0.231
+"8","Toll-like receptor signaling pathway",0,0.001,0.009,104,8,5,"IL1B, CCL4L1, NFKB1, CCL5, CD40","IRF5, CCL3, STAT1",0.351
+"9","Cell adhesion molecules (CAMs)",0,0.001,0.01,137,9,3,"CD274, ICAM1, CD40","GLG1, HLA-A, HLA-B, ITGAM, ITGB2, PECAM1",0.2
+"10","TNF signaling pathway",0,0.009,0.085,108,7,7,"ICAM1, IL1B, NFKB1, PTGS2, CCL5, CCL20, TRAF1","",0.532
+"11","Natural killer cell mediated cytotoxicity",0.001,0.018,0.197,124,7,1,"ICAM1","FCER1G, HLA-A, HLA-B, ITGB2, LCP2, CD48",0.1
+"12","Cytosolic DNA-sensing pathway",0.001,0.021,0.252,63,5,4,"IL1B, CCL4L1, NFKB1, CCL5","DDX58",0.44
+"13","HIF-1 signaling pathway",0.001,0.022,0.311,98,6,4,"HMOX1, NFKB1, PFKFB3, TFRC","HK2, CAMK2D",0.364
+"14","Tryptophan metabolism",0.001,0.022,0.317,39,4,3,"IL4I1, IDO1, KYNU","KMO",0.426
+"15","AGE-RAGE signaling pathway in diabetic complications",0.001,0.022,0.328,99,6,5,"ICAM1, IL1A, IL1B, NFKB1, STAT5A","STAT1",0.447
+"16","Antigen processing and presentation",0.002,0.024,0.433,71,5,1,"CD74","CTSB, HLA-A, HLA-B, LGMN",0.135
+"17","Chemokine signaling pathway",0.002,0.024,0.44,183,8,4,"CCL4L1, NFKB1, CCL5, CCL20","HCK, CCL3, SRC, STAT1",0.272
+"18","Type I diabetes mellitus",0.002,0.024,0.458,43,4,2,"IL1A, IL1B","HLA-A, HLA-B",0.297
+"19","PPAR signaling pathway",0.002,0.024,0.461,72,5,4,"FABP5, ACSL1, ACSL4, CD36","FABP4",0.435
+"20","Mineral absorption",0.003,0.043,0.862,51,4,3,"FTH1, HMOX1, MT2A","FTL",0.414
+"21","Antifolate resistance",0.006,0.075,1,31,3,2,"IL1B, NFKB1","GGH",0.382
+"22","Fructose and mannose metabolism",0.008,0.086,1,33,3,2,"PFKFB3, FBP2","HK2",0.379
+"23","Alanine, aspartate and glutamate metabolism",0.009,0.096,1,35,3,3,"IL4I1, GFPT1, GLS","",0.543
+"24","Adipocytokine signaling pathway",0.01,0.096,1,69,4,4,"ACSL1, ACSL4, NFKB1, CD36","",0.529
+"25","Leukocyte transendothelial migration",0.01,0.096,1,107,5,1,"ICAM1","ITGAM, ITGB2, NCF2, PECAM1",0.123
+"26","Prolactin signaling pathway",0.011,0.096,1,70,4,2,"NFKB1, STAT5A","SRC, STAT1",0.279
+"27","RIG-I-like receptor signaling pathway",0.011,0.096,1,70,4,3,"NFKB1, IFIH1, ISG15","DDX58",0.404
+"28","Fatty acid biosynthesis",0.011,0.096,1,13,2,2,"ACSL1, ACSL4","",0.577
+"29","Cellular senescence",0.013,0.112,1,158,6,2,"IL1A, NFKB1","HLA-A, HLA-B, ZFP36L1, SQSTM1",0.186
+"30","IL-17 signaling pathway",0.025,0.205,1,90,4,4,"IL1B, NFKB1, PTGS2, CCL20","",0.522
+"31","Non-alcoholic fatty liver disease (NAFLD)",0.03,0.236,1,141,5,4,"IL1A, IL1B, NDUFA4, NFKB1","NDUFA10",0.418
+"32","Inflammatory mediator regulation of TRP channels",0.03,0.236,1,96,4,1,"IL1B","PLA2G4A, SRC, CAMK2D",0.146
+"33","VEGF signaling pathway",0.034,0.259,1,58,3,1,"PTGS2","PLA2G4A, SRC",0.193
+"34","Mitophagy - animal",0.042,0.304,1,63,3,0,"","GABARAP, SRC, SQSTM1",0.024
+"35","Th17 cell differentiation",0.043,0.304,1,107,4,3,"IL1B, NFKB1, STAT5A","STAT1",0.394
+"36","Cytokine-cytokine receptor interaction",0.045,0.312,1,266,7,6,"IL1A, IL1B, CCL4L1, CCL5, CCL20, CD40","CCL3",0.442
+"37","Fc epsilon RI signaling pathway",0.048,0.318,1,66,3,0,"","FCER1G, LCP2, PLA2G4A",0.023
+"38","D-Glutamine and D-glutamate metabolism",0.048,0.318,1,4,1,1,"GLS","",0.625
