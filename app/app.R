@@ -166,6 +166,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                                  tabPanel(title = "Gene Hits By Iteration", value="geneList",
                                           dataTableOutput("geneList")),
                                  tabPanel(title="Graph: Gene Hits By Iteration", value="geneHitsByIteration",
+                                          dataTableOutput("geneHitsTableByIteration"),
                                           plotOutput("geneHitsByIteration")),
                                  tabPanel(title = "Pathway Enrichments", value = "pathwayEnrich.cond",
                                           dataTableOutput("pathwayEnrich.cond"))
@@ -1339,7 +1340,15 @@ options(shiny.maxRequestSize = 3*1024^2)
             return(dat)
           })
           #message("completed geneList tab")
-               
+        
+        
+          # Show table of gene hits by iterations 
+          # It is used to generate the plot below
+          output$geneHitsTableByIteration <- renderDataTable({
+            dat1 <- datatable(geneHitsToPlot, options = list(paging = FALSE, searching = FALSE, rownames = FALSE))
+            return (dat1)
+          })
+          
           # Create plots showing the numbers of gene hits by iteration
           output$geneHitsByIteration <- renderPlot({
             geneHitsToPlot.melt <- melt(geneHitsToPlot, id.vars = "Iteration")
@@ -1347,7 +1356,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             ggplot(data = geneHitsToPlot.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
               scale_colour_discrete("") + scale_shape_manual("") + 
-              annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/2, ymax=numTotal) + 
+              #annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/2, ymax=numTotal) + 
               theme(
                 axis.text=element_text(size=12),
                 axis.title=element_text(size=14,face="bold")

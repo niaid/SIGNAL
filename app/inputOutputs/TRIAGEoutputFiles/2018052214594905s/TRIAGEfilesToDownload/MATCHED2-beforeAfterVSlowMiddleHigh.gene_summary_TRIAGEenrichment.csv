@@ -1,0 +1,14 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","Platinum drug resistance",0,0,0,73,4,3,"FAS, CASP8, FADD","BAK1",0.402
+"2","Apoptosis - multiple species",0,0,0,31,3,2,"CASP8, FADD","BAK1",0.382
+"3","Apoptosis",0,0,0.001,135,4,3,"FAS, CASP8, FADD","BAK1",0.39
+"4","Necroptosis",0,0,0.001,162,4,3,"FAS, CASP8, FADD","CHMP4B",0.387
+"5","IL-17 signaling pathway",0,0.003,0.013,91,3,2,"CASP8, FADD","IL17C",0.35
+"6","TNF signaling pathway",0,0.004,0.022,108,3,3,"FAS, CASP8, FADD","",0.514
+"7","p53 signaling pathway",0.002,0.05,0.375,66,2,2,"FAS, CASP8","",0.515
+"8","RIG-I-like receptor signaling pathway",0.002,0.05,0.398,68,2,2,"CASP8, FADD","",0.515
+"9","Toll-like receptor signaling pathway",0.004,0.098,0.886,102,2,2,"CASP8, FADD","",0.51
+"10","Non-alcoholic fatty liver disease (NAFLD)",0.007,0.174,1,144,2,2,"FAS, CASP8","",0.507
+"11","NOD-like receptor signaling pathway",0.009,0.204,1,164,2,2,"CASP8, FADD","",0.506
+"12","Cytokine-cytokine receptor interaction",0.022,0.462,1,263,2,1,"FAS","IL17C",0.254
+"13","Type I diabetes mellitus",0.038,0.719,1,41,1,1,"FAS","",0.512

@@ -1,0 +1,58 @@
+"","EntrezID","GeneSymbol","ConfidenceCategory","TRIAGEhit","Pathway","InteractingGenes","NetworkGenePathways"
+"320",79602,"ADIPOR2","MedConf","Yes","Non-alcoholic fatty liver disease (NAFLD)",NA,NA
+"413",10768,"AHCYL1","MedConf","Yes","Metabolic pathways, Cysteine and methionine metabolism",NA,NA
+"449",221264,"AK9","MedConf","Yes","Metabolic pathways",NA,NA
+"586",271,"AMPD2","MedConf","Yes","Metabolic pathways",NA,NA
+"1178",506,"ATP5B","MedConf","Yes","Metabolic pathways",NA,NA
+"1311",570,"BAAT","MedConf","Yes","Metabolic pathways, Primary bile acid biosynthesis, Taurine and hypotaurine metabolism","GGT1","Glutathione metabolism (1), Taurine and hypotaurine metabolism (1), Metabolic pathways (1)"
+"1333",578,"BAK1","HighConf","Yes","Apoptosis - multiple species, Platinum drug resistance, Apoptosis",NA,NA
+"2205",841,"CASP8","HighConf","Yes","Apoptosis - multiple species, Platinum drug resistance, Apoptosis, Non-alcoholic fatty liver disease (NAFLD), NOD-like receptor signaling pathway, Necroptosis, p53 signaling pathway, IL-17 signaling pathway","EIF4G1, FAS, FADD","Apoptosis (3), Necroptosis (2), Platinum drug resistance (2), IL-17 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), p53 signaling pathway (1), Non-alcoholic fatty liver disease (NAFLD) (1)"
+"2839",9023,"CH25H","HighConf","Yes","Primary bile acid biosynthesis","CYP7A1, FDFT1","Metabolic pathways (2), PPAR signaling pathway (1), Steroid hormone biosynthesis (1), Primary bile acid biosynthesis (1)"
+"2891",128866,"CHMP4B","HighConf","Yes","Necroptosis",NA,NA
+"3310",51805,"COQ3","MedConf","Yes","Metabolic pathways",NA,NA
+"3338",9377,"COX5A","MedConf","Yes","Metabolic pathways, Non-alcoholic fatty liver disease (NAFLD)",NA,NA
+"3399",1375,"CPT1B","MedConf","Yes","PPAR signaling pathway",NA,NA
+"3427",1387,"CREBBP","MedConf","Yes",NA,"CYP1A1, CYP7A1, STAT4, FDFT1, EIF2S1","Metabolic pathways (3), Steroid hormone biosynthesis (2), Apoptosis (1), Necroptosis (1), PPAR signaling pathway (1), Primary bile acid biosynthesis (1), Non-alcoholic fatty liver disease (NAFLD) (1)"
+"3711",1585,"CYP11B2","MedConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","HSD17B6","Steroid hormone biosynthesis (1), Metabolic pathways (1)"
+"3714",1543,"CYP1A1","MedConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","CYP7A1, SULT2B1, HSD17B6, CREBBP","Steroid hormone biosynthesis (3), Metabolic pathways (2), PPAR signaling pathway (1), Primary bile acid biosynthesis (1)"
+"3761",1581,"CYP7A1","MedConf","Yes","Metabolic pathways, Primary bile acid biosynthesis, Steroid hormone biosynthesis, PPAR signaling pathway","SULT2B1, CREBBP, CH25H, CYP1A1","Steroid hormone biosynthesis (2), Metabolic pathways (1), Primary bile acid biosynthesis (1)"
+"3763",1582,"CYP8B1","HighConf","Yes","Metabolic pathways, Primary bile acid biosynthesis, PPAR signaling pathway",NA,NA
+"4312",1806,"DPYD","MedConf","Yes","Metabolic pathways",NA,NA
+"4406",1856,"DVL2","MedConf","Yes",NA,"PIP5K1B","Phosphatidylinositol signaling system (1), Inositol phosphate metabolism (1), Metabolic pathways (1)"
+"4583",1965,"EIF2S1","MedConf","Yes","Apoptosis, Non-alcoholic fatty liver disease (NAFLD)","CREBBP, EIF4G1",NA
+"4612",1981,"EIF4G1","HighConf","Yes",NA,"EIF2S1, CASP8","Apoptosis (3), IL-17 signaling pathway (1), p53 signaling pathway (1), Necroptosis (1), NOD-like receptor signaling pathway (1), Platinum drug resistance (1), Apoptosis - multiple species (1), Non-alcoholic fatty liver disease (NAFLD) (2)"
+"4712",58478,"ENOPH1","MedConf","Yes","Metabolic pathways, Cysteine and methionine metabolism",NA,NA
+"4965",8772,"FADD","HighConf","Yes","Apoptosis - multiple species, Platinum drug resistance, Apoptosis, NOD-like receptor signaling pathway, Necroptosis, IL-17 signaling pathway","CASP8, FAS","Apoptosis (3), p53 signaling pathway (2), Necroptosis (2), Platinum drug resistance (2), IL-17 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), Non-alcoholic fatty liver disease (NAFLD) (2)"
+"5233",355,"FAS","HighConf","Yes","Platinum drug resistance, Apoptosis, Non-alcoholic fatty liver disease (NAFLD), Necroptosis, p53 signaling pathway","FADD, CASP8","Apoptosis (4), IL-17 signaling pathway (2), Necroptosis (2), NOD-like receptor signaling pathway (2), Platinum drug resistance (2), Apoptosis - multiple species (2), p53 signaling pathway (1), Non-alcoholic fatty liver disease (NAFLD) (1)"
+"5354",2222,"FDFT1","HighConf","Yes","Metabolic pathways","CREBBP, CH25H","Primary bile acid biosynthesis (1)"
+"5908",2678,"GGT1","HighConf","Yes","Metabolic pathways, Taurine and hypotaurine metabolism, Glutathione metabolism","BAAT, GPX4","Ferroptosis (1), Glutathione metabolism (1), Taurine and hypotaurine metabolism (1), Primary bile acid biosynthesis (1), Metabolic pathways (1)"
+"5971",2712,"GK2","MedConf","Yes","Metabolic pathways, PPAR signaling pathway",NA,NA
+"6014",27165,"GLS2","HighConf","Yes","Metabolic pathways, Arginine biosynthesis, D-Glutamine and D-glutamate metabolism, Alanine, aspartate and glutamate metabolism",NA,NA
+"6041",29926,"GMPPA","MedConf","Yes","Metabolic pathways, Fructose and mannose metabolism",NA,NA
+"6131",2806,"GOT2","MedConf","Yes","Metabolic pathways, Cysteine and methionine metabolism, Arginine biosynthesis, Tyrosine metabolism, Alanine, aspartate and glutamate metabolism, Phenylalanine, tyrosine and tryptophan biosynthesis",NA,NA
+"6275",2879,"GPX4","MedConf","Yes","Glutathione metabolism, Ferroptosis","GGT1","Glutathione metabolism (1), Taurine and hypotaurine metabolism (1), Metabolic pathways (1)"
+"6613",3081,"HGD","MedConf","Yes","Metabolic pathways, Tyrosine metabolism",NA,NA
+"6781",3163,"HMOX2","MedConf","Yes","Metabolic pathways, Porphyrin and chlorophyll metabolism",NA,NA
+"6924",8630,"HSD17B6","MedConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","CYP1A1, CYP11B2","Steroid hormone biosynthesis (2), Metabolic pathways (2)"
+"7047",3423,"IDS","MedConf","Yes","Metabolic pathways",NA,NA
+"7187",27189,"IL17C","HighConf","Yes","IL-17 signaling pathway",NA,NA
+"7196",3606,"IL18","MedConf","Yes","NOD-like receptor signaling pathway","STAT4","Necroptosis (1)"
+"7464",80271,"ITPKC","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"8737",10905,"MAN1A2","MedConf","Yes","Metabolic pathways",NA,NA
+"9169",326625,"MMAB","MedConf","Yes","Metabolic pathways, Porphyrin and chlorophyll metabolism",NA,NA
+"9488",55613,"MTMR8","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"11394",9489,"PGS1","MedConf","Yes","Metabolic pathways",NA,NA
+"11500",5287,"PIK3C2B","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","PIP5K1B, SYNJ2","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2)"
+"11530",8395,"PIP5K1B","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","SYNJ2, DVL2, PIK3C2B","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2)"
+"11841",10585,"POMT1","MedConf","Yes","Metabolic pathways",NA,NA
+"12469",260434,"PYDC1","MedConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"13314",50484,"RRM2B","MedConf","Yes","Metabolic pathways, Glutathione metabolism, p53 signaling pathway",NA,NA
+"13485",112483,"SAT2","MedConf","Yes","Metabolic pathways, Ferroptosis",NA,NA
+"14574",6652,"SORD","MedConf","Yes","Metabolic pathways, Fructose and mannose metabolism",NA,NA
+"14912",8869,"ST3GAL5","MedConf","Yes","Metabolic pathways, Glycosphingolipid biosynthesis - ganglio series",NA,NA
+"14929",29906,"ST8SIA5","MedConf","Yes","Metabolic pathways, Glycosphingolipid biosynthesis - ganglio series",NA,NA
+"14959",6775,"STAT4","MedConf","Yes","Necroptosis","IL18, CREBBP","NOD-like receptor signaling pathway (1)"
+"15082",6820,"SULT2B1","MedConf","Yes","Steroid hormone biosynthesis","CYP1A1, CYP7A1","Steroid hormone biosynthesis (2), Metabolic pathways (2), PPAR signaling pathway (1), Primary bile acid biosynthesis (1)"
+"15162",8871,"SYNJ2","HighConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","PIK3C2B, PIP5K1B","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2)"
+"16391",51393,"TRPV2","HighConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"16627",6675,"UAP1","HighConf","Yes","Metabolic pathways",NA,NA

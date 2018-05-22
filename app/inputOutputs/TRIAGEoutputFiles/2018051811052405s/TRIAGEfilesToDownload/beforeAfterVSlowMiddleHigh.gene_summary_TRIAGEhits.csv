@@ -1,0 +1,149 @@
+"","EntrezID","GeneSymbol","ConfidenceCategory","TRIAGEhit","Pathway","InteractingGenes","NetworkGenePathways"
+"295",55811,"ADCY10","MedConf","Yes","Purine metabolism","PDE4B, GNG10","Purine metabolism (1)"
+"366",174,"AFP","MedConf","Yes",NA,"TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"390",26523,"AGO1","MedConf","Yes",NA,"TP53, ETS1","Cellular senescence (2), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"413",10768,"AHCYL1","HighConf","Yes","Metabolic pathways",NA,NA
+"449",221264,"AK9","MedConf","Yes","Metabolic pathways, Purine metabolism, Pyrimidine metabolism",NA,NA
+"476",8644,"AKR1C3","MedConf","Yes","Metabolic pathways, Steroid hormone biosynthesis",NA,NA
+"586",271,"AMPD2","MedConf","Yes","Metabolic pathways, Purine metabolism","PDE4B, NT5C1A, DCK","Purine metabolism (3), Pyrimidine metabolism (2), Metabolic pathways (2)"
+"607",51434,"ANAPC7","MedConf","Yes",NA,"CREBBP, PSME4, PSMD1","Wnt signaling pathway (1)"
+"991",405,"ARNT","MedConf","Yes",NA,"CREBBP, ETS1","Cellular senescence (1), Wnt signaling pathway (1)"
+"1080",443,"ASPA","MedConf","Yes","Metabolic pathways, Alanine, aspartate and glutamate metabolism","GOT2","Carbon metabolism (1), aspartate and glutamate metabolism (1), Alanine (1), Metabolic pathways (1)"
+"1110",1386,"ATF2","MedConf","Yes","TNF signaling pathway","CHRD, CBFB, GTF3A, CREBBP","Wnt signaling pathway (1)"
+"1187",521,"ATP5I","MedConf","Yes","Metabolic pathways",NA,NA
+"1289",10331,"B3GNT3","MedConf","Yes","Metabolic pathways",NA,NA
+"1306",9331,"B4GALT6","MedConf","Yes","Metabolic pathways","ST3GAL5","Glycosphingolipid biosynthesis - ganglio series (1), Metabolic pathways (1)"
+"1311",570,"BAAT","HighConf","Yes","Metabolic pathways, Primary bile acid biosynthesis, Taurine and hypotaurine metabolism","GGT1","Glutathione metabolism (1), Taurine and hypotaurine metabolism (1), Metabolic pathways (1)"
+"1333",578,"BAK1","HighConf","Yes","Platinum drug resistance, Apoptosis - multiple species, Apoptosis",NA,NA
+"1460",332,"BIRC5","MedConf","Yes","Platinum drug resistance, Apoptosis - multiple species, Apoptosis",NA,NA
+"2046",91768,"CABLES1","MedConf","Yes",NA,"TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"2133",820,"CAMP","MedConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"2205",841,"CASP8","HighConf","Yes","Platinum drug resistance, Apoptosis - multiple species, Apoptosis, NOD-like receptor signaling pathway, p53 signaling pathway, TNF signaling pathway, IL-17 signaling pathway","EIF4G1, FAS, NMT1, FADD","Apoptosis (3), TNF signaling pathway (2), Platinum drug resistance (2), IL-17 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), p53 signaling pathway (1), Type I diabetes mellitus (1)"
+"2227",865,"CBFB","MedConf","Yes",NA,"ATF2","TNF signaling pathway (1)"
+"2444",8812,"CCNK","HighConf","Yes",NA,"TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"2555",941,"CD80","MedConf","Yes","Type I diabetes mellitus",NA,NA
+"2798",10715,"CERS1","MedConf","Yes","Metabolic pathways",NA,NA
+"2839",9023,"CH25H","HighConf","Yes","Primary bile acid biosynthesis","CYP7A1, FDFT1","Metabolic pathways (2), Steroid hormone biosynthesis (1), Primary bile acid biosynthesis (1)"
+"2906",8646,"CHRD","HighConf","Yes",NA,"ATF2","TNF signaling pathway (1)"
+"3310",51805,"COQ3","MedConf","Yes","Metabolic pathways",NA,NA
+"3338",9377,"COX5A","MedConf","Yes","Metabolic pathways",NA,NA
+"3427",1387,"CREBBP","HighConf","Yes","Wnt signaling pathway","MED17, SP100, ETS1, ATF2, CYP1A1, CYP7A1, SREBF1, MED9, HMGCR, ARNT, ANAPC7, STAT4, ONECUT1, HSD17B4, PEX11A, TIAM2, GTF3A, FOXO3, TP53, PML, EIF2S1, FDFT1","Metabolic pathways (5), Cellular senescence (3), Apoptosis (2), Primary bile acid biosynthesis (2), Steroid hormone biosynthesis (2), p53 signaling pathway (1), Wnt signaling pathway (1), Platinum drug resistance (1), TNF signaling pathway (1)"
+"3711",1585,"CYP11B2","MedConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","HSD17B6","Steroid hormone biosynthesis (1), Metabolic pathways (1)"
+"3714",1543,"CYP1A1","HighConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","CYP7A1, SULT2B1, HSD17B6, GSTM5, CREBBP","Steroid hormone biosynthesis (3), Metabolic pathways (2), Glutathione metabolism (1), Platinum drug resistance (1), Wnt signaling pathway (1), Primary bile acid biosynthesis (1)"
+"3761",1581,"CYP7A1","MedConf","Yes","Metabolic pathways, Primary bile acid biosynthesis, Steroid hormone biosynthesis","SULT2B1, CREBBP, CYP1A1, CH25H","Steroid hormone biosynthesis (2), Metabolic pathways (1), Primary bile acid biosynthesis (1), Wnt signaling pathway (1)"
+"3763",1582,"CYP8B1","HighConf","Yes","Metabolic pathways, Primary bile acid biosynthesis",NA,NA
+"3850",1633,"DCK","MedConf","Yes","Metabolic pathways, Purine metabolism, Pyrimidine metabolism","AMPD2, PDE4B, NT5C1A","Purine metabolism (3), Metabolic pathways (2), Pyrimidine metabolism (1)"
+"3986",8560,"DEGS1","MedConf","Yes","Metabolic pathways",NA,NA
+"4037",8525,"DGKZ","MedConf","Yes","Metabolic pathways, Phosphatidylinositol signaling system, Glycerophospholipid metabolism",NA,NA
+"4109",1737,"DLAT","MedConf","Yes","Metabolic pathways, Carbon metabolism, Pyruvate metabolism",NA,NA
+"4312",1806,"DPYD","HighConf","Yes","Metabolic pathways, Pyrimidine metabolism",NA,NA
+"4406",1856,"DVL2","MedConf","Yes","Wnt signaling pathway","WNT5A, NKD2, PSME4, PIP5K1B, PSMD1","Wnt signaling pathway (2), Phosphatidylinositol signaling system (1), Inositol phosphate metabolism (1), Metabolic pathways (1)"
+"4573",27102,"EIF2AK1","MedConf","Yes",NA,"EIF2S1","Apoptosis (1)"
+"4579",8891,"EIF2B3","MedConf","Yes",NA,"EIF2S1","Apoptosis (1)"
+"4583",1965,"EIF2S1","MedConf","Yes","Apoptosis","RPL36, CREBBP, RPL26L1, EIF4G1, EIF2AK1, EIF2B3, RPL31, RPL10A, RPS8, RPLP2","Wnt signaling pathway (1)"
+"4612",1981,"EIF4G1","HighConf","Yes",NA,"RPL26L1, RPL10A, EIF2S1, RPL36, PSME4, RPL31, RPS8, RPLP2, PSMD1, CASP8","Apoptosis (3), IL-17 signaling pathway (1), TNF signaling pathway (1), p53 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), Platinum drug resistance (1)"
+"4712",58478,"ENOPH1","MedConf","Yes","Metabolic pathways",NA,NA
+"4869",2113,"ETS1","MedConf","Yes","Cellular senescence","AGO1, ARNT, SP100, TP53, CREBBP","Wnt signaling pathway (2), Cellular senescence (1), p53 signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"4924",2132,"EXT2","MedConf","Yes","Metabolic pathways",NA,NA
+"4965",8772,"FADD","HighConf","Yes","Platinum drug resistance, Apoptosis - multiple species, Apoptosis, NOD-like receptor signaling pathway, TNF signaling pathway, IL-17 signaling pathway","CASP8, TNFRSF10D, FAS","Apoptosis (4), TNF signaling pathway (2), p53 signaling pathway (2), Platinum drug resistance (2), Type I diabetes mellitus (1), IL-17 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1)"
+"5233",355,"FAS","HighConf","Yes","Platinum drug resistance, Apoptosis, Type I diabetes mellitus, p53 signaling pathway, TNF signaling pathway","CASP8, ILK, TP53, FADD","Apoptosis (5), Platinum drug resistance (3), IL-17 signaling pathway (2), TNF signaling pathway (2), p53 signaling pathway (2), NOD-like receptor signaling pathway (2), Apoptosis - multiple species (2), Cellular senescence (1), Wnt signaling pathway (1)"
+"5354",2222,"FDFT1","HighConf","Yes","Metabolic pathways","CREBBP, CH25H","Primary bile acid biosynthesis (1), Wnt signaling pathway (1)"
+"5571",2309,"FOXO3","MedConf","Yes","Cellular senescence","TP53, CREBBP","Wnt signaling pathway (2), Cellular senescence (1), p53 signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"5892",9945,"GFPT2","MedConf","Yes","Metabolic pathways, Amino sugar and nucleotide sugar metabolism, Alanine, aspartate and glutamate metabolism","GNPNAT1, HK3","Amino sugar and nucleotide sugar metabolism (2), Fructose and mannose metabolism (1), Carbon metabolism (1), Metabolic pathways (1)"
+"5908",2678,"GGT1","HighConf","Yes","Metabolic pathways, Taurine and hypotaurine metabolism, Glutathione metabolism","BAAT, GPX4, GSTM5","Glutathione metabolism (2), Platinum drug resistance (1), Taurine and hypotaurine metabolism (1), Primary bile acid biosynthesis (1), Metabolic pathways (1)"
+"5971",2712,"GK2","HighConf","Yes","Metabolic pathways",NA,NA
+"6014",27165,"GLS2","HighConf","Yes","Metabolic pathways, Alanine, aspartate and glutamate metabolism",NA,NA
+"6041",29926,"GMPPA","HighConf","Yes","Metabolic pathways, Amino sugar and nucleotide sugar metabolism, Fructose and mannose metabolism",NA,NA
+"6069",2790,"GNG10","MedConf","Yes",NA,"ADCY10","Purine metabolism (1)"
+"6090",64841,"GNPNAT1","MedConf","Yes","Amino sugar and nucleotide sugar metabolism","HK3, GFPT2","Amino sugar and nucleotide sugar metabolism (2), Metabolic pathways (2), aspartate and glutamate metabolism (1), Alanine (1), Fructose and mannose metabolism (1), Carbon metabolism (1)"
+"6131",2806,"GOT2","MedConf","Yes","Metabolic pathways, Alanine, aspartate and glutamate metabolism, Carbon metabolism","SLC25A12, ASPA","aspartate and glutamate metabolism (1), Alanine (1), Metabolic pathways (1)"
+"6275",2879,"GPX4","HighConf","Yes","Glutathione metabolism","GSTM5, GGT1","Glutathione metabolism (2), Taurine and hypotaurine metabolism (1), Metabolic pathways (1), Platinum drug resistance (1)"
+"6374",2949,"GSTM5","MedConf","Yes","Platinum drug resistance, Glutathione metabolism","CYP1A1, GGT1, GPX4","Glutathione metabolism (2), Metabolic pathways (2), Taurine and hypotaurine metabolism (1), Steroid hormone biosynthesis (1)"
+"6403",2971,"GTF3A","MedConf","Yes",NA,"CREBBP, ATF2","TNF signaling pathway (1), Wnt signaling pathway (1)"
+"6485",51179,"HAO2","MedConf","Yes","Metabolic pathways, Carbon metabolism",NA,NA
+"6613",3081,"HGD","MedConf","Yes","Metabolic pathways",NA,NA
+"6727",3101,"HK3","MedConf","Yes","Metabolic pathways, Amino sugar and nucleotide sugar metabolism, Carbon metabolism, Fructose and mannose metabolism","SORD, GNPNAT1, GFPT2","Metabolic pathways (2), Amino sugar and nucleotide sugar metabolism (2), Fructose and mannose metabolism (1), aspartate and glutamate metabolism (1), Alanine (1)"
+"6732",3107,"HLA-C","MedConf","Yes","Type I diabetes mellitus, Cellular senescence","ISG20, MX2, OAS3, PML, SP100","NOD-like receptor signaling pathway (1)"
+"6743",3122,"HLA-DRA","MedConf","Yes","Type I diabetes mellitus",NA,NA
+"6768",3156,"HMGCR","MedConf","Yes","Metabolic pathways","CREBBP","Wnt signaling pathway (1)"
+"6781",3163,"HMOX2","HighConf","Yes","Metabolic pathways",NA,NA
+"6923",3295,"HSD17B4","MedConf","Yes","Metabolic pathways, Primary bile acid biosynthesis","CREBBP","Wnt signaling pathway (1)"
+"6924",8630,"HSD17B6","HighConf","Yes","Metabolic pathways, Steroid hormone biosynthesis","CYP1A1, CYP11B2","Steroid hormone biosynthesis (2), Metabolic pathways (2)"
+"7047",3423,"IDS","MedConf","Yes","Metabolic pathways",NA,NA
+"7187",27189,"IL17C","HighConf","Yes","IL-17 signaling pathway",NA,NA
+"7196",3606,"IL18","HighConf","Yes","NOD-like receptor signaling pathway","STAT4",NA
+"7257",3611,"ILK","MedConf","Yes",NA,"FAS","TNF signaling pathway (1), p53 signaling pathway (1), Type I diabetes mellitus (1), Apoptosis (1), Platinum drug resistance (1)"
+"7401",3669,"ISG20","MedConf","Yes",NA,"MX2, OAS3, HLA-C","Cellular senescence (1), Type I diabetes mellitus (1), NOD-like receptor signaling pathway (1)"
+"7464",80271,"ITPKC","HighConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"8428",64900,"LPIN3","MedConf","Yes","Metabolic pathways, Glycerophospholipid metabolism",NA,NA
+"8737",10905,"MAN1A2","HighConf","Yes","Metabolic pathways",NA,NA
+"8741",4122,"MAN2A2","MedConf","Yes","Metabolic pathways",NA,NA
+"8943",4200,"ME2","MedConf","Yes","Carbon metabolism, Pyruvate metabolism","PDHA2","Pyruvate metabolism (1), Carbon metabolism (1), Metabolic pathways (1)"
+"8960",9440,"MED17","MedConf","Yes",NA,"SREBF1, MED9, CREBBP","Wnt signaling pathway (1)"
+"8979",55090,"MED9","MedConf","Yes",NA,"MED17, CREBBP","Wnt signaling pathway (1)"
+"9169",326625,"MMAB","HighConf","Yes","Metabolic pathways",NA,NA
+"9195",4314,"MMP3","MedConf","Yes","TNF signaling pathway, IL-17 signaling pathway",NA,NA
+"9477",4534,"MTM1","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"9478",8776,"MTMR1","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"9488",55613,"MTMR8","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system",NA,NA
+"9545",4600,"MX2","HighConf","Yes",NA,"OAS3, ISG20, HLA-C","Cellular senescence (1), Type I diabetes mellitus (1), NOD-like receptor signaling pathway (1)"
+"9564",4609,"MYC","MedConf","Yes","Wnt signaling pathway, Cellular senescence",NA,NA
+"9741",4683,"NBN","MedConf","Yes","Cellular senescence","TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"9820",4698,"NDUFA5","MedConf","Yes","Metabolic pathways",NA,NA
+"9925",4775,"NFATC3","MedConf","Yes","Wnt signaling pathway, Cellular senescence",NA,NA
+"9998",85409,"NKD2","MedConf","Yes","Wnt signaling pathway","DVL2","Wnt signaling pathway (1)"
+"10027",22861,"NLRP1","MedConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"10063",4836,"NMT1","MedConf","Yes",NA,"CASP8","Apoptosis (2), IL-17 signaling pathway (1), TNF signaling pathway (1), p53 signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), Platinum drug resistance (1)"
+"10255",84618,"NT5C1A","MedConf","Yes","Metabolic pathways, Purine metabolism, Pyrimidine metabolism","DCK, AMPD2, PDE4B","Purine metabolism (3), Metabolic pathways (2), Pyrimidine metabolism (1)"
+"10279",4914,"NTRK1","MedConf","Yes","Apoptosis",NA,NA
+"10310",318,"NUDT2","MedConf","Yes","Purine metabolism, Pyrimidine metabolism",NA,NA
+"10315",11164,"NUDT5","MedConf","Yes","Purine metabolism",NA,NA
+"10384",4940,"OAS3","MedConf","Yes","NOD-like receptor signaling pathway","HLA-C, ISG20, MX2, SP100, PML, UBXN7","Cellular senescence (1), Type I diabetes mellitus (1)"
+"10446",3175,"ONECUT1","MedConf","Yes",NA,"CREBBP","Wnt signaling pathway (1)"
+"11229",5142,"PDE4B","MedConf","Yes","Purine metabolism","NT5C1A, ADCY10, DCK, AMPD2","Purine metabolism (4), Metabolic pathways (3), Pyrimidine metabolism (2)"
+"11243",8622,"PDE8B","MedConf","Yes","Purine metabolism",NA,NA
+"11254",5161,"PDHA2","MedConf","Yes","Metabolic pathways, Carbon metabolism, Pyruvate metabolism","ME2","Pyruvate metabolism (1), Carbon metabolism (1)"
+"11326",8800,"PEX11A","MedConf","Yes",NA,"CREBBP","Wnt signaling pathway (1)"
+"11394",9489,"PGS1","MedConf","Yes","Metabolic pathways, Glycerophospholipid metabolism",NA,NA
+"11484",51227,"PIGP","MedConf","Yes","Metabolic pathways",NA,NA
+"11500",5287,"PIK3C2B","HighConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","PIP5K1B, SYNJ2","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2)"
+"11530",8395,"PIP5K1B","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","SYNJ2, DVL2, PIK3C2B","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2), Wnt signaling pathway (1)"
+"11536",23761,"PISD","MedConf","Yes","Metabolic pathways, Glycerophospholipid metabolism","PLA2G3","Glycerophospholipid metabolism (1), Metabolic pathways (1)"
+"11590",50487,"PLA2G3","MedConf","Yes","Metabolic pathways, Glycerophospholipid metabolism","PISD","Glycerophospholipid metabolism (1), Metabolic pathways (1)"
+"11619",5332,"PLCB4","MedConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system, NOD-like receptor signaling pathway, Wnt signaling pathway",NA,NA
+"11718",5366,"PMAIP1","MedConf","Yes","Platinum drug resistance, Apoptosis - multiple species, Apoptosis, p53 signaling pathway","TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"11725",5371,"PML","MedConf","Yes",NA,"CREBBP, SP100, OAS3, HLA-C, TP53","Cellular senescence (2), Wnt signaling pathway (2), p53 signaling pathway (1), Apoptosis (1), Platinum drug resistance (1), Type I diabetes mellitus (1), NOD-like receptor signaling pathway (1)"
+"11791",56655,"POLE4","MedConf","Yes","Metabolic pathways, Purine metabolism, Pyrimidine metabolism",NA,NA
+"11841",10585,"POMT1","MedConf","Yes","Metabolic pathways",NA,NA
+"12257",29968,"PSAT1","MedConf","Yes","Metabolic pathways, Carbon metabolism",NA,NA
+"12304",5707,"PSMD1","MedConf","Yes",NA,"DVL2, EIF4G1, ANAPC7, PSME4","Wnt signaling pathway (1)"
+"12321",23198,"PSME4","HighConf","Yes",NA,"PSMD1, DVL2, EIF4G1, ANAPC7","Wnt signaling pathway (1)"
+"12469",260434,"PYDC1","HighConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"12819",8608,"RDH16","MedConf","Yes","Metabolic pathways",NA,NA
+"13183",4736,"RPL10A","MedConf","Yes",NA,"RPS8, RPLP2, RPL31, EIF2S1, RPL36, RPL26L1, EIF4G1","Apoptosis (1)"
+"13203",51121,"RPL26L1","MedConf","Yes",NA,"EIF4G1, RPL10A, RPLP2, RPL31, RPS8, RPL36, EIF2S1","Apoptosis (1)"
+"13210",6160,"RPL31","MedConf","Yes",NA,"EIF2S1, RPL36, RPL26L1, EIF4G1, RPLP2, RPL10A, RPS8","Apoptosis (1)"
+"13215",25873,"RPL36","MedConf","Yes",NA,"RPL26L1, EIF4G1, EIF2S1, RPLP2, RPL10A, RPS8, RPL31","Apoptosis (1)"
+"13235",6181,"RPLP2","MedConf","Yes",NA,"RPL31, EIF2S1, RPL36, RPL26L1, EIF4G1, RPL10A, RPS8","Apoptosis (1)"
+"13293",6202,"RPS8","MedConf","Yes",NA,"RPLP2, RPL31, EIF2S1, RPL36, RPL26L1, EIF4G1, RPL10A","Apoptosis (1)"
+"13314",50484,"RRM2B","HighConf","Yes","Metabolic pathways, Purine metabolism, Pyrimidine metabolism, p53 signaling pathway, Glutathione metabolism","TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"13485",112483,"SAT2","MedConf","Yes","Metabolic pathways",NA,NA
+"13780",6425,"SFRP5","MedConf","Yes","Wnt signaling pathway","WNT5A","Wnt signaling pathway (1)"
+"14069",8604,"SLC25A12","MedConf","Yes",NA,"GOT2","Carbon metabolism (1), aspartate and glutamate metabolism (1), Alanine (1), Metabolic pathways (1)"
+"14574",6652,"SORD","HighConf","Yes","Metabolic pathways, Fructose and mannose metabolism","HK3","Fructose and mannose metabolism (1), Carbon metabolism (1), Amino sugar and nucleotide sugar metabolism (1), Metabolic pathways (1)"
+"14605",6672,"SP100","MedConf","Yes",NA,"ETS1, OAS3, HLA-C, PML, CREBBP, TP53","Cellular senescence (3), Wnt signaling pathway (2), p53 signaling pathway (1), Apoptosis (1), Platinum drug resistance (1), Type I diabetes mellitus (1), NOD-like receptor signaling pathway (1)"
+"14814",6720,"SREBF1","MedConf","Yes",NA,"MED17, CREBBP","Wnt signaling pathway (1)"
+"14912",8869,"ST3GAL5","MedConf","Yes","Metabolic pathways, Glycosphingolipid biosynthesis - ganglio series","B4GALT6","Metabolic pathways (1)"
+"14929",29906,"ST8SIA5","MedConf","Yes","Metabolic pathways, Glycosphingolipid biosynthesis - ganglio series",NA,NA
+"14959",6775,"STAT4","MedConf","Yes",NA,"IL18, CREBBP","NOD-like receptor signaling pathway (1), Wnt signaling pathway (1)"
+"15082",6820,"SULT2B1","HighConf","Yes","Steroid hormone biosynthesis","CYP1A1, CYP7A1","Steroid hormone biosynthesis (2), Metabolic pathways (2), Primary bile acid biosynthesis (1)"
+"15162",8871,"SYNJ2","HighConf","Yes","Metabolic pathways, Inositol phosphate metabolism, Phosphatidylinositol signaling system","PIK3C2B, PIP5K1B","Phosphatidylinositol signaling system (2), Inositol phosphate metabolism (2), Metabolic pathways (2)"
+"15628",26230,"TIAM2","MedConf","Yes",NA,"CREBBP","Wnt signaling pathway (1)"
+"16046",8793,"TNFRSF10D","MedConf","Yes","Apoptosis","TP53, FADD","Apoptosis (3), Platinum drug resistance (2), IL-17 signaling pathway (1), TNF signaling pathway (1), NOD-like receptor signaling pathway (1), Apoptosis - multiple species (1), Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1)"
+"16147",7157,"TP53","MedConf","Yes","Platinum drug resistance, Apoptosis, Wnt signaling pathway, p53 signaling pathway, Cellular senescence","PML, CREBBP, SP100, ETS1, AGO1, TNFRSF10D, NBN, FAS, CCNK, CABLES1, RRM2B, PMAIP1, AFP, VCAN, FOXO3","Apoptosis (4), Cellular senescence (3), p53 signaling pathway (3), Platinum drug resistance (2), Apoptosis - multiple species (1), Glutathione metabolism (1), Pyrimidine metabolism (1), Purine metabolism (1), Metabolic pathways (1), TNF signaling pathway (1), Type I diabetes mellitus (1), Wnt signaling pathway (1)"
+"16212",7187,"TRAF3","MedConf","Yes","NOD-like receptor signaling pathway, TNF signaling pathway, IL-17 signaling pathway",NA,NA
+"16391",51393,"TRPV2","HighConf","Yes","NOD-like receptor signaling pathway",NA,NA
+"16627",6675,"UAP1","HighConf","Yes","Metabolic pathways, Amino sugar and nucleotide sugar metabolism",NA,NA
+"16723",26043,"UBXN7","MedConf","Yes",NA,"OAS3","NOD-like receptor signaling pathway (1)"
+"16953",1462,"VCAN","MedConf","Yes",NA,"TP53","Cellular senescence (1), p53 signaling pathway (1), Wnt signaling pathway (1), Apoptosis (1), Platinum drug resistance (1)"
+"17201",7474,"WNT5A","MedConf","Yes","Wnt signaling pathway","SFRP5, DVL2","Wnt signaling pathway (2)"
