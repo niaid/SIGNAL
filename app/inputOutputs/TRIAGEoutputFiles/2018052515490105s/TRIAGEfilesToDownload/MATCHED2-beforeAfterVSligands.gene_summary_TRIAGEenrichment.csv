@@ -1,0 +1,15 @@
+"","Pathway","pVal","pValFDR","pValBonferroni","Genes","HitGenes","HighScoreGenes","HighScoreGenesNames","MedScoreGenesNames","EnrichScore"
+"1","Platinum drug resistance",0,0,0,73,5,5,"FAS, BAK1, CASP3, CASP8, FADD","",0.534
+"2","Apoptosis",0,0,0,135,5,5,"FAS, BAK1, CASP3, CASP8, FADD","",0.519
+"3","Apoptosis - multiple species",0,0,0,31,4,4,"BAK1, CASP3, CASP8, FADD","",0.565
+"4","TNF signaling pathway",0,0,0.001,108,4,4,"FAS, CASP3, CASP8, FADD","",0.519
+"5","Necroptosis",0,0.001,0.006,162,4,4,"CHMP4B, FAS, CASP8, FADD","",0.512
+"6","p53 signaling pathway",0,0.002,0.014,66,3,3,"FAS, CASP3, CASP8","",0.523
+"7","IL-17 signaling pathway",0,0.005,0.036,91,3,3,"CASP3, CASP8, FADD","",0.516
+"8","Non-alcoholic fatty liver disease (NAFLD)",0.001,0.017,0.14,144,3,3,"FAS, CASP3, CASP8","",0.51
+"9","NOD-like receptor signaling pathway",0.001,0.023,0.205,164,3,3,"TRPV2, CASP8, FADD","",0.509
+"10","RIG-I-like receptor signaling pathway",0.003,0.073,0.732,68,2,2,"CASP8, FADD","",0.515
+"11","Toll-like receptor signaling pathway",0.007,0.147,1,102,2,2,"CASP8, FADD","",0.51
+"12","Natural killer cell mediated cytotoxicity",0.01,0.2,1,125,2,2,"FAS, CASP3","",0.508
+"13","Glycosaminoglycan biosynthesis - heparan sulfate / heparin",0.029,0.563,1,24,1,1,"NDST4","",0.521
+"14","MAPK signaling pathway",0.037,0.652,1,253,2,2,"FAS, CASP3","",0.504
