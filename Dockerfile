@@ -1,15 +1,10 @@
-# Base image
-FROM platform-docker.artifactory.niaid.nih.gov/shiny1-alpine3:latest
+FROM platform-docker.artifactory.niaid.nih.gov/shiny1-ubuntu18.04:latest 
  
 USER root
- 
-ENV JDK_VERSION="8"
-ENV JAVA_HOME=/usr/lib/jvm/java-1.${JDK_VERSION}-openjdk
 
-RUN apk update && apk upgrade && apk add --no-cache zip openjdk${JDK_VERSION}
- 
-RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-dev && \
-    mkdir -p /usr/share/doc/R/html && \
+RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-dev libcurl4-openssl-dev" && \
+    install_opts="-y --no-install-recommends" && \
+    apt-get update && apt-get install $install_opts $build_deps && \
     R CMD javareconf && \
     R -e "install.packages('dplyr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('leaflet', repos='https://cran.rstudio.com/')" && \
@@ -32,15 +27,12 @@ RUN apk add --no-cache --virtual .build-dependencies make gcc R-dev g++ libxml2-
     R -e "install.packages('gridExtra', dep=T, repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('crosstalk', dep=T, repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('htmltools', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE); biocLite("AnnotationDbi", ask=FALSE);'  && \
-    apk del .build-dependencies
-
-# Make all files inside the directory 'app' available to the container
-COPY app/ /srv/shiny-server/
-RUN chown -R default /srv/shiny-server/
+    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE); biocLite("AnnotationDbi", ask=FALSE);' && \
+    apt-get purge -y --auto-remove $build_deps && \
+    apt-get install -y --no-install-recommends openjdk-8-jre && \ 
+    rm -rf /var/lib/{apt,dpkg}
  
 # Set or override the environmental variables
-ENV LANG=en_US.UTF-8
 ENV SHINY_APP_DATA_DIR  /srv/shiny-server/app/data/
 ENV SHINY_APP_SCRIPT_DIR  /srv/shiny-server/app/Rscripts/
 ENV SHINY_APP_INPUT_DIR  /srv/shiny-server/app/inputOutputs/TRIAGEinputFiles/
@@ -48,3 +40,5 @@ ENV SHINY_APP_OUTPUT_DIR  /srv/shiny-server/app/inputOutputs/TRIAGEoutputFiles/
  
 # Override the previous user
 USER default
+# Make all files inside the directory 'app' available to the container
+COPY --chown=default:default app/ /srv/shiny-server/
