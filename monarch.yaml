@@ -4,10 +4,10 @@ tech_email_addresses: jian.song@nih.gov
 mgmt_email_addresses: jian.song@nih.gov 
  
 docker_build:
-	variables:
-		IMAGE_REPO: git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git
-    	REGISTRY_USER: songj11
+  variables:
+    IMAGE_REPO: git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git
+    REGISTRY_USER: songj11
  
 webapp_scan:
-	variables:
-    	NS_URL: 'https://triage.niaidawsqa.net/'
+  variables:
+    NS_URL: 'https://triage.niaidawsqa.net/'
