@@ -41,4 +41,4 @@ ENV SHINY_APP_OUTPUT_DIR  /srv/shiny-server/app/inputOutputs/TRIAGEoutputFiles/
 # Override the previous user
 USER default
 # Make all files inside the directory 'app' available to the container
-COPY --chown=default:default app/ /srv/shiny-server/
+COPY app/ /srv/shiny-server/
