@@ -23,9 +23,29 @@ variable "container_port"         {
   default = "3838"
 }
 
+variable "docker_labels" {
+    "Labels": {
+      "gov.nih.niaid.pipeline-name": "triage_deploy_qa",
+      "gov.nih.niaid.pipeline-label": "321_99c0643",
+      "gov.nih.niaid.mgmt-email-addresses": "gentzela@niaid.nih.gov",
+      "gov.nih.niaid.tech-email-addresses": "NIAIDOEBPlatformTeam@mail.nih.gov",
+      "org.label-schema.build-date": "Thu May 31 15:43:06 EDT 2018",
+      "org.label-schema.name": "TRIAGE",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.vcs-ref": "944fa62",
+      "org.label-schema.vcs-url": "git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git",
+      "org.label-schema.vendor": "National Institute of Allergy and Infectious Diseases"
+    }
+}
+
+module "myapp" {
+  source              = "modules/stack/web-application"
+  docker_labels       = "${var.docker_labels}"
+}
 
 module "triage" {
   source                       = "modules/stack/web-application"
+  docker_labels                = "${var.docker_labels}"
 
   name                         = "${var.name}"
   image                        = "${data.terraform_remote_state.stack.monarch_repo_short}/${var.org}/${var.name}"
