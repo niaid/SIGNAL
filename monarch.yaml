@@ -1,12 +1,12 @@
-name: phasespace-explorer
+name: triage
  
 tech_email_addresses: jian.song@nih.gov 
 mgmt_email_addresses: jian.song@nih.gov 
  
 docker_build:
   variables:
-    IMAGE_REPO: git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git
-    REGISTRY_USER: songj11
+    IMAGE_REPO: git@github.niaid.nih.gov:yazhuks2/TRIAGE.git
+    REGISTRY_USER: yazhuks2
  
 webapp_scan:
   variables:
