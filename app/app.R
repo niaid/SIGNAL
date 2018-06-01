@@ -303,7 +303,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         ## Complete list of 23504 genes (mRNAs and ncRNAs) in mouse genome
         ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
-        mouseGenes <- read.table(file=paste0(dataDir, "Mus_musculus_23504_genes_EntrezID_geneSymbol_lookup.txt"), sep="\t", header=TRUE)
+        mouseGenes <- read.table(file=paste0(dataDir, "Mouse_proteinCoding_sourceMouseMine.txt"), sep="\t", header=TRUE)
         
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
@@ -720,7 +720,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
         inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
 
-        outputFileName <- paste0(inputFilePrefix, "_", "_TRIAGEouput_ALL.csv")
+        outputFileName <- paste0(inputFilePrefix, "_", "_TRIAGEoutput_ALL.csv")
 
         # 1) Seed Pathway Analysis
         # if('SHINY_SERVER' %in% env_names){
@@ -871,7 +871,7 @@ options(shiny.maxRequestSize = 3*1024^2)
              || (iteration >= 5 
                  && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-2)]]) 
                  && identical(siRNA.Score[[paste0("Network.class.iteration", iteration-1)]], siRNA.Score[[paste0("Network.class.iteration", iteration-3)]])
-                 && (length(siRNA.Score$EntrezID[siRNA.Score[[nName2]]== 1]) > length(siRNA.Score$EntrezID[siRNA.Score[[paste0("Network.class.iteration", iteration-1)]] == 1])))) { 
+                 && (length(siRNA.Score$EntrezID[siRNA.Score[[nName2]]== "HighConf"]) > length(siRNA.Score$EntrezID[siRNA.Score[[paste0("Network.class.iteration", iteration-1)]] == "HighConf"])))) { 
            #dupCols <- (ncol(siRNA.Score)-1):ncol(siRNA.Score)      #This just shaves off the last two columns 
             #siRNA.Score <- siRNA.Score[, -dupCols]
             counter <- FALSE
@@ -1809,7 +1809,7 @@ options(shiny.maxRequestSize = 3*1024^2)
     output$documentation <- renderUI({
       tags$iframe(
         seamless="seamless",
-        src="UserGuide_V1.pdf",
+        src="UserGuide_V2.pdf",
         height=700,
         width=800
       )
