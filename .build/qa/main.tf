@@ -41,9 +41,6 @@ module "triage" {
   desired_count                = "${var.desired_count}"
   cpu                          = "${var.cpu}"
   memory                       = "${var.memory}"
-  command                      = "tini /usr/local/bin/shiny_server.sh"
-  healtcheck_timeout           = "25"
-  healtcheck_healthy_threshold = "2"
   environment                  = "${data.terraform_remote_state.stack.environment}"
   cluster                      = "${data.terraform_remote_state.stack.cluster}"
   iam_role                     = "${data.terraform_remote_state.stack.iam_role}"
@@ -54,6 +51,9 @@ module "triage" {
   external_zone_id             = "${data.terraform_remote_state.stack.external_zone_id}"
   ssl_certificate_id           = "${data.terraform_remote_state.stack.default_ssl_cert_id}"
   vpc_id                       = "${data.terraform_remote_state.stack.vpc_id}"
+  command                      = "/usr/local/bin/shiny_server.sh"
+  healtcheck_timeout           = "25"
+  healtcheck_healthy_threshold = "2"
 }
 
 module "remote_state" {
