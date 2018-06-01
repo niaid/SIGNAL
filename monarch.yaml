@@ -5,7 +5,7 @@ mgmt_email_addresses: triage-team@nih.gov,jian.song@nih.gov,samuel.katz@nih.gov
  
 docker_build:
   variables:
-    IMAGE_REPO: LSB_triage
+    IMAGE_REPO: lsb-triage
     REGISTRY_USER: songj11
 webapp_scan:
   variables:
