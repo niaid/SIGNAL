@@ -1,38 +1,42 @@
-variable "org"                    { }
-variable "tag"                    { }
-variable "name"                   { }
-variable "region"                 { }
-variable "environment"            { }
-variable "allowed_account_ids"    { }
+variable "org" {}
+variable "tag" {}
+variable "name" {}
+variable "region" {}
+variable "environment" {}
+variable "allowed_account_ids" {}
 
 variable "docker_labels" {
   default = "null"
 }
 
-variable "desired_count"          {
+variable "desired_count" {
   default = "1"
 }
-variable "cpu"                    {
+
+variable "cpu" {
   default = "128"
 }
-variable "memory"                 {
+
+variable "memory" {
   default = "1024"
 }
-variable "alb_listener_port"      {
+
+variable "alb_listener_port" {
   default = "443"
 }
-variable "container_port"         {
+
+variable "container_port" {
   default = "3838"
 }
 
 module "myapp" {
-  source              = "modules/stack/web-application"
-  docker_labels       = "${var.docker_labels}"
+  source        = "modules/stack/web-application"
+  docker_labels = "${var.docker_labels}"
 }
 
 module "triage" {
-  source                       = "modules/stack/web-application"
-  docker_labels                = "${var.docker_labels}"
+  source        = "modules/stack/web-application"
+  docker_labels = "${var.docker_labels}"
 
   name                         = "${var.name}"
   image                        = "${data.terraform_remote_state.stack.monarch_repo_short}/${var.org}/${var.name}"
@@ -61,21 +65,20 @@ module "triage" {
 module "remote_state" {
   source = "modules/stack/remote-state"
 
-  name              = "${var.name}"
-  region            = "${var.region}"
-  environment       = "${var.environment}"
+  name        = "${var.name}"
+  region      = "${var.region}"
+  environment = "${var.environment}"
 }
 
 data "terraform_remote_state" "stack" {
   backend = "s3"
 
   config {
-    bucket  = "${var.environment}-${var.environment}-niaid-terraform-remote-state"
-    key     = "${var.environment}-${var.environment}/terraform.tfstate"
-    region  = "${var.region}"
+    bucket = "${var.environment}-${var.environment}-niaid-terraform-remote-state"
+    key    = "${var.environment}-${var.environment}/terraform.tfstate"
+    region = "${var.region}"
   }
 }
-
 
 /**
  * Outputs.
@@ -86,4 +89,3 @@ data "terraform_remote_state" "stack" {
 output "alb_listener_id" {
   value = "${module.triage.listener_id}"
 }
-
