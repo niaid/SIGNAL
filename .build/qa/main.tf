@@ -1,63 +1,46 @@
-variable "org"                    { }
-variable "tag"                    { }
-variable "name"                   { }
-variable "region"                 { }
-variable "environment"            { }
-variable "allowed_account_ids"    { }
-variable "env_vars"               {
-  default = "[]"
+variable "org" {}
+variable "tag" {}
+variable "name" {}
+variable "region" {}
+variable "environment" {}
+variable "allowed_account_ids" {}
+
+variable "docker_labels" {
+  default = "null"
 }
-variable "desired_count"          {
+
+variable "desired_count" {
   default = "1"
 }
-variable "cpu"                    {
+
+variable "cpu" {
   default = "128"
 }
-variable "memory"                 {
+
+variable "memory" {
   default = "1024"
 }
-variable "alb_listener_port"      {
+
+variable "alb_listener_port" {
   default = "443"
 }
-variable "container_port"         {
+
+variable "container_port" {
   default = "3838"
 }
 
-variable "docker_labels" {
-    "Labels": {
-      "gov.nih.niaid.pipeline-name": "triage_deploy_qa",
-      "gov.nih.niaid.pipeline-label": "321_99c0643",
-      "gov.nih.niaid.mgmt-email-addresses": "gentzela@niaid.nih.gov",
-      "gov.nih.niaid.tech-email-addresses": "NIAIDOEBPlatformTeam@mail.nih.gov",
-      "org.label-schema.build-date": "Thu May 31 15:43:06 EDT 2018",
-      "org.label-schema.name": "TRIAGE",
-      "org.label-schema.schema-version": "1.0",
-      "org.label-schema.vcs-ref": "944fa62",
-      "org.label-schema.vcs-url": "git@github.niaid.nih.gov:Signaling-Systems-Unit/TRIAGE.git",
-      "org.label-schema.vendor": "National Institute of Allergy and Infectious Diseases"
-    }
-}
-
-module "myapp" {
-  source              = "modules/stack/web-application"
-  docker_labels       = "${var.docker_labels}"
-}
-
 module "triage" {
-  source                       = "modules/stack/web-application"
-  docker_labels                = "${var.docker_labels}"
+  source        = "modules/stack/web-application"
+  docker_labels = "${var.docker_labels}"
 
   name                         = "${var.name}"
   image                        = "${data.terraform_remote_state.stack.monarch_repo_short}/${var.org}/${var.name}"
-  version                      = "${var.tag}"
+  image_version                = "${var.tag}"
   port                         = "${var.alb_listener_port}"
   container_port               = "${var.container_port}"
   desired_count                = "${var.desired_count}"
   cpu                          = "${var.cpu}"
   memory                       = "${var.memory}"
-  command                      = "tini /usr/local/bin/shiny_server.sh"
-  healtcheck_timeout           = "25"
-  healtcheck_healthy_threshold = "2"
   environment                  = "${data.terraform_remote_state.stack.environment}"
   cluster                      = "${data.terraform_remote_state.stack.cluster}"
   iam_role                     = "${data.terraform_remote_state.stack.iam_role}"
@@ -68,27 +51,28 @@ module "triage" {
   external_zone_id             = "${data.terraform_remote_state.stack.external_zone_id}"
   ssl_certificate_id           = "${data.terraform_remote_state.stack.default_ssl_cert_id}"
   vpc_id                       = "${data.terraform_remote_state.stack.vpc_id}"
-  env_vars                     = "${var.env_vars}"
+  command                      = "/usr/local/bin/shiny_server.sh"
+  healtcheck_timeout           = "25"
+  healtcheck_healthy_threshold = "2"
 }
 
 module "remote_state" {
   source = "modules/stack/remote-state"
 
-  name              = "${var.name}"
-  region            = "${var.region}"
-  environment       = "${var.environment}"
+  name        = "${var.name}"
+  region      = "${var.region}"
+  environment = "${var.environment}"
 }
 
 data "terraform_remote_state" "stack" {
   backend = "s3"
 
   config {
-    bucket  = "${var.environment}-${var.environment}-niaid-terraform-remote-state"
-    key     = "${var.environment}-${var.environment}/terraform.tfstate"
-    region  = "${var.region}"
+    bucket = "${var.environment}-${var.environment}-niaid-terraform-remote-state"
+    key    = "${var.environment}-${var.environment}/terraform.tfstate"
+    region = "${var.region}"
   }
 }
-
 
 /**
  * Outputs.
@@ -99,4 +83,3 @@ data "terraform_remote_state" "stack" {
 output "alb_listener_id" {
   value = "${module.triage.listener_id}"
 }
-
