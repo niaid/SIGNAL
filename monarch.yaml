@@ -1,13 +1,12 @@
 name: triage
  
-tech_email_addresses: jian.song@nih.gov 
-mgmt_email_addresses: jian.song@nih.gov 
+tech_email_addresses: triage-team@nih.gov,jian.song@nih.gov,samuel.katz@nih.gov 
+mgmt_email_addresses: triage-team@nih.gov,jian.song@nih.gov,samuel.katz@nih.gov
  
 docker_build:
   variables:
-    IMAGE_REPO: git@github.niaid.nih.gov:yazhuks2/TRIAGE.git
-    REGISTRY_USER: yazhuks2
- 
+    IMAGE_REPO: LSB_triage
+    REGISTRY_USER: songj11
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
