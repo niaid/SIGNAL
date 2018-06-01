@@ -29,11 +29,6 @@ variable "container_port" {
   default = "3838"
 }
 
-module "myapp" {
-  source        = "modules/stack/web-application"
-  docker_labels = "${var.docker_labels}"
-}
-
 module "triage" {
   source        = "modules/stack/web-application"
   docker_labels = "${var.docker_labels}"
