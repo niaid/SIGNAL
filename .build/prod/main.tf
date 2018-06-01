@@ -7,8 +7,9 @@ variable "allowed_account_ids"    { }
 variable "use_public_ssl_cert"    { }
 variable "url_to_monitor"         { }
 variable "alert_recipients"       { }
-variable "env_vars"               {
-  default = "[]"
+
+variable "docker_labels" {
+  default = "null"
 }
 variable "desired_count"          {
   default = "1"
