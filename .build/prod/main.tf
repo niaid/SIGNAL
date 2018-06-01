@@ -37,7 +37,7 @@ module "triage" {
 
   name                         = "${var.name}"
   image                        = "${data.terraform_remote_state.stack.monarch_repo_short}/${var.org}/${var.name}"
-  version                      = "${var.tag}"
+  image_version                = "${var.tag}"
   port                         = "${var.alb_listener_port}"
   container_port               = "${var.container_port}"
   desired_count                = "${var.desired_count}"
@@ -55,7 +55,6 @@ module "triage" {
   internal_zone_id             = "${data.terraform_remote_state.stack.internal_zone_id}"
   external_zone_id             = "${data.terraform_remote_state.stack.external_zone_id}"
   vpc_id                       = "${data.terraform_remote_state.stack.vpc_id}"
-  env_vars                     = "${var.env_vars}"
   use_public_ssl_cert          = "${var.use_public_ssl_cert}"
   alert_recipients             = "${var.alert_recipients}"
   url_to_monitor               = "${var.url_to_monitor}"
