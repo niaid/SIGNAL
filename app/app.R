@@ -1292,13 +1292,12 @@ options(shiny.maxRequestSize = 3*1024^2)
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
               myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
-message(pathEnrich[i,][1])
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
               myGene <- paste(myBlueGene, myRedGene, sep = "")
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
-            View(pathEnrich)
+            #View(pathEnrich)
             # Chang column name from 'Genes' to 'TotalGenes'
             colnames(pathEnrich)[which(names(pathEnrich) == "Genes")] <- "TotalGenes"
             return(pathEnrich)
