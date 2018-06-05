@@ -762,19 +762,22 @@ options(shiny.maxRequestSize = 3*1024^2)
         #########################################
         ########## Create data tier of gene lists
         #########################################
+        cutoffHigh <<- as.numeric(input$cutoff_valueH)
+        cutoffMed <<- as.numeric(input$cutoff_valueM)
+        cutoffType <<- input$cutoff_type
         #Ensure cutoff column is as numeric
         siRNA.Score <- 
         
         #Depending on the differnce between the high conf cutoff and the mid conf cutoff assign criteria based on "greater than" or "less than"
-        if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
+        if((cutoffHigh - cutoffMed) > 0){
           siRNA.Score <- siRNA.Score %>%
-            mutate(ConfidenceCategory = ifelse(get(proxyScore, as.environment(siRNA.Score)) >= input$cutoff_valueH, "HighConf",
-                                               ifelse(get(proxyScore, as.environment(siRNA.Score)) >= input$cutoff_valueM & get(proxyScore, as.environment(siRNA.Score)) < input$cutoff_valueH,"MedConf",
+            mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) >= cutoffHigh, "HighConf",
+                                               ifelse(get(cutoffType, as.environment(siRNA.Score)) >= cutoffMed & get(cutoffType, as.environment(siRNA.Score)) < cutoffHigh,"MedConf",
                                                       "LowConf")))
         }else{
           siRNA.Score <- siRNA.Score %>%
-            mutate(ConfidenceCategory = ifelse(get(proxyScore, as.environment(siRNA.Score)) <= input$cutoff_valueH, "HighConf",
-                                               ifelse(get(proxyScore, as.environment(siRNA.Score)) <= input$cutoff_valueM & get(proxyScore, as.environment(siRNA.Score)) > input$cutoff_valueH,"MedConf",
+            mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) <= cutoffHigh, "HighConf",
+                                               ifelse(get(cutoffType, as.environment(siRNA.Score)) <= cutoffMed & get(cutoffType, as.environment(siRNA.Score)) > cutoffHigh,"MedConf",
                                                       "LowConf")))
         }
         
@@ -801,8 +804,6 @@ options(shiny.maxRequestSize = 3*1024^2)
 
         cutoffType <<- input$cutoff_type
         proxyScore <- "ConfidenceCategory"
-        cutoffHigh <<- as.numeric(input$cutoff_valueH)
-        cutoffMed <<- as.numeric(input$cutoff_valueM)
         iteration <- 1
         counter <- TRUE
 
@@ -1239,6 +1240,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                        <input type="hidden" name="reference" value="white">
                        <input type="submit" onclick="extLink()" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
             }
+            
 
             # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
             for (i in 1:nrow(pathEnrich))
@@ -1296,6 +1298,7 @@ message(pathEnrich[i,][1])
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
+            View(pathEnrich)
             # Chang column name from 'Genes' to 'TotalGenes'
             colnames(pathEnrich)[which(names(pathEnrich) == "Genes")] <- "TotalGenes"
             return(pathEnrich)
