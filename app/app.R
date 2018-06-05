@@ -1231,7 +1231,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               sprintf('<script>function extLink() {
                           alert("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
                        }</script>                        
-                       <form target="_blank" enctype="multipart/form-data" method="post" action="http://www.genome.jp/kegg-bin/mcolor_pathway">
+                       <form target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway">
                        <input type="hidden" name="map" value="%s0%s">
                        <input type="hidden" name="unclassified" value="%s">
                        <input type="hidden" name="s_sample" value="color">
@@ -1290,7 +1290,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               mapperHeader <- capture.output(cat("#", organismAbbr,	"CLP/CMP\tBlast_phase\tAll"))
               myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
-
+message(pathEnrich[i,][1])
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
               myGene <- paste(myBlueGene, myRedGene, sep = "")
               myGene <- substring(myGene, 2)
