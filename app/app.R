@@ -1221,7 +1221,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
             # Add a hyperlink to KEGG pathway
             createLink <- function(val1, val2, val3) {
-              sprintf('<a href="http://www.genome.jp/kegg-bin/show_pathway?%s0%s" target="_blank" class="btn btn-primary">%s</a>', val1, val2, val3)
+              sprintf('<a href="https://www.kegg.jp/kegg-bin/show_pathway?%s0%s" target="_blank" class="btn btn-primary">%s</a>', val1, val2, val3)
             }
 
             # Add a hyperlink to KEGG mapper
