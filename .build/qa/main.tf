@@ -14,11 +14,11 @@ variable "desired_count" {
 }
 
 variable "cpu" {
-  default = "128"
+  default = "256"
 }
 
 variable "memory" {
-  default = "1024"
+  default = "2048"
 }
 
 variable "alb_listener_port" {
