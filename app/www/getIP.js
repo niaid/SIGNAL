@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $.get("http://ipinfo.io", function(response) {
+  $.get("https://ipinfo.io", function(response) {
     Shiny.onInputChange("getIP", response);
   }, "json");
 });
