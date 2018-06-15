@@ -710,7 +710,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
-        outDir <- paste0(outputDir,"/", userDir)
+        outDir <<- paste0(outputDir,"/", userDir)
         dir.create(outDir)
         setwd(outDir)
         
@@ -1820,6 +1820,13 @@ options(shiny.maxRequestSize = 3*1024^2)
     ## Change log
     output$changeLog <- renderUI({
       HTML("Change Log - version and update history")
+    })
+    
+    # This code will be run after the client has disconnected
+    # ie, a user session is closed
+    session$onSessionEnded(function() {
+      # Delete user/session-specific directory after removing all downloadable files
+      unlink(outDir, recursive = TRUE)
     })
     
     # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
