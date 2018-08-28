@@ -720,7 +720,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
         inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
 
-        outputFileName <- paste0(inputFilePrefix, "_", "_TRIAGEoutput_ALL.csv")
+        outputFileName <- paste0(inputFilePrefix, "_", "TRIAGEoutput_ALL.csv")
 
         # 1) Seed Pathway Analysis
         # if('SHINY_SERVER' %in% env_names){
@@ -913,11 +913,11 @@ options(shiny.maxRequestSize = 3*1024^2)
         pathDF <- data.frame(GeneSymbol = tempDF$GeneSymbol, Pathway = pathVector, stringsAsFactors = F)
 
         ## Save the results into output files in the TRIAGEoutputFiles folder
-        out <- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
+        triage.Out <<- merge(siRNA.Score, pathDF, by = "GeneSymbol", all = T)
 
         message(getwd(), "#####")
 
-        write.csv(out, file = outputFileName, row.names = F)
+        write.csv(triage.Out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv")
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
 
@@ -1123,7 +1123,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                                                by.x = "GeneMappingID", by.y = "source",
                                                all.y = T)
         
-        #######Add to triage Out put file
+        #######Add to TRIAGE output file
         TRIAGEoutput <- merge(TRIAGEoutput, EdgePathways_stacked_EntrezID[, c("EntrezID", "NetworkGenePathways")],
                               by.x = "EntrezID", by.y = "EntrezID",
                               all.x = T)
@@ -1198,7 +1198,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
-        write.csv(out, file = outputFileName, row.names = F)
+        write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
       ## Switch to 'Enriched Pathways' tab and display partial results
