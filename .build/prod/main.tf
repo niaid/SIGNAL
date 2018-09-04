@@ -34,7 +34,7 @@ variable "container_port" {
 
 module "triage" {
   source = "modules/stack/web-application"
-
+  docker_labels = "{var.docker_labels}"
   name                         = "${var.name}"
   image                        = "${data.terraform_remote_state.stack.monarch_repo_short}/${var.org}/${var.name}"
   image_version                = "${var.tag}"
