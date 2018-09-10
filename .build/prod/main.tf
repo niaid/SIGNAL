@@ -21,7 +21,7 @@ variable "cpu" {
 }
 
 variable "memory" {
-  default = "1024"
+  default = "2048"
 }
 
 variable "alb_listener_port" {
