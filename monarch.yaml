@@ -11,5 +11,5 @@ webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
   whitelist:
-     - Out-of-date Version (Bootstrap)
+     - Out-of-date Version (Bootstrap):
        - 'https://triage.niaidawsqa.net/' # Whitelissting temporarily
