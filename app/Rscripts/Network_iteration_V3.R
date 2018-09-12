@@ -23,7 +23,6 @@
 library("igraph")
 set.seed(123)
 
-G <- upgrade_graph(G)
 OverallDegree <- degree(G)
 Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID, V(G)$name)
 Graph <- induced.subgraph(G, Screen_Genes.for.network.analysis)

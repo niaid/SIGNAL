@@ -610,7 +610,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                 load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
               }
                 
-              G <<- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
+              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
             }
             if(network_ConfidenceCutoff <= 150){
               if('SHINY_SERVER_VERSION' %in% env_names){
@@ -623,8 +623,10 @@ options(shiny.maxRequestSize = 3*1024^2)
               G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
               }
             }
-          } else if(input_netowrk == "Advanced Options")
+          } 
+          else if(input_netowrk == "Advanced Options")
           {
+            
             for (i in 1:length(network_InteractionSources)) {
               if('SHINY_SERVER_VERSION' %in% env_names){
               load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
@@ -662,8 +664,9 @@ options(shiny.maxRequestSize = 3*1024^2)
               }
             }
           }
-        ##Push graph to global environment
-        #G <<- G
+        ## Update the G igraph object
+        G <- upgrade_graph(G)
+        
         
         #Selected_STRINGnetwork.igraph <- G
         message("Networks Loaded")
@@ -907,7 +910,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
         tempDF <- Reduce(function(x, y) merge(x, y, by = "GeneSymbol", all = T), tempL)
 
-        samp <- tempDF[, 2:ncol(tempDF)]
+        samp <- as.data.frame(tempDF[, 2:ncol(tempDF)])
         pathVector <- sapply(seq(nrow(samp)), function(i) unlist(paste(samp[i, which(!is.na(samp[i, ]))], collapse = ", "))) #Switched to comma seperator from " ; " 
 
         pathDF <- data.frame(GeneSymbol = tempDF$GeneSymbol, Pathway = pathVector, stringsAsFactors = F)
