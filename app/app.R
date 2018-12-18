@@ -63,7 +63,10 @@ options(shiny.maxRequestSize = 3*1024^2)
       # Capture user access information
       tags$head(
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
-        tags$script(src="getIP.js")
+        tags$script(src="getIP.js"),
+        tags$script(src="https://d3js.org/d3.v5.min.js"),
+        tags$script(src="custom_network.js"),
+        tags$div(`data-value` = "graphView1") 
       ),
 
       # style
@@ -494,7 +497,6 @@ options(shiny.maxRequestSize = 3*1024^2)
       
       ## Start perfroming enrichment
       observeEvent(input$goButton, {
-        
         ## Check if input file and relevant paremater selected
         ## if not, show an error message
         if(is.null(input$file1)){
@@ -713,9 +715,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
-        outDir <<- paste0(outputDir,"/", userDir)
+        outDir <<- paste0(outputDir, userDir)
         dir.create(outDir)
-        setwd(outDir)
+        #setwd(outDir)
+        setwd(paste0('inputOutputs/TRIAGEoutputFiles/', userDir))
         
         # Set the output file name
         inputFile <- input$file1
@@ -1194,7 +1197,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         ############# Write files to new Directory
         downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
         dir.create(downloadDir)
-        setwd(downloadDir)
+        #setwd(downloadDir)
+        setwd('TRIAGEfilesToDownload')
         
         TRIAGE.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
         Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
