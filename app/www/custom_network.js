@@ -3,9 +3,7 @@ Shiny.addCustomMessageHandler("jsondata",
     var json_data = message;
     console.log(json_data);
 
-    return json_data;
-
-    /*var w = 1280,
+    var w = 1280,
       h = 800,
       rx = w / 2,
       ry = h / 2,
@@ -192,7 +190,7 @@ Shiny.addCustomMessageHandler("jsondata",
     }
 
     // Lazily construct the package hierarchy from class names.
-    function root(dat) {
+    function root(json_data) {
       var map = {};
 
       function find(name, data) {
@@ -208,7 +206,7 @@ Shiny.addCustomMessageHandler("jsondata",
         return node;
       }
 
-      dat.forEach(function(d) {
+      json_data.forEach(function(d) {
         find(d.name, d);
       });
 
@@ -233,6 +231,6 @@ Shiny.addCustomMessageHandler("jsondata",
       });
 
       return imports;
-    }*/
+    }
 
   });
