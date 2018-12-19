@@ -416,12 +416,6 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
   Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
   
-  #json_data <- rbind(names(g), sapply(g, as.character))
-  json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows', pretty=T)
-  #json_1 <- Chimera1[[1]][1]$json_real
-  session$sendCustomMessage(type="jsondata",json_1)
-  #session$sendCustomMessage(type="jsondata",json_2)
-  
   # Create 1st dimension networkD3 object
   g11 = g
   g11_wc <- cluster_walktrap(g11)
@@ -430,6 +424,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # Convert to object suitable for networkD3
   g11_d3 <<- igraph_to_networkD3(g11, group = g11_members)
   g11_vis <<- toVisNetworkData(g11)
+  
+  #json_data <- rbind(names(g), sapply(g, as.character))
+  json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
+  #json_1 <- Chimera1[[1]][1]$json_real
+  session$sendCustomMessage(type="jsondata",json_1)
+  #session$sendCustomMessage(type="jsondata",json_2)
   
   # Create 2nd dimension networkD3 object
   g22 = g2
