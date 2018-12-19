@@ -63,7 +63,13 @@ options(shiny.maxRequestSize = 3*1024^2)
       # Capture user access information
       tags$head(
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
-        tags$script(src="getIP.js")
+        tags$script(src="getIP.js"),
+        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.js"),
+        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
+        #tags$script(src="http://mbostock.github.io/d3/talk/20111116/packages.js"),
+        #tags$script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"),
+        tags$script(src="custom_network.js")
+        #tags$div(id="igraphViews") 
       ),
 
       # style
@@ -73,7 +79,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       useShinyjs(), br(),
 
       # Application title
-      headerPanel(includeHTML("header.html")),
+      #headerPanel(includeHTML("header.html")),
 
       # Sidebar with a slider input for number of bins
       sidebarLayout(
@@ -135,9 +141,11 @@ options(shiny.maxRequestSize = 3*1024^2)
           ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
-          textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          #textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          textInput("cutoff_valueH", "High-conf Cutoff Value", value = "1"),
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          #textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          textInput("cutoff_valueM", "Med-conf Cutoff Value", value = "0.5"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           checkboxInput("includeBackground", "Add genome background"),
           bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
@@ -183,18 +191,19 @@ options(shiny.maxRequestSize = 3*1024^2)
             ),
             tabPanel(title = "PathNet", value = "graphViews",
                 htmlOutput("spacer4"),
-                tabsetPanel(id = 'igraphViews',
+                tabsetPanel(id = 'igraphViews'
                       ## Display in igrap
-                      tabPanel(title="1st Degree Network", value="graphView1",
-                               htmlOutput("graphLegend1"),
-                               htmlOutput("graphView1i", width = "100%", height = "700px")
-                      ),
-                      tabPanel(title="2nd Degree Network", value="graphView2",
-                               htmlOutput("graphLegend2"),
-                               htmlOutput("graphView2i", width = "100%", height = "700px")
-                      ),
-                      tabPanel(title = "PathNet Table", value = "PathNetTable",
-                               dataTableOutput("PathNetTable"))
+                      # tabPanel(title="1st Degree Network", value="graphView1",
+                      #          htmlOutput("graphLegend1"),
+                      #          htmlOutput("graphView1i", width = "100%", height = "700px")
+                      # ),
+                      # tabPanel(title="2nd Degree Network", value="graphView2",
+                      #          htmlOutput("graphLegend2"),
+                      #          htmlOutput("graphView2i", width = "100%", height = "700px")
+                      # ),
+                      # tabPanel(title = "PathNet Table", value = "PathNetTable",
+                      #          dataTableOutput("PathNetTable")
+                      # )
                 )
             ),
             # tabPanel(title = "NetworkD3", value = "networkViews",
@@ -286,25 +295,25 @@ options(shiny.maxRequestSize = 3*1024^2)
           return(NULL)
 
         data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
-        
+
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$GeneSymbol)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
-        # }        
-        # 
+        # }
+        #
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$EntrezID)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated EntrezIDs were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
-        # } 
-        
+        # }
+
         ## Complete list of 19191 protein-encoding genes in human genome
         ## ftp://ftp.ncbi.nlm.nih.gov/refseq/M_musculus/Mus_musculus.gene_info.gz
         humanGenes <- read.table(file=paste0(dataDir, "HGNC_19191_genes_with_protein_product_EntrezID_geneSymbole_lookup.txt"), sep="\t", header=TRUE)
-        
+
         ## Complete list of 23504 genes (mRNAs and ncRNAs) in mouse genome
         ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
         mouseGenes <- read.table(file=paste0(dataDir, "Mouse_proteinCoding_sourceMouseMine.txt"), sep="\t", header=TRUE)
-        
+
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
           # Input data do not have EntrezID AND GeneSymbol columns
@@ -323,15 +332,15 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Hs.egSYMBOL2EG
             backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
-            library('org.Mm.eg.db') 
+            library('org.Mm.eg.db')
             x <- org.Mm.egSYMBOL2EG
             backgroundGenes <- mouseGenes
           }
-          
+
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
-          
-          
+
+
           # If no overlapping genes found, catch and handle the error
           if(length(overlappingGenes) == 0){
             showModal(modalDialog(
@@ -340,31 +349,31 @@ options(shiny.maxRequestSize = 3*1024^2)
               easyClose = TRUE
             ))
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$GeneSymbol %in% data$GeneSymbol,]
-          
+
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors=FALSE)
           numGeneInInput <- nrow(data)
-          
+
           if(length(overlappingGenes) > 0){
             tempData <- merge(x=data, y=y, by="GeneSymbol")
             data <- tempData
           }
           numGeneWithEntrezID <- nrow(data)
-          
+
           # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
           if((numGeneInInput - numGeneWithEntrezID) > 0){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
                                   HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
           }
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           rm(tempData,x,y,xx)
-          
+
           message("Input file has a 'GeneSymbol' column!")
         }
         else if(("EntrezID" %in% colnames(data)) & !("GeneSymbol" %in% colnames(data))){
@@ -379,11 +388,11 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Mm.egSYMBOL
             backgroundGenes <- mouseGenes
           }
-          
+
           #mapped_genes <- as.integer(mappedkeys(x))
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(mapped_genes, data$EntrezID)
-          
+
           # If no overlapping genes found, catch and handle the error
           if(length(overlappingGenes) == 0){
             showModal(modalDialog(
@@ -392,42 +401,42 @@ options(shiny.maxRequestSize = 3*1024^2)
               easyClose = TRUE
             ))
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
-          
+
           xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors=FALSE)
-          
+
           if(length(overlappingGenes) > 0){
             # Create a dataframe of the input data with both EntrezID and GeneSymbol
             tempData <- merge(x=data, y=y, by="EntrezID")
             data <- tempData
           }
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
-          
+
           rm(tempData,x,y,xx)
           message("Input file has a 'EntrezID' column!")
-          
-          # Having both EntrezID and GeneSymbol 
-        }else{ 
-          if(input$organism == "Human"){  
+
+          # Having both EntrezID and GeneSymbol
+        }else{
+          if(input$organism == "Human"){
             backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
             backgroundGenes <- mouseGenes
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           message("Input file has both 'EntrezID' and 'GeneSymbol' columns!")
         }
-        
+
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
         for (i in 1:nrow(data)){
           if(is.na(data$GeneSymbol[i])){
@@ -442,19 +451,19 @@ options(shiny.maxRequestSize = 3*1024^2)
         #     data$GeneSymbol[i] <- data$EntrezID[i]
         #   }
         # }
-        
+
         # Make sure the EntrezIDs are integers
         data$EntrezID <- as.integer(data$EntrezID)
         data <- data[order(data$EntrezID),]
-        
 
-        
+
+
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
-        
+
         data <- data %>%
           dplyr::select(GeneSymbol, everything())
-        
+
         # display the input file dimension
         datatable(data, rownames = FALSE, options = list(paging=TRUE))
       })
@@ -481,7 +490,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         pulldown_types <- c("", colnames(data2))
 
-        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
       })
 
       # # These user information (userName and userEmail) will collected after the modal is closed/submitted
@@ -494,7 +503,6 @@ options(shiny.maxRequestSize = 3*1024^2)
       
       ## Start perfroming enrichment
       observeEvent(input$goButton, {
-        
         ## Check if input file and relevant paremater selected
         ## if not, show an error message
         if(is.null(input$file1)){
@@ -713,9 +721,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
-        outDir <<- paste0(outputDir,"/", userDir)
+        outDir <<- paste0(outputDir, userDir)
         dir.create(outDir)
-        setwd(outDir)
+        #setwd(outDir)
+        setwd(paste0('inputOutputs/TRIAGEoutputFiles/', userDir))
         
         # Set the output file name
         inputFile <- input$file1
@@ -1194,7 +1203,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         ############# Write files to new Directory
         downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
         dir.create(downloadDir)
-        setwd(downloadDir)
+        #setwd(downloadDir)
+        setwd('TRIAGEfilesToDownload')
         
         TRIAGE.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
         Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
@@ -1505,21 +1515,21 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             ## Display 1st dimension
             # legend
-            output$graphLegend1 <- renderUI({
-              HTML(graphLegend)
-            })
-            #output$graphView1i <- renderEdgebundle({
-            output$graphView1i <- renderUI({
-              
-              file.copy(paste0(PathNetName.output, "1Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "1Degree.html")), overwrite = TRUE)
-              tags$iframe(
-                seamless="seamless",
-                src=paste0(PathNetName.output, "1Degree.html"),
-                scrolling = 'no',
-                height=700, 
-                width=700
-              )
-            })
+            # output$graphLegend1 <- renderUI({
+            #   HTML(graphLegend)
+            # })
+            # #output$graphView1i <- renderEdgebundle({
+            # output$graphView1i <- renderUI({
+            #   
+            #   file.copy(paste0(PathNetName.output, "1Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "1Degree.html")), overwrite = TRUE)
+            #   tags$iframe(
+            #     seamless='seamless',
+            #     src=paste0(PathNetName.output, "1Degree.html"),
+            #     scrolling = 'no',
+            #     height=700,
+            #     width=700
+            #   )
+            # })
             
             # Display 2nd dimension)
             # legend

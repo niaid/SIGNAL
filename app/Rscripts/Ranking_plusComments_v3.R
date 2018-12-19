@@ -266,7 +266,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
 
   Scores_nodes_and_edges <<- Scores_nodes_and_edges
   #message(TRIAGE.output, "**")
-  setwd(downloadDir)
+  #setwd(downloadDir)
+  #setwd('TRIAGEfilesToDownload')
   write.csv(Scores_nodes_and_edges, RankingFileName.output)
   
   ############################################################################### Add visualization ##############################################################################
@@ -389,6 +390,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   clr <- as.factor(V(g)$Loc)
   clr2 <- as.factor(V(g2)$Loc)
   
+  
   if(length(selectedRows) == 3){
     levels(clr) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
     levels(clr2) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
@@ -412,7 +414,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #plot(g, layout = layout.circle, vertex.label=NA)
   
   Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
-  Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)       
+  Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
   
   # Create 1st dimension networkD3 object
   g11 = g
@@ -422,6 +424,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # Convert to object suitable for networkD3
   g11_d3 <<- igraph_to_networkD3(g11, group = g11_members)
   g11_vis <<- toVisNetworkData(g11)
+  
+  #json_data <- rbind(names(g), sapply(g, as.character))
+  json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
+  #json_1 <- Chimera1[[1]][1]$json_real
+  session$sendCustomMessage(type="jsondata",json_1)
+  #session$sendCustomMessage(type="jsondata",json_2)
   
   # Create 2nd dimension networkD3 object
   g22 = g2
@@ -494,8 +502,10 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
     saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
   }else{
-    saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+    #saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+    saveEdgebundle(Chimera1,file = paste0(PathNetName.output, "1Degree.html"))
+    #saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+    saveEdgebundle(Chimera2,file = paste0(PathNetName.output, "1Degree.html"))
   }
   
   
