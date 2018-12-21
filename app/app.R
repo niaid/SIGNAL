@@ -527,7 +527,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Remove duplicate EntrezID rows based on the cutoff values
         if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
           # sort the dataframe in decending order
-          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'],-siRNA.Score[,input$cutoff_type]),]
+          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'], -siRNA.Score[,input$cutoff_type]),]
           # remove the duplicated EntrezID row that has a smaller value in cutoff_type column 
           siRNA.Score = siRNA.Score[!duplicated(siRNA.Score$EntrezID),]
         }else{
@@ -1499,6 +1499,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             progress1$set(message = "Generating network graph....", value = 0.3)
             
             message(selectedRows)
+            source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             progress1$inc(1/2)
             Generate_NetworkGraph(selectedRows, organism)

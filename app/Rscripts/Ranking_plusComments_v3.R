@@ -426,8 +426,9 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   g11_vis <<- toVisNetworkData(g11)
   
   #json_data <- rbind(names(g), sapply(g, as.character))
-  json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
+  #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
   #json_1 <- Chimera1[[1]][1]$json_real
+  json_1 <- config_json(g11_vis$edges, 'dim1')
   session$sendCustomMessage(type="jsondata",json_1)
   #session$sendCustomMessage(type="jsondata",json_2)
   

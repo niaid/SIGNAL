@@ -1,7 +1,15 @@
 Shiny.addCustomMessageHandler("jsondata",
   function(message){
     var json_data = message;
-    console.log(json_data);
+
+    var df = []
+
+    json_data.forEach(function(d){
+      d = {name: d.name[0], imports: d.imports};
+      df.push(d)
+    })
+
+    console.log(df);
 
     var w = 1280,
       h = 800,
@@ -29,6 +37,7 @@ Shiny.addCustomMessageHandler("jsondata",
 
     // Chrome 15 bug: <http://code.google.com/p/chromium/issues/detail?id=98951>
     var div = d3.select("div.row").insert("div")
+      .attr("class", "d3network")
       .style("top", "100px")
       .style("left", "450px")
       .style("width", w + "px")
@@ -49,9 +58,53 @@ Shiny.addCustomMessageHandler("jsondata",
 
     // testing data for console development
     // var myurl = "https://gist.githubusercontent.com/mbostock/1044242/raw/3ebc0fde3887e288b4a9979dad446eb434c54d08/flare.json"
-    // var json_data = await $.getJSON(myurl)
+    // var json_flare = await $.getJSON(myurl)
 
-    var nodes = cluster.nodes(root(json_data)),
+    // Lazily construct the package hierarchy from class names.
+    function root(classes) {
+      var map = {};
+
+      function find(name, data) {
+        var node = map[name], i;
+        if (!node) {
+          node = map[name] = data || {name: name, children: []};
+          if (name.length) {
+            node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+            node.parent.children.push(node);
+            node.key = name.substring(i + 1);
+          }
+        }
+        return node;
+      }
+
+      classes.forEach(function(d) {
+        find(d.name, d);
+      });
+
+      return map[""];
+    }
+
+    // Return a list of imports for the given array of nodes.
+    function imports(nodes) {
+      var map = {},
+          imports = [];
+
+      // Compute a map from name to node.
+      nodes.forEach(function(d) {
+        map[d.name] = d;
+      });
+
+      // For each import, construct a link from the source to target node.
+      nodes.forEach(function(d) {
+        if (d.imports) d.imports.forEach(function(i) {
+          imports.push({source: map[d.name], target: map[i]});
+        });
+      });
+
+      return imports;
+    }
+
+    var nodes = cluster.nodes(root(df)),
         links = imports(nodes),
         splines = bundle(links);
 
@@ -187,50 +240,6 @@ Shiny.addCustomMessageHandler("jsondata",
 
     function dot(a, b) {
     return a[0] * b[0] + a[1] * b[1];
-    }
-
-    // Lazily construct the package hierarchy from class names.
-    function root(json_data) {
-      var map = {};
-
-      function find(name, data) {
-        var node = map[name], i;
-        if (!node) {
-          node = map[name] = data || {name: name, children: []};
-          if (name.length) {
-            node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
-            node.parent.children.push(node);
-            node.key = name.substring(i + 1);
-          }
-        }
-        return node;
-      }
-
-      json_data.forEach(function(d) {
-        find(d.name, d);
-      });
-
-      return map[""];
-    }
-
-    // Return a list of imports for the given array of nodes.
-    function imports(nodes) {
-      var map = {},
-          imports = [];
-
-      // Compute a map from name to node.
-      nodes.forEach(function(d) {
-        map[d.name] = d;
-      });
-
-      // For each import, construct a link from the source to target node.
-      nodes.forEach(function(d) {
-        if (d.imports) d.imports.forEach(function(i) {
-          imports.push({source: map[d.name], target: map[i]});
-        });
-      });
-
-      return imports;
     }
 
   });
