@@ -15,7 +15,7 @@
 #selectedRows <- c(1,2,3)  
 #Generate_NetworkGraph(selectedRows)
 
-Generate_NetworkGraph <- function(selectedRows, organism){
+Generate_NetworkGraph <- function(selectedRows, organism, G){
   #############################################################
   #Set directories
   
@@ -358,6 +358,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   rel <- rel.target[, c("source.ID", "target.ID")]
   names(rel)[names(rel)=="source.ID"] <- "V1"
   names(rel)[names(rel)=="target.ID"] <- "V2"
+  rel$weights = rel.target$weights
   
   #Flip columns to get pathway colors as links for 2nd dimension graph
   names(rel2.target)[names(rel2.target)=="target.ID"] <- "target.ID2"
@@ -372,6 +373,7 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   rel2 <- rel2.target[, c("source.ID", "target.ID")]
   names(rel2)[names(rel2)=="source.ID"] <- "V1"
   names(rel2)[names(rel2)=="target.ID"] <- "V2"
+  rel2$weights = rel2.target$weights
   
   # Remove nodes that do not have connection to the selected pathways
   rel.V1.matrix <- as.matrix((unique(rel$V1)))
@@ -428,7 +430,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   #json_data <- rbind(names(g), sapply(g, as.character))
   #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
   #json_1 <- Chimera1[[1]][1]$json_real
-  json_1 <- config_json(g11_vis$edges, 'dim1')
+  dimNames = c(path1_name, path2_name, path3_name)
+  json_1 <- config_json(g11_vis$edges, dimNames)
   session$sendCustomMessage(type="jsondata",json_1)
   #session$sendCustomMessage(type="jsondata",json_2)
   

@@ -11,17 +11,20 @@ Shiny.addCustomMessageHandler("jsondata",
 
     console.log(df);
 
-    var w = 1280,
-      h = 800,
+    var w = 800,
+      h = w,
       rx = w / 2,
       ry = h / 2,
       m0,
       rotate = 0,
-      freeze = 0;
+      headSpace = 63;
 
-    var clickedData = [];
+    var clickedData = [],
+        splines = [],
+        childrenData = {},
+        childrenArray = [];
 
-    var splines = [];
+    var colorMap = ['#ff0000', '#ff8000', '#00ff80', '#0080ff'];
 
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
@@ -36,19 +39,25 @@ Shiny.addCustomMessageHandler("jsondata",
       .angle(function(d) { return d.x / 180 * Math.PI; });
 
     // Chrome 15 bug: <http://code.google.com/p/chromium/issues/detail?id=98951>
-    var div = d3.select("div.row").insert("div")
+    var div = d3.select('#igraphViews').insert("div")
       .attr("class", "d3network")
-      .style("top", "100px")
-      .style("left", "450px")
+      .style("top", headSpace + "px")
+      //.style("left", "0px")
       .style("width", w + "px")
       .style("height", w + "px")
       .style("position", "absolute")
       .style("-webkit-backface-visibility", "hidden");
 
-    var svg = div.append("svg:svg")
+    var legend = div.append("svg")
+      .attr("width", w)
+      .attr("height", w/10)
+      .attr("class", "legend");
+
+    var svG = div.append("svg:svg")
       .attr("width", w)
       .attr("height", w)
-    .append("svg:g")
+
+    var svg = svG.append("svg:g")
       .attr("transform", "translate(" + rx + "," + ry + ")");
 
     svg.append("svg:path")
@@ -60,6 +69,21 @@ Shiny.addCustomMessageHandler("jsondata",
     // var myurl = "https://gist.githubusercontent.com/mbostock/1044242/raw/3ebc0fde3887e288b4a9979dad446eb434c54d08/flare.json"
     // var json_flare = await $.getJSON(myurl)
 
+    // find all names of parentNames
+    function findParents(classes){
+      var map = {};
+
+      function find(data){
+        map[data.parent.name] = data.parent.name;
+      }
+
+      classes.forEach(function(d) {
+        find(d);
+      })
+
+      return Object.keys(map);
+    }
+
     // Lazily construct the package hierarchy from class names.
     function root(classes) {
       var map = {};
@@ -69,9 +93,9 @@ Shiny.addCustomMessageHandler("jsondata",
         if (!node) {
           node = map[name] = data || {name: name, children: []};
           if (name.length) {
-            node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+            node.parent = find(name.substring(0, name.indexOf(".")));
             node.parent.children.push(node);
-            node.key = name.substring(i + 1);
+            node.key = name.substring(name.lastIndexOf(".") + 1);
           }
         }
         return node;
@@ -106,7 +130,8 @@ Shiny.addCustomMessageHandler("jsondata",
 
     var nodes = cluster.nodes(root(df)),
         links = imports(nodes),
-        splines = bundle(links);
+        splines = bundle(links),
+        parents = findParents(df);
 
     var path = svg.selectAll("path.link")
         .data(links)
@@ -114,13 +139,28 @@ Shiny.addCustomMessageHandler("jsondata",
         .attr("class", function(d) { return "link source-" + d.source.key + " target-" + d.target.key; })
         .attr("d", function(d, i) { return line(splines[i]); });
 
-    svg.selectAll("g.node")
+    var colorMapping = function(d){
+      for(i in parents){
+        if(d.name.includes(parents[i])){
+          return colorMap[i];
+        }
+      }
+    }
+
+    var allNodes = svg.selectAll("g.node")
         .data(nodes.filter(function(n) { return !n.children; }))
       .enter().append("svg:g")
         .attr("class", "node")
         .attr("id", function(d) { return "node-" + d.key; })
-        .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-      .append("svg:text")
+        .attr("parentNode", function(d) { return d.parent.name;})
+        .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; });
+
+
+    allNodes.append("svg:text")
+        .style("fill", colorMapping)
+        .style("font-size", function(){
+          return (df.length > 350 ? '7.5px' : '10px')
+        })
         .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
         .attr("dy", ".31em")
         .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
@@ -129,6 +169,14 @@ Shiny.addCustomMessageHandler("jsondata",
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
         .on("click", mouseclick);
+
+    svG.append('svg:rect')
+      .attr('width', w-640)
+      .attr('height', w-640)
+      .attr('fill', 'blue')
+      .attr('x', 640)
+
+    svg.on("dblclick", mousedbl);
 
     d3.select("input[type=range]").on("change", function() {
       line.tension(this.value / 100);
@@ -157,89 +205,156 @@ Shiny.addCustomMessageHandler("jsondata",
     }
 
     function mouseup() {
-    if (m0) {
-      var m1 = mouse(d3.event),
-          dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
+      if (m0) {
+        var m1 = mouse(d3.event),
+            dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
 
-      rotate += dm;
-      if (rotate > 360) rotate -= 360;
-      else if (rotate < 0) rotate += 360;
-      m0 = null;
+        rotate += dm;
+        if (rotate > 360) rotate -= 360;
+        else if (rotate < 0) rotate += 360;
+        m0 = null;
 
-      div.style("-webkit-transform", null);
+        div.style("-webkit-transform", null);
 
-      svg
-          .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
-        .selectAll("g.node text")
-          .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
-          .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
-          .attr("transform", function(d) { return (d.x + rotate) % 360 < 180 ? null : "rotate(180)"; });
-    }
+        svg
+            .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+          .selectAll("g.node text")
+            .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
+            .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
+            .attr("transform", function(d) { return (d.x + rotate) % 360 < 180 ? null : "rotate(180)"; });
+      }
     }
 
     function mouseover(d) {
-        svg.selectAll("path.link.target-" + d.key)
-            .classed("target", true)
-            .each(updateNodes("source", true));
-
-        svg.selectAll("path.link.source-" + d.key)
-            .classed("source", true)
-            .each(updateNodes("target", true));
+      if(!d.clicked){
+        if(clickedData.length === 0 || childrenArray.indexOf(d.name) > -1){
+          svg.select("#node-" + d.key)
+              .style('font-weight', 'bold');
+          setvals(d, true)
+        }
+      }
+      else{
+          svg.select("#node-" + d.key)
+              .style('font-weight', 'bold');
+          setvals(d, true)
+      }
+      //svg.select("#node-")
     }
 
     function mouseout(d) {
-      if(!freeze & !clickedData.includes(d)){
-        svg.selectAll("path.link.source-" + d.key)
-            .classed("source", false)
-            .each(updateNodes("target", false));
-
-        svg.selectAll("path.link.target-" + d.key)
-            .classed("target", false)
-            .each(updateNodes("source", false));
+      svg.select("#node-" + d.key)
+          .style('font-weight', 'normal');
+      var i = clickedData.length>1 ? clickedData.length-1 : 0;
+      if(!d.clicked){
+        setvals(d, false)
+        if(clickedData.length>=1){
+          setvals(clickedData[i], true, false)
+        }
       }
-      freeze=0;
+      else if(clickedData.length === 1){
+        setvals(d, true, false)
+        setvals(clickedData[i], true, false)
+      }
     }
 
     function mouseclick(d){
-      //freeze = (freeze) ? 0 : 1
-      freeze = 1
-      if(!clickedData.includes(d)){
-        clickedData.push(d)
+      d.clicked = !d.clicked && true;
+      //d.clicked = true;
+
+      clickedData.push(d)
+
+      if(d.clicked){
+        removelinks()
+
+        //clickedData = Array.from(new Set(clickedData))
+
+        updateChildren(d)
+
+        childrenArray = childrenData[d.name][0]
+      }
+      else if(clickedData[clickedData.length-1].name === d.name){
+        svg.select("#node-" + d.key)
+            .style('font-weight', 'bold');
+        setvals(d, true, false)
       }
       else{
-        removeClicked(d)
-        svg.selectAll("path.link.source-" + d.key)
-            .classed("source", false)
-            .each(updateNodes("target", false));
+        clickedData.pop()
 
-        svg.selectAll("path.link.target-" + d.key)
-            .classed("target", false)
-            .each(updateNodes("source", false));
+        updateChildren(d, true)
+
+        setvals(d, false, false)
+
       }
     }
 
-    function removeClicked(d, fullName){
-      for(var i=0; i < clickedData.length; i++){
-        if(d.name === clickedData[i].name){
-          clickedData.splice(i-1, i+1)
-          break
+    function mousedbl(){
+      childrenData = {}
+      childrenArray = []
+      if(clickedData.length>0){
+        for(var i in clickedData){
+          setvals(clickedData[i], false, false)
+          clickedData[i].clicked = false
+          svg.select("#node-" + clickedData[i].key)
+              .style('font-weight', 'normal');
         }
+        clickedData = []
       }
     }
 
     function updateNodes(name, value) {
-    return function(d) {
-      if (value) this.parentNode.appendChild(this);
-      svg.select("#node-" + d[name].key).classed(name, value);
-    };
+      return function(d) {
+        if (value) this.parentNode.appendChild(this);
+        svg.select("#node-" + d[name].key).classed(name, value);
+      };
+    }
+
+    function updateChildren(d, remove=false){
+      childrenArray = []
+
+      if(!remove){
+        childrenData = {[d.name]: [d.imports]}
+      }
+      else{
+        delete childrenData[d.name]
+      }
+    }
+
+    function setvals(d, val, block=true){
+      if(block){
+        if(svg.selectAll("path.link.target-" + d.key).classed("target") === val){
+          return;
+        }
+      }
+
+      svg.selectAll("path.link.target-" + d.key)
+          .classed("target", val)
+          .each(updateNodes("source", val));
+
+      svg.selectAll("path.link.source-" + d.key)
+          .classed("source", val)
+          .each(updateNodes("target", val));
+    }
+
+    function removelinks(){
+      for(var i = 0; i < clickedData.length-1; i++){
+        clickedData[i].clicked = false
+
+        svg.selectAll("path.link.target-" + clickedData[i].key)
+          .classed('target', false)
+          .each(updateNodes("source", false));
+
+        svg.selectAll("path.link.source-" + clickedData[i].key)
+          .classed('source', false)
+          .each(updateNodes("target", false));
+      }
     }
 
     function cross(a, b) {
-    return a[0] * b[1] - a[1] * b[0];
+      return a[0] * b[1] - a[1] * b[0];
     }
 
     function dot(a, b) {
-    return a[0] * b[0] + a[1] * b[1];
+      return a[0] * b[0] + a[1] * b[1];
     }
 
   });

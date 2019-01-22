@@ -89,11 +89,11 @@ path.arc {
 }
 
 .node {
-  font-size: 10px;
+  font-weight: normal;
 }
 
 .node:hover {
-  fill: #1f77b4;
+  cursor: crosshair;
 }
 
 .link {
@@ -108,18 +108,10 @@ path.arc {
   stroke-width: 2px;
 }
 
-.node.target {
-  fill: #d62728 !important;
-}
-
-.link.source {
+.link.source{
   stroke: #d62728;
 }
 
-.node.source {
-  fill: #2ca02c;
-}
-
 .link.target {
-  stroke: #2ca02c;
+  stroke: #d62728;
 }

@@ -608,6 +608,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           
           G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
+          E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2), na.rm=T)
           { 
             if(network_ConfidenceCutoff <= 400){
               if('SHINY_SERVER_VERSION' %in% env_names){ 
@@ -619,6 +620,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               }
                 
               G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
+              E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2, E(G)$weights_3), na.rm=T)
             }
             if(network_ConfidenceCutoff <= 150){
               if('SHINY_SERVER_VERSION' %in% env_names){
@@ -629,6 +631,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                 load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
               }
               G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
+              E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2, E(G)$weights_3), na.rm=T)
               }
             }
           } 
@@ -673,8 +676,9 @@ options(shiny.maxRequestSize = 3*1024^2)
             }
           }
         ## Update the G igraph object
-        G <- upgrade_graph(G)
+        #G <- upgrade_graph(G)
         
+        G <<- G
         
         #Selected_STRINGnetwork.igraph <- G
         message("Networks Loaded")
@@ -1020,19 +1024,24 @@ options(shiny.maxRequestSize = 3*1024^2)
         siRNA.Score.Formatted <- siRNA.Score
         
         gNames <- V(SubGraph)$name
+        
         ###############################################################################
         #                 Create Network for D3 Rendering for Hit Genes
         ###############################################################################
         GraphEdgesHitNames <- get.data.frame(SubGraph, what = "edges")
+        #GraphEdgesHitNames$weights = round(rowMeans(GraphEdgesHitNames[3:ncol(GraphEdgesHitNames)], na.rm=T), 0)
         GraphEdgesHitNames <- GraphEdgesHitNames[!duplicated(GraphEdgesHitNames), ]
-        source <- target <- rep(NA, nrow(GraphEdgesHitNames))
+        source <- target <- weights <- rep(NA, nrow(GraphEdgesHitNames))
         tempGenes <- union(GraphEdgesHitNames$from,GraphEdgesHitNames$to)
         for(i in 1:length(tempGenes)){
           source[which(GraphEdgesHitNames$from == tempGenes[i])] <- i-1
           target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
         }
         
+        
+        
         GraphEdgesHitNumber <- data.frame(source,target)
+        GraphEdgesHitNumber$weights = GraphEdgesHitNames$weights
         
         
         GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
@@ -1164,7 +1173,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         ####################
         ### Create Condensed Output File
-        TRIAGEoutput.condensed <- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+        TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
 
         ########################
         ######## Pathway Output
@@ -1502,8 +1511,9 @@ options(shiny.maxRequestSize = 3*1024^2)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             progress1$inc(1/2)
-            Generate_NetworkGraph(selectedRows, organism)
+            Generate_NetworkGraph(selectedRows, organism, G)
             progress1$inc(1)
+            head(E(G))
             
             #############
             ## PathNet ##
