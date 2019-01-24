@@ -5,7 +5,7 @@ Shiny.addCustomMessageHandler("jsondata",
     var df = []
 
     json_data.forEach(function(d){
-      d = {name: d.name[0], imports: d.imports};
+      d = {name: d.name[0], imports: d.imports, weights: d.weights, datasource: d.datasource};
       df.push(d)
     })
 

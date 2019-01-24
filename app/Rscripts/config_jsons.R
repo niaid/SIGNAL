@@ -5,7 +5,8 @@
 #function to configure dataframes for each json value
 change_form <- function(l, i){data.frame('name' = rep(names(l[i]), nrow(l[[i]])),
                                          'imports' = l[[i]][,1],
-                                         'weights' = l[[i]][,2])}
+                                         'weights' = l[[i]][,2],
+                                         'datasource' = l[[i]][,3])}
 
 # function to combine names of edge dataframe
 join_str <- function(str1, str2, names){
@@ -56,12 +57,12 @@ config_json <- function(edges, dimNames){
   edges = assign_names(dimNames, edges)
   
   # creates matrices of dimension name and edge matrix gene columns
-  edge_df = data.frame(name = edges[,1], imports = edges[,2], weights = edges[,3])
+  edge_df = data.frame(name = edges[,1], imports = edges[,2], weights = edges[,3], datasource = edges[,4])
   
   # creates a larger list designating level 1 node connection to all other nodes
-  group1 = lapply(split(edge_df, edge_df$name), `[`, 2:3)
-  group2 = lapply(split(edge_df, edge_df$imports), `[`, c(1,3))
-  group2 = lapply(group2, setNames, c('imports', 'weights'))
+  group1 = lapply(split(edge_df, edge_df$name), `[`, 2:4)
+  group2 = lapply(split(edge_df, edge_df$imports), `[`, c(1,3,4))
+  group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource'))
   L = merge_lists(group1, group2)
   
   # json formation and output from list of dataframes

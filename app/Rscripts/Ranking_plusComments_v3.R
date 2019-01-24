@@ -359,6 +359,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   names(rel)[names(rel)=="source.ID"] <- "V1"
   names(rel)[names(rel)=="target.ID"] <- "V2"
   rel$weights = rel.target$weights
+  rel$datasource = rel.target$datasource
   
   #Flip columns to get pathway colors as links for 2nd dimension graph
   names(rel2.target)[names(rel2.target)=="target.ID"] <- "target.ID2"
@@ -374,6 +375,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   names(rel2)[names(rel2)=="source.ID"] <- "V1"
   names(rel2)[names(rel2)=="target.ID"] <- "V2"
   rel2$weights = rel2.target$weights
+  rel2$datasource = rel2.target$datasource
   
   # Remove nodes that do not have connection to the selected pathways
   rel.V1.matrix <- as.matrix((unique(rel$V1)))

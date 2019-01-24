@@ -597,84 +597,121 @@ options(shiny.maxRequestSize = 3*1024^2)
         network_ConfidenceCutoff <<- as.numeric(input$interaction_confidence_cutoff)
         network_InteractionSources <<- input$STRING_interaction_sources
         
-        if(input_netowrk == "Experimental & Database") 
-        {
-          if('SHINY_SERVER_VERSION' %in% env_names){ 
-            load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-            load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
-          }else{
-            load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-            load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+        if(input_netowrk == "Experimental & Database"){
+          if(network_ConfidenceCutoff == 700){
+            if('SHINY_SERVER_VERSION' %in% env_names){ 
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+            }else{
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+            }
+            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
+            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2),1, which.max)
+            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
           }
+          else if(network_ConfidenceCutoff == 400){
+            if('SHINY_SERVER_VERSION' %in% env_names){ 
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+            }else{
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+            }
+            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
+            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
+            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          }
+          else{
+            if('SHINY_SERVER_VERSION' %in% env_names){
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+            }else{
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+            }
+            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
+            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
+            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          }
+        }
+        else if(input_netowrk == "Advanced Options"){
+          if(network_ConfidenceCutoff == 700){
+            conf.level = ".highConf.igraph"
+          }
+          else if(network_ConfidenceCutoff == 400){
+            conf.level = ".midConf.igraph"
+          }
+          else{
+            conf.level = ".lowConf.igraph"
+          }
+          dir_begin = ifelse('SHINY_SERVER_VERSION' %in% env_names, "/srv/shiny-server/data/Networks/String.", "~/TRIAGE/app/data/Networks/String.")
+          files2load = paste0(dir_begin, tolower(organism), ".", network_InteractionSources, conf.level, ".Rdata")
+          vars2load = paste0("String.", tolower(organism), ".", network_InteractionSources, conf.level)
+          for (i in 1:length(files2load)) assign(gsub(".*/","",files2load[i]), load(files2load[i]))
+          all.G = list()
+          for(i in 1:length(vars2load)) all.G[[i]] = get(vars2load[i])
+          all.G = all.G[which(sapply(all.G, vcount) > 0)]
+          G = graph.union(all.G)
+          cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
+          weight_df = list()
+          for(i in 1:length(cols)){
+            weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
+            weight_df[[i]][is.na(weight_df[[i]])] = 0
+          }
+          weight_df = data.frame(weight_df)
+          weight_df = apply(weight_df, 2, as.integer)
+          E(G)$weights = rowMax(weight_df)
+          indx <- max.col(weight_df, ties.method='first')
+          cols = edge_attr_names(G)[grep("^datasource_",edge_attr_names(G))]
+          E(G)$datasource = network_InteractionSources[indx]
+        }
           
-          G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
-          E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2), na.rm=T)
-          { 
-            if(network_ConfidenceCutoff <= 400){
-              if('SHINY_SERVER_VERSION' %in% env_names){ 
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-              }
-                
-              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
-              E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2, E(G)$weights_3), na.rm=T)
-            }
-            if(network_ConfidenceCutoff <= 150){
-              if('SHINY_SERVER_VERSION' %in% env_names){
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-              }
-              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
-              E(G)$weights = rowMeans(cbind(E(G)$weights_1, E(G)$weights_2, E(G)$weights_3), na.rm=T)
-              }
-            }
-          } 
-          else if(input_netowrk == "Advanced Options")
-          {
-            
-            for (i in 1:length(network_InteractionSources)) {
-              if('SHINY_SERVER_VERSION' %in% env_names){
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
-              }
-              
-              if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph")))}
-              else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph"))}
-              }
-            {
-              if(network_ConfidenceCutoff <= 400)
-                {
-                for (i in 1:length(network_InteractionSources)) {
-                  if('SHINY_SERVER_VERSION' %in% env_names){
-                    load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }else{
-                    load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }
-                    
-                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
-                }
-              }
-              if(network_ConfidenceCutoff <= 150)
-                {
-                for (i in 1:length(network_InteractionSources)) {
-                  if('SHINY_SERVER_VERSION' %in% env_names){
-                    load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }else{
-                    load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }
-                  
-                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
-                }
-              }
-            }
-          }
+          
+          # 
+          #     for (i in 1:length(network_InteractionSources)) {
+          #       if('SHINY_SERVER_VERSION' %in% env_names){
+          #         load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
+          #       }else{
+          #         load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
+          #       }
+          #     }
+          #       
+          #       if(exists("G")) {
+          #         G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph")))
+          #         E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+          #         datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
+          #         E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          #       }
+          #       else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph"))}
+          #     
+          #   }
+          #   else if(network_ConfidenceCutoff == 400){
+          #     for (i in 1:length(network_InteractionSources)) {
+          #       if('SHINY_SERVER_VERSION' %in% env_names){
+          #         load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+          #       }else{
+          #         load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
+          #       }
+          #       if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))}
+          #       else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph"))}
+          #     }
+          #   }
+          #   else{
+          #     for (i in 1:length(network_InteractionSources)) {
+          #       if('SHINY_SERVER_VERSION' %in% env_names){
+          #         load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".lowConf.igraph.Rdata"))
+          #       }else{
+          #         load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".lowConf.igraph.Rdata"))
+          #       }
+          #       if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".lowConf.igraph")))}
+          #       else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".lowConf.igraph"))}
+          #     }
+          #   }
+          # }
         ## Update the G igraph object
         #G <- upgrade_graph(G)
         
@@ -1040,8 +1077,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         
         
-        GraphEdgesHitNumber <- data.frame(source,target)
+        GraphEdgesHitNumber <- data.table(source,target)
         GraphEdgesHitNumber$weights = GraphEdgesHitNames$weights
+        GraphEdgesHitNumber$datasource = GraphEdgesHitNames$datasource
+        
         
         
         GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
