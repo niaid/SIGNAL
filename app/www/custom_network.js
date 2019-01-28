@@ -5,7 +5,9 @@ Shiny.addCustomMessageHandler("jsondata",
     var df = []
 
     json_data.forEach(function(d){
-      d = {name: d.name[0], imports: d.imports, weights: d.weights, datasource: d.datasource};
+      d = {name: d.name[0], imports: d.imports, weights: d.weights,
+            datasource: d.datasource, Confidence: d.Confidence[0],
+            pathway: d.Pathway[0]};
       df.push(d)
     })
 
@@ -17,7 +19,9 @@ Shiny.addCustomMessageHandler("jsondata",
       ry = h / 2,
       m0,
       rotate = 0,
-      headSpace = 63;
+      headSpace = 63,
+      rectW = w-640,
+      rectH = w-640;
 
     var clickedData = [],
         splines = [],
@@ -25,6 +29,7 @@ Shiny.addCustomMessageHandler("jsondata",
         childrenArray = [];
 
     var colorMap = ['#ff0000', '#ff8000', '#00ff80', '#0080ff'];
+    var windowFields = ['Gene Name:', ' ', 'Gene Family:', ' ', 'Connections:', 'Confidence:'];
 
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
@@ -59,6 +64,30 @@ Shiny.addCustomMessageHandler("jsondata",
 
     var svg = svG.append("svg:g")
       .attr("transform", "translate(" + rx + "," + ry + ")");
+
+    var windowArea = svG.append("svg:g")
+      .attr("transform", "translate(640,5)")
+
+    windowArea.append("svg:rect")
+      .attr("height", rectH)
+      .attr("width", rectW)
+      .attr("rx", 5)
+      .attr("ry", 5)
+      .style("stroke", '#0080ff')
+      .style("fill", "none")
+      .style("stroke-width", 2);
+
+    var windowText = windowArea.selectAll("text")
+
+    windowText.data(windowFields)
+      .enter()
+        .append("svg:text")
+        .attr("class", "vizText")
+        .style("fill", "black")
+        .attr("transform", function(d) { return "translate(0,20)"; })
+        .attr("dy", function(d,i){return(20*i)})
+        .attr("dx", 2)
+        .text(function(d) { return d; });
 
     svg.append("svg:path")
       .attr("class", "arc")
@@ -142,6 +171,7 @@ Shiny.addCustomMessageHandler("jsondata",
     var colorMapping = function(d){
       for(i in parents){
         if(d.name.includes(parents[i])){
+          d.color = colorMap[i]
           return colorMap[i];
         }
       }
@@ -169,12 +199,6 @@ Shiny.addCustomMessageHandler("jsondata",
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
         .on("click", mouseclick);
-
-    svG.append('svg:rect')
-      .attr('width', w-640)
-      .attr('height', w-640)
-      .attr('fill', 'blue')
-      .attr('x', 640)
 
     svg.on("dblclick", mousedbl);
 
@@ -232,13 +256,93 @@ Shiny.addCustomMessageHandler("jsondata",
               .style('font-weight', 'bold');
           setvals(d, true)
         }
+        if(clickedData.length === 0){
+          d3.selectAll(".vizText").remove()
+          geneFamily = d.parent.name
+          windowFields = ['Gene Name: ',
+                          d.key,
+                          'Gene Family: ',
+                          geneFamily,
+                          'Connections: ' + d.datasource.length,
+                          'Confidence: ' + d.Confidence]
+          /*if(geneFamily != 'Novel Genes'){
+            windowFields = ['Gene Name: ',
+                            d.key,
+                            'Gene Family: ',
+                            geneFamily,
+                            'Connections: ' + d.datasource.length,
+                            'KEGG Confidence: ' + d.keggConf,
+                            'STRING Confidence: ' + d.netConf]
+                            //'Average Score: ' + Math.round(d3.mean(d.weights) *100) / 100,
+                            //'Sources: ' + Array.from(new Set(d.datasource))];
+          }
+          else{
+            windowFields = ['Gene Name: ',
+                            d.key,
+                            'Gene Family: ',
+                            geneFamily,
+                            'Connections: ' + d.datasource.length]
+                            //'Average Score: ' + Math.round(d3.mean(d.weights) *100) / 100,
+                            //'Sources: ' + Array.from(new Set(d.datasource))];
+          }*/
+          var textColor = d.color;
+          windowText.data(windowFields)
+            .enter()
+              .append("svg:text")
+              .attr("class", "vizText")
+              .style("fill", function(d, i){
+                if(i === 1 || i === 3){
+                  return textColor;
+                }
+              })
+              .attr("transform", function(d) { return "translate(0,20)"; })
+              .attr("dy", function(d, i){
+                return i*20;
+              })
+              .attr("dx", function(d, i){
+                return (i > 3 || i % 2 === 0) ? 2 : 10;
+              })
+              .text(function(d){return d;});
+        }
+        else if(childrenArray.indexOf(d.name) > -1){
+          d3.selectAll(".vizText").remove()
+          n = clickedData[clickedData.length-1]
+          cInd = childrenArray.indexOf(d.name)
+          windowFields = ['Linked Gene: ', d.key,
+                          'Reference Gene: ', n.key,
+                          'Connections: ' + d.weights.length,
+                          'Score: ' + n.weights[cInd],
+                          'Source: ' + n.datasource[cInd]];
+          var linkedColor = d.color;
+          var refColor = n.color;
+
+          windowText.data(windowFields)
+            .enter()
+              .append("svg:text")
+              .attr("class", "vizText")
+              .style("fill", function(d, i){
+                if(i === 1){
+                  return linkedColor;
+                }
+                else if(i ===3){
+                  return refColor;
+                }
+              })
+              .attr("transform", function(d) { return "translate(0,20)"; })
+              .attr("dy", function(d, i){
+                return i*20;
+              })
+              .attr("dx", function(d, i){
+                return (i>3 || i % 2 ===0) ? 2 : 10;
+              })
+              .text(function(d){return d;});
+        }
       }
       else{
           svg.select("#node-" + d.key)
               .style('font-weight', 'bold');
           setvals(d, true)
       }
-      //svg.select("#node-")
     }
 
     function mouseout(d) {
@@ -255,16 +359,76 @@ Shiny.addCustomMessageHandler("jsondata",
         setvals(d, true, false)
         setvals(clickedData[i], true, false)
       }
+      if(clickedData.length === 0){
+        clearVizText()
+      }
+      else{
+        d3.selectAll(".vizText").remove()
+        n = clickedData[clickedData.length-1]
+        windowFields = ['Gene Name: ',
+                        n.key,
+                        'Gene Family: ',
+                        n.parent.name,
+                        'Connections: ' + n.datasource.length,
+                        'Confidence: ' + n.Confidence]
+                        //'Average Score: ' + Math.round(d3.mean(d.weights) *100) / 100,
+                        //'Sources: ' + Array.from(new Set(d.datasource))];
+        var textColor = n.color;
+        windowText.data(windowFields)
+          .enter()
+            .append("svg:text")
+            .attr("class", "vizText")
+            .style("fill", function(d, i){
+              if(i === 1 || i === 3){
+                return textColor;
+              }
+            })
+            .attr("transform", function(d) { return "translate(0,20)"; })
+            .attr("dy", function(d, i){
+              return i*20;
+            })
+            .attr("dx", function(d, i){
+              return (i > 3 || i % 2 === 0) ? 2 : 10;
+            })
+            .text(function(d){return d;});
+      }
     }
 
     function mouseclick(d){
       d.clicked = !d.clicked && true;
-      //d.clicked = true;
 
       clickedData.push(d)
 
       if(d.clicked){
         removelinks()
+
+        d3.selectAll(".vizText").remove()
+        windowFields = ['Gene Name: ',
+                        d.key,
+                        'Gene Family: ',
+                        d.parent.name,
+                        'Connections: ' + d.datasource.length,
+                        'Confidence: ' + d.Confidence]
+                        //'Average Score: ' + Math.round(d3.mean(d.weights) *100) / 100,
+                        //'Sources: ' + Array.from(new Set(d.datasource))];
+        var textColor = d.color;
+        windowText.data(windowFields)
+          .enter()
+            .append("svg:text")
+            .attr("class", "vizText")
+            .style("fill", function(d, i){
+              if(i === 1 || i === 3){
+                return textColor;
+              }
+            })
+            .attr("transform", function(d) { return "translate(0,20)"; })
+            .attr("dy", function(d, i){
+              return i*20;
+            })
+            .attr("dx", function(d, i){
+              return (i > 3 || i % 2 === 0) ? 2 : 10;
+            })
+            .text(function(d){return d;});
 
         //clickedData = Array.from(new Set(clickedData))
 
@@ -273,8 +437,6 @@ Shiny.addCustomMessageHandler("jsondata",
         childrenArray = childrenData[d.name][0]
       }
       else if(clickedData[clickedData.length-1].name === d.name){
-        svg.select("#node-" + d.key)
-            .style('font-weight', 'bold');
         setvals(d, true, false)
       }
       else{
@@ -283,7 +445,6 @@ Shiny.addCustomMessageHandler("jsondata",
         updateChildren(d, true)
 
         setvals(d, false, false)
-
       }
     }
 
@@ -299,6 +460,32 @@ Shiny.addCustomMessageHandler("jsondata",
         }
         clickedData = []
       }
+      clearVizText()
+    }
+
+    var colorText = function(d){
+      for(i in parents){
+        if(d === parents[i]){
+          return colorMap[i];
+        }
+      }
+    }
+
+    function clearVizText(){
+      d3.selectAll(".vizText").remove()
+      windowFields = ['Gene Name:', ' ',
+                      'Gene Family:', ' ',
+                      'Connections:',
+                      'Confidence:']
+      windowText.data(windowFields)
+        .enter()
+          .append("svg:text")
+          .attr("class", "vizText")
+          .style("fill", "black")
+          .attr("transform", function(d) { return "translate(0,20)"; })
+          .attr("dy", function(d,i){return(20*i)})
+          .attr("dx", 2)
+          .text(function(d) { return d; });
     }
 
     function updateNodes(name, value) {

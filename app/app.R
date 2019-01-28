@@ -1091,7 +1091,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         N = ncol(TRIAGEhits)
         # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, N-4, N-2, N-1, N)],
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
@@ -1101,7 +1101,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
         
-        colnames(NodeInfo)[4:5] = c('keggConf', 'netConf')
+        colnames(NodeInfo)[4] = 'Confidence'
+        
         
         ######################################
         

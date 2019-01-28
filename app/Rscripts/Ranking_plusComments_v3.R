@@ -288,7 +288,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   
   #Move ID column first
-  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'keggConf', 'netConf', 'Pathway')]
+  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'Confidence', 'Pathway')]
   
   #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
   rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information

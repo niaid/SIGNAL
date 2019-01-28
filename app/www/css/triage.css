@@ -115,3 +115,7 @@ path.arc {
 .link.target {
   stroke: #d62728;
 }
+
+.vizText{
+          font-size: 12px;
+        }

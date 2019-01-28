@@ -3,13 +3,17 @@
 #change_name <- function(x){names(x) = "imports"; return(x)}
 
 #function to configure dataframes for each json value
-change_form <- function(l, i){data.frame('name' = rep(names(l[i]), nrow(l[[i]])),
-                                         'imports' = l[[i]][,1],
-                                         'weights' = l[[i]][,2],
-                                         'datasource' = l[[i]][,3],
-                                         'keggConf' = l[[i]][,4],
-                                         'netConf' = l[[i]][,5],
-                                         'Pathway' = l[[i]][,6])}
+change_form <- function(l, i){
+  key.name = gsub(".*\\.","",names(l[i]))
+  node.info = nodes[which(nodes$key == key.name),]
+
+  data.frame('name' = rep(names(l[i]), nrow(l[[i]])),
+             'imports' = l[[i]][,1],
+             'weights' = l[[i]][,2],
+             'datasource' = l[[i]][,3],
+             'Confidence' = rep(node.info$Confidence, nrow(l[[i]])),
+             'Pathway' = rep(node.info$Pathway, nrow(l[[i]])))
+}
 
 # function to combine names of edge dataframe
 join_str <- function(str1, str2, names){
@@ -56,11 +60,20 @@ merge_lists <- function(l.1, l.2){
 }
 
 config_json <- function(nodes, edges, dimNames){
+  #fix values of confidence levels
+  conf.f = function(x){substr(x, 1, nchar(x)-4)}
+  nodes$Confidence = conf.f(nodes$Confidence)
+  
   #links matches between nodes and edges
-  matches = match(edges$from, nodes$id)
-  edges$keggConf = nodes$keggConf[matches]
-  edges$netConf = nodes$netConf[matches]
-  edges$Pathway = nodes$Pathway[matches]
+  # edgesFrom = as.vector(sapply(edges$from, function(x){substr(x, 3, nchar(x))}))
+  # edgesTo = as.vector(sapply(edges$to, function(x){substr(x, 3, nchar(x))}))
+  # matches.from = match(edgesFrom, nodes$key)
+  # matches.to = match(edgesTo, nodes$key)
+  # #matches = match(edgeLinks, nodes$key)
+  # edges$keggConf_from = nodes$keggConf[matches.from]
+  # edges$keggConf_to = nodes$keggConf[matches.to]
+  # edges$netConf = nodes$netConf[matches]
+  # edges$Pathway = nodes$Pathway[matches]
   
   #assigns correct names of network pathways selected
   edges = assign_names(dimNames, edges)
@@ -71,7 +84,7 @@ config_json <- function(nodes, edges, dimNames){
   # creates a larger list designating level 1 node connection to all other nodes
   group1 = lapply(split(edges, edges$name), `[`, 2:ncol(edges))
   group2 = lapply(split(edges, edges$imports), `[`, c(1,3:ncol(edges)))
-  group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource', 'keggConf', 'netConf', 'Pathway'))
+  group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource')) #, 'keggConf', 'netConf', 'Pathway'))
   L = merge_lists(group1, group2)
   
   # json formation and output from list of dataframes
