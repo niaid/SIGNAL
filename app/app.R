@@ -1013,7 +1013,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Generate Matrices for TRIAGE Hits, high conf hits, med conf hits
         #Get filtered TRIAGEhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
         
-        TRIAGEhits <- filter(TRIAGEoutput, TRIAGEhit == "Yes")
+        TRIAGEhits <<- filter(TRIAGEoutput, TRIAGEhit == "Yes")
         TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
         
         # Get filtered TRIAGE High/Med Conf
@@ -1089,7 +1089,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        GraphNodesHit <- merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")], 
+        N = ncol(TRIAGEhits)
+        # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, N-4, N-2, N-1, N)],
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
@@ -1098,6 +1100,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
+        
+        colnames(NodeInfo)[4:5] = c('keggConf', 'netConf')
         
         ######################################
         

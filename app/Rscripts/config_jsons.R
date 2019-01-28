@@ -6,7 +6,10 @@
 change_form <- function(l, i){data.frame('name' = rep(names(l[i]), nrow(l[[i]])),
                                          'imports' = l[[i]][,1],
                                          'weights' = l[[i]][,2],
-                                         'datasource' = l[[i]][,3])}
+                                         'datasource' = l[[i]][,3],
+                                         'keggConf' = l[[i]][,4],
+                                         'netConf' = l[[i]][,5],
+                                         'Pathway' = l[[i]][,6])}
 
 # function to combine names of edge dataframe
 join_str <- function(str1, str2, names){
@@ -52,17 +55,23 @@ merge_lists <- function(l.1, l.2){
   return(L)
 }
 
-config_json <- function(edges, dimNames){
+config_json <- function(nodes, edges, dimNames){
+  #links matches between nodes and edges
+  matches = match(edges$from, nodes$id)
+  edges$keggConf = nodes$keggConf[matches]
+  edges$netConf = nodes$netConf[matches]
+  edges$Pathway = nodes$Pathway[matches]
+  
   #assigns correct names of network pathways selected
   edges = assign_names(dimNames, edges)
   
-  # creates matrices of dimension name and edge matrix gene columns
-  edge_df = data.frame(name = edges[,1], imports = edges[,2], weights = edges[,3], datasource = edges[,4])
+  # change names of from and to to name and imports
+  colnames(edges)[1:2] = c('name', 'imports')
   
   # creates a larger list designating level 1 node connection to all other nodes
-  group1 = lapply(split(edge_df, edge_df$name), `[`, 2:4)
-  group2 = lapply(split(edge_df, edge_df$imports), `[`, c(1,3,4))
-  group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource'))
+  group1 = lapply(split(edges, edges$name), `[`, 2:ncol(edges))
+  group2 = lapply(split(edges, edges$imports), `[`, c(1,3:ncol(edges)))
+  group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource', 'keggConf', 'netConf', 'Pathway'))
   L = merge_lists(group1, group2)
   
   # json formation and output from list of dataframes

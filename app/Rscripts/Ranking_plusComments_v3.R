@@ -288,7 +288,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   
   #Move ID column first
-  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc')]
+  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'keggConf', 'netConf', 'Pathway')]
   
   #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
   rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
@@ -433,7 +433,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
   #json_1 <- Chimera1[[1]][1]$json_real
   dimNames = c(path1_name, path2_name, path3_name)
-  json_1 <- config_json(g11_vis$edges, dimNames)
+  json_1 <- config_json(g11_vis$nodes, g11_vis$edges, dimNames)
   session$sendCustomMessage(type="jsondata",json_1)
   #session$sendCustomMessage(type="jsondata",json_2)
   
