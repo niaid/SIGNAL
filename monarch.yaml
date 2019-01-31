@@ -13,4 +13,8 @@ webapp_scan:
   whitelist:
      - Out-of-date Version (Bootstrap):
        - 'https://triage.niaidawsqa.net/' # Whitelissting temporarily
+       - 'CVE-2018-12121'
+       - 'CVE-2018-12122'
+       - 'CVE-2018-12123'
+       - 'CVE-2018-7159'
 approved_for_prod: true
