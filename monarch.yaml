@@ -18,3 +18,27 @@ webapp_scan:
        - 'CVE-2018-12123'
        - 'CVE-2018-7159'
 approved_for_prod: true
+
+terraform:
+  modules:
+    - web-application
+  module_name: triage # legacy, not needed for new apps
+  variables:
+    cpu: 256
+    memory: 2048
+    container_port: 3838
+    desired_count: 1
+    command: /usr/local/bin/shiny_server.sh
+    alert_recipients: "[[${var.tech_email_addresses},${var.mgmt_email_addresses}]]"
+    healtcheck_timeout: 25
+    healtcheck_healthy_threshold: 2
+  environments:
+    qa:
+      variables:
+        image: "[[${var.pre_prod_image_base}]]"
+    prod:
+      variables:
+        cpu: 128
+        image: "[[${var.prod_image_base}]]"
+        use_public_ssl_cert: true
+        url_to_monitor: "triage-pilot.niaid.nih.gov"
