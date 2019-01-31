@@ -7,6 +7,12 @@ docker_build:
   variables:
     IMAGE_REPO: lsb-triage
     REGISTRY_USER: songj11
+docker_scan:
+  cve_whitelist:
+    - CVE-2018-12121
+    - CVE-2018-12122
+    - CVE-2018-12123
+    - CVE-2018-7159
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
