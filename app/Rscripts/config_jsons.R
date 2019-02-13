@@ -3,7 +3,7 @@
 #change_name <- function(x){names(x) = "imports"; return(x)}
 
 #function to configure dataframes for each json value
-change_form <- function(l, i){
+change_form <- function(l, i, nodes){
   key.name = gsub(".*\\.","",names(l[i]))
   node.info = nodes[which(nodes$key == key.name),]
 
@@ -89,7 +89,7 @@ config_json <- function(nodes, edges, dimNames){
   
   # json formation and output from list of dataframes
   df_L = list()
-  for(i in 1:length(L)){df_L = append(df_L, list(change_form(L, i)))}
+  for(i in 1:length(L)){df_L = append(df_L, list(change_form(L, i, nodes)))}
   json = jsonlite::toJSON(df_L, 'columns')
   
   return(json)
