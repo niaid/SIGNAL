@@ -274,8 +274,10 @@ Shiny.addCustomMessageHandler("jsondata",
     function mousemove() {
     if (m0) {
       var m1 = mouse(d3.event),
-          dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
-      div.style("-webkit-transform", "translateY(" + (ry - rx) + "px)rotateZ(" + dm + "deg)translateY(" + (rx - ry) + "px)");
+          dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+          rotate1 = rotate ? rotate+dm : dm;
+
+      svg.style("-webkit-transform", "translateX(" + rx + "px)translateY(" + ry + "px)rotateZ(" + rotate1 + "deg)");
     }
     }
 
