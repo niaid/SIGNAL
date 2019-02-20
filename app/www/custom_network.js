@@ -19,9 +19,9 @@ Shiny.addCustomMessageHandler("jsondata",
       ry = h / 2,
       m0,
       rotate = 0,
-      headSpace = 63,
+      headSpace = 100,
       rectW = w-640,
-      rectH = w-640;
+      rectH = w-650;
 
     var clickedData = [],
         splines = [],
@@ -60,7 +60,11 @@ Shiny.addCustomMessageHandler("jsondata",
       .radius(function(d) { return d.y; })
       .angle(function(d) { return d.x / 180 * Math.PI; });
 
-    var div = d3.select('#igraphViews').insert("div")
+    if(d3.select("#graphView1")[0][0].children.length === 1){
+      d3.select("#graphView1")[0][0].children[0].remove()
+    }
+
+    var div = d3.select("#graphView1")
       .attr("class", "d3network")
       .style("top", headSpace + "px")
       .style("width", w + "px")

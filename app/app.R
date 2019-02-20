@@ -198,14 +198,17 @@ options(shiny.maxRequestSize = 3*1024^2)
                 tabsetPanel(id = 'igraphViews',
                       # Display in igraph
                       tabPanel(title="1st Degree Network", value="graphView1",
+                               HTML("<div id='graphView1'></div>"),
                                htmlOutput("graphLegend1"),
                                htmlOutput("graphView1i", width = "100%", height = "700px")
                       ),
                       tabPanel(title="2nd Degree Network", value="graphView2",
+                               HTML("<div id='graphView2'></div>"),
                                htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
                       ),
                       tabPanel(title = "PathNet Table", value = "PathNetTable",
+                               HTML("<div id='PathNetTable'></div>"),
                                dataTableOutput("PathNetTable")
                       )
                 )
