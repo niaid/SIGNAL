@@ -84,12 +84,12 @@ iframe {
 }
 
 path.arc {
-  cursor: move;
-  fill: #fff;
-}
+          cursor: move;
+          fill: #fff;
+        }
 
 .node {
-  font-weight: normal;
+  font-size: 10px;
 }
 
 .node:hover {
@@ -98,24 +98,22 @@ path.arc {
 
 .link {
   fill: none;
-  stroke: #1f77b4;
-  stroke-opacity: .4;
+  stroke-opacity: .1;
   pointer-events: none;
 }
 
 .link.source, .link.target {
-  stroke-opacity: 1;
   stroke-width: 2px;
 }
 
-.link.source{
-  stroke: #d62728;
+.node.target {
+}
+
+.link.source {
+}
+
+.node.source {
 }
 
 .link.target {
-  stroke: #d62728;
 }
-
-.vizText{
-          font-size: 12px;
-        }

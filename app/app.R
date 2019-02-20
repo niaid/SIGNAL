@@ -35,6 +35,10 @@ library(crosstalk)
 library(htmltools)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
+#used to set home directory for local development
+# Sys.setenv(HOME='/Users/kylewebb/Documents/')
+
+
 #setting
 #override scientific notation to avoid numeric mis assignments
 options(scipen = 999)
@@ -191,19 +195,19 @@ options(shiny.maxRequestSize = 3*1024^2)
             ),
             tabPanel(title = "PathNet", value = "graphViews",
                 htmlOutput("spacer4"),
-                tabsetPanel(id = 'igraphViews'
-                      ## Display in igrap
-                      # tabPanel(title="1st Degree Network", value="graphView1",
-                      #          htmlOutput("graphLegend1"),
-                      #          htmlOutput("graphView1i", width = "100%", height = "700px")
-                      # ),
-                      # tabPanel(title="2nd Degree Network", value="graphView2",
-                      #          htmlOutput("graphLegend2"),
-                      #          htmlOutput("graphView2i", width = "100%", height = "700px")
-                      # ),
-                      # tabPanel(title = "PathNet Table", value = "PathNetTable",
-                      #          dataTableOutput("PathNetTable")
-                      # )
+                tabsetPanel(id = 'igraphViews',
+                      # Display in igraph
+                      tabPanel(title="1st Degree Network", value="graphView1",
+                               htmlOutput("graphLegend1"),
+                               htmlOutput("graphView1i", width = "100%", height = "700px")
+                      ),
+                      tabPanel(title="2nd Degree Network", value="graphView2",
+                               htmlOutput("graphLegend2"),
+                               htmlOutput("graphView2i", width = "100%", height = "700px")
+                      ),
+                      tabPanel(title = "PathNet Table", value = "PathNetTable",
+                               dataTableOutput("PathNetTable")
+                      )
                 )
             ),
             # tabPanel(title = "NetworkD3", value = "networkViews",

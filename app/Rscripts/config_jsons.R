@@ -59,9 +59,14 @@ merge_lists <- function(l.1, l.2){
   return(L)
 }
 
+conf.f = function(x){
+  x = substr(x, 1, nchar(x)-4)
+  x = ifelse(x=='Med', 'Medium', x)
+  return(x)
+}
+
 config_json <- function(nodes, edges, dimNames){
   #fix values of confidence levels
-  conf.f = function(x){substr(x, 1, nchar(x)-4)}
   nodes$Confidence = conf.f(nodes$Confidence)
   
   #links matches between nodes and edges
