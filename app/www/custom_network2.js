@@ -1,4 +1,4 @@
-Shiny.addCustomMessageHandler("jsondata1",
+Shiny.addCustomMessageHandler("jsondata2",
   function(message){
     var json_data = message;
 
@@ -59,11 +59,11 @@ Shiny.addCustomMessageHandler("jsondata1",
       .radius(function(d) { return d.y; })
       .angle(function(d) { return d.x / 180 * Math.PI; });
 
-    if(d3.select("#graphView1")[0][0].children.length === 1){
-      d3.select("#graphView1")[0][0].children[0].remove()
+    if(d3.select("#graphView2")[0][0].children.length === 1){
+      d3.select("#graphView2")[0][0].children[0].remove()
     }
 
-    var div = d3.select("#graphView1")
+    var div = d3.select("#graphView2")
       .attr("class", "d3network")
       .style("top", headSpace + "px")
       .style("width", w + "px")
@@ -242,7 +242,7 @@ Shiny.addCustomMessageHandler("jsondata1",
     allNodes.append("svg:text")
         .style("fill", function(d){ return d.color;})
         .style("font-size", function(){
-          return (Math.min(1/Math.log10(df.length)*15, 14))
+          return (Math.min(1/Math.log10(df.length)*10, 14))
         })
         .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
         .attr("dy", ".31em")
@@ -346,7 +346,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       }
       else{
         d3.selectAll(".vizText").remove()
-        paintWindow(d, 2)
+        paintWindow(d, 2);
       }
     }
 
@@ -377,24 +377,6 @@ Shiny.addCustomMessageHandler("jsondata1",
 
         setvals(d, false, false)
       }
-
-      var clicker = clickedData[clickedData.length-1],
-          clickerImports = [],
-          clickerDatasources = [],
-          clickerWeights = [];
-      for(i in clicker.imports){clickerImports.push('"' + clicker.imports[i] + '"')}
-      for(i in clicker.datasources){clickerDatasources.push('"' + clicker.datasource[i] + '"')}
-      for(i in clicker.weights){clickerWeights.push('"' + clicker.weights[i] + '"')}
-
-      var clickeR = '{"name": ["' + clicker.name + '"],' +
-                    '"key": ["' + clicker.key + '"],' +
-                    '"confidence": ["' + clicker.Confidence + '"],' +
-                    '"imports": [' + clickerImports + '],' +
-                    '"datasource": [' + clickerDatasources + '],' +
-                    '"weights": [' + clickerWeights + ']}'
-
-      Shiny.setInputValue("clickedData", clickeR);
-
     }
 
     function mousedbl(){

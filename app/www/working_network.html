@@ -84,7 +84,7 @@
 
       //var colorMap = ['#ff0000', '#ff8000', '#00ff80', '#0080ff'];
       var colorMap = ['#ff0000', '#ff8000', '#2ECC40', '#0080ff'];
-      var windowFields = ['Gene Name:', ' ', 'Pathway:', ' ', 'Connections:', 'Confidence:'];
+      var windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
 
       var uniquePathways = function(df){
         var lookup = {};
@@ -189,7 +189,10 @@
           find(d);
         })
 
-        return Object.keys(map);
+        arr = Object.keys(map);
+        arr.push(arr.splice(arr.indexOf("Novel Genes"), 1)[0]);
+
+        return arr;
       }
 
       // Lazily construct the package hierarchy from class names.
@@ -298,7 +301,7 @@
       allNodes.append("svg:text")
           .style("fill", function(d){ return d.color;})
           .style("font-size", function(){
-            return (Math.min(1/Math.log10(df.length)*20, 14))
+            return Math.min(1/Math.log10(df.length)*15, 14)
           })
           .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
           .attr("dy", ".31em")
@@ -334,7 +337,7 @@
           var m1 = mouse(d3.event),
               dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
               rotate1 = rotate ? rotate+dm : dm;
-          
+
           svg.style("-webkit-transform", "translateX(" + rx + "px)translateY(" + ry + "px)rotateZ(" + rotate1 + "deg)");
         }
       }
@@ -371,77 +374,12 @@
           }
           if(clickedData.length === 0){
             d3.selectAll(".vizText").remove()
-            geneFamily = fixStrings(d.parent.name)
-            windowFields = ['Gene Name: ',
-                            d.key,
-                            'Pathway: ',
-                            geneFamily,
-                            'Connections: ' + d.datasource.length,
-                            'Confidence: ' + d.Confidence]
-            windowFields = [].concat.apply([], windowFields);
-            var textColor = d.color;
-            var windowL = windowFields.length
-            windowText.data(windowFields)
-              .enter()
-                .append("svg:text")
-                .attr("class", "vizText")
-                .style("fill", function(d, i){
-                  if(i===1 || i===3){
-                    return textColor;
-                  }
-                  else if(windowL>6 && i>3 && i<windowL-2){
-                    return textColor;
-                  }
-                })
-                .attr("transform", function(d) { return "translate(0,20)"; })
-                .attr("dy", function(d, i){
-                  return i*20;
-                })
-                .attr("dx", function(d, i){
-                  if(i===1 || i===3){
-                    return 10;
-                  }
-                  else if(windowL>6 && i>3 && i<windowL-2){
-                    return 10;
-                  }
-                  else{
-                    return 2;
-                  }
-                })
-                .text(function(d){return d;});
+            //geneFamily = fixStrings(d.parent.name)
+            paintWindow(d, 1);
           }
           else if(childrenArray.indexOf(d.name) > -1){
             d3.selectAll(".vizText").remove()
-            n = clickedData[clickedData.length-1]
-            cInd = childrenArray.indexOf(d.name)
-            windowFields = ['Linked Gene: ', d.key,
-                            'Reference Gene: ', n.key,
-                            'Connections: ' + d.weights.length,
-                            'Score: ' + n.weights[cInd],
-                            'Source: ' + n.datasource[cInd]];
-            var linkedColor = d.color;
-            var refColor = n.color;
-
-            windowText.data(windowFields)
-              .enter()
-                .append("svg:text")
-                .attr("class", "vizText")
-                .style("fill", function(d, i){
-                  if(i === 1){
-                    return linkedColor;
-                  }
-                  else if(i === 3){
-                    return refColor;
-                  }
-                })
-                .attr("transform", function(d) { return "translate(0,20)"; })
-                .attr("dy", function(d, i){
-                  return i*20;
-                })
-                .attr("dx", function(d, i){
-                  return (i>3 || i % 2 ===0) ? 2 : 10;
-                })
-                .text(function(d){return d;});
+            paintWindow(d, 3);
           }
         }
         else{
@@ -463,52 +401,14 @@
         }
         else if(clickedData.length === 1){
           setvals(d, true, false, pop=5)
-          setvals(clickedData[i], true, false)
+          setvals(clickedData[i], true, false, pop=5)
         }
         if(clickedData.length === 0){
           clearVizText()
         }
         else{
           d3.selectAll(".vizText").remove()
-          n = clickedData[clickedData.length-1]
-          geneFamily = fixStrings(n.parent.name)
-          windowFields = ['Gene Name: ',
-                          n.key,
-                          'Pathway: ',
-                          geneFamily,
-                          'Connections: ' + n.datasource.length,
-                          'Confidence: ' + n.Confidence]
-          windowFields = [].concat.apply([], windowFields);
-          var textColor = n.color;
-          var windowL = windowFields.length;
-          windowText.data(windowFields)
-            .enter()
-              .append("svg:text")
-              .attr("class", "vizText")
-              .style("fill", function(d, i){
-                if(i===1 || i===3){
-                  return textColor;
-                }
-                else if(windowL>6 && i>3 && i<windowL-2){
-                  return textColor;
-                }
-              })
-              .attr("transform", function(d) { return "translate(0,20)"; })
-              .attr("dy", function(d, i){
-                return i*20;
-              })
-              .attr("dx", function(d, i){
-                if(i===1 || i===3){
-                  return 10;
-                }
-                else if(windowL>6 && i>3 && i<windowL-2){
-                  return 10;
-                }
-                else{
-                  return 2;
-                }
-              })
-              .text(function(d){return d;});
+          paintWindow(d, 2);
         }
       }
 
@@ -523,46 +423,8 @@
           setvals(d, true, false, pop=5)
 
           d3.selectAll(".vizText").remove()
-          geneFamily = fixStrings(d.parent.name);
-          windowFields = ['Gene Name: ',
-                          d.key,
-                          'Pathway: ',
-                          geneFamily,
-                          'Connections: ' + d.datasource.length,
-                          'Confidence: ' + d.Confidence]
-          windowFields = [].concat.apply([], windowFields);
-          var textColor = d.color;
-          var windowL = windowFields.length;
-          windowText.data(windowFields)
-            .enter()
-              .append("svg:text")
-              .attr("class", "vizText")
-              .style("fill", function(d, i){
-                if(i===1 || i===3){
-                  return textColor;
-                }
-                else if(windowL>6 && i>3 && i<windowL-2){
-                  return textColor;
-                }
-              })
-              .attr("transform", function(d) { return "translate(0,20)"; })
-              .attr("dy", function(d, i){
-                return i*20;
-              })
-              .attr("dx", function(d, i){
-                if(i===1 || i===3){
-                  return 10;
-                }
-                else if(windowL>6 && i>3 && i<windowL-2){
-                  return 10;
-                }
-                else{
-                  return 2;
-                }
-              })
-              .text(function(d){return d;});
 
-          //clickedData = Array.from(new Set(clickedData))
+          paintWindow(d, 1);
 
           updateChildren(d)
 
@@ -606,7 +468,6 @@
       function clearVizText(){
         d3.selectAll(".vizText").remove()
         windowFields = ['Gene Name:', ' ',
-                        'Pathway:', ' ',
                         'Connections:',
                         'Confidence:']
         windowText.data(windowFields)
@@ -694,7 +555,7 @@
             .classed(name, value)
             .style('font-weight', nodeBold)
             //.attr("transform", function(d) {"translate(" + rx + "+5, " + ry + "+5)"});
-            .transition(50)
+            .transition(200)
             //.attr("transform", "translate(240,240)")
             //.attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
             //.attr("dy", ".31em")
@@ -732,7 +593,104 @@
         return a[0] * b[0] + a[1] * b[1];
       }
 
-      function fixStrings(s, cut=20){
+      function paintWindow(d, option){
+        if(option === 1){
+          windowFields = ['Gene Name: ',
+                          d.key,
+                          'Connections: ' + d.datasource.length,
+                          'Confidence: ' + d.Confidence]
+          windowFields = [].concat.apply([], windowFields);
+          var textColor = d.color
+          windowText.data(windowFields)
+            .enter()
+              .append("svg:text")
+              .attr("class", "vizText")
+              .style("fill", function(d, i){
+                if(i===1){
+                  return textColor;
+                }
+              })
+              .attr("transform", function(d) { return "translate(0,20)"; })
+              .attr("dy", function(d, i){
+                return i*20;
+              })
+              .attr("dx", function(d, i){
+                if(i===1){
+                  return 10;
+                }
+                else{
+                  return 2;
+                }
+              })
+              .text(function(d){return d;});
+        }
+        else if(option === 2){
+          n = clickedData[clickedData.length-1]
+          //geneFamily = fixStrings(n.parent.name)
+          windowFields = ['Gene Name: ',
+                          n.key,
+                          'Connections: ' + n.datasource.length,
+                          'Confidence: ' + n.Confidence]
+          windowFields = [].concat.apply([], windowFields);
+          var textColor = n.color;
+          var windowL = windowFields.length;
+          windowText.data(windowFields)
+            .enter()
+              .append("svg:text")
+              .attr("class", "vizText")
+              .style("fill", function(d, i){
+                if(i===1){
+                  return textColor;
+                }
+              })
+              .attr("transform", function(d) { return "translate(0,20)"; })
+              .attr("dy", function(d, i){
+                return i*20;
+              })
+              .attr("dx", function(d, i){
+                if(i===1){
+                  return 10;
+                }
+                else{
+                  return 2;
+                }
+              })
+              .text(function(d){return d;});
+        }
+        else{
+          n = clickedData[clickedData.length-1]
+          cInd = childrenArray.indexOf(d.name)
+          windowFields = ['Linked Gene: ', d.key,
+                          'Reference Gene: ', n.key,
+                          'Connections: ' + d.weights.length,
+                          'Score: ' + n.weights[cInd],
+                          'Source: ' + n.datasource[cInd]];
+          var linkedColor = d.color;
+          var refColor = n.color;
+          windowText.data(windowFields)
+            .enter()
+              .append("svg:text")
+              .attr("class", "vizText")
+              .style("fill", function(d, i){
+                if(i === 1){
+                  return linkedColor;
+                }
+                else if(i === 3){
+                  return refColor;
+                }
+              })
+              .attr("transform", function(d) { return "translate(0,20)"; })
+              .attr("dy", function(d, i){
+                return i*20;
+              })
+              .attr("dx", function(d, i){
+                return (i>3 || i % 2 ===0) ? 2 : 10;
+              })
+              .text(function(d){return d;});
+        }
+      }
+
+      /*function fixStrings(s, cut=18){
         if(s.length <= cut){
           return s;
         }
@@ -759,7 +717,7 @@
           }
           return(strings)
         }
-      }
+      }*/
     </script>
   </body>
 </html>

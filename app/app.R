@@ -37,6 +37,7 @@ Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 #used to set home directory for local development
 # Sys.setenv(HOME='/Users/kylewebb/Documents/')
+# setwd('~')
 
 
 #setting
@@ -72,7 +73,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
         #tags$script(src="http://mbostock.github.io/d3/talk/20111116/packages.js"),
         #tags$script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"),
-        tags$script(src="custom_network.js")
+        tags$script(src="custom_network.js"),
+        tags$script(src="custom_network2.js")
         #tags$div(id="igraphViews") 
       ),
 
@@ -793,7 +795,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Pathway types
         #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
         #pathway.type <- pathway.types[1]
-        pathway.type <- input$pathway
+        pathway.type <<- input$pathway
         
         #Get appropiate pathway document suffix
         if (pathway.type == 'KEGG: Biological Processes'){
@@ -1108,7 +1110,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
         
-        colnames(NodeInfo)[4] = 'Confidence'
+        #colnames(NodeInfo)[4] = 'Confidence'
         
         
         ######################################
@@ -1595,21 +1597,21 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             # Display 2nd dimension)
             # legend
-            output$graphLegend2 <- renderUI({
-              HTML(graphLegend)
-            })
-            
-            output$graphView2i <- renderUI({
-              # Copy HTML files to www directory for display in iframe
-              file.copy(paste0(PathNetName.output, "2Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "2Degree.html")), overwrite = TRUE)
-              tags$iframe(
-                seamless="seamless",
-                src=paste0(PathNetName.output, "2Degree.html"),
-                scrolling = 'no',
-                height=700, 
-                width=700
-              )              
-            })
+            # output$graphLegend2 <- renderUI({
+            #   HTML(graphLegend)
+            # })
+            # 
+            # output$graphView2i <- renderUI({
+            #   # Copy HTML files to www directory for display in iframe
+            #   file.copy(paste0(PathNetName.output, "2Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "2Degree.html")), overwrite = TRUE)
+            #   tags$iframe(
+            #     seamless="seamless",
+            #     src=paste0(PathNetName.output, "2Degree.html"),
+            #     scrolling = 'no',
+            #     height=700, 
+            #     width=700
+            #   )              
+            # })
             
             output$PathNetTable <- renderDataTable({
               dat <- datatable(Scores_nodes_and_edges, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
@@ -1796,6 +1798,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
         })
       })
+          
       message("Outside NetworkGraph")
     
       ## Create the 'Download' tab
@@ -1826,6 +1829,14 @@ options(shiny.maxRequestSize = 3*1024^2)
       )
 
       message("Download content completed")
+    })
+      
+    observeEvent(input$clickedData, {
+      message('clicked')
+      #clicked <- input$clickedData
+      clicker <- jsonlite::fromJSON(input$clickedData)
+      print(clicker)
+      #clicked <<- append(clicked, jsonlite::fromJSON(input$clickedData))
     })
 
     # Contact us by sending email to triage@niaid.nih.gov

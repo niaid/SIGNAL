@@ -11,8 +11,8 @@ change_form <- function(l, i, nodes){
              'imports' = l[[i]][,1],
              'weights' = l[[i]][,2],
              'datasource' = l[[i]][,3],
-             'Confidence' = rep(node.info$Confidence, nrow(l[[i]])),
-             'Pathway' = rep(node.info$Pathway, nrow(l[[i]])))
+             'Confidence' = rep(node.info$Confidence, nrow(l[[i]])))
+             #'Pathway' = rep(node.info$Pathway, nrow(l[[i]])))
 }
 
 # function to combine names of edge dataframe
@@ -24,7 +24,12 @@ join_str <- function(str1, str2, names){
   st1 = substr(str1, 2, nchar(str1))
   st2 = substr(str2, 2, nchar(str2))
   if(val2 == 4){
-    c(paste0(names[val1], st1), paste0('Novel Genes', st2))
+    if(val1 != 4){
+      c(paste0(names[val1], st1), paste0('Novel Genes', st2))  
+    }
+    else{
+      c(paste0('Novel Genes', st1), paste0('Novel Genes', st2))
+    }
   }
   else{
     c(paste0(names[val1], st1), paste0(names[val2], st2))
@@ -65,20 +70,9 @@ conf.f = function(x){
   return(x)
 }
 
-config_json <- function(nodes, edges, dimNames){
+config_df <- function(nodes, edges, dimNames){
   #fix values of confidence levels
   nodes$Confidence = conf.f(nodes$Confidence)
-  
-  #links matches between nodes and edges
-  # edgesFrom = as.vector(sapply(edges$from, function(x){substr(x, 3, nchar(x))}))
-  # edgesTo = as.vector(sapply(edges$to, function(x){substr(x, 3, nchar(x))}))
-  # matches.from = match(edgesFrom, nodes$key)
-  # matches.to = match(edgesTo, nodes$key)
-  # #matches = match(edgeLinks, nodes$key)
-  # edges$keggConf_from = nodes$keggConf[matches.from]
-  # edges$keggConf_to = nodes$keggConf[matches.to]
-  # edges$netConf = nodes$netConf[matches]
-  # edges$Pathway = nodes$Pathway[matches]
   
   #assigns correct names of network pathways selected
   edges = assign_names(dimNames, edges)
@@ -95,12 +89,25 @@ config_json <- function(nodes, edges, dimNames){
   # json formation and output from list of dataframes
   df_L = list()
   for(i in 1:length(L)){df_L = append(df_L, list(change_form(L, i, nodes)))}
+  return(df_L)
+}
+
+config_json <- function(nodes, edges, dimNames){
+  df_L = config_df(nodes, edges, dimNames)
   json = jsonlite::toJSON(df_L, 'columns')
   
   return(json)
 }
 
-
+config_json2 <- function(nodes1, edges1, nodes2, edges2, dimNames){
+  df1 = config_df(nodes1, edges1, dimNames)
+  df2 = config_df(nodes2, edges2, dimNames)
+  df_full = list(df1, df2)
+  #df_full = df_full[-which(duplicated(df_full))]
+  json = jsonlite::toJSON(df_full, 'columns')
+  
+  return(json)
+}
 
 
 

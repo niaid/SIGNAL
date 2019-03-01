@@ -287,6 +287,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   NodeInfo$ID <- paste(NodeInfo$Loc, NodeInfo$GeneSymbol, sep = ".")
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   
+  colnames(NodeInfo)[names(NodeInfo)== "ConfidenceCategory"] = 'Confidence'
+  
   #Move ID column first
   NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'Confidence', 'Pathway')]
   
@@ -307,7 +309,24 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
                     Loc.source != 1 & Loc.target != 1 )
   
   # Netgraph with 2nd dimension of connections
-  rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  #rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  
+  degree2.filter <- function(rel){
+    markers = c()
+    for(i in 1:nrow(rel)){
+      r = rel[i,]
+      if(r$Loc.source == 4 & r$Loc.target == 4){
+        st.filter = filter(rel, source.ID == r$source.ID | target.ID == r$target.ID)
+        if(any(unique(st.filter$Loc.target)!=4) || any(unique(st.filter$Loc.source)!=4)){
+          markers = append(markers, i)
+        }
+      }
+    }
+    return(rel[markers,])
+  }
+  
+  rel2.7 = degree2.filter(rel.target) 
+  
   rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
   
   # For netgraph with 2nd dimension of connections
@@ -434,7 +453,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #json_1 <- Chimera1[[1]][1]$json_real
   dimNames = c(path1_name, path2_name, path3_name)
   json_1 <- config_json(g11_vis$nodes, g11_vis$edges, dimNames)
-  session$sendCustomMessage(type="jsondata",json_1)
+  session$sendCustomMessage(type="jsondata1",json_1)
   #session$sendCustomMessage(type="jsondata",json_2)
   
   # Create 2nd dimension networkD3 object
@@ -445,6 +464,9 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   # Convert to object suitable for networkD3
   g22_d3 <<- igraph_to_networkD3(g22, group = g22_members)
   g22_vis <<- toVisNetworkData(g22)
+  
+  json_2 <- config_json(g22_vis$nodes, g22_vis$edges, dimNames)
+  session$sendCustomMessage(type="jsondata2",json_2)
   
   # Add a legend box on the html page
   if(length(selectedRows) == 3){
