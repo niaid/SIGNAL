@@ -14,8 +14,8 @@ Shiny.addCustomMessageHandler("jsondata2",
 
     var w = 800,
       h = w,
-      rx = w / 2,
-      ry = h / 2,
+      rx = 380,
+      ry = 365,
       m0,
       rotate = 0,
       headSpace = 100,
@@ -94,7 +94,7 @@ Shiny.addCustomMessageHandler("jsondata2",
       .style("stroke-width", 2);
 
     var dubsMessage = svG.append("svg:g")
-      .attr("transform", "translate(640, 700)")
+      .attr("transform", "translate(640, 650)")
 
     dubsMessage.append("svg:text")
       .style("font-size", "12px")
@@ -377,6 +377,56 @@ Shiny.addCustomMessageHandler("jsondata2",
 
         setvals(d, false, false)
       }
+
+      clickeRs = getClicker();
+
+      Shiny.setInputValue("clickedData", clickeRs);
+    }
+
+    function getClicker(){
+      nConn = clickedData.length
+      if(nConn===0){
+        return '{}';
+      }
+      else if(nConn===1){
+        clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                  '"Parent1": ["' + clicker.parent.name + '"],' +
+                  '"Name1": ["' + clicker.key + '"],' +
+                  '"Connections1": ["' + clicker.imports.length + '"],' +
+                  '"Confidence": ["' + clicker.Confidence + '"]}'
+        return clickeR;
+      }
+      else{
+        var clickeRs = '['
+        for(conn in clickedData){
+            clicker = clickedData[conn]
+            if(conn < nConn-1){
+              console.log(true)
+              nextClicker = clickedData[parseInt(conn)+1]
+              console.log(nextClicker)
+              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                        '"Parent1": ["' + clicker.parent.name + '"],' +
+                        '"Name1": ["' + clicker.key + '"],' +
+                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Confidence": ["' + clicker.Confidence + '"],' +
+                        '"Node2": ["' + nextClicker.name + '"],' +
+                        '"Parent2": ["' + nextClicker.parent.name + '"],' +
+                        '"Name2": ["' + nextClicker.key + '"],' +
+                        '"Connections2": ["' + nextClicker.imports.length + '"],' +
+                        '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
+                        '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
+            }
+            else{
+              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                        '"Parent1": ["' + clicker.parent.name + '"],' +
+                        '"Name1": ["' + clicker.key + '"],' +
+                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Confidence": ["' + clicker.Confidence + '"]}]'
+            }
+            clickeRs = clickeRs + clickeR
+          }
+        return clickeRs;
+      }
     }
 
     function mousedbl(){
@@ -392,6 +442,8 @@ Shiny.addCustomMessageHandler("jsondata2",
         clickedData = []
       }
       clearVizText()
+
+      Shiny.setInputValue("clickedData", '{}');
     }
 
     var colorText = function(d){

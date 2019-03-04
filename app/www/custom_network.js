@@ -14,8 +14,8 @@ Shiny.addCustomMessageHandler("jsondata1",
 
     var w = 800,
       h = w,
-      rx = w / 2,
-      ry = h / 2,
+      rx = 380,
+      ry = 365,
       m0,
       rotate = 0,
       headSpace = 100,
@@ -25,7 +25,8 @@ Shiny.addCustomMessageHandler("jsondata1",
     var clickedData = [],
         splines = [],
         childrenData = {},
-        childrenArray = [];
+        childrenArray = [],
+        nClicked = 0;
 
     var colorMap = ['#ff0000', '#ff8000', '#2ECC40', '#0080ff'];
     var windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
@@ -94,7 +95,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       .style("stroke-width", 2);
 
     var dubsMessage = svG.append("svg:g")
-      .attr("transform", "translate(640, 700)")
+      .attr("transform", "translate(640, 650)")
 
     dubsMessage.append("svg:text")
       .style("font-size", "12px")
@@ -378,23 +379,56 @@ Shiny.addCustomMessageHandler("jsondata1",
         setvals(d, false, false)
       }
 
-      var clicker = clickedData[clickedData.length-1],
-          clickerImports = [],
-          clickerDatasources = [],
-          clickerWeights = [];
-      for(i in clicker.imports){clickerImports.push('"' + clicker.imports[i] + '"')}
-      for(i in clicker.datasources){clickerDatasources.push('"' + clicker.datasource[i] + '"')}
-      for(i in clicker.weights){clickerWeights.push('"' + clicker.weights[i] + '"')}
+      clickeRs = getClicker();
 
-      var clickeR = '{"name": ["' + clicker.name + '"],' +
-                    '"key": ["' + clicker.key + '"],' +
-                    '"confidence": ["' + clicker.Confidence + '"],' +
-                    '"imports": [' + clickerImports + '],' +
-                    '"datasource": [' + clickerDatasources + '],' +
-                    '"weights": [' + clickerWeights + ']}'
+      Shiny.setInputValue("clickedData", clickeRs);
+    }
 
-      Shiny.setInputValue("clickedData", clickeR);
-
+    function getClicker(){
+      nConn = clickedData.length
+      if(nConn===0){
+        return '{}';
+      }
+      else if(nConn===1){
+        clicker = clickedData[0]
+        clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                  '"Parent1": ["' + clicker.parent.name + '"],' +
+                  '"Name1": ["' + clicker.key + '"],' +
+                  '"Connections1": ["' + clicker.imports.length + '"],' +
+                  '"Confidence": ["' + clicker.Confidence + '"]}'
+        return clickeR;
+      }
+      else{
+        var clickeRs = '['
+        for(conn in clickedData){
+            clicker = clickedData[conn]
+            if(conn < nConn-1){
+              console.log(true)
+              nextClicker = clickedData[parseInt(conn)+1]
+              console.log(nextClicker)
+              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                        '"Parent1": ["' + clicker.parent.name + '"],' +
+                        '"Name1": ["' + clicker.key + '"],' +
+                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Confidence": ["' + clicker.Confidence + '"],' +
+                        '"Node2": ["' + nextClicker.name + '"],' +
+                        '"Parent2": ["' + nextClicker.parent.name + '"],' +
+                        '"Name2": ["' + nextClicker.key + '"],' +
+                        '"Connections2": ["' + nextClicker.imports.length + '"],' +
+                        '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
+                        '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
+            }
+            else{
+              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+                        '"Parent1": ["' + clicker.parent.name + '"],' +
+                        '"Name1": ["' + clicker.key + '"],' +
+                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Confidence": ["' + clicker.Confidence + '"]}]'
+            }
+            clickeRs = clickeRs + clickeR
+          }
+        return clickeRs;
+      }
     }
 
     function mousedbl(){
@@ -410,6 +444,8 @@ Shiny.addCustomMessageHandler("jsondata1",
         clickedData = []
       }
       clearVizText()
+
+      Shiny.setInputValue("clickedData", '{}');
     }
 
     var colorText = function(d){

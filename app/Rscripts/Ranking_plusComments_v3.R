@@ -452,7 +452,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
   #json_1 <- Chimera1[[1]][1]$json_real
   dimNames = c(path1_name, path2_name, path3_name)
-  json_1 <- config_json(g11_vis$nodes, g11_vis$edges, dimNames)
+  json_1df <<- config_df(g11_vis$nodes, g11_vis$edges, dimNames)
+  json_1 = jsonlite::toJSON(json_1df, 'columns')
   session$sendCustomMessage(type="jsondata1",json_1)
   #session$sendCustomMessage(type="jsondata",json_2)
   
@@ -465,7 +466,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   g22_d3 <<- igraph_to_networkD3(g22, group = g22_members)
   g22_vis <<- toVisNetworkData(g22)
   
-  json_2 <- config_json(g22_vis$nodes, g22_vis$edges, dimNames)
+  json_2df <<- config_df(g22_vis$nodes, g22_vis$edges, dimNames)
+  json_2 <- jsonlite::toJSON(json_2df, 'columns')
   session$sendCustomMessage(type="jsondata2",json_2)
   
   # Add a legend box on the html page

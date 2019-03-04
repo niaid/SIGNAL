@@ -92,22 +92,22 @@ config_df <- function(nodes, edges, dimNames){
   return(df_L)
 }
 
-config_json <- function(nodes, edges, dimNames){
-  df_L = config_df(nodes, edges, dimNames)
-  json = jsonlite::toJSON(df_L, 'columns')
-  
-  return(json)
-}
+# config_json <- function(nodes, edges, dimNames){
+#   df_L = config_df(nodes, edges, dimNames)
+#   json = jsonlite::toJSON(df_L, 'columns')
+#   
+#   return(json)
+# }
 
-config_json2 <- function(nodes1, edges1, nodes2, edges2, dimNames){
-  df1 = config_df(nodes1, edges1, dimNames)
-  df2 = config_df(nodes2, edges2, dimNames)
-  df_full = list(df1, df2)
-  #df_full = df_full[-which(duplicated(df_full))]
-  json = jsonlite::toJSON(df_full, 'columns')
-  
-  return(json)
-}
+# config_json2 <- function(nodes1, edges1, nodes2, edges2, dimNames){
+#   df1 = config_df(nodes1, edges1, dimNames)
+#   df2 = config_df(nodes2, edges2, dimNames)
+#   df_full = list(df1, df2)
+#   #df_full = df_full[-which(duplicated(df_full))]
+#   json = jsonlite::toJSON(df_full, 'columns')
+#   
+#   return(json)
+# }
 
 
 

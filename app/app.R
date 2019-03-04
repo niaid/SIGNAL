@@ -212,6 +212,10 @@ options(shiny.maxRequestSize = 3*1024^2)
                       tabPanel(title = "PathNet Table", value = "PathNetTable",
                                HTML("<div id='PathNetTable'></div>"),
                                dataTableOutput("PathNetTable")
+                      ),
+                      tabPanel(title = "Clicked Pathways Table", value = "ClickedDataTable",
+                               HTML("<div id='ClickedTable'></div>"),
+                               dataTableOutput("ClickedDataTable")
                       )
                 )
             ),
@@ -499,7 +503,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         pulldown_types <- c("", colnames(data2))
 
-        selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
+        #selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
       })
 
       # # These user information (userName and userEmail) will collected after the modal is closed/submitted
@@ -1565,14 +1570,42 @@ options(shiny.maxRequestSize = 3*1024^2)
             source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             progress1$inc(1/2)
             Generate_NetworkGraph(selectedRows, organism, G)
+            
+            # Writing fully generated network files for download
+            write.csv(rbindlist(json_2df), paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
+            write.csv(rbindlist(json_1df), paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+            
+            observeEvent(input$clickedData, {
+              
+              clicker <- data.frame(jsonlite::fromJSON(input$clickedData))
+              
+              output$ClickedDataTable <- renderDataTable({
+                if(nrow(clicker)==0){
+                  clicker=NULL
+                }
+                dat <- datatable(data.frame(clicker), rownames = TRUE)
+                return(dat)
+              })
+              
+            })
+            
+            # clickedPathways <- reactive({
+            #   observeEvent(input$clickedData, {
+            #     clicker <- data.frame(jsonlite::fromJSON(input$clickedData))
+            #     write.csv(clicker, paste0(inputFilePrefix, "_", "Clicked_Pathways.csv")) 
+            #   })
+            # })
+            
+            
+            
             progress1$inc(1)
             head(E(G))
             
             #############
             ## PathNet ##
             #############
-            saveEdgebundle(Chimera1, paste0(PathNetName.output, "1Degree.html"), selfcontained = TRUE)
-            saveEdgebundle(Chimera2, paste0(PathNetName.output, "2Degree.html"), selfcontained = TRUE)
+            #saveEdgebundle(Chimera1, paste0(PathNetName.output, "1Degree.html"), selfcontained = TRUE)
+            #saveEdgebundle(Chimera2, paste0(PathNetName.output, "2Degree.html"), selfcontained = TRUE)
             
             # Remove existing html file in www folder
             Sys.chmod(wwwDir, mode = "0777")
@@ -1829,14 +1862,6 @@ options(shiny.maxRequestSize = 3*1024^2)
       )
 
       message("Download content completed")
-    })
-      
-    observeEvent(input$clickedData, {
-      message('clicked')
-      #clicked <- input$clickedData
-      clicker <- jsonlite::fromJSON(input$clickedData)
-      print(clicker)
-      #clicked <<- append(clicked, jsonlite::fromJSON(input$clickedData))
     })
 
     # Contact us by sending email to triage@niaid.nih.gov
