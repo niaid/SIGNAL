@@ -356,7 +356,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           numGeneWithEntrezID <- nrow(data)
           
           # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
-          if((numGeneInInput - numGeneWithEntrezID) > 0){
+          if((numGeneInInput - numGeneWithEntrezID) > 1){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
                                   HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
           }
