@@ -297,7 +297,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       if('SHINY_SERVER_VERSION' %in% env_names){
         dataDir <- '/srv/shiny-server/data/'
       }else{
-        dataDir <- "~/TRIAGE/app/data/"
+        dataDir <<- "~/TRIAGE/app/data/"
       }  
       
       # Read in the input fie
@@ -503,8 +503,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         pulldown_types <- c("", colnames(data2))
 
-        #selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
-        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
+        # selectInput("cutoff_type", "Cutoff Type", pulldown_types)
       })
 
       # # These user information (userName and userEmail) will collected after the modal is closed/submitted
@@ -566,6 +566,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         progress$set(message = "Performing Enrichment....", value = 0)
         
+        startA = Sys.time()
+        
         ## Set up scriptDir, inputDir, outputDir, wwwDir depending on whether this is used
         # as a standalone tool or on AWS webservice
         if('SHINY_SERVER_VERSION' %in% env_names){
@@ -595,7 +597,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Get organism name from user input
         organism <- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
-        print(organism)
 
         ## Source other codes depending on whether this is used
         # as a standalone tool or on AWS webservice
@@ -611,78 +612,132 @@ options(shiny.maxRequestSize = 3*1024^2)
         network_ConfidenceCutoff <<- as.numeric(input$interaction_confidence_cutoff)
         network_InteractionSources <<- input$STRING_interaction_sources
         
+        if(network_ConfidenceCutoff == 700){
+          conf.level = ".highConf.igraph"
+        }
+        else if(network_ConfidenceCutoff == 400){
+          conf.level = ".midConf.igraph"
+        }
+        else{
+          conf.level = ".lowConf.igraph"
+        }
+        
+        dir_begin <<- ifelse('SHINY_SERVER_VERSION' %in% env_names, "/srv/shiny-server/data/Networks/String.", "~/TRIAGE/app/data/Networks/String.")
+        
         if(input_netowrk == "Experimental & Database"){
-          if(network_ConfidenceCutoff == 700){
-            if('SHINY_SERVER_VERSION' %in% env_names){ 
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
-            }else{
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
-            }
-            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
-            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
-            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2),1, which.max)
-            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
-          }
-          else if(network_ConfidenceCutoff == 400){
-            if('SHINY_SERVER_VERSION' %in% env_names){ 
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-            }else{
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-            }
-            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
-            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
-            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
-            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
-          }
-          else{
-            if('SHINY_SERVER_VERSION' %in% env_names){
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-            }else{
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-              load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-            }
-            G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
-            E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
-            datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
-            E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
-          }
+          
+          load(paste0(dir_begin, tolower(organism), ".exp_and_data", conf.level, ".Rdata"))
+          G <- get(paste0("String.", tolower(organism), ".exp_and_data", conf.level))
+          
+          
+          # if(network_ConfidenceCutoff == 700){
+          #   if('SHINY_SERVER_VERSION' %in% env_names){ 
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+          #     load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".exp_and_data.", conf.level, ".igraph.Rdata"))
+          #   }else{
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+          #     load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".exp_and_data.", conf.level, ".igraph.Rdata"))
+          #   }
+          #   G <- get(paste0("String.", tolower(organism), ".exp_and_data.", conf.level, ".igraph"))
+          #   # G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
+          #   # E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+          #   # datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2),1, which.max)
+          #   # E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          # }
+          # else if(network_ConfidenceCutoff == 400){
+          #   if('SHINY_SERVER_VERSION' %in% env_names){ 
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+          #     load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".exp_and_data.midConf.igraph.Rdata"))
+          #   }else{
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
+          #     load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".exp_and_data.midConf.igraph.Rdata"))
+          #   }
+          #   G <- get(paste0("String.", tolower(organism), ".exp_and_data.midConf.igraph"))
+          #   # G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
+          #   # E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+          #   # datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
+          #   # E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          # }
+          # else{
+          #   if('SHINY_SERVER_VERSION' %in% env_names){
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+          #     #load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+          #     load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".exp_and_data.lowConf.igraph.Rdata"))
+          #   }else{
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
+          #     #load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
+          #     load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".exp_and_data.lowConf.igraph.Rdata"))
+          #   }
+          #   G <- get(paste0("String.", tolower(organism), ".exp_and_data.lowConf.igraph"))
+          #   # G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
+          #   # E(G)$weights = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, max, na.rm = T)
+          #   # datasources = apply(cbind(E(G)$weights_1, E(G)$weights_2), 1, which.max)
+          #   # E(G)$datasource = ifelse(datasources==1, E(G)$datasource_1, E(G)$datasource_2)
+          # }
         }
         else if(input_netowrk == "Advanced Options"){
-          if(network_ConfidenceCutoff == 700){
-            conf.level = ".highConf.igraph"
-          }
-          else if(network_ConfidenceCutoff == 400){
-            conf.level = ".midConf.igraph"
-          }
-          else{
-            conf.level = ".lowConf.igraph"
-          }
-          dir_begin = ifelse('SHINY_SERVER_VERSION' %in% env_names, "/srv/shiny-server/data/Networks/String.", "~/TRIAGE/app/data/Networks/String.")
           files2load = paste0(dir_begin, tolower(organism), ".", network_InteractionSources, conf.level, ".Rdata")
           vars2load = paste0("String.", tolower(organism), ".", network_InteractionSources, conf.level)
           for (i in 1:length(files2load)) assign(gsub(".*/","",files2load[i]), load(files2load[i]))
           all.G = list()
           for(i in 1:length(vars2load)) all.G[[i]] = get(vars2load[i])
-          all.G = all.G[which(sapply(all.G, vcount) > 0)]
-          G = graph.union(all.G)
-          cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
-          weight_df = list()
-          for(i in 1:length(cols)){
-            weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
-            weight_df[[i]][is.na(weight_df[[i]])] = 0
+          #print(lapply(all.G, vertex_attr_names))
+          empty.G.check = which(sapply(sapply(sapply(all.G, edge.attributes), names), is.null))
+          count.G.check = which(sapply(all.G, vcount) <= 0)
+          all.checks = union(count.G.check, empty.G.check)
+          
+          datasources = sapply(strsplit(vars2load, '[,.]'), '[[', 3)
+          
+          if(length(all.checks)>0){
+            all.G <- all.G[-union(count.G.check, empty.G.check)]
+            datasources = datasources[-union(count.G.check, empty.G.check)]
           }
-          weight_df = data.frame(weight_df)
-          weight_df = apply(weight_df, 2, as.integer)
-          E(G)$weights = rowMax(weight_df)
-          indx <- max.col(weight_df, ties.method='first')
-          cols = edge_attr_names(G)[grep("^datasource_",edge_attr_names(G))]
-          E(G)$datasource = network_InteractionSources[indx]
+          
+          if(length(all.G)==0){
+            showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                                  easyClose = TRUE))
+            Sys.sleep(5)
+            session$reload()
+          }
+          else if(length(all.G)==1){
+            G <- all.G[[1]]
+          }
+          else{
+            #G <<- graph.union(all.G)
+            for(j in 1:length(all.G)){
+              names(edge.attributes(all.G[[j]])) = paste0(names(edge.attributes(all.G[[j]])), '_', datasources[j])
+            }
+            
+            temp = all.G[[1]]
+            
+            for(i in 2:length(all.G)){
+              temp = graph.union(temp, all.G[[i]])
+            }
+            G <<- temp
+           
+            cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
+            weight_df = list()
+            for(i in 1:length(cols)){
+              weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
+              weight_df[[i]][is.na(weight_df[[i]])] = 0
+            }
+            weight_df = data.frame(weight_df)
+            weight_df = apply(weight_df, 2, as.integer)
+            E(G)$weights = rowMax(weight_df)
+            indx <- max.col(weight_df, ties.method='first')
+            cols = edge_attr_names(G)[grep("^datasource_", edge_attr_names(G))]
+            E(G)$datasource = datasources[indx]
+            message(vertex_attr_names(G))
+            message(edge_attr_names(G))
+          }
         }
+        
+        #test = Reduce(intersect, vertex_attr(G))
+        #lapply(vertex_attr(G), match, test)
           
           
           # 
@@ -729,7 +784,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         ## Update the G igraph object
         #G <- upgrade_graph(G)
         
-        G <<- G
+        #G <<- G
         
         #Selected_STRINGnetwork.igraph <- G
         message("Networks Loaded")
@@ -776,18 +831,23 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
+        
+        #userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
+        
         outDir <<- paste0(outputDir, userDir)
         dir.create(outDir)
-        #setwd(outDir)
-        setwd(paste0('inputOutputs/TRIAGEoutputFiles/', userDir))
+        
+        
+        setwd(outDir)
+        #setwd(paste0('inputOutputs/TRIAGEoutputFiles/', userDir))
         
         # Set the output file name
         inputFile <- input$file1
-        inputFileName <- inputFile$name
+        inputFileName <<- inputFile$name
         #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
-        inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
+        inputFilePrefix <<- tools::file_path_sans_ext(inputFileName)
 
-        outputFileName <- paste0(inputFilePrefix, "_", "TRIAGEoutput_ALL.csv")
+        outputFileName <<- paste0(inputFilePrefix, "_", "TRIAGEoutput_ALL.csv")
 
         # 1) Seed Pathway Analysis
         # if('SHINY_SERVER' %in% env_names){
@@ -921,7 +981,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           # 2) Expansion - [Network Analysis]
     message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
     
+    
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
+          
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
           nName2 <- paste0("Network.class.iteration", iteration)
@@ -949,7 +1011,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           message(paste("iteration: ", iteration, "\n"))
           proxyScore <- nName2
           iteration <- iteration + 1
+          
         } # end of while loop
+        
 
         ### Append Enrichment Info --------------------------------------------
         # set the cutoff for the enriched pathways to display
@@ -1051,15 +1115,40 @@ options(shiny.maxRequestSize = 3*1024^2)
         # AVERAGE DUPLICATED ROWS
         siRNA.Score <- TRIAGEhits[which(!is.na(TRIAGEhits$EntrezID)),]    
         OverallDegree <- degree(G)
-        Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
-        Graph <- induced.subgraph(G,Screen_Genes.for.network.analysis)
+        
+        # if(!length(vertex_attr(G)) > 1){
+          Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID, V(G)$name)
+        # }
+        # else{
+        #   #vertex.info = lapply(vertex_attr(G), as.numeric)
+        #   #Screen_Genes.for.network.analysis <- c()
+        #   int.list = list(siRNA.Score$EntrezID)
+        #   for(i in 1:length(vertex.info)){
+        #     v = as.numeric(vertex.attributes(G)[[i]])
+        #     # Screen_Genes.for.network.analysis <- append(Screen_Genes.for.network.analysis,
+        #     #                                             intersect(siRNA.Score$EntrezID, v))
+        #     int.list[[i+1]] = v
+        #   }
+        #   Screen_Genes.for.network.analysis <- Reduce(intersect, int.list)
+        # }
+        Graph <- induced.subgraph(G, Screen_Genes.for.network.analysis)
+        
+        #Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
         
         #############################################################
         #            Select sub-graphs from hit genes
         #############################################################
-        Subset_Genes.for.network.analysis <- Screen_Genes.for.network.analysis
+        #Subset_Genes.for.network.analysis <- Screen_Genes.for.network.analysis
         
-        SubGraph <- induced.subgraph(Graph,Subset_Genes.for.network.analysis)
+        #SubGraph <- induced.subgraph(Graph, Subset_Genes.for.network.analysis)
+        SubGraph <<- Graph
+        
+        if(length(E(SubGraph))==0 | length(V(SubGraph))==0){
+          showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                                easyClose = TRUE))
+          Sys.sleep(5)
+          session$reload()
+        }
         
         # if(tolower(use.only.commnected.components) == "yes"){
         #   SubGraph <- induced.subgraph(SubGraph,names(which(degree(SubGraph) > 0)))
@@ -1273,12 +1362,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         #setwd(downloadDir)
         setwd('TRIAGEfilesToDownload')
         
-        TRIAGE.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
+        TRIAGE.cond.output.name <<- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
         Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
         
         write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
-        write.csv(triage.Out, file = outputFileName, row.names = F)
+        # write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
       ## Switch to 'Enriched Pathways' tab and display partial results
@@ -1560,6 +1649,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           else{
             ## Show progress bar
             # Create a Progress object
+            startB <- Sys.time()
+            
             progress1 <- shiny::Progress$new()
             # Make sure it closes when we exit this reactive, even if there's an error
             on.exit(progress1$close())
@@ -1569,11 +1660,35 @@ options(shiny.maxRequestSize = 3*1024^2)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             progress1$inc(1/2)
+            
+            
             Generate_NetworkGraph(selectedRows, organism, G)
             
             # Writing fully generated network files for download
-            write.csv(rbindlist(json_2df), paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
-            write.csv(rbindlist(json_1df), paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+            write.csv(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
+            write.csv(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+            # write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+            
+            print(Sys.time() - startB)
+            
+            
+            observe({
+              if(input$inTabset == 'downloads'){
+                clicker <<- data.frame(jsonlite::fromJSON(input$clickedData))
+                clicker = apply(clicker, 2, unlist)
+                #print(clicker)
+                write.csv(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+              }
+            })
+            
+            # observe({
+            #   if(input$inTabset == 'graphViews'){
+            #     print('hello graphViews')
+            #   }
+            # })
+            # if(!is.null(input$tabs) || input$tab == 'ClickedPathways'){
+            #   print("Got it")
+            # }
             
             observeEvent(input$clickedData, {
               
@@ -1587,6 +1702,23 @@ options(shiny.maxRequestSize = 3*1024^2)
                 return(dat)
               })
               
+            })
+            
+            # observe({
+            #   print()
+            # })
+            
+            # clicked.path.data <- observe({
+            #   if(!exists('clicker') || nrow(clicker)==0){
+            #     return()
+            #   }
+            #   write.csv(clicker, paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"), row.names = F)
+            # })
+            
+            clicked.path.data <- reactive({
+              observeEvent(input$clickedData, {
+                return(data.frame(jsonlite::fromJSON(input$clickedData)))
+              })
             })
             
             # clickedPathways <- reactive({
@@ -1850,20 +1982,33 @@ options(shiny.maxRequestSize = 3*1024^2)
 
       ## Download all output data
       output$downloadButton <- downloadHandler(
-
         filename = function(){
           paste("TRIAGE_analysis_output", "zip", sep=".")
         },
         content = function(filename){
+          # cwd <- getwd()
+          # outputFiles <- list.files(path = './')
+          # setwd("C:\\Users\\webbkp\\AppData\\Local\\Temp\\1\\RtmpSQmzv5")
+          # print(fname)
+          # print(outputFiles)
+          # zip(fname, files = outputFiles)
+          # if(file.exists(paste0(fname, ".zip"))) {file.rename(paste0(fname, ".zip"), fname)}
+          # setwd(cwd)
+          
           outputFiles <- list.files(path = './')
           zip(zipfile=filename, files = outputFiles)
         },
         contentType = "application/zip"
       )
-
+      
+      
+      endA = Sys.time()
+      print(endA - startA) 
       message("Download content completed")
     })
 
+      
+      
     # Contact us by sending email to triage@niaid.nih.gov
     # Send email using mailR package
     # in order for this to work, set the java path for R on commandline in a terminal
@@ -1935,10 +2080,10 @@ options(shiny.maxRequestSize = 3*1024^2)
     
     # This code will be run after the client has disconnected
     # ie, a user session is closed
-    session$onSessionEnded(function() {
-      # Delete user/session-specific directory after removing all downloadable files
-      unlink(outDir, recursive = TRUE)
-    })
+    # session$onSessionEnded(function() {
+    #   # Delete user/session-specific directory after removing all downloadable files
+    #   unlink(outDir, recursive = TRUE)
+    # })
     
     # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
     session$allowReconnect(TRUE)

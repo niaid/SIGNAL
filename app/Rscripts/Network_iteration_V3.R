@@ -71,36 +71,35 @@ tempPeripheralGenes <- PeripheralGenes <- NULL
 hit.Genes.Network <- intersect(hit.Genes, V(Graph)$name)
 message(paste("Hit genes in network", length(hit.Genes.Network)))
 
-if(length(hit.Genes.Network) <= 0)
-{
+if(length(hit.Genes.Network) <= 0){
   # message("No hit gene found! Please change your cutoff values to ensure genes are selected.")
   # showNotification("No hit gene found! Please change your cutoff values to ensure genes are selected.", duration = NULL,
   #                  action = a(href = "javascript:location.reload();", "Reload page")
   # )
   showModal(modalDialog(
     title=HTML("<h3><font color=#ff0000>Error with cutoff values!</font></h3>"),
-    HTML("No hit gene found! Please change your cutoff values to ensure a sest of genes will be selected!"),
+    HTML("No hit gene found! Please try changing your Interaction Sources or Confidence to ensure a set of genes will be selected!<br>
+         Session will restart."),
     easyClose = TRUE
   ))
-  Sys.sleep(8)
+  Sys.sleep(5)
   session$reload()
-}
-
-for(i in 1:length(hit.Genes.Network)){
-  
-  tempPeripheralGenes <- V(Graph)[unlist(neighborhood(Graph, 1, nodes=hit.Genes.Network[i], mode="all"))]$name
-  if(length(tempPeripheralGenes) > 0) {
-    tempPeripheralGenes <- setdiff(unique(tempPeripheralGenes), hit.Genes.Network)
+} else{
+  for(i in 1:length(hit.Genes.Network)){
+    
+    tempPeripheralGenes <- V(Graph)[unlist(neighborhood(Graph, 1, nodes=hit.Genes.Network[i], mode="all"))]$name
+    if(length(tempPeripheralGenes) > 0) {
+      tempPeripheralGenes <- setdiff(unique(tempPeripheralGenes), hit.Genes.Network)
+    }
+    PeripheralGenes <- c(tempPeripheralGenes, PeripheralGenes)
   }
-  PeripheralGenes <- c(tempPeripheralGenes, PeripheralGenes)
-}
-PeripheralGenesFrequency <- table(PeripheralGenes)
-PeripheralGenesSelected <- names(PeripheralGenesFrequency[PeripheralGenesFrequency >= 1])
-
-tempGenes <- findHitGenes(siRNA.Score.Formatted)
-if(length(tempGenes) > 0) {
-  PeripheralGenesSelected <- intersect(PeripheralGenesSelected, tempGenes)
-}
+  PeripheralGenesFrequency <- table(PeripheralGenes)
+  PeripheralGenesSelected <- names(PeripheralGenesFrequency[PeripheralGenesFrequency >= 1])
+  
+  tempGenes <- findHitGenes(siRNA.Score.Formatted)
+  if(length(tempGenes) > 0) {
+    PeripheralGenesSelected <- intersect(PeripheralGenesSelected, tempGenes)
+  }
 
 PeripheralHitGenes <- union(hit.Genes.Network, PeripheralGenesSelected)
 ###############################################################################
@@ -133,4 +132,5 @@ ScreenHit <- rep("No", length(gNames2))
 ScreenHit[match(gNames, gNames2)] <- "Yes"
 indPeripheralGenes <- match(PeripheralGenesSelected, gNames2)
 selected.gNames2 <- gNames2[indPeripheralGenes]
+}
 

@@ -245,12 +245,12 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path3_hits.net.count"] <- paste0("NtwrkCount.", path3_name)
   
   #Character strings of pathways names removing spaces and non-alpha numeric chracters
-  names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
-                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name))
-                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
+  names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
+                              gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)), "_",
+                              gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
   
-  names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
-                                      , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
+  names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
+                                        gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
   
   names.SelectedPathways_1 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)))
   
@@ -313,16 +313,15 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   degree2.filter <- function(rel){
     markers = c()
-    for(i in 1:nrow(rel)){
-      r = rel[i,]
-      if(r$Loc.source == 4 & r$Loc.target == 4){
-        st.filter = filter(rel, source.ID == r$source.ID | target.ID == r$target.ID)
-        if(any(unique(st.filter$Loc.target)!=4) || any(unique(st.filter$Loc.source)!=4)){
-          markers = append(markers, i)
-        }
+    new.rel = filter(rel, Loc.source == 4 & Loc.target == 4)
+    for(i in 1:nrow(new.rel)){
+      r = new.rel[i,]
+      st.filter = filter(rel, source.ID == r$source.ID | target.ID == r$target.ID)
+      if(any(st.filter$Loc.target!=4) || any(st.filter$Loc.source!=4)){
+        markers = append(markers, i)
       }
     }
-    return(rel[markers,])
+    return(new.rel[markers,])
   }
   
   rel2.7 = degree2.filter(rel.target) 
@@ -407,8 +406,16 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   NodeInfo1 <<- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
   
   #Generate the graph
-  g <- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
-  g2 <- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
+  g <<- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
+  g2 <<- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
+  
+  # Check to make sure the generated graph is full
+  if(length(E(g))==0 | length(V(g))==0){
+    showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                          easyClose = TRUE))
+    Sys.sleep(5)
+    session$reload()
+  }
   
   clr <- as.factor(V(g)$Loc)
   clr2 <- as.factor(V(g2)$Loc)
@@ -436,8 +443,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   # igraph static plot
   #plot(g, layout = layout.circle, vertex.label=NA)
   
-  Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
-  Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
+  #Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
+  #Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
   
   # Create 1st dimension networkD3 object
   g11 = g
@@ -528,15 +535,17 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_1)
   }
   
-  if(grepl('shiny', outputDir)){
-    saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
-  }else{
-    #saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera1,file = paste0(PathNetName.output, "1Degree.html"))
-    #saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera2,file = paste0(PathNetName.output, "1Degree.html"))
-  }
+  # commenting out code to save network .html files
+  
+  # if(grepl('shiny', outputDir)){
+  #   saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
+  # }else{
+  #   #saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera1,file = paste0(PathNetName.output, "1Degree.html"))
+  #   #saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera2,file = paste0(PathNetName.output, "1Degree.html"))
+  # }
   
   
   return(TRUE)

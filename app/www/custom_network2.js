@@ -421,7 +421,8 @@ Shiny.addCustomMessageHandler("jsondata2",
                         '"Parent1": ["' + clicker.parent.name + '"],' +
                         '"Name1": ["' + clicker.key + '"],' +
                         '"Connections1": ["' + clicker.imports.length + '"],' +
-                        '"Confidence": ["' + clicker.Confidence + '"]}]'
+                        '"Confidence": ["' + clicker.Confidence + '"],' +
+                        '"Node2": ["NA"], "Parent2": ["NA"], "Name2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
             }
             clickeRs = clickeRs + clickeR
           }

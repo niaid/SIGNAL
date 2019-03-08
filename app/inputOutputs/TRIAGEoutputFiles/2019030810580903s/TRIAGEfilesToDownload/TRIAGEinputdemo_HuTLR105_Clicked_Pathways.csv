@@ -1,0 +1,4 @@
+"","Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
+"1","RNA transport.UBE2I","RNA transport","UBE2I","24","Medium","Novel Genes.XPA","Novel Genes","XPA","2","900","database"
+"2","Novel Genes.XPA","Novel Genes","XPA","2","Medium","RNA transport.SUMO3","RNA transport","SUMO3","12","900","database"
+"3","RNA transport.SUMO3","RNA transport","SUMO3","12","High",NA,NA,NA,NA,NA,NA
