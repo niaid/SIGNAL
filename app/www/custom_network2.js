@@ -37,13 +37,17 @@ Shiny.addCustomMessageHandler("jsondata2",
       for (var i = 0; i<df.length; i++) {
         var name = df[i].parent.name;
 
-        if(name === 'Novel Genes'){continue;}
+        //if(name === 'Novel Genes'){continue;}
 
         if (!(name in lookup)) {
           lookup[name] = 1;
           result.push(name);
         }
       }
+
+      result.sort()
+      result.push(result.splice(result.indexOf('Novel Genes'), 1)[0]);
+
       return(result)
     }
 
@@ -185,12 +189,12 @@ Shiny.addCustomMessageHandler("jsondata2",
         parents = findParents(df),
         pathwayNames = uniquePathways(df);
 
-    if(pathwayNames.length === 1){
+    if(pathwayNames.length === 2){
       colorMapt = colorMap.slice(0,1)
       colorMapt.push(colorMap[3])
       colorMap = colorMapt
     }
-    else if(pathwayNames.length === 2){
+    else if(pathwayNames.length === 3){
       colorMapt = colorMap.slice(0,2)
       colorMapt.push(colorMap[3])
       colorMap = colorMapt

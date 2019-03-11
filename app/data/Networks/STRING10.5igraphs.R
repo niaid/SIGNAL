@@ -115,7 +115,7 @@ create_igraph <- function(key, type, level){
   return(i_graph)
 }
 
-create_specaial_igraphs <- function(str1, str2){
+create_special_igraphs <- function(str1, str2){
   load(paste0(str1, '.Rdata'))
   load(paste0(str2, '.Rdata'))
   G = graph.union(get(str1), get(str2))
@@ -304,27 +304,27 @@ rm(String.mouse.textmining.midConf.igraph)
 
 # saving specialized files for quick retrieval of experimental and database
 
-String.human.exp_and_data.highConf.igraph = create_specaial_igraphs("String.human.experimental.highConf.igraph", "String.human.database.highConf.igraph")
+String.human.exp_and_data.highConf.igraph = create_special_igraphs("String.human.experimental.highConf.igraph", "String.human.database.highConf.igraph")
 save(String.human.exp_and_data.highConf.igraph, file = 'String.human.exp_and_data.highConf.igraph.Rdata')
 rm(String.human.exp_and_data.highConf.igraph)
 
-String.human.exp_and_data.midConf.igraph = create_specaial_igraphs("String.human.experimental.midConf.igraph", "String.human.database.midConf.igraph")
+String.human.exp_and_data.midConf.igraph = create_special_igraphs("String.human.experimental.midConf.igraph", "String.human.database.midConf.igraph")
 save(String.human.exp_and_data.midConf.igraph, file = 'String.human.exp_and_data.midConf.igraph.Rdata')
 rm(String.human.exp_and_data.midConf.igraph)
 
-String.human.exp_and_data.lowConf.igraph = create_specaial_igraphs("String.human.experimental.lowConf.igraph", "String.human.database.lowConf.igraph")
+String.human.exp_and_data.lowConf.igraph = create_special_igraphs("String.human.experimental.lowConf.igraph", "String.human.database.lowConf.igraph")
 save(String.human.exp_and_data.lowConf.igraph, file = 'String.human.exp_and_data.lowConf.igraph.Rdata')
 rm(String.human.exp_and_data.lowConf.igraph)
 
-String.mouse.exp_and_data.highConf.igraph = create_specaial_igraphs("String.mouse.experimental.highConf.igraph", "String.mouse.database.highConf.igraph")
+String.mouse.exp_and_data.highConf.igraph = create_special_igraphs("String.mouse.experimental.highConf.igraph", "String.mouse.database.highConf.igraph")
 save(String.mouse.exp_and_data.highConf.igraph, file = 'String.mouse.exp_and_data.highConf.igraph.Rdata')
 rm(String.mouse.exp_and_data.highConf.igraph)
 
-String.mouse.exp_and_data.midConf.igraph = create_specaial_igraphs("String.mouse.experimental.midConf.igraph", "String.mouse.database.midConf.igraph")
+String.mouse.exp_and_data.midConf.igraph = create_special_igraphs("String.mouse.experimental.midConf.igraph", "String.mouse.database.midConf.igraph")
 save(String.mouse.exp_and_data.midConf.igraph, file = 'String.mouse.exp_and_data.midConf.igraph.Rdata')
 rm(String.mouse.exp_and_data.midConf.igraph)
 
-String.mouse.exp_and_data.lowConf.igraph = create_specaial_igraphs("String.mouse.experimental.lowConf.igraph", "String.mouse.database.lowConf.igraph")
+String.mouse.exp_and_data.lowConf.igraph = create_special_igraphs("String.mouse.experimental.lowConf.igraph", "String.mouse.database.lowConf.igraph")
 save(String.mouse.exp_and_data.lowConf.igraph, file = 'String.mouse.exp_and_data.lowConf.igraph.Rdata')
 rm(String.mouse.exp_and_data.lowConf.igraph)
 

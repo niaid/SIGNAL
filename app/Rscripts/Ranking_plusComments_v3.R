@@ -68,7 +68,6 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   path2_pathway.genes.matrix <- matrix(path2_pathway.genes$GeneSymbol)
   
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$GeneSymbol)
-  
 
   
   TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits"
@@ -478,45 +477,45 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   session$sendCustomMessage(type="jsondata2",json_2)
   
   # Add a legend box on the html page
-  if(length(selectedRows) == 3){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey;">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-                            <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, path2_name, path3_name, "other TRIAGE hit genes")
-  }
-  if(length(selectedRows) == 2){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, path2_name, "other TRIAGE hit genes")
-  }
-  if(length(selectedRows) == 1){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey;">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, "other TRIAGE hit genes")
-  }
+  # if(length(selectedRows) == 3){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+  #                           <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+  # }
+  # if(length(selectedRows) == 2){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, path2_name, "other TRIAGE hit genes")
+  # }
+  # if(length(selectedRows) == 1){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, "other TRIAGE hit genes")
+  # }
   
   
   

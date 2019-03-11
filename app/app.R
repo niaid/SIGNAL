@@ -201,12 +201,12 @@ options(shiny.maxRequestSize = 3*1024^2)
                       # Display in igraph
                       tabPanel(title="1st Degree Network", value="graphView1",
                                HTML("<div id='graphView1'></div>"),
-                               htmlOutput("graphLegend1"),
+                               #htmlOutput("graphLegend1"),
                                htmlOutput("graphView1i", width = "100%", height = "700px")
                       ),
                       tabPanel(title="2nd Degree Network", value="graphView2",
                                HTML("<div id='graphView2'></div>"),
-                               htmlOutput("graphLegend2"),
+                               #htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
                       ),
                       tabPanel(title = "PathNet Table", value = "PathNetTable",
@@ -595,7 +595,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           wwwDir <<- "~/TRIAGE/app/www/"
         }        
         # Get organism name from user input
-        organism <- input$organism
+        organism <<- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
 
         ## Source other codes depending on whether this is used
@@ -873,7 +873,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           pathway.type <- 'All'
         } 
         
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
+        pathwayData <<- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
         # Get input file
         # siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
@@ -1659,6 +1659,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             message(selectedRows)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
+            # source(paste0(scriptDir, "Ranking_temp.R"), local = TRUE)
             progress1$inc(1/2)
             
             
