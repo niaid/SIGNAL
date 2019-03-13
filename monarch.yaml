@@ -26,14 +26,15 @@ terraform:
     - web-application
   module_name: triage # legacy, not needed for new apps
   variables:
-    cpu: 256
+    cpu: 512
     memory: 2048
     container_port: 3838
     desired_count: 1
     command: /usr/local/bin/shiny_server.sh
     alert_recipients: "[[${var.tech_email_addresses},${var.mgmt_email_addresses}]]"
-    healtcheck_timeout: 25
-    healtcheck_healthy_threshold: 2
+    healthcheck_timeout: 25
+    healthcheck_healthy_threshold: 2
+    healthcheck_unhealthy_threshold: 6
   environments:
     qa:
       variables:
