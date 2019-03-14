@@ -2,6 +2,8 @@ name: triage
  
 tech_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov 
 mgmt_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov
+monarch_team_id: 5c8946358e735a001c5e1855
+monarch_product_id: 5c8949c0197b90001c4b4a5a
  
 docker_build:
   variables:
