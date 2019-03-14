@@ -106,13 +106,11 @@ path.arc {
   stroke-width: 2px;
 }
 
-.node.target {
+.link.source {
+  !stroke: #d62728;
 }
 
 .link.source {
-}
-
-.node.source {
 }
 
 .link.target {

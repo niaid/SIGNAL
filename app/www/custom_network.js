@@ -6,12 +6,13 @@ Shiny.addCustomMessageHandler("jsondata1",
 
     json_data.forEach(function(d){
       d = {name: d.name[0], imports: d.imports, weights: d.weights,
-            datasource: d.datasource, Confidence: d.Confidence[0]};
+            datasource: d.datasource, Confidence: d.Confidence[0], color: d.Color[0]};
       df.push(d)
     })
 
-    console.log(df);
+    //console.log(df);
 
+    // Variables for div and svg dimensions
     var w = 800,
       h = w,
       rx = 380,
@@ -22,52 +23,44 @@ Shiny.addCustomMessageHandler("jsondata1",
       rectW = w-640,
       rectH = w-650;
 
+    // empty variables to be populated later
     var clickedData = [],
         splines = [],
         childrenData = {},
         childrenArray = [],
-        nClicked = 0;
+        nClicked = 0,
+        numbNovel = 0,
+        numbNoNovel = 0;
 
-    var colorMap = ['#ff0000', '#ff8000', '#2ECC40', '#0080ff'];
-    var windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
+    // colors for visualization and colormapping to unique node parent names
+    var novelColor = "#00238B",
+        color1 = "#46008B",
+        color2 = "#8B0000",
+        color3 = "#468B00",
+        color12 = "#8B0068",
+        color13 = "#008B57",
+        color23 = "#8B6800",
+        color123 = "#008B8B",
+        intColors = [color12, color13, color23, color123],
+        colorMap = [color1, color2, color3, novelColor, color12, color13, color23, color123],
+        windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
 
-    var uniquePathways = function(df){
-      var lookup = {};
-      var result = [];
-
-      for (var i = 0; i<df.length; i++) {
-        var name = df[i].parent.name;
-
-        //if(name === 'Novel Genes'){continue;}
-
-        if (!(name in lookup)) {
-          lookup[name] = 1;
-          result.push(name);
-        }
-      }
-
-      result.sort();
-      result.push(result.splice(result.indexOf('Novel Genes'), 1)[0]);
-
-      return(result)
-    }
-
+    // network assignments cluster, bundle, and line
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
-      .sort(function(a, b) { return d3.ascending(a.key, b.key); });
-
     var bundle = d3.layout.bundle();
-
     var line = d3.svg.line.radial()
       .interpolate("bundle")
       .tension(.85)
       .radius(function(d) { return d.y; })
       .angle(function(d) { return d.x / 180 * Math.PI; });
 
+    // removes the network div once another network is chosen in shiny
     if(d3.select("#graphView1")[0][0].children.length === 1){
       d3.select("#graphView1")[0][0].children[0].remove()
     }
 
+    // main div and svg elements for the network, legend, window, and double click message
     var div = d3.select("#graphView1")
       .attr("class", "d3network")
       .style("top", headSpace + "px")
@@ -84,7 +77,6 @@ Shiny.addCustomMessageHandler("jsondata1",
       .attr("transform", "translate(5,5)")
 
     var svg = svG.append("svg:g")
-      .attr("transform", "translate(" + rx + "," + ry + ")");
 
     var windowArea = svG.append("svg:g")
       .attr("transform", "translate(640,5)")
@@ -94,7 +86,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       .attr("width", rectW)
       .attr("rx", 5)
       .attr("ry", 5)
-      .style("stroke", '#0080ff')
+      .style("stroke", novelColor)
       .style("fill", "none")
       .style("stroke-width", 2);
 
@@ -135,7 +127,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       })
 
       arr = Object.keys(map);
-      arr.push(arr.splice(arr.indexOf("Novel Genes"), 1)[0]);
+      arr.push(arr.splice(arr.indexOf("Novel"), 1)[0]);
 
       return arr;
     }
@@ -184,51 +176,161 @@ Shiny.addCustomMessageHandler("jsondata1",
       return imports;
     }
 
+    // setting up nodes , links, splines, and parents for references and visualizations
+    // of network graph
     var nodes = cluster.nodes(root(df)),
         links = imports(nodes),
         splines = bundle(links),
-        parents = findParents(df),
-        pathwayNames = uniquePathways(df);
+        parents = findParents(df);
 
-    if(pathwayNames.length === 2){
-      colorMapt = colorMap.slice(0,1)
-      colorMapt.push(colorMap[3])
-      colorMap = colorMapt
-    }
-    else if(pathwayNames.length === 3){
-      colorMapt = colorMap.slice(0,2)
-      colorMapt.push(colorMap[3])
-      colorMap = colorMapt
-    }
-
-    var colorMapping = function(d){
-      for(i in parents){
-        if(d.name.includes(parents[i])){
-          d.color = colorMap[i]
-          return colorMap[i];
-        }
+    // counters for number of novel genes and non-novel genes
+    for(i in df){
+      if(df[i].parent.name === "Novel"){
+        numbNovel ++;
+      }
+      else{
+        numbNoNovel ++;
       }
     }
 
-    for(i in df){colorMapping(df[i])}
+    // Rotating the network graph to center around hit gene families
+    var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;
+    svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")");
 
+    // Attributing colors to nodes as well as assignment of colored legend text
+    var colorMapping = function(df){
+      newCols = []
+      for(i in df){
+        if(!(newCols.includes(df[i].color))){
+          newCols.push(df[i].color)
+        }
+      }
+      newCols.splice(newCols.indexOf(novelColor), 1);
+      newCols.push(novelColor);
+      return newCols;
+    }
+
+    startingColors = colorMapping(df)
+
+    var ordColors = []
+
+    for(j in colorMap){
+      if(startingColors.includes(colorMap[j])){
+        ordColors.push(colorMap[j])
+      }
+    }
+
+    var novelInd = ordColors.indexOf(novelColor)
+
+    var getLegendColors = function(){
+      check = 0
+      for(i in parents){
+        if(parents[i].includes(" & ")){
+          check = 1
+        }
+      }
+      if(check){
+        lColors = ["#000000"];
+        lColors = lColors.concat(ordColors.slice(0, novelInd+1));
+        lColors.push("#000000", "#000000", "#000000");
+        lColors = lColors.concat(ordColors.slice(novelInd+1));
+      }
+      else{
+        lColors = ordColors;
+      }
+      return lColors;
+    }
+
+    var legendColors = getLegendColors();
+
+    var pathwayNames = parents.slice(0);
+
+    // fixes the unique pathway names and assigns correct legend text
+    var fixPathwayNames = function(pns){
+      pathways = ["Pathways:"]
+      overlaps = [" ", "Genes in Overlapping", "Pathways:"]
+      abc = ["1: ", "2: ", "3: "]
+      abcs = ["1 & 2", "1 & 3", "2 & 3", "1 & 2 & 3"]
+      n = startingColors.length
+      pns = pns.slice(0)
+      check = 0
+      for(i in pns){
+        if(pns[i].includes(" & ")){
+          check = 1
+        }
+      }
+      if(!check){
+        pns[pns.length-1] = "Novel Genes"
+      }
+      else{
+        for(s in ordColors){
+          color = ordColors[s]
+          switch (color) {
+            case color1:
+              nS = abc[0] + pns[startingColors.indexOf(color)];
+              pathways.push(nS)
+              break;
+            case color2:
+              nS = abc[1] + pns[startingColors.indexOf(color)];
+              pathways.push(nS)
+              break;
+            case color3:
+              nS = abc[2] + pns[startingColors.indexOf(color)];
+              pathways.push(nS)
+              break;
+            case novelColor:
+              nS = "Novel Genes";
+              pathways.push(nS)
+              break;
+            case color12:
+              nS = abcs[0];
+              overlaps.push(nS)
+              break;
+            case color13:
+              nS = abcs[1];
+              overlaps.push(nS)
+              break;
+            case color23:
+              nS = abcs[2];
+              overlaps.push(nS)
+              break;
+            case color123:
+              nS = abcs[3];
+              overlaps.push(nS)
+              break;
+          }
+        }
+
+        // bringing them together
+        pnsSort = pathways.concat(overlaps)
+        pns = pnsSort
+      }
+      return pns;
+    }
+
+    pathwayNames = fixPathwayNames(pathwayNames);
+
+    // builds the legend
     legend.selectAll("text")
       .data(pathwayNames)
       .enter()
       .append("svg:text")
-      .style("fill", function(d, i) {return colorMap[i];})
+      .style("fill", function(d, i) {return legendColors[i];})
+      .attr("id", function(d, i){return 'text' + i})
       .attr("transform", function(d) {return "translate(0,20)";})
-      .attr("dy", function(d,i) {return(20*i)})
-      //.attr("dx", 2)
+      .attr("dy", function(d,i) {
+        return 20*i
+      })
       .text(function(d) { return d; });
 
+    // builds the path links in the network
     var path = svg.selectAll("path.link")
         .data(links)
       .enter().append("svg:path")
         .attr("class", function(d) { return "link source-" + d.source.key + " target-" + d.target.key; })
         .attr("d", function(d, i) { return line(splines[i]); })
         .style('stroke', function(d) {
-          if(d.source.parent.name === 'Novel Genes'){
+          if(d.source.parent.name === 'Novel'){
             return d.target.color;
           }
           else{
@@ -236,6 +338,7 @@ Shiny.addCustomMessageHandler("jsondata1",
           }
         });
 
+    // builds the nodes for the network as graph elements
     var allNodes = svg.selectAll("g.node")
         .data(nodes.filter(function(n) { return !n.children; }))
       .enter().append("svg:g")
@@ -258,24 +361,23 @@ Shiny.addCustomMessageHandler("jsondata1",
         .on("mouseout", mouseout)
         .on("click", mouseclick);
 
+    // resets clicked selections on double click
     svg.on("dblclick", mousedbl);
 
-    d3.select("input[type=range]").on("change", function() {
-      line.tension(this.value / 100);
-      path.attr("d", function(d, i) { return line(splines[i]); });
-    });
-
+    // when the mouse is held down and moved, the network will rotate
     d3.select(window)
       .on("mousemove", mousemove)
       .on("mouseup", mouseup);
 
+    // returns the pixel coordinates of the mouse
     function mouse(e) {
-    return [e.pageX - rx, e.pageY - ry];
+      return [e.pageX - rx, e.pageY - ry];
     }
 
+    //
     function mousedown() {
-    m0 = mouse(d3.event);
-    d3.event.preventDefault();
+      m0 = mouse(d3.event);
+      d3.event.preventDefault();
     }
 
     function mousemove() {
@@ -642,4 +744,4 @@ Shiny.addCustomMessageHandler("jsondata1",
       }
     }
 
-  });
+});

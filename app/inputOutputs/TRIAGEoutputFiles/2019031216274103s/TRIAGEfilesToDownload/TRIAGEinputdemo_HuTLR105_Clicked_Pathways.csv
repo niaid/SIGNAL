@@ -1,0 +1,8 @@
+"","Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
+"1","Base excision repair.POLE","Base excision repair","POLE","20","Medium","Novel.RPS27A","Novel","RPS27A","90","900","database"
+"2","Novel.RPS27A","Novel","RPS27A","90","Medium","Protein export.SRP68","Protein export","SRP68","17","900","database"
+"3","Protein export.SRP68","Protein export","SRP68","17","Medium","Novel.ADPRHL1","Novel","ADPRHL1","3","424","experimental"
+"4","Novel.ADPRHL1","Novel","ADPRHL1","3","High","Novel.EIF4B","Novel","EIF4B","32","614","experimental"
+"5","Novel.EIF4B","Novel","EIF4B","32","Medium","Aldosterone-regulated sodium reabsorption.SFN","Aldosterone-regulated sodium reabsorption","SFN","15","417","experimental"
+"6","Aldosterone-regulated sodium reabsorption.SFN","Aldosterone-regulated sodium reabsorption","SFN","15","Medium","Protein export.HSPA5","Protein export","HSPA5","26","417","experimental"
+"7","Protein export.HSPA5","Protein export","HSPA5","26","High",NA,NA,NA,NA,NA,NA

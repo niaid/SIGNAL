@@ -1,0 +1,4 @@
+"","Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
+"1","RNA transport & NF-kappa B signaling pathway.UBE2I","RNA transport & NF-kappa B signaling pathway","UBE2I","32","Medium","NF-kappa B signaling pathway.PARP1","NF-kappa B signaling pathway","PARP1","13","900","database"
+"2","NF-kappa B signaling pathway.PARP1","NF-kappa B signaling pathway","PARP1","13","Medium","Novel.UBB","Novel","UBB","15","900","database"
+"3","Novel.UBB","Novel","UBB","15","High",NA,NA,NA,NA,NA,NA

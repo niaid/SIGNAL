@@ -1,55 +1,43 @@
 ###################################################
-## Setting up Network Analysis
-## And ranking draft
+## Setting up Network Analysis, jsons, and outputting
+## TRIAGE hits
 ###################################################
-# Kyle Webb
+# Kyle Webb, Sam Katz
 # March 8, 2019
 ###################################################
 
-# require('edgebundleR')                        #Load Libraries
-# library('igraph')
-# library('data.table')
-# library('dplyr')
-
-#selectedRows <- c(1,2,3)  
-#Generate_NetworkGraph(selectedRows)
-
 Generate_NetworkGraph <- function(selectedRows, organism, G){
   #############################################################
-  #Set directories
-  
-  TRIAGE.input <- dataDir                                             
-  
+                                          
+  # TRIAGE hit data 
   TRIAGEhits <- TRIAGEoutput.condensed                                      
   
   
-  #Get pathway file
+  #Get pathway file and pathway names (along with intersections)
   pathwayFile <- pathwayData      
   
-  
-  
-  #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
-  
-  
-  
   path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]     
-  #message(path1_name)
   path1_pathway.genes <- filter(pathwayFile, PathwayName == path1_name)
   path1_pathway.genes.matrix <- matrix(path1_pathway.genes$EntrezID)
   
   
   path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]   
-  #message(path2_name)
   path2_pathway.genes <- filter(pathwayFile, PathwayName == path2_name)
   path2_pathway.genes.matrix <- matrix(path2_pathway.genes$EntrezID)
   
   
   path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]    
-  #message(path3_name)
   path3_pathway.genes <- filter(pathwayFile, PathwayName == path3_name)
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$EntrezID)
   
   
+  path12_name = paste0(path1_name, ' & ', path2_name)
+  path13_name = paste0(path1_name, ' & ', path3_name)
+  path23_name = paste0(path2_name, ' & ', path3_name)
+  path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
+  
+  
+  # filtering pathway hits which are in the TRIAGE hits data
   path1_hits <- filter(TRIAGEhits, EntrezID %in% path1_pathway.genes.matrix)
   path1_hits.matrix <- matrix(path1_hits$EntrezID)
   
@@ -68,64 +56,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$GeneSymbol)
   
-  
-  # Trying to find out how all these hits intersect and building seperate pathways for them
-  # path.12 = intersect(as.character(path1_pathway.genes$EntrezID), as.character(path2_pathway.genes$EntrezID))
-  # path.13 = intersect(as.character(path1_pathway.genes$EntrezID), as.character(path3_pathway.genes$EntrezID))
-  # path.23 = intersect(as.character(path2_pathway.genes$EntrezID), as.character(path3_pathway.genes$EntrezID))
-  # path.123 = Reduce(intersect, list(as.character(path1_pathway.genes$EntrezID), as.character(path2_pathway.genes$EntrezID), as.character(path3_pathway.genes$EntrezID)))
-  # 
-  # list.check = list(path.12, path.13, path.23, path.123)
-  # names(list.check) = c('path12', 'path13', 'path23', 'path123')
-  # 
-  # if(any(sapply(list.check, length) > 0)){
-  #   checks = which(sapply(list.check, length) > 0)
-  #   for(i in names(checks)){
-  #     val = list.check[i]
-  #     attributes(val) = NULL
-  #     assign(i, val[[1]])
-  #   }
-  #   if('path12' %in% ls()){
-  #     path12_name = paste0(path1_name, ' & ', path2_name)
-  #   }
-  #   else if('path13' %in% ls()){
-  #     path13_name = paste0(path1_name, ' & ', path3_name)
-  #   }
-  #   else if('path23' %in% ls()){
-  #     path23_name = paste0(path2_name, ' & ', path3_name)
-  #   }
-  #   else if('path123' %in% ls()){
-  #     path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
-  #   }
-  #   
-  #   extra.names = c(path12_name, path13_name, path23_name, path123_name)
-  # }
-  # else if(all(!is.na(c(path1_name, path2_name)))){
-  #   path12_name = paste0(path1_name, ' & ', path2_name)
-  #   extra.names = c(path12_name)
-  # }
-  # path12_name = paste0(path1_name, ' & ', path2_name)
-  # path13_name = paste0(path1_name, ' & ', path3_name)
-  # path23_name = paste0(path2_name, ' & ', path3_name)
-  # path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
-  
-  
-  # test13.found = test13[which(duplicated(test13))]
-  # filter(path1_pathway.genes, EntrezID %in% test13.found)
-  # filter(path3_pathway.genes, EntrezID %in% test13.found)
-  
-  
   TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits"
-  
-  
-  
-  
-  
-  #Get matrices for Pathways (Hits and non hits seperately)      # Now creating seperate matrices for each pathway containing only the genes of that pathway that are ALSO hits in the screen
-  #Hits
-  
-  
-  
   
   #Add GeneSymbols to Edge dataframe                                              
   Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
@@ -136,15 +67,30 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   names(Edge.target)[names(Edge.target)=="GeneSymbol"] <- "target.ID"
   
-  #Set column for pathway groupings
+  #Set column for pathway groupings and colors for pathways
+  colorMap = c("#46008B", #Pathway 1
+               "#8B0000", #Pathway 2
+               "#468B00", #Pathway 3
+               "#8B0068", # 1 & 2
+               "#8B6800", # 2 & 3
+               "#008B57", # 1 & 3
+               "#008B8B", # 1 & 2 & 3
+               "#00238B" #Novel
+  )
+  
   NodeInfo$Group <- "Novel"
+  NodeInfo$Color = last(colorMap)
   
   NodeInfo$Group[NodeInfo$GeneSymbol %in% path1_pathway.genes.matrix] <- path1_name
+  NodeInfo$Color[NodeInfo$GeneSymbol %in% path1_pathway.genes.matrix] = colorMap[1]
   
-  NodeInfo$Group[NodeInfo$GeneSymbol %in% path2_pathway.genes.matrix] <- path2_name        
+  NodeInfo$Group[NodeInfo$GeneSymbol %in% path2_pathway.genes.matrix] <- path2_name 
+  NodeInfo$Color[NodeInfo$GeneSymbol %in% path2_pathway.genes.matrix] = colorMap[2]
   
   NodeInfo$Group[NodeInfo$GeneSymbol %in% path3_pathway.genes.matrix] <- path3_name
+  NodeInfo$Color[NodeInfo$GeneSymbol %in% path3_pathway.genes.matrix] = colorMap[3]
   
+  # checks for hits available in intersection pathways
   path12_check = NodeInfo$GeneSymbol %in% path1_pathway.genes.matrix &
                   NodeInfo$GeneSymbol %in% path2_pathway.genes.matrix
   path13_check = NodeInfo$GeneSymbol %in% path1_pathway.genes.matrix &
@@ -155,30 +101,33 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
                   NodeInfo$GeneSymbol %in% path2_pathway.genes.matrix &
                   NodeInfo$GeneSymbol %in% path3_pathway.genes.matrix
   
+  # empty vector to be populated with hits that intersect multiple pathways
   extra_path_names = c()
   
   if(any(path12_check)){
     NodeInfo$Group[path12_check] <- path12_name
+    NodeInfo$Color[path12_check] = colorMap[4]
     path12_name = paste0(path1_name, ' & ', path2_name)
     extra_path_names = append(extra_path_names, path12_name)
   }
   if(any(path13_check)){
     NodeInfo$Group[path13_check] <- path13_name
+    NodeInfo$Color[path13_check] = colorMap[5]
     path13_name = paste0(path1_name, ' & ', path3_name)
     extra_path_names = append(extra_path_names, path13_name)
   }
   if(any(path23_check)){
     NodeInfo$Group[path23_check] <- path23_name
+    NodeInfo$Color[path23_check] = colorMap[6]
     path23_name = paste0(path2_name, ' & ', path3_name)
     extra_path_names = append(extra_path_names, path23_name)
   }
   if(any(path123_check)){
     NodeInfo$Group[path123_check] <- path123_name
+    NodeInfo$Color[path123_check] = colorMap[7]
     path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
     extra_path_names = append(extra_path_names, path123_name)
   }
-  
-  # filter(Scores_nodes_and_edges, Group == "RNA transport & NF-kappa B signaling pathway")
   
   #Merge Pathway, and TRIAGEhits to NodeInfo
   Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
@@ -204,7 +153,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #Merge with scores 
   Scores_nodes_and_edges <- merge(Scores_and_nodes, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
   
-  #Create column with counts for interacting genes                                               #Here a counter is added, this counts for each gene how many genes (within the TRIAGE set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
+  # Create column in Scores_nodes_and_edges with counts for intersecting pathways                                               #Here a counter is added, this counts for each gene how many genes (within the TRIAGE set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
   for (i in 1:length(Scores_nodes_and_edges$Ntwrk.all)) {
     Scores_nodes_and_edges$Allnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.all[i]) == T, 0, 
                                                      length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.all[i], ", "))))
@@ -218,9 +167,9 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   # creating vector for all pathway names for gene hits in multiple pathways
   
   if(length(extra_path_names)){
-    all_pathway_names = c(sigPathways$Pathway[as.numeric(selectedRows)], extra_path_names)  
+    all_pathway_names <<- c(sigPathways$Pathway[as.numeric(selectedRows)], extra_path_names)  
   }  else{
-    all_pathway_names = sigPathways$Pathway[as.numeric(selectedRows)]
+    all_pathway_names <<- sigPathways$Pathway[as.numeric(selectedRows)]
   }
   
   # Function and variables used in create_nodes_and_edges below for writing csv file name
@@ -275,11 +224,14 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
       
     }
     
-    #here a counter is added for how many "hits" that are in the selected groups it's predicted to interact with.
+    #here a counter is added for how many "hits" that are in the selected groups it's shown to interact with.
     sumcols = grep("NtwrkCount", colnames(Scores_nodes_and_edges))
-    Scores_nodes_and_edges$Total_Path_Hits.net.count = rowSums(Scores_nodes_and_edges[,sumcols])
     
-    ###write file
+    if(n != 1){
+      Scores_nodes_and_edges$Total_Path_Hits.net.count = rowSums(Scores_nodes_and_edges[,sumcols])  
+    }
+    
+    ### write file
     file.name = paste0("TRIAGEsort_" , inputFilePrefix, "_", t.file.name, ".csv")
     
     ret.list = list(Scores_nodes_and_edges, file.name)
@@ -289,267 +241,63 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   SNE_output = create_nodes_and_edges(all_pathway_names)
   
-  Scores_nodes_and_edges = SNE_output[[1]]
+  Scores_nodes_and_edges <<- SNE_output[[1]]
   file.name = SNE_output[[2]]
-  # 
-  # #Like the "counter" for all the network genes, now setting up seperate counter for each pahway of interest. Within pathways you want to seperate wther the gene it is interacting with is also a "hit" in TRIAGE or is it just a gene in that pathway that is not a hit.  ########################################### Create Matrices of the genes within each group that are also hits in the screen
-  # 
-  # ########################################### Create Matrices of the genes within each group that are also hits in the screen
-  # #Pathway#1 Hit Genes 
-  # path1_hits.genes <- filter(Scores_nodes_and_edges, Group == path1_name & EntrezID %in% TRIAGEhits.matrix)
-  # path1_hits.genes.matrix <- matrix(path1_hits.genes$GeneSymbol)
-  # 
-  # #Pathway#2 Hit Genes 
-  # 
-  # path2_hits.genes <- filter(Scores_nodes_and_edges, Group == path2_name & EntrezID %in% TRIAGEhits.matrix)
-  # path2_hits.genes.matrix <- matrix(path2_hits.genes$GeneSymbol)
-  # 
-  # #Pathway#3 Hit Genes 
-  # 
-  # path3_hits.genes <- filter(Scores_nodes_and_edges, Group == path3_name & EntrezID %in% TRIAGEhits.matrix)
-  # path3_hits.genes.matrix <- matrix(path3_hits.genes$GeneSymbol)
-  # 
-  # #Now for each "pathway" or group you do a seperate count, first pulling out the genes from the network column related to it, then counting how many of it it is.          
-  # 
-  ##################################### Create list and rankings by group hits ##############################             #This is the same process as above only instead of looking for the number of genes in the group it looks at genes in the group that are also "hits"
   
-  
-  ############################# path1_ Hits Genes
-  
-  # #Create Blank
-  # Scores_nodes_and_edges$Ntwrk.path1_.hits <- NA
-  # group.list <- path1_hits.genes.matrix
-  # 
-  # #Extract genes from network interaction associted with genes from group
-  # for (i in 1:length(group.list)) {
-  #   temp.name <- group.list[i]
-  #   out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
-  #   Scores_nodes_and_edges$Ntwrk.path1_.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.path1_.hits[out], sep = ", ")
-  # }
-  # 
-  # #remove "NA" from rows with genes in them
-  # Scores_nodes_and_edges$Ntwrk.path1_.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.path1_)
-  # 
-  # #Create column with counts for interacting genes
-  # for (i in 1:length(Scores_nodes_and_edges$Ntwrk.path1_.hits)) {
-  #   Scores_nodes_and_edges$path1_hits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.path1_.hits[i]) == T, 0, 
-  #                                                            length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.path1_[i], ", "))))
-  # }
-  # 
-  # ############################# path2_ Hits Genes
-  # 
-  # #Create Blank
-  # Scores_nodes_and_edges$Ntwrk.path2_.hits <- NA
-  # group.list <- path2_hits.genes.matrix
-  # 
-  # #Extract genes from network interaction associted with genes from group
-  # for (i in 1:length(group.list)) {
-  #   temp.name <- group.list[i]
-  #   out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
-  #   Scores_nodes_and_edges$Ntwrk.path2_.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.path2_.hits[out], sep = ", ")
-  # }
-  # 
-  # #remove "NA" from rows with genes in them
-  # Scores_nodes_and_edges$Ntwrk.path2_.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.path2_.hits)
-  # 
-  # #Create column with counts for interacting genes
-  # for (i in 1:length(Scores_nodes_and_edges$Ntwrk.path2_.hits)) {
-  #   Scores_nodes_and_edges$path2_hits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.path2_.hits[i]) == T, 0, 
-  #                                                            length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.path2_.hits[i], ", "))))
-  # }
-  # 
-  # ############################# path3_ Hits Genes
-  # 
-  # #Create Blank
-  # Scores_nodes_and_edges$Ntwrk.path3_.hits <- NA
-  # group.list <- path3_hits.genes.matrix
-  # 
-  # #Extract genes from network interaction associted with genes from group
-  # for (i in 1:length(group.list)) {
-  #   temp.name <- group.list[i]
-  #   out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
-  #   Scores_nodes_and_edges$Ntwrk.path3_.hits[out] <- paste(temp.name, Scores_nodes_and_edges$Ntwrk.path3_.hits[out], sep = ", ")
-  # }
-  # 
-  # #remove "NA" from rows with genes in them
-  # Scores_nodes_and_edges$Ntwrk.path3_.hits <- gsub(", NA", "", Scores_nodes_and_edges$Ntwrk.path3_.hits)
-  # 
-  # #Create column with counts for interacting genes
-  # for (i in 1:length(Scores_nodes_and_edges$Ntwrk.path3_.hits)) {
-  #   Scores_nodes_and_edges$path3_hits.net.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.path3_.hits[i]) == T, 0, 
-  #                                                            length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.path3_.hits[i], ", "))))
-  # }
-  
-  # 
-  # ############################## Network Hits Total                                                 #here a counter is added for how many "hits" that are in the selected groups it's predicted to interact with.
-  # Scores_nodes_and_edges <- Scores_nodes_and_edges %>%
-  #   mutate(Total_Path_Hits.net.count = path1_hits.net.count + path3_hits.net.count + path2_hits.net.count)
-  # 
-  # 
-  # ###write file                                                                                   #Final File is created
-  # 
-  # #Organize column order
-  # Scores_nodes_and_edges <- Scores_nodes_and_edges[, c("EntrezID", "GeneSymbol", "GeneMappingID", "ConfidenceCategory"
-  #                                                      , "Group", "Pathway"
-  #                                                      , "Allnet.count", "Ntwrk.all"
-  #                                                      ,"path1_hits.net.count" ,"Ntwrk.path1_.hits"
-  #                                                      ,"path2_hits.net.count" ,"Ntwrk.path2_.hits"
-  #                                                      ,"path3_hits.net.count" ,"Ntwrk.path3_.hits"
-  #                                                      ,"Total_Path_Hits.net.count"
-  # )]
-  # 
-  # 
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "Ntwrk.path1_.hits"] <- paste0("Ntwrk.", path1_name)
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path1_hits.net.count"] <- paste0("NtwrkCount.", path1_name)
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "Ntwrk.path2_.hits"] <- paste0("Ntwrk.", path2_name)
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path2_hits.net.count"] <- paste0("NtwrkCount.", path2_name)
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "Ntwrk.path3_.hits"] <- paste0("Ntwrk.", path3_name)
-  # names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path3_hits.net.count"] <- paste0("NtwrkCount.", path3_name)
-  # 
-  # #Character strings of pathways names removing spaces and non-alpha numeric chracters
-  # names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
-  #                                    gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)), "_",
-  #                                    gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
-  # 
-  # names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
-  #                                    gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
-  # 
-  # names.SelectedPathways_1 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)))
-  # 
-  # if(length(selectedRows) == 3){
-  #   RankingFileName.output <- paste0("TRIAGEsort_" , inputFilePrefix, "_", names.SelectedPathways_3, ".csv")
-  # }
-  # if(length(selectedRows) == 2){
-  #   RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", names.SelectedPathways_2, ".csv")
-  # }
-  # if(length(selectedRows) == 1){
-  #   RankingFileName.output <- paste0("TRIAGEsort_", inputFilePrefix, "_", names.SelectedPathways_1, ".csv")
-  # }
-  # 
-  # Scores_nodes_and_edges <<- Scores_nodes_and_edges
-  #message(TRIAGE.output, "**")
-  #setwd(downloadDir)
-  #setwd('TRIAGEfilesToDownload')
   write.csv(Scores_nodes_and_edges, file.name)
   
   ############################################################################### Add visualization ##############################################################################
   
   #############**************************************************################
   ###############################################################################
-  #                 Hirachical Edge Bundling
+  #       Creating Node and Edge info for 1st and 2nd degree Networks
   ###############################################################################
   
-  #Set up dataframe for groupings (Loc)                                          #Assigning a number to each group (this will enable the grouping later)
-  NodeInfo$Loc <- 4
-  NodeInfo$Loc[NodeInfo$EntrezID %in% path3_hits.matrix] <-3
-  NodeInfo$Loc[NodeInfo$EntrezID %in% path2_hits.matrix] <-2
-  NodeInfo$Loc[NodeInfo$EntrezID %in% path1_hits.matrix] <-1
-  
   #Set up dataframe for IDs                                                      #now creating a name in the format of groupNumber.geneSymbol
-  NodeInfo$ID <- paste(NodeInfo$Loc, NodeInfo$GeneSymbol, sep = ".")
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
+  names(NodeInfo)[names(NodeInfo)== "ConfidenceCategory"] = 'Confidence'
   
-  colnames(NodeInfo)[names(NodeInfo)== "ConfidenceCategory"] = 'Confidence'
+  NodeInfo$ID <- paste(NodeInfo$Group, NodeInfo$key, sep = ".")
   
   #Move ID column first
-  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'Confidence', 'Pathway')]
+  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Group', 'Confidence', 'Pathway', 'Color')]
   
   #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
-  rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
+  rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Group")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
   names(rel.source)[names(rel.source)=="ID"] <- "source.ID"
-  names(rel.source)[names(rel.source)=="Loc"] <- "Loc.source"
+  names(rel.source)[names(rel.source)=="Group"] <- "Group.source"
   
-  rel.target <- merge(rel.source, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
+  rel.target <- merge(rel.source, NodeInfo[, c("GeneMappingID", "ID", "Group")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
   names(rel.target)[names(rel.target)=="ID"] <- "target.ID"
-  names(rel.target)[names(rel.target)=="Loc"] <- "Loc.target"
+  names(rel.target)[names(rel.target)=="Group"] <- "Group.target"
   
-  #Remove non hits                                                   #There are more connections than we want to visualize so here some connections are being removed to simplify
-  rel.target.filter <- filter(rel.target, Loc.source !=  Loc.target) #Here connections within the same group are ignored (assuming that we are only interested in intergroup connections)
-  rel.7 <- filter(rel.target, Loc.source != 4 & Loc.target != 4 &    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
-                    Loc.source != 3 & Loc.target != 3 &
-                    Loc.source != 2 & Loc.target != 2 &
-                    Loc.source != 1 & Loc.target != 1 )
+  # Remove hits within the same pathway (assuming only interested in inter-pathway interaction)                                  
+  rel1.target <- filter(rel.target, Group.source !=  Group.target) 
   
-  # Netgraph with 2nd dimension of connections
-  #rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
-  
+  # Filter funciton that only includes 2nd degree novel genes IF
+  #  they are connected to at least one novel gene that maps back to a pathway
+  #  (i.e. Novel -> Novel -> Pathway)
   degree2.filter <- function(rel){
     markers = c()
-    new.rel = filter(rel, Loc.source == 4 & Loc.target == 4)
+    new.rel = filter(rel, Group.source == "Novel" & Group.target == "Novel")
     for(i in 1:nrow(new.rel)){
       r = new.rel[i,]
       st.filter = filter(rel, source.ID == r$source.ID | target.ID == r$target.ID)
-      if(any(st.filter$Loc.target!=4) || any(st.filter$Loc.source!=4)){
+      if(any(st.filter$Group.target!="Novel") || any(st.filter$Group.source!="Novel")){
         markers = append(markers, i)
       }
     }
     return(new.rel[markers,])
   }
   
-  rel2.7 = degree2.filter(rel.target) 
+  rel2.target = rbind(rel1.target, degree2.filter(rel.target))
   
-  rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
-  
-  # For netgraph with 2nd dimension of connections
-  rel2.target <- rbind(rel.target.filter, rel2.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
-  
-  
-  # Fix directionality of connection for members of group seven    #Hirarchical edge bundling colors the interactions based on the source so here the columns are switched to get the result wanted (shoudl Novel-group interactions be the color of the group or the color of the "novel" gene category)
-  rel.target.filter <- filter(rel.target, Loc.target != 4)
-  # For netgraph with 2nd dimension of connections
-  rel2.target.filter <- filter(rel2.target, Loc.target != 4)
-  rel.7 <- filter(rel.target, Loc.target == 4)
-  # For netgraph with 2nd dimension of connections
-  rel2.7 <- filter(rel2.target, Loc.target == 4)
-  
-  #Switchnames for 1st dimension graph only
-  names(rel.7)[names(rel.7)=="target.ID"] <- "target.ID2"
-  names(rel.7)[names(rel.7)=="source.ID"] <- "source.ID2"
-  names(rel.7)[names(rel.7)=="target"] <- "target2"
-  names(rel.7)[names(rel.7)=="source"] <- "source2"
-  names(rel.7)[names(rel.7)=="target.ID2"] <- "source.ID"
-  names(rel.7)[names(rel.7)=="source.ID2"] <- "target.ID"
-  names(rel.7)[names(rel.7)=="target2"] <- "source"
-  names(rel.7)[names(rel.7)=="source2"] <- "target"
-  
-  #Switchnames for 2nd dimension graph
-  names(rel2.7)[names(rel2.7)=="target.ID"] <- "target.ID2"
-  names(rel2.7)[names(rel2.7)=="source.ID"] <- "source.ID2"
-  names(rel2.7)[names(rel2.7)=="target"] <- "target2"
-  names(rel2.7)[names(rel2.7)=="source"] <- "source2"
-  names(rel2.7)[names(rel2.7)=="target.ID2"] <- "source.ID"
-  names(rel2.7)[names(rel2.7)=="source.ID2"] <- "target.ID"
-  names(rel2.7)[names(rel2.7)=="target2"] <- "source"
-  names(rel2.7)[names(rel2.7)=="source2"] <- "target"
-  
-  rel.target <- rbind(rel.target.filter, rel.7)
-  rel2.target <- rbind(rel2.target.filter, rel2.7)
-  
-  #Flip columns to get pathway colors as links
-  names(rel.target)[names(rel.target)=="target.ID"] <- "target.ID2"
-  names(rel.target)[names(rel.target)=="source.ID"] <- "source.ID2"
-  names(rel.target)[names(rel.target)=="target"] <- "target2"
-  names(rel.target)[names(rel.target)=="source"] <- "source2"
-  names(rel.target)[names(rel.target)=="target.ID2"] <- "source.ID"
-  names(rel.target)[names(rel.target)=="source.ID2"] <- "target.ID"
-  names(rel.target)[names(rel.target)=="target2"] <- "source"
-  names(rel.target)[names(rel.target)=="source2"] <- "target"
-  
-  rel <- rel.target[, c("source.ID", "target.ID")]
-  names(rel)[names(rel)=="source.ID"] <- "V1"
-  names(rel)[names(rel)=="target.ID"] <- "V2"
-  rel$weights = rel.target$weights
-  rel$datasource = rel.target$datasource
-  
-  #Flip columns to get pathway colors as links for 2nd dimension graph
-  names(rel2.target)[names(rel2.target)=="target.ID"] <- "target.ID2"
-  names(rel2.target)[names(rel2.target)=="source.ID"] <- "source.ID2"
-  names(rel2.target)[names(rel2.target)=="target"] <- "target2"
-  names(rel2.target)[names(rel2.target)=="source"] <- "source2"
-  names(rel2.target)[names(rel2.target)=="target.ID2"] <- "source.ID"
-  names(rel2.target)[names(rel2.target)=="source.ID2"] <- "target.ID"
-  names(rel2.target)[names(rel2.target)=="target2"] <- "source"
-  names(rel2.target)[names(rel2.target)=="source2"] <- "target"
+  # labeling columns and adding weights and datasources for each network edge
+  rel1 <- rel1.target[, c("source.ID", "target.ID")]
+  names(rel1)[names(rel1)=="source.ID"] <- "V1"
+  names(rel1)[names(rel1)=="target.ID"] <- "V2"
+  rel1$weights = rel1.target$weights
+  rel1$datasource = rel1.target$datasource
   
   rel2 <- rel2.target[, c("source.ID", "target.ID")]
   names(rel2)[names(rel2)=="source.ID"] <- "V1"
@@ -558,20 +306,18 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   rel2$datasource = rel2.target$datasource
   
   # Remove nodes that do not have connection to the selected pathways
-  # rel.V1.matrix <- as.matrix((unique(rel$V1)))
-  # rel.V2.matrix <- as.matrix((unique(rel$V2)))
-  # rel.genes.matrix <- as.matrix(unique(rbind(rel.V1.matrix, rel.V2.matrix)))
-  
-  #NodeInfo <- subset(NodeInfo, !is.na(key))
+  rel1.V1.matrix <- as.matrix((unique(rel1$V1)))
+  rel1.V2.matrix <- as.matrix((unique(rel1$V2)))
+  rel1.genes.matrix <- as.matrix(unique(rbind(rel1.V1.matrix, rel1.V2.matrix)))
   
   NodeInfo2 <<- NodeInfo
-  NodeInfo1 <<- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
+  NodeInfo1 <<- filter(NodeInfo, Group != "Novel" | ID %in% rel1.genes.matrix)
   
-  #Generate the graph
-  g <<- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
+  #Generate the igraphs
+  g <<- graph.data.frame(rel1, directed=T, vertices=NodeInfo1)
   g2 <<- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
   
-  # Check to make sure the generated graph is full
+  # Error message to make sure the generated graph is full
   if(length(E(g))==0 | length(V(g))==0){
     showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
                           easyClose = TRUE))
@@ -579,139 +325,31 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     session$reload()
   }
   
-  # clr <- as.factor(V(g)$Loc)
-  # clr2 <- as.factor(V(g2)$Loc)
+  
+  ###############################################################################
+  #                 Creating JSONs for D3
+  ###############################################################################
   
   
-  # if(length(selectedRows) == 3){
-  #   levels(clr) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
-  #   levels(clr2) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
-  # }
-  # if(length(selectedRows) == 2){
-  #   levels(clr) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
-  #   levels(clr2) <- c("red", "darkblue", "green")  #Three colors are chosen since there are three groups
-  # }
-  # if(length(selectedRows) == 1){
-  #   levels(clr) <- c("red", "green")  #Two colors are chosen since there are two groups
-  #   levels(clr2) <- c("red", "green")  #Two colors are chosen since there are two groups
-  # }
-  
-  # V(g)$color <- as.character(clr)
-  # V(g)$size = degree(g)*5
-  # 
-  # V(g2)$color <- as.character(clr2)
-  # V(g2)$size = degree(g2)*5
-  
-  # igraph static plot
-  #plot(g, layout = layout.circle, vertex.label=NA)
-  
-  #Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
-  #Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
-  
-  # Create 1st dimension networkD3 object
-  # g11 = g
-  # g11_wc <- cluster_walktrap(g11)
-  # g11_members <- membership(g11_wc)
-  # 
-  # # Convert to object suitable for networkD3
-  # g11_d3 <<- igraph_to_networkD3(g11, group = g11_members)
   g11_vis <<- toVisNetworkData(g)
-  
-  #json_data <- rbind(names(g), sapply(g, as.character))
-  #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
-  #json_1 <- Chimera1[[1]][1]$json_real
-  dimNames = c(path1_name, path2_name, path3_name)
-  json_1df <<- config_df(g11_vis$nodes, g11_vis$edges, dimNames)
+
+  # sources functions from config_jsons.R to build list (json_1df)
+  json_1df <<- config_df(g11_vis$nodes, g11_vis$edges, all_pathway_names)
   json_1 = jsonlite::toJSON(json_1df, 'columns')
+
+  # sends json_1 to custom_network.js file for first degree visualization
   session$sendCustomMessage(type="jsondata1",json_1)
-  #session$sendCustomMessage(type="jsondata",json_2)
   
-  # Create 2nd dimension networkD3 object
-  # g22 = g2
-  # g22_wc <- cluster_walktrap(g22)
-  # g22_members <- membership(g22_wc)
-  # 
-  # # Convert to object suitable for networkD3
-  # g22_d3 <<- igraph_to_networkD3(g22, group = g22_members)
   g22_vis <<- toVisNetworkData(g2)
   
-  json_2df <<- config_df(g22_vis$nodes, g22_vis$edges, dimNames)
+  # sources functions from config_jsons.R to build list (json_2df)
+  json_2df <<- config_df(g22_vis$nodes, g22_vis$edges, all_pathway_names)
   json_2 <- jsonlite::toJSON(json_2df, 'columns')
+  
+  # sends json_2 to custom_network2.js file for second degree visualization
   session$sendCustomMessage(type="jsondata2",json_2)
   
-  # Add a legend box on the html page
-  # if(length(selectedRows) == 3){
-  #   graphLegend <<- sprintf('
-  #                           <div id="htmlwidget_container">
-  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
-  #                           <fieldset>
-  #                           <legend>Network Graph Colors:</legend>
-  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-  #                           <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
-  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-  #                           </fieldset>
-  #                           </form>',
-  #                           path1_name, path2_name, path3_name, "other TRIAGE hit genes")
-  # }
-  # if(length(selectedRows) == 2){
-  #   graphLegend <<- sprintf('
-  #                           <div id="htmlwidget_container">
-  #                           <form style="width: 360px; margin: 0 auto; color: grey">
-  #                           <fieldset>
-  #                           <legend>Network Graph Colors:</legend>
-  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-  #                           </fieldset>
-  #                           </form>',
-  #                           path1_name, path2_name, "other TRIAGE hit genes")
-  # }
-  # if(length(selectedRows) == 1){
-  #   graphLegend <<- sprintf('
-  #                           <div id="htmlwidget_container">
-  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
-  #                           <fieldset>
-  #                           <legend>Network Graph Colors:</legend>
-  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-  #                           </fieldset>
-  #                           </form>',
-  #                           path1_name, "other TRIAGE hit genes")
-  # }
-  
-  
-  
-  #Places (2) where plot will be saved to
-  #setwd(TRIAGE.output)    
-  #saveEdgebundle(Chimera1, "Chimera_STRINGHi_against_selectedPathways_1st.hits.html")
-  #saveEdgebundle(Chimera2, "Chimera_STRINGHi_against_selectedPathways_2nd.hits.html")
-  #Creating name for Chimera plots, now called PathNet
-  # if(length(selectedRows) == 3){
-  #   PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_3)
-  # }
-  # if(length(selectedRows) == 2){
-  #   PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_2)
-  # }
-  # if(length(selectedRows) == 1){
-  #   PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_1)
-  # }
-  
   PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", t.file.name)
-  
-  
-  # commenting out code to save network .html files
-  
-  # if(grepl('shiny', outputDir)){
-  #   saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
-  #   saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
-  # }else{
-  #   #saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-  #   saveEdgebundle(Chimera1,file = paste0(PathNetName.output, "1Degree.html"))
-  #   #saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-  #   saveEdgebundle(Chimera2,file = paste0(PathNetName.output, "1Degree.html"))
-  # }
-  
   
   return(TRUE)
 }
