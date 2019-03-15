@@ -1,0 +1,6 @@
+"Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
+"RNA transport.ACIN1","RNA transport","ACIN1","5","High","Novel Genes.BCAS2","Novel Genes","BCAS2","3","503","experimental"
+"Novel Genes.BCAS2","Novel Genes","BCAS2","3","Medium","Proteasome.PSMD3","Proteasome","PSMD3","27","417","experimental"
+"Proteasome.PSMD3","Proteasome","PSMD3","27","High","Novel Genes.ZNF526","Novel Genes","ZNF526","3","503","experimental"
+"Novel Genes.ZNF526","Novel Genes","ZNF526","3","Medium","Proteasome.PSMA1","Proteasome","PSMA1","30","503","experimental"
+"Proteasome.PSMA1","Proteasome","PSMA1","30","Medium",NA,NA,NA,NA,NA,NA

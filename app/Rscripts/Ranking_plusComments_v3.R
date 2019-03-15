@@ -15,7 +15,7 @@
 #selectedRows <- c(1,2,3)  
 #Generate_NetworkGraph(selectedRows)
 
-Generate_NetworkGraph <- function(selectedRows, organism){
+Generate_NetworkGraph <- function(selectedRows, organism, G){
   #############################################################
   #Set directories
   
@@ -68,7 +68,6 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   path2_pathway.genes.matrix <- matrix(path2_pathway.genes$GeneSymbol)
   
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$GeneSymbol)
-  
 
   
   TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits"
@@ -245,12 +244,12 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   names(Scores_nodes_and_edges)[names(Scores_nodes_and_edges) == "path3_hits.net.count"] <- paste0("NtwrkCount.", path3_name)
   
   #Character strings of pathways names removing spaces and non-alpha numeric chracters
-  names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
-                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name))
-                            , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
+  names.SelectedPathways_3 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
+                              gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)), "_",
+                              gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path3_name)))
   
-  names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name))
-                                      , gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
+  names.SelectedPathways_2 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)), "_",
+                                        gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path2_name)))
   
   names.SelectedPathways_1 <- paste0(gsub("[[:space:] ]", "_", gsub("[^[:alnum:] ]", "", path1_name)))
   
@@ -266,7 +265,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
 
   Scores_nodes_and_edges <<- Scores_nodes_and_edges
   #message(TRIAGE.output, "**")
-  setwd(downloadDir)
+  #setwd(downloadDir)
+  #setwd('TRIAGEfilesToDownload')
   write.csv(Scores_nodes_and_edges, RankingFileName.output)
   
   ############################################################################### Add visualization ##############################################################################
@@ -286,8 +286,10 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   NodeInfo$ID <- paste(NodeInfo$Loc, NodeInfo$GeneSymbol, sep = ".")
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   
+  colnames(NodeInfo)[names(NodeInfo)== "ConfidenceCategory"] = 'Confidence'
+  
   #Move ID column first
-  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc')]
+  NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Loc', 'Confidence', 'Pathway')]
   
   #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
   rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Loc")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
@@ -306,7 +308,23 @@ Generate_NetworkGraph <- function(selectedRows, organism){
                     Loc.source != 1 & Loc.target != 1 )
   
   # Netgraph with 2nd dimension of connections
-  rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  #rel2.7 <- filter(rel.target, Loc.source == 4 & Loc.target == 4)    #Here connections between Novel genes and other Novels genes are pulled out to be added back in later.
+  
+  degree2.filter <- function(rel){
+    markers = c()
+    new.rel = filter(rel, Loc.source == 4 & Loc.target == 4)
+    for(i in 1:nrow(new.rel)){
+      r = new.rel[i,]
+      st.filter = filter(rel, source.ID == r$source.ID | target.ID == r$target.ID)
+      if(any(st.filter$Loc.target!=4) || any(st.filter$Loc.source!=4)){
+        markers = append(markers, i)
+      }
+    }
+    return(new.rel[markers,])
+  }
+  
+  rel2.7 = degree2.filter(rel.target) 
+  
   rel.target <- rbind(rel.target.filter, rel.7)                      #Intra-connections of Novel genes are added to list of inter-group connections
   
   # For netgraph with 2nd dimension of connections
@@ -357,6 +375,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   rel <- rel.target[, c("source.ID", "target.ID")]
   names(rel)[names(rel)=="source.ID"] <- "V1"
   names(rel)[names(rel)=="target.ID"] <- "V2"
+  rel$weights = rel.target$weights
+  rel$datasource = rel.target$datasource
   
   #Flip columns to get pathway colors as links for 2nd dimension graph
   names(rel2.target)[names(rel2.target)=="target.ID"] <- "target.ID2"
@@ -371,6 +391,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   rel2 <- rel2.target[, c("source.ID", "target.ID")]
   names(rel2)[names(rel2)=="source.ID"] <- "V1"
   names(rel2)[names(rel2)=="target.ID"] <- "V2"
+  rel2$weights = rel2.target$weights
+  rel2$datasource = rel2.target$datasource
   
   # Remove nodes that do not have connection to the selected pathways
   rel.V1.matrix <- as.matrix((unique(rel$V1)))
@@ -383,11 +405,20 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   NodeInfo1 <<- filter(NodeInfo, Loc != 4 | ID %in% rel.genes.matrix)
   
   #Generate the graph
-  g <- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
-  g2 <- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
+  g <<- graph.data.frame(rel, directed=T, vertices=NodeInfo1)
+  g2 <<- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
+  
+  # Check to make sure the generated graph is full
+  if(length(E(g))==0 | length(V(g))==0){
+    showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                          easyClose = TRUE))
+    Sys.sleep(5)
+    session$reload()
+  }
   
   clr <- as.factor(V(g)$Loc)
   clr2 <- as.factor(V(g2)$Loc)
+  
   
   if(length(selectedRows) == 3){
     levels(clr) <- c("red", "darkblue", "saddlebrown", "green")  #Four colors are chosen since there are four groups including the other TRIAGE hit genes
@@ -411,8 +442,8 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   # igraph static plot
   #plot(g, layout = layout.circle, vertex.label=NA)
   
-  Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
-  Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)       
+  #Chimera1 <<- edgebundleR::edgebundle(g, tension = 0.8, fontsize = 8)       
+  #Chimera2 <<- edgebundleR::edgebundle(g2, tension = 0.8, fontsize = 3)
   
   # Create 1st dimension networkD3 object
   g11 = g
@@ -423,6 +454,15 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   g11_d3 <<- igraph_to_networkD3(g11, group = g11_members)
   g11_vis <<- toVisNetworkData(g11)
   
+  #json_data <- rbind(names(g), sapply(g, as.character))
+  #json_1 <- jsonlite::toJSON(g11_vis$nodes, 'rows')
+  #json_1 <- Chimera1[[1]][1]$json_real
+  dimNames = c(path1_name, path2_name, path3_name)
+  json_1df <<- config_df(g11_vis$nodes, g11_vis$edges, dimNames)
+  json_1 = jsonlite::toJSON(json_1df, 'columns')
+  session$sendCustomMessage(type="jsondata1",json_1)
+  #session$sendCustomMessage(type="jsondata",json_2)
+  
   # Create 2nd dimension networkD3 object
   g22 = g2
   g22_wc <- cluster_walktrap(g22)
@@ -432,46 +472,50 @@ Generate_NetworkGraph <- function(selectedRows, organism){
   g22_d3 <<- igraph_to_networkD3(g22, group = g22_members)
   g22_vis <<- toVisNetworkData(g22)
   
+  json_2df <<- config_df(g22_vis$nodes, g22_vis$edges, dimNames)
+  json_2 <- jsonlite::toJSON(json_2df, 'columns')
+  session$sendCustomMessage(type="jsondata2",json_2)
+  
   # Add a legend box on the html page
-  if(length(selectedRows) == 3){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey;">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-                            <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, path2_name, path3_name, "other TRIAGE hit genes")
-  }
-  if(length(selectedRows) == 2){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, path2_name, "other TRIAGE hit genes")
-  }
-  if(length(selectedRows) == 1){
-    graphLegend <<- sprintf('
-                            <div id="htmlwidget_container">
-                            <form style="width: 360px; margin: 0 auto; color: grey;">
-                            <fieldset>
-                            <legend>Network Graph Colors:</legend>
-                            <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
-                            <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
-                            </fieldset>
-                            </form>',
-                            path1_name, "other TRIAGE hit genes")
-  }
+  # if(length(selectedRows) == 3){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+  #                           <font color="saddlebrown" face="courier"><b>Brown:</b></font><font size="-1"color="saddlebrown"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, path2_name, path3_name, "other TRIAGE hit genes")
+  # }
+  # if(length(selectedRows) == 2){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="darkblue" face="courier"><b>&nbsp;Blue:</b></font><font size="-1" color="darkblue"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, path2_name, "other TRIAGE hit genes")
+  # }
+  # if(length(selectedRows) == 1){
+  #   graphLegend <<- sprintf('
+  #                           <div id="htmlwidget_container">
+  #                           <form style="width: 360px; margin: 0 auto; color: grey;">
+  #                           <fieldset>
+  #                           <legend>Network Graph Colors:</legend>
+  #                           <font color="red" face="courier"><b>&nbsp;&nbsp;Red:</b></font><font size="-1" color="red"> %s</font><br>
+  #                           <font color="green" face="courier"><b>Green:</b></font><font size="-1" color="green"> %s</font><br>
+  #                           </fieldset>
+  #                           </form>',
+  #                           path1_name, "other TRIAGE hit genes")
+  # }
   
   
   
@@ -490,13 +534,17 @@ Generate_NetworkGraph <- function(selectedRows, organism){
     PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", names.SelectedPathways_1)
   }
   
-  if(grepl('shiny', outputDir)){
-    saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
-  }else{
-    saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-    saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
-  }
+  # commenting out code to save network .html files
+  
+  # if(grepl('shiny', outputDir)){
+  #   saveEdgebundle(Chimera1, file = paste0("/srv/shiny-server/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera2, file = paste0("/srv/shiny-server/", PathNetName.output, "2Degree.html"))
+  # }else{
+  #   #saveEdgebundle(Chimera1,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera1,file = paste0(PathNetName.output, "1Degree.html"))
+  #   #saveEdgebundle(Chimera2,file = paste0("/Library/WebServer/Documents/", PathNetName.output, "1Degree.html"))
+  #   saveEdgebundle(Chimera2,file = paste0(PathNetName.output, "1Degree.html"))
+  # }
   
   
   return(TRUE)

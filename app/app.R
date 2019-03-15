@@ -1,5 +1,5 @@
 # TRIAGE app
-# edits May 15, 2018
+# edits March 14, 2019
 #
 # This is a Shiny web application. You can run the application by clicking
 # the 'Run App' button above.
@@ -33,7 +33,15 @@ library(tidyr)
 library(gridExtra)
 library(crosstalk)
 library(htmltools)
+library(stringr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
+
+# used to set home directory for local development. 
+# Assign the home_string for folder where TRIAGE has been downloaded to
+#
+# home_string = '/Users/username/Documents/'
+# Sys.setenv(HOME = home_string)
+# setwd('~')
 
 #setting
 #override scientific notation to avoid numeric mis assignments
@@ -54,16 +62,19 @@ isValidEmail <- function(x) {
 # Set the maximum input file size to 3Mb
 options(shiny.maxRequestSize = 3*1024^2)
 
-#if (interactive()) {
-
     ##################################################
-    # Define UI for application that draws a histogram
+    # Define UI for application
     ui <- fluidPage(
       
       # Capture user access information
       tags$head(
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
-        tags$script(src="getIP.js")
+        tags$script(src="getIP.js"),
+        # sources below are for d3 network graph layout and interaction
+        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.js"),
+        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
+        tags$script(src="custom_network.js"),
+        tags$script(src="custom_network2.js")
       ),
 
       # style
@@ -72,16 +83,10 @@ options(shiny.maxRequestSize = 3*1024^2)
       # use shinyjs
       useShinyjs(), br(),
 
-      # Application title
-      headerPanel(includeHTML("header.html")),
-
       # Sidebar with a slider input for number of bins
       sidebarLayout(
 
         sidebarPanel(
-          # Background color of sidebar panel
-          #tags$style(".well {background-color:rgb(1, 81, 154); color: white;}"),
-          
           # Global site tag (gtag.js) - Google Analytics 
           tags$head(
             HTML("<!-- Global site tag (gtag.js) - Google Analytics -->"),
@@ -135,9 +140,11 @@ options(shiny.maxRequestSize = 3*1024^2)
           ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
-          textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          # textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
+          textInput("cutoff_valueH", "High-conf Cutoff Value", value = "1"),
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
-          textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          # textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
+          textInput("cutoff_valueM", "Med-conf Cutoff Value", value = "0.5"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           checkboxInput("includeBackground", "Add genome background"),
           bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
@@ -174,8 +181,6 @@ options(shiny.maxRequestSize = 3*1024^2)
             ),
             tabPanel(title = "Network", value = "myNetworkGraph",
                      h4('Please select your (1-3) pathways for network graph analysis'), hr(),
-                     #textInput("mySelection", label="Your selected pathway IDs:"),
-                     #uiOutput("submitGraph"),
                      div(style="display:inline-block",textInput(inputId="mySelection", label="Your selected pathway IDs", value = 0.0)),
                      div(style="display:inline-block",uiOutput("submitGraph")),
                      div(style="display:inline-block",uiOutput("link2Graph")),
@@ -184,37 +189,27 @@ options(shiny.maxRequestSize = 3*1024^2)
             tabPanel(title = "PathNet", value = "graphViews",
                 htmlOutput("spacer4"),
                 tabsetPanel(id = 'igraphViews',
-                      ## Display in igrap
+                      # Display in igraph
                       tabPanel(title="1st Degree Network", value="graphView1",
-                               htmlOutput("graphLegend1"),
+                               HTML("<div id='graphView1'></div>"),
+                               #htmlOutput("graphLegend1"),
                                htmlOutput("graphView1i", width = "100%", height = "700px")
                       ),
                       tabPanel(title="2nd Degree Network", value="graphView2",
-                               htmlOutput("graphLegend2"),
+                               HTML("<div id='graphView2'></div>"),
+                               #htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
                       ),
                       tabPanel(title = "PathNet Table", value = "PathNetTable",
-                               dataTableOutput("PathNetTable"))
+                               HTML("<div id='PathNetTable'></div>"),
+                               dataTableOutput("PathNetTable")
+                      ),
+                      tabPanel(title = "Clicked Pathways Table", value = "ClickedDataTable",
+                               HTML("<div id='ClickedTable'></div>"),
+                               dataTableOutput("ClickedDataTable")
+                      )
                 )
             ),
-            # tabPanel(title = "NetworkD3", value = "networkViews",
-            #     htmlOutput("spacer5"),
-            #     tabsetPanel(id = 'networkD3Views',
-            #           ## Display in networkD3
-            #           tabPanel(title="1st Degree D3 Network", value="networkView1",
-            #                    forceNetworkOutput("networkView1D3", width = "100%", height = "700px")),
-            # 
-            #           tabPanel(title="2nd Degree D3 Network", value="networkView2",
-            #                   forceNetworkOutput("networkView2D3", width = "100%", height = "700px"))
-            # 
-            #           # # Display in visNetwork
-            #           # tabPanel(title="1st Dimension visNet", value="networkView3",
-            #           #          visNetworkOutput("networkView3vis", width = "100%", height = "700px")),
-            #           # 
-            #           # tabPanel(title="2nd Dimension visNet", value="graphView4",
-            #           #          visNetworkOutput("networkView4vis", width = "100%", height = "700px"))
-            #     )
-            # ),
             tabPanel(title = "Download", value = "downloads",
                      htmlOutput("spacer6"),
                      htmlOutput("downloadFiles"),
@@ -241,7 +236,7 @@ options(shiny.maxRequestSize = 3*1024^2)
     )
 
     ##################################################
-    # Define server logic required to draw a histogram
+    # Define server logic
     server <- function(session, input, output) {
       
       # Add spacers in the tab panel
@@ -275,7 +270,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       if('SHINY_SERVER_VERSION' %in% env_names){
         dataDir <- '/srv/shiny-server/data/'
       }else{
-        dataDir <- "~/TRIAGE/app/data/"
+        dataDir <<- "~/TRIAGE/app/data/"
       }  
       
       # Read in the input fie
@@ -308,6 +303,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         ## The two files used above can be updated/regenerated by runing the Rscript 
         ## 'Generate_human_and_mouse_protein_codig_genes_for_TRIAGE.R' in the Rscripts folder
         
+        ## Complete list of 19191 protein-encoding genes in human genome
+        ## ftp://ftp.ncbi.nlm.nih.gov/refseq/M_musculus/Mus_musculus.gene_info.gz
+        humanGenes <- read.table(file=paste0(dataDir, "HGNC_19191_genes_with_protein_product_EntrezID_geneSymbole_lookup.txt"), sep="\t", header=TRUE)
+
+        ## Complete list of 23504 genes (mRNAs and ncRNAs) in mouse genome
+        ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
+        mouseGenes <- read.table(file=paste0(dataDir, "Mouse_proteinCoding_sourceMouseMine.txt"), sep="\t", header=TRUE)
+
+>>>>>>> 627c9ca8c546e34a39943e3fa7a0f15bc94908e9
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
           # Input data do not have EntrezID AND GeneSymbol columns
@@ -326,15 +330,15 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Hs.egSYMBOL2EG
             backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
-            library('org.Mm.eg.db') 
+            library('org.Mm.eg.db')
             x <- org.Mm.egSYMBOL2EG
             backgroundGenes <- mouseGenes
           }
-          
+
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(as.character(as.list(mapped_genes)), as.character(data$GeneSymbol))
-          
-          
+
+
           # If no overlapping genes found, catch and handle the error
           if(length(overlappingGenes) == 0){
             showModal(modalDialog(
@@ -343,31 +347,31 @@ options(shiny.maxRequestSize = 3*1024^2)
               easyClose = TRUE
             ))
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$GeneSymbol %in% data$GeneSymbol,]
-          
+
           xx <- as.list(x[overlappingGenes])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = names(y), EntrezID = y, row.names = NULL, stringsAsFactors=FALSE)
           numGeneInInput <- nrow(data)
-          
+
           if(length(overlappingGenes) > 0){
             tempData <- merge(x=data, y=y, by="GeneSymbol")
             data <- tempData
           }
           numGeneWithEntrezID <- nrow(data)
-          
+
           # Display a warning if one or more input genes have no matching EntrezID due obsolete GeneSymbol
           if((numGeneInInput - numGeneWithEntrezID) > 1){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Only"), numGeneWithEntrezID,HTML("/"),numGeneInInput, HTML("GeneSymbols have mapped EntrezIDs and will be used in this analysis!</font><h3><br>"),
                                   HTML("Either check the organism or update your GeneSymbols to match the official <a href='https://www.genenames.org/cgi-bin/symbol_checker' target=_blank>HGNC</a> symbols if you want to include ALL in this analysis.")))
           }
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           rm(tempData,x,y,xx)
-          
+
           message("Input file has a 'GeneSymbol' column!")
         }
         else if(("EntrezID" %in% colnames(data)) & !("GeneSymbol" %in% colnames(data))){
@@ -382,11 +386,10 @@ options(shiny.maxRequestSize = 3*1024^2)
             x <- org.Mm.egSYMBOL
             backgroundGenes <- mouseGenes
           }
-          
-          #mapped_genes <- as.integer(mappedkeys(x))
+
           mapped_genes <- mappedkeys(x)
           overlappingGenes <- intersect(mapped_genes, data$EntrezID)
-          
+
           # If no overlapping genes found, catch and handle the error
           if(length(overlappingGenes) == 0){
             showModal(modalDialog(
@@ -395,82 +398,68 @@ options(shiny.maxRequestSize = 3*1024^2)
               easyClose = TRUE
             ))
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
-          
+
           xx <- as.list(x[!is.na(overlappingGenes)])
           y <- unlist(xx)
           y <- data.frame(GeneSymbol = y, EntrezID = names(y), row.names = NULL, stringsAsFactors=FALSE)
-          
+
           if(length(overlappingGenes) > 0){
             # Create a dataframe of the input data with both EntrezID and GeneSymbol
             tempData <- merge(x=data, y=y, by="EntrezID")
             data <- tempData
           }
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
-          
+
           rm(tempData,x,y,xx)
           message("Input file has a 'EntrezID' column!")
-          
-          # Having both EntrezID and GeneSymbol 
-        }else{ 
-          if(input$organism == "Human"){  
+
+          # Having both EntrezID and GeneSymbol
+        }else{
+          if(input$organism == "Human"){
             backgroundGenes <- humanGenes
           } else if(input$organism == "Mouse"){
             backgroundGenes <- mouseGenes
           }
-          
-          # Get background genes that are not in the input data 
+
+          # Get background genes that are not in the input data
           df_backgroundGenes <<- backgroundGenes[!backgroundGenes$EntrezID %in% data$EntrezID,]
-          
+
           # Switch/reorder 'EntrezID' to the FIRST column
           data = data[, c(ncol(data), 1:(ncol(data) - 1))]
           message("Input file has both 'EntrezID' and 'GeneSymbol' columns!")
         }
-        
+
         # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
         for (i in 1:nrow(data)){
           if(is.na(data$GeneSymbol[i])){
             data$GeneSymbol[i] <- data$EntrezID[i]
           }
         }
-        # # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
-        # for (i in 1:nrow(data)){
-        #   if(grepl('-', data$GeneSymbol[i])){
-        #     data$GeneSymbol[i] <- data$EntrezID[i]
-        #   }else if(is.na(data$GeneSymbol[i])){
-        #     data$GeneSymbol[i] <- data$EntrezID[i]
-        #   }
-        # }
-        
+
         # Make sure the EntrezIDs are integers
         data$EntrezID <- as.integer(data$EntrezID)
         data <- data[order(data$EntrezID),]
-        
 
-        
         # Make a copy of the original input data for later use
         siRNA.Score <<- data
-        
+
         data <- data %>%
           dplyr::select(GeneSymbol, everything())
-        
+
         # display the input file dimension
         datatable(data, rownames = FALSE, options = list(paging=TRUE))
       })
       
-      # # Move the GeneSymbol as the first column
-
-
       output$cutoffTypes <- renderUI({
         inFile2 <- input$file1
         if (is.null(inFile2))
           return(NULL)
 
-        #data2 <- read.csv(inFile2$datapath)
         # Check validity of the input file
         mtry <- try(read.csv(inFile2$datapath, stringsAsFactors = FALSE, header = TRUE), 
                     silent = TRUE)
@@ -484,20 +473,16 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         pulldown_types <- c("", colnames(data2))
 
-        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
       })
 
-      # # These user information (userName and userEmail) will collected after the modal is closed/submitted
-      # values = reactiveValues(userInfo = "",   ## This is the text that will be displayed
-      #                         modal_closed=F)  ## This prevents the values$userInfo output from updating until the modal is closed/submitted
-      
+      # reloads the app
       observeEvent(input$refresh, {   
         session$reload()
       })
       
       ## Start perfroming enrichment
       observeEvent(input$goButton, {
-        
         ## Check if input file and relevant paremater selected
         ## if not, show an error message
         if(is.null(input$file1)){
@@ -522,7 +507,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Remove duplicate EntrezID rows based on the cutoff values
         if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
           # sort the dataframe in decending order
-          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'],-siRNA.Score[,input$cutoff_type]),]
+          siRNA.Score = siRNA.Score[order(siRNA.Score[,'EntrezID'], -siRNA.Score[,input$cutoff_type]),]
           # remove the duplicated EntrezID row that has a smaller value in cutoff_type column 
           siRNA.Score = siRNA.Score[!duplicated(siRNA.Score$EntrezID),]
         }else{
@@ -531,13 +516,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           # remove the duplicated EntrezID row that has a larger value in cutoff_type column 
           siRNA.Score = siRNA.Score[!duplicated(siRNA.Score$EntrezID),]
         }
-        
-        ## Upon job submission, switch to 'status' tab
-        # message("switching to status tab")
-        # updateTabsetPanel(session, "inTabset", selected = "status")
-
-        #withCallingHandlers({
-        #   shinyjs::html("status", "")
 
         ## Show progress bar
         # Create a Progress object
@@ -546,6 +524,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         on.exit(progress$close())
         
         progress$set(message = "Performing Enrichment....", value = 0)
+        
+        startA = Sys.time()
         
         ## Set up scriptDir, inputDir, outputDir, wwwDir depending on whether this is used
         # as a standalone tool or on AWS webservice
@@ -574,9 +554,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           wwwDir <<- "~/TRIAGE/app/www/"
         }        
         # Get organism name from user input
-        organism <- input$organism
+        organism <<- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
-        print(organism)
 
         ## Source other codes depending on whether this is used
         # as a standalone tool or on AWS webservice
@@ -592,154 +571,106 @@ options(shiny.maxRequestSize = 3*1024^2)
         network_ConfidenceCutoff <<- as.numeric(input$interaction_confidence_cutoff)
         network_InteractionSources <<- input$STRING_interaction_sources
         
-        if(input_netowrk == "Experimental & Database") 
-        {
-          if('SHINY_SERVER_VERSION' %in% env_names){ 
-            load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-            load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
-          }else{
-            load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.highConf.igraph.Rdata"))
-            load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.highConf.igraph.Rdata"))
+        if(network_ConfidenceCutoff == 700){
+          conf.level = ".highConf.igraph"
+        }
+        else if(network_ConfidenceCutoff == 400){
+          conf.level = ".midConf.igraph"
+        }
+        else{
+          conf.level = ".lowConf.igraph"
+        }
+        
+        dir_begin <<- ifelse('SHINY_SERVER_VERSION' %in% env_names, "/srv/shiny-server/data/Networks/String.", "~/TRIAGE/app/data/Networks/String.")
+        
+        if(input_netowrk == "Experimental & Database"){
+          
+          # loads igraph for experimental and database source selections
+          load(paste0(dir_begin, tolower(organism), ".exp_and_data", conf.level, ".Rdata"))
+          G <- get(paste0("String.", tolower(organism), ".exp_and_data", conf.level))
+          
+        }
+        else if(input_netowrk == "Advanced Options"){
+          files2load = paste0(dir_begin, tolower(organism), ".", network_InteractionSources, conf.level, ".Rdata")
+          vars2load = paste0("String.", tolower(organism), ".", network_InteractionSources, conf.level)
+          for (i in 1:length(files2load)) assign(gsub(".*/","",files2load[i]), load(files2load[i]))
+          all.G = list()
+          for(i in 1:length(vars2load)) all.G[[i]] = get(vars2load[i])
+          empty.G.check = which(sapply(sapply(sapply(all.G, edge.attributes), names), is.null))
+          count.G.check = which(sapply(all.G, vcount) <= 0)
+          all.checks = union(count.G.check, empty.G.check)
+          
+          datasources = sapply(strsplit(vars2load, '[,.]'), '[[', 3)
+          
+          if(length(all.checks)>0){
+            all.G <- all.G[-union(count.G.check, empty.G.check)]
+            datasources = datasources[-union(count.G.check, empty.G.check)]
           }
           
-          G <- graph.union(get(paste0("String.", tolower(organism), ".experimental.highConf.igraph")), get(paste0("String.", tolower(organism), ".database.highConf.igraph")))
-          { 
-            if(network_ConfidenceCutoff <= 400){
-              if('SHINY_SERVER_VERSION' %in% env_names){ 
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.midConf.igraph.Rdata"))
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.midConf.igraph.Rdata"))
-              }
-                
-              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.midConf.igraph")), get(paste0("String.", tolower(organism), ".database.midConf.igraph")))
-            }
-            if(network_ConfidenceCutoff <= 150){
-              if('SHINY_SERVER_VERSION' %in% env_names){
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-                load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".experimental.lowConf.igraph.Rdata"))
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".database.lowConf.igraph.Rdata"))
-              }
-              G <- graph.union(G, get(paste0("String.", tolower(organism), ".experimental.lowConf.igraph")), get(paste0("String.", tolower(organism), ".database.lowConf.igraph")))
-              }
-            }
-          } 
-          else if(input_netowrk == "Advanced Options")
-          {
-            
-            for (i in 1:length(network_InteractionSources)) {
-              if('SHINY_SERVER_VERSION' %in% env_names){
-              load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
-              }else{
-                load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph.Rdata"))
-              }
-              
-              if(exists("G")) {G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph")))}
-              else {G <- get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".highConf.igraph"))}
-              }
-            {
-              if(network_ConfidenceCutoff <= 400)
-                {
-                for (i in 1:length(network_InteractionSources)) {
-                  if('SHINY_SERVER_VERSION' %in% env_names){
-                    load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }else{
-                    load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }
-                    
-                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
-                }
-              }
-              if(network_ConfidenceCutoff <= 150)
-                {
-                for (i in 1:length(network_InteractionSources)) {
-                  if('SHINY_SERVER_VERSION' %in% env_names){
-                    load(paste0("/srv/shiny-server/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }else{
-                    load(paste0("~/TRIAGE/app/data/Networks/String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph.Rdata"))
-                  }
-                  
-                  G <- graph.union(G, get(paste0("String.", tolower(organism), ".", network_InteractionSources[i], ".midConf.igraph")))
-                }
-              }
-            }
+          if(length(all.G)==0){
+            showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                                  easyClose = TRUE))
+            Sys.sleep(5)
+            session$reload()
           }
-        ## Update the G igraph object
-        G <- upgrade_graph(G)
-        
-        
+          else if(length(all.G)==1){
+            G <- all.G[[1]]
+          }
+          else{
+            
+            for(j in 1:length(all.G)){
+              names(edge.attributes(all.G[[j]])) = paste0(names(edge.attributes(all.G[[j]])), '_', datasources[j])
+            }
+            
+            temp = all.G[[1]]
+            
+            for(i in 2:length(all.G)){
+              temp = graph.union(temp, all.G[[i]])
+            }
+            G <<- temp
+           
+            cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
+            weight_df = list()
+            for(i in 1:length(cols)){
+              weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
+              weight_df[[i]][is.na(weight_df[[i]])] = 0
+            }
+            weight_df = data.frame(weight_df)
+            weight_df = apply(weight_df, 2, as.integer)
+            E(G)$weights = rowMax(weight_df)
+            indx <- max.col(weight_df, ties.method='first')
+            cols = edge_attr_names(G)[grep("^datasource_", edge_attr_names(G))]
+            E(G)$datasource = datasources[indx]
+            message(vertex_attr_names(G))
+            message(edge_attr_names(G))
+          }
+        }
         #Selected_STRINGnetwork.igraph <- G
         message("Networks Loaded")
 
         #message(networkType)
         use.only.commnected.components <- c('Yes')
 
-        # Generate logfiles
-        # user_login.log - with user input information
-        # logDir <- getwd()
-        # message(logDir, "***")
-        # userLoginInfo <- c(input$userName, input$userEmail)
-        # write.table(userLoginInfo, file = paste0(logDir, '/user_login.log'), append = TRUE)
-
-        # user_access.log
-        # Capture user access information
-        # IP <- reactive({ input$getIP })
-        # observe({
-        #   cat(capture.output(str(IP()), split=TRUE))
-        #   userAccessInfo <- capture.output(str(IP()), split=TRUE)
-        #   write.table(userAccessInfo, file = paste0(logDir, '/user_access.log'), append = TRUE, quote = TRUE, sep = " ",
-        #               eol = "\n", na = "NA", dec = ".", row.names = TRUE,
-        #               col.names = TRUE, qmethod = c("escape", "double"))
-        # })
-
-        # Create uesr-specific directory
-        # userDir <- input$userEmail
-        # userDir <- gsub("\\.", "_", userDir)
-        # userDir <- gsub("@", "_", userDir)
-        # setwd(outputDir)
-        # outDir <- c(getwd(), "/", userDir)
-
         # Remove all files in the outputDir
         unlink(outputDir, recursive = FALSE)
-
-        # Create user-specific directory
-        # if(!dir.exists(userDir)[1]){
-        #   dir.create(userDir)
-        # }
-        # else{
-        #   unlink(outDir, recursive = FALSE)
-        # }
-        # setwd(userDir)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
-        outDir <<- paste0(outputDir,"/", userDir)
+        
+        outDir <<- paste0(outputDir, userDir)
         dir.create(outDir)
+        
         setwd(outDir)
         
         # Set the output file name
         inputFile <- input$file1
-        inputFileName <- inputFile$name
-        #inputFilePrefix = (unlist(strsplit(inputFileName, split='.csv', fixed=TRUE)))[1]
-        inputFilePrefix <- tools::file_path_sans_ext(inputFileName)
+        inputFileName <<- inputFile$name
+        inputFilePrefix <<- tools::file_path_sans_ext(inputFileName)
 
-        outputFileName <- paste0(inputFilePrefix, "_", "TRIAGEoutput_ALL.csv")
-
-        # 1) Seed Pathway Analysis
-        # if('SHINY_SERVER' %in% env_names){
-        #   setwd("/srv/shiny-server/inputOutputs/TRIAGEoutputFiles")
-        # }
-        # else{
-        #   setwd("~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles")
-        # }
+        outputFileName <<- paste0(inputFilePrefix, "_", "TRIAGEoutput_ALL.csv")
 
         # Pathway types
-        #pathway.types <- c("KEGG", "Reactome", "Gene_Ontology")
-        #pathway.type <- pathway.types[1]
-        pathway.type <- input$pathway
+        pathway.type <<- input$pathway
         
         #Get appropiate pathway document suffix
         if (pathway.type == 'KEGG: Biological Processes'){
@@ -752,16 +683,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           pathway.type <- 'All'
         } 
         
-        pathwayData <- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
-        # Get input file
-        # siRNA.Score <- read.csv((input$file1)$datapath, stringsAsFactors = F)
-        # Populate GeneSymbolcolumn with EntrezIDs if the corresponding GeneSymbols are not available
-        # for (i in 1:nrow(siRNA.Score )){
-        #   if(siRNA.Score$GeneSymbol[i] == '-'){
-        #     siRNA.Score$GeneSymbol[i] <- siRNA.Score$EntrezID[i]
-        #   }
-        # }        
-        
+        pathwayData <<- read.csv(file = paste0(dataDir, "Pathways/KEGG2017_", organism, "_", pathway.type, ".csv"))
+
         proxyScore <- input$cutoff_type
         
         
@@ -789,18 +712,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         ## To include background genes 
         includeBackground <- input$includeBackground
-        # if(includeBackground){
-        #   # To add a value to cutoffType and the value should be based on values of the two cutoff_values
-        #   if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
-        #     backgroundValue = as.numeric(input$cutoff_valueM) -  (as.numeric(input$cutoff_valueM)/10)
-        #     df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
-        #   }else{
-        #     backgroundValue = as.numeric(input$cutoff_valueM) +  (as.numeric(input$cutoff_valueM)/10)
-        #     df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, proxyScore = rep(backgroundValue, nrow(df_backgroundGenes)))
-        #   }
-        #   
-        #   # change the name the cutoff_type from 'proxScore' to what it stands in the original data
-        #   names(df_background)[names(df_background) == 'proxyScore'] <- input$cutoff_type
+        
         if(includeBackground){
           df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, ConfidenceCategory = rep("Background", nrow(df_backgroundGenes)))
           # combined input data and background data
@@ -860,7 +772,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           # 2) Expansion - [Network Analysis]
     message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
     
+    
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
+          
           siRNA.Score <- data.frame(siRNA.Score, temp1 = "No", temp2 = siRNA.Score[[kName1]], stringsAsFactors = FALSE)
           nName1 <- paste0("Network.", iteration)
           nName2 <- paste0("Network.class.iteration", iteration)
@@ -888,7 +802,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           message(paste("iteration: ", iteration, "\n"))
           proxyScore <- nName2
           iteration <- iteration + 1
+          
         } # end of while loop
+        
 
         ### Append Enrichment Info --------------------------------------------
         # set the cutoff for the enriched pathways to display
@@ -931,12 +847,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
 
         completed <- TRUE
-      #},
-      # message = function(m) {
-      #   shinyjs::html(id = "status", html = m$message, add = TRUE)
-      # })
-        
-        
+     
       ###################################
       ### Generate Condensed Output Files
       ###################################
@@ -950,12 +861,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Set High and Low confidence Label and TRIAGE Label
         ##################
         
-        # #Set confidence catgeor
-        # TRIAGEoutput <- TRIAGEoutput %>%
-        #   mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffHigh, "HighConf",
-        #                                      ifelse(get(cutoffType, as.environment(TRIAGEoutput)) >= cutoffMed & get(cutoffType, as.environment(TRIAGEoutput)) < cutoffHigh,"MedConf",
-        #                                             "")))
-        
         FinalIterationNetworkColumn <- paste0("Network.class.iteration", iterationNum)
         
         TRIAGEoutput <- TRIAGEoutput %>%
@@ -966,7 +871,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         # Generate Matrices for TRIAGE Hits, high conf hits, med conf hits
         #Get filtered TRIAGEhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
         
-        TRIAGEhits <- filter(TRIAGEoutput, TRIAGEhit == "Yes")
+        TRIAGEhits <<- filter(TRIAGEoutput, TRIAGEhit == "Yes")
         TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits" 
         
         # Get filtered TRIAGE High/Med Conf
@@ -990,19 +895,26 @@ options(shiny.maxRequestSize = 3*1024^2)
         # AVERAGE DUPLICATED ROWS
         siRNA.Score <- TRIAGEhits[which(!is.na(TRIAGEhits$EntrezID)),]    
         OverallDegree <- degree(G)
-        Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
-        Graph <- induced.subgraph(G,Screen_Genes.for.network.analysis)
+        
+        Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID, V(G)$name)
+        
+        Graph <- induced.subgraph(G, Screen_Genes.for.network.analysis)
+        
+        #Screen_Genes.for.network.analysis <- intersect(siRNA.Score$EntrezID,V(G)$name)
         
         #############################################################
         #            Select sub-graphs from hit genes
         #############################################################
-        Subset_Genes.for.network.analysis <- Screen_Genes.for.network.analysis
+        SubGraph <<- Graph
         
-        SubGraph <- induced.subgraph(Graph,Subset_Genes.for.network.analysis)
+        if(length(E(SubGraph))==0 | length(V(SubGraph))==0){
+          showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                                easyClose = TRUE))
+          Sys.sleep(5)
+          session$reload()
+        }
         
-        # if(tolower(use.only.commnected.components) == "yes"){
-        #   SubGraph <- induced.subgraph(SubGraph,names(which(degree(SubGraph) > 0)))
-        # }
+        
         
         #############################################################
         #            Calculation of Node properties
@@ -1014,19 +926,26 @@ options(shiny.maxRequestSize = 3*1024^2)
         siRNA.Score.Formatted <- siRNA.Score
         
         gNames <- V(SubGraph)$name
+        
         ###############################################################################
         #                 Create Network for D3 Rendering for Hit Genes
         ###############################################################################
         GraphEdgesHitNames <- get.data.frame(SubGraph, what = "edges")
+        #GraphEdgesHitNames$weights = round(rowMeans(GraphEdgesHitNames[3:ncol(GraphEdgesHitNames)], na.rm=T), 0)
         GraphEdgesHitNames <- GraphEdgesHitNames[!duplicated(GraphEdgesHitNames), ]
-        source <- target <- rep(NA, nrow(GraphEdgesHitNames))
+        source <- target <- weights <- rep(NA, nrow(GraphEdgesHitNames))
         tempGenes <- union(GraphEdgesHitNames$from,GraphEdgesHitNames$to)
         for(i in 1:length(tempGenes)){
           source[which(GraphEdgesHitNames$from == tempGenes[i])] <- i-1
           target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
         }
         
-        GraphEdgesHitNumber <- data.frame(source,target)
+        
+        
+        GraphEdgesHitNumber <- data.table(source,target)
+        GraphEdgesHitNumber$weights = GraphEdgesHitNames$weights
+        GraphEdgesHitNumber$datasource = GraphEdgesHitNames$datasource
+        
         
         
         GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
@@ -1035,7 +954,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        GraphNodesHit <- merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")], 
+        N = ncol(TRIAGEhits)
+        # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
@@ -1044,6 +965,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
+        
+        #colnames(NodeInfo)[4] = 'Confidence'
+        
         
         ######################################
         
@@ -1158,7 +1082,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         ####################
         ### Create Condensed Output File
-        TRIAGEoutput.condensed <- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+        TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
 
         ########################
         ######## Pathway Output
@@ -1197,14 +1121,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         ############# Write files to new Directory
         downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
         dir.create(downloadDir)
-        setwd(downloadDir)
+        #setwd(downloadDir)
+        setwd('TRIAGEfilesToDownload')
         
-        TRIAGE.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
+        TRIAGE.cond.output.name <<- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
         Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
         
         write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
-        write.csv(triage.Out, file = outputFileName, row.names = F)
+        # write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
       ## Switch to 'Enriched Pathways' tab and display partial results
@@ -1251,11 +1176,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             # Used to add text color to GeneSymbols indicate whether they are in the original hit or identified by TRIAGE
             for (i in 1:nrow(pathEnrich))
             {
-              # Add hyperlink to KEGG pathway database
-              #pathwayName <- pathEnrich[i,][1]
-              #pathwayID <- pathwayData$PathwayID[match(pathwayName, pathwayData$PathwayName)]
-              #pathEnrich[i,][1] <- createLink(organismAbbr, pathwayID, pathwayName)
-
+             
               # Add color to indicate whether a gene is in the original hit gene set
               # Also create a hyperlink to KEGG mapper for each pathways
               myGeneSet <- pathEnrich[i,7]
@@ -1377,7 +1298,6 @@ options(shiny.maxRequestSize = 3*1024^2)
               formatStyle('GeneSymbol', target = 'row', backgroundColor = styleEqual(c('Total'), c('orange')))
             return(dat)
           })
-          #message("completed geneList tab")
         
         
           # Show table of gene hits by iterations 
@@ -1414,10 +1334,9 @@ options(shiny.maxRequestSize = 3*1024^2)
                                                                                                                  ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
                                                                                                                  ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
                                                                                                                  ,"}"))))) #%>%
-              #formatStyle("EnrichScore", background = styleColorBar(c(0,1), 'lightblue')) 
+              
             return(dat)
           })
-          #})
       
       
       
@@ -1486,61 +1405,78 @@ options(shiny.maxRequestSize = 3*1024^2)
           else{
             ## Show progress bar
             # Create a Progress object
+            startB <- Sys.time()
+            
             progress1 <- shiny::Progress$new()
             # Make sure it closes when we exit this reactive, even if there's an error
             on.exit(progress1$close())
             progress1$set(message = "Generating network graph....", value = 0.3)
             
             message(selectedRows)
-            source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
+            source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
+            # source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
+            source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
-            Generate_NetworkGraph(selectedRows, organism)
+            
+            
+            Generate_NetworkGraph(selectedRows, organism, G)
+            
+            # Writing fully generated network files for download
+            write.csv(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
+            write.csv(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+            
+            
+            print(paste0("Network Generation Time: ", Sys.time() - startB))
+            
+            
+            observe({
+              if(input$inTabset == 'downloads'){
+                if(length(input$clickedData)>0){
+                  clicker <<- data.frame(jsonlite::fromJSON(input$clickedData))
+                  clicker = apply(clicker, 2, unlist)
+                  #print(clicker)
+                  write.csv(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                }
+                else{
+                  write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                }
+              }
+            })
+            
+            
+            observeEvent(input$clickedData, {
+              
+              clicker <- data.frame(jsonlite::fromJSON(input$clickedData))
+              
+              output$ClickedDataTable <- renderDataTable({
+                if(nrow(clicker)==0){
+                  clicker=NULL
+                }
+                dat <- datatable(data.frame(clicker), rownames = TRUE)
+                return(dat)
+              })
+              
+            })
+            
+            clicked.path.data <- reactive({
+              observeEvent(input$clickedData, {
+                return(data.frame(jsonlite::fromJSON(input$clickedData)))
+              })
+            })
+            
+            
+            
+            
+            
             progress1$inc(1)
+            head(E(G))
             
             #############
             ## PathNet ##
             #############
-            saveEdgebundle(Chimera1, paste0(PathNetName.output, "1Degree.html"), selfcontained = TRUE)
-            saveEdgebundle(Chimera2, paste0(PathNetName.output, "2Degree.html"), selfcontained = TRUE)
             
             # Remove existing html file in www folder
             Sys.chmod(wwwDir, mode = "0777")
-            
-            ## Display 1st dimension
-            # legend
-            output$graphLegend1 <- renderUI({
-              HTML(graphLegend)
-            })
-            #output$graphView1i <- renderEdgebundle({
-            output$graphView1i <- renderUI({
-              
-              file.copy(paste0(PathNetName.output, "1Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "1Degree.html")), overwrite = TRUE)
-              tags$iframe(
-                seamless="seamless",
-                src=paste0(PathNetName.output, "1Degree.html"),
-                scrolling = 'no',
-                height=700, 
-                width=700
-              )
-            })
-            
-            # Display 2nd dimension)
-            # legend
-            output$graphLegend2 <- renderUI({
-              HTML(graphLegend)
-            })
-            
-            output$graphView2i <- renderUI({
-              # Copy HTML files to www directory for display in iframe
-              file.copy(paste0(PathNetName.output, "2Degree.html"), paste0(wwwDir, paste0(PathNetName.output, "2Degree.html")), overwrite = TRUE)
-              tags$iframe(
-                seamless="seamless",
-                src=paste0(PathNetName.output, "2Degree.html"),
-                scrolling = 'no',
-                height=700, 
-                width=700
-              )              
-            })
             
             output$PathNetTable <- renderDataTable({
               dat <- datatable(Scores_nodes_and_edges, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
@@ -1555,178 +1491,11 @@ options(shiny.maxRequestSize = 3*1024^2)
               return(dat)
             })
             
-            # ################
-            # ## D3 Network ##
-            # ################
-            # # Display in D3 (1st dimension)
-            # output$networkView1D3 <- renderForceNetwork({
-            #   # build the two data frames - 'links' and 'nodes'
-            #   g11_links <- g11_d3$links
-            #   g11.links.original <<- g11_links
-            #   g11_nodes <- NodeInfo1
-            # 
-            #   # delete unneeded data columns
-            #   g11_nodes$ID <- NULL
-            #   g11_nodes$GeneMappingID <- NULL
-            #   # add column names
-            #   colnames(g11_nodes) <- c("name", "group")
-            #   g11.nodes.original <<- g11_nodes
-            # 
-            #   # Add pathway name as new nodes (with spacd removed - gsub) 
-            #   # and get the indices of the pathway nodes to update the corresponding links
-            #   if(length(selectedRows) == 3){
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-            #     index1 <<- nrow(g11_nodes)
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
-            #     index2 <<- nrow(g11_nodes)
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path3_name), 2)
-            #     index3 <<- nrow(g11_nodes)
-            #     # Add Nodesize column
-            #     g11_nodes$nodesize <- 1
-            #     g11_nodes[index1, 'nodesize'] <- 20
-            #     g11_nodes[index2, 'nodesize'] <- 20
-            #     g11_nodes[index3, 'nodesize'] <- 20
-            #   }else if(length(selectedRows) == 2){
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-            #     index1 <<- nrow(g11_nodes)
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path2_name), 3)
-            #     index2 <<- nrow(g11_nodes)
-            #     # Add Nodesize column
-            #     g11_nodes$nodesize <- 1
-            #     g11_nodes[index1, 'nodesize'] <- 20
-            #     g11_nodes[index2, 'nodesize'] <- 20
-            #   }else if(length(selectedRows) == 1){
-            #     g11_nodes[nrow(g11_nodes) + 1,] = c(paste0('[Pathway]', path1_name), 1)
-            #     index1 <<- nrow(g11_nodes)
-            #     # Add Nodesize column
-            #     g11_nodes$nodesize <- 1
-            #     g11_nodes[index1, 'nodesize'] <- 20
-            #   }
-            # 
-            #   # # Update the g11_links with the added pathway nodes
-            #   for (i in 1:(index1 - 1)){
-            #     if(g11_nodes[i, 'group'] == 1){
-            #       g11_links[nrow(g11_links) + 1,] <- c((index1-1), (i-1))
-            #     }else if(g11_nodes[i, 'group'] == 3){
-            #       g11_links[nrow(g11_links) + 1,] <- c((index3-1), (i-1))
-            #     }else if(g11_nodes[i, 'group'] == 2){
-            #       g11_links[nrow(g11_links) + 1,] <- c((index2-1), (i-1))
-            #     }
-            #   }
-            #   
-            #   # Create a copy of network nodes and links for visNetwork
-            #   visNodes11 <<- g11_nodes
-            #   visLinks11 <<- g11_links
-            # 
-            #   # Save to a html file
-            #   forceNetwork(Links = g11_links, Nodes = g11_nodes,
-            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE) %>%
-            #     saveNetwork(file = paste0(PathNetName.output, "1Degree.D3.html"))
-            #   
-            #   # Create force directed network plot
-            #   forceNetwork(Links = g11_links, Nodes = g11_nodes,
-            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize = 10, zoom = TRUE)
-            # 
-            #   # Add a search box for D3 network
-            # })
-            #             
-            # ## Display in D3 (2nd dimension)
-            # output$networkView2D3 <- renderForceNetwork({
-            #   # build the two data frames - 'links' and 'nodes'
-            #   g22_links <- g22_d3$links
-            #   g22.links.original <<- g22_links
-            #   g22_nodes <- NodeInfo2
-            #   # delete unneeded data columns
-            #   g22_nodes$ID <- NULL
-            #   g22_nodes$GeneMappingID <- NULL
-            #   # add column names
-            #   colnames(g22_nodes) <- c("name", "group")
-            #   g22.nodes.original <<- g22_nodes
-            #   
-            #   # Add pathway nodes and get the indices for the pathway nodes
-            #   if(length(selectedRows) == 3){
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-            #     index1 <<- nrow(g22_nodes)
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
-            #     index2 <<- nrow(g22_nodes)
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path3_name), 2)
-            #     index3 <<- nrow(g22_nodes)
-            #     # Add Nodesize column
-            #     g22_nodes$nodesize <- 1
-            #     g22_nodes[index1, 'nodesize'] <- 20
-            #     g22_nodes[index2, 'nodesize'] <- 20
-            #     g22_nodes[index3, 'nodesize'] <- 20
-            #   }else if(length(selectedRows) == 2){
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-            #     index1 <<- nrow(g22_nodes)
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path2_name), 3)
-            #     index2 <<- nrow(g22_nodes)
-            #     # Add Nodesize column
-            #     g22_nodes$nodesize <- 1
-            #     g22_nodes[index1, 'nodesize'] <- 20
-            #     g22_nodes[index2, 'nodesize'] <- 20
-            #   }else if(length(selectedRows) == 1){
-            #     g22_nodes[nrow(g22_nodes) + 1,] = c(paste0('[Pathway] ', path1_name), 1)
-            #     index1 <<- nrow(g22_nodes)
-            #     # Add Nodesize column
-            #     g22_nodes$nodesize <- 1
-            #     g22_nodes[index1, 'nodesize'] <- 20
-            #   }
-            #   
-            #   # Update the g11_links with the added pathway nodes
-            #   for (i in 1:(index1 - 1)){
-            #     if(g22_nodes[i, 'group'] == 1){
-            #       g22_links[nrow(g22_links) + 1,] <- c((index1-1), (i-1))
-            #     }else if(g22_nodes[i, 'group'] == 3){
-            #       g22_links[nrow(g22_links) + 1,] <- c((index3-1), (i-1))
-            #     }else if(g22_nodes[i, 'group'] == 2){
-            #       g22_links[nrow(g22_links) + 1,] <- c((index2-1), (i-1))
-            #     }
-            #   }      
-            #   
-            #   # Create a copy of network nodes and links for visNetwork
-            #   visNodes22 <<- g22_nodes
-            #   visLinks22 <<- g22_links
-            # 
-            #   # Save to a html file
-            #   forceNetwork(Links = g22_links, Nodes = g22_nodes,
-            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE) %>%                            
-            #     saveNetwork(file = paste0(PathNetName.output, "2Degree.D3.html"))
-            #   
-            #   # Create force directed network plot
-            #   forceNetwork(Links = g22_links, Nodes = g22_nodes,
-            #                Source = 'source', Target = 'target', NodeID = 'name', Nodesize = 'nodesize',
-            #                Group = 'group', opacity = 0.6, bounded = FALSE, opacityNoHover = TRUE, fontSize =10, zoom = TRUE)
-            #   
-            #   # Add a search box for D3 network
-            #})
-            
-            
-            # ################
-            # ## visNetwork ##
-            # ################
-            # 
-            # # output$networkView3vis <- renderVisNetwork({
-            # #   # Create force directed network plot
-            # #   visNetwork(g11_vis$nodes, g11_vis$edges)
-            # # })
-            # # output$networkView4vis <- renderVisNetwork({
-            # #   # Create force directed network plot
-            # #   visNetwork(g22_vis$nodes, g22_vis$edges)
-            # # })
-            # 
-            # # Switch tab
-            # updateTabsetPanel(session, "inTabset", selected = "networkViews")
-            # ########################################        
-            # 
-            # # Switch tab
             updateTabsetPanel(session, "inTabset", selected = "graphViews")
           }
         })
       })
+          
       message("Outside NetworkGraph")
     
       ## Create the 'Download' tab
@@ -1745,20 +1514,23 @@ options(shiny.maxRequestSize = 3*1024^2)
 
       ## Download all output data
       output$downloadButton <- downloadHandler(
-
         filename = function(){
           paste("TRIAGE_analysis_output", "zip", sep=".")
         },
         content = function(filename){
+          
           outputFiles <- list.files(path = './')
           zip(zipfile=filename, files = outputFiles)
         },
         contentType = "application/zip"
       )
-
+      
+      print(paste0("TRIAGE Analysis Time: ", Sys.time() - startA))
       message("Download content completed")
     })
 
+      
+      
     # Contact us by sending email to triage@niaid.nih.gov
     # Send email using mailR package
     # in order for this to work, set the java path for R on commandline in a terminal
@@ -1830,10 +1602,10 @@ options(shiny.maxRequestSize = 3*1024^2)
     
     # This code will be run after the client has disconnected
     # ie, a user session is closed
-    session$onSessionEnded(function() {
-      # Delete user/session-specific directory after removing all downloadable files
-      unlink(outDir, recursive = TRUE)
-    })
+    # session$onSessionEnded(function() {
+    #   # Delete user/session-specific directory after removing all downloadable files
+    #   unlink(outDir, recursive = TRUE)
+    # })
     
     # Set this to "force" instead of TRUE for testing locally (without Shiny Server)
     session$allowReconnect(TRUE)
@@ -1843,4 +1615,3 @@ options(shiny.maxRequestSize = 3*1024^2)
   # Run the application
   shinyApp(ui = ui, server = server)
 
-#}
