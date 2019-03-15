@@ -1236,7 +1236,7 @@ options(shiny.maxRequestSize = 3*1024^2)
               #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
               # Create a form for each datatable row
               sprintf('<script>function extLink() {
-                          confirm("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
+                         return confirm("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
                        }</script>                        
                        <form target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway">
                        <input type="hidden" name="map" value="%s0%s">
