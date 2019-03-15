@@ -1,5 +1,0 @@
-"Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
-"RNA transport.UBE2I","RNA transport","UBE2I","24","Medium","Novel Genes.KDM4A","Novel Genes","KDM4A","1","900","database"
-"Novel Genes.KDM4A","Novel Genes","KDM4A","1","Medium","RNA transport.UBE2I","RNA transport","UBE2I","24","900","database"
-"RNA transport.UBE2I","RNA transport","UBE2I","24","Medium","Novel Genes.RPS27A","Novel Genes","RPS27A","37","900","database"
-"Novel Genes.RPS27A","Novel Genes","RPS27A","37","Medium",NA,NA,NA,NA,NA,NA

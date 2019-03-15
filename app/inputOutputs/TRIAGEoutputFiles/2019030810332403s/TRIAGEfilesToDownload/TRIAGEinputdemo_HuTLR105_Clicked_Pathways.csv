@@ -1,5 +1,0 @@
-"Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
-"RNA transport.UBE2I","RNA transport","UBE2I","24","Medium","Novel Genes.BIRC5","Novel Genes","BIRC5","9","900","database"
-"Novel Genes.BIRC5","Novel Genes","BIRC5","9","Medium","Proteasome.PSMA3","Proteasome","PSMA3","27","900","database"
-"Proteasome.PSMA3","Proteasome","PSMA3","27","Medium","Novel Genes.EXOSC4","Novel Genes","EXOSC4","5","417","experimental"
-"Novel Genes.EXOSC4","Novel Genes","EXOSC4","5","Medium",NA,NA,NA,NA,NA,NA

@@ -1,5 +1,0 @@
-"Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
-"RNA transport.UBE2I","RNA transport","UBE2I","24","Medium","Novel Genes.BIRC5","Novel Genes","BIRC5","9","900","database"
-"Novel Genes.BIRC5","Novel Genes","BIRC5","9","Medium","RNA transport.NUP155","RNA transport","NUP155","17","900","database"
-"RNA transport.NUP155","RNA transport","NUP155","17","Medium","Novel Genes.DDX39A","Novel Genes","DDX39A","13","900","database"
-"Novel Genes.DDX39A","Novel Genes","DDX39A","13","High",NA,NA,NA,NA,NA,NA
