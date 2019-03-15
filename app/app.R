@@ -311,7 +311,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
         mouseGenes <- read.table(file=paste0(dataDir, "Mouse_proteinCoding_sourceMouseMine.txt"), sep="\t", header=TRUE)
 
->>>>>>> 627c9ca8c546e34a39943e3fa7a0f15bc94908e9
         # Check to see if eitehr a 'EntrezID' or a 'GeneSymbol' column is in the input file
         if(!("EntrezID" %in% colnames(data)) && !("GeneSymbol" %in% colnames(data))){
           # Input data do not have EntrezID AND GeneSymbol columns
