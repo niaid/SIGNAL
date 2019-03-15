@@ -1393,7 +1393,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             message(selectedRows)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             # source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
-            source(paste0(scriptDir, "Ranking_temp.R"), local = TRUE)
+            source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
             
             
