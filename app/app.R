@@ -68,8 +68,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
         tags$script(src="getIP.js"),
         # sources below are for d3 network graph layout and interaction
-        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.js"),
-        tags$script(src="http://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
+        tags$script(src="https://mbostock.github.io/d3/talk/20111116/d3/d3.js"),
+        tags$script(src="https://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
         tags$script(src="custom_network.js"),
         tags$script(src="custom_network2.js")
       ),
@@ -138,10 +138,10 @@ options(shiny.maxRequestSize = 3*1024^2)
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
           # textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
-          textInput("cutoff_valueH", "High-conf Cutoff Value", value = "1"),
+          textInput("cutoff_valueH", "High-conf Cutoff Value"),
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           # textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
-          textInput("cutoff_valueM", "Med-conf Cutoff Value", value = "0.5"),
+          textInput("cutoff_valueM", "Med-conf Cutoff Value"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           checkboxInput("includeBackground", "Add genome background"),
           bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
@@ -461,7 +461,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         pulldown_types <- c("", colnames(data2))
 
-        selectInput("cutoff_type", "Cutoff Type", pulldown_types, selected="Score")
+        selectInput("cutoff_type", "Cutoff Type", pulldown_types)
       })
 
       # reloads the app
