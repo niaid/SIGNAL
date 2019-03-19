@@ -38,10 +38,15 @@ Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 # used to set home directory for local development. 
 # Assign the home_string for folder where TRIAGE has been downloaded to
-#
-# home_string = '/Users/username/Documents/'
+# home_string = '/Users/kylewebb/Documents/Work/NIAID'
 # Sys.setenv(HOME = home_string)
 # setwd('~')
+
+# If running a mac and having trouble loading rJava - follow the steps on this site:
+# https://zhiyzuo.github.io/installation-rJava/
+
+# If running a pc and having trouble loading rJava:
+# https://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/
 
 #setting
 #override scientific notation to avoid numeric mis assignments

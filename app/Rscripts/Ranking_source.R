@@ -110,17 +110,17 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     path12_name = paste0(path1_name, ' & ', path2_name)
     extra_path_names = append(extra_path_names, path12_name)
   }
-  if(any(path13_check)){
-    NodeInfo$Group[path13_check] <- path13_name
-    NodeInfo$Color[path13_check] = colorMap[5]
-    path13_name = paste0(path1_name, ' & ', path3_name)
-    extra_path_names = append(extra_path_names, path13_name)
-  }
   if(any(path23_check)){
     NodeInfo$Group[path23_check] <- path23_name
-    NodeInfo$Color[path23_check] = colorMap[6]
+    NodeInfo$Color[path23_check] = colorMap[5]
     path23_name = paste0(path2_name, ' & ', path3_name)
     extra_path_names = append(extra_path_names, path23_name)
+  }
+  if(any(path13_check)){
+    NodeInfo$Group[path13_check] <- path13_name
+    NodeInfo$Color[path13_check] = colorMap[6]
+    path13_name = paste0(path1_name, ' & ', path3_name)
+    extra_path_names = append(extra_path_names, path13_name)
   }
   if(any(path123_check)){
     NodeInfo$Group[path123_check] <- path123_name
