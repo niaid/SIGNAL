@@ -259,6 +259,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   NodeInfo$ID <- paste(NodeInfo$Group, NodeInfo$key, sep = ".")
   
+  print(head(NodeInfo))
+  
   #Move ID column first
   NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Group', 'Confidence', 'Pathway', 'Color')]
   

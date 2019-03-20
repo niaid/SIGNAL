@@ -36,15 +36,15 @@ library(htmltools)
 library(stringr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
-# used to set home directory for local development. 
+### TO RUN LOCALLY ###
 # Assign the home_string for folder where TRIAGE has been downloaded to
 # home_string = '/Users/kylewebb/Documents/Work/NIAID'
 # Sys.setenv(HOME = home_string)
 # setwd('~')
 
+### Errors with rJava ###
 # If running a mac and having trouble loading rJava - follow the steps on this site:
 # https://zhiyzuo.github.io/installation-rJava/
-
 # If running a pc and having trouble loading rJava:
 # https://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/
 
@@ -939,7 +939,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         N = ncol(TRIAGEhits)
         # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
+        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "Pathway", "TRIAGEhit")]
+        TRIAGEhits.merge$ConfidenceCategory = TRIAGEhits[,N-2]
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                          #c(1, 3, 4, N-1, N)],
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
