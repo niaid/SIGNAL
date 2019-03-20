@@ -1,5 +1,4 @@
 body {
-    min-width: 1000px;
     width: auto;
     margin-left:auto;
     margin-right:auto;
@@ -9,7 +8,7 @@ body {
 header{
     background-color: rgb(1, 81, 154);
     color: white;
-    width: 100%;
+    width: 1100px;
     height: 140px;
     -webkit-border-radius: 1px;
     -moz-border-radius: 25px;
@@ -32,7 +31,7 @@ header{
 footer{
     background-color: rgb(1, 81, 154);
     color: white;
-    width: 100%;
+    width: 1100px;
     height: 80px;
     -webkit-border-radius: 1px;
     -moz-border-radius: 25px;
@@ -82,37 +81,4 @@ footer{
 
 iframe {
   border: 0;
-}
-
-path.arc {
-          cursor: move;
-          fill: #fff;
-        }
-
-.node {
-  font-size: 10px;
-}
-
-.node:hover {
-  cursor: crosshair;
-}
-
-.link {
-  fill: none;
-  stroke-opacity: .1;
-  pointer-events: none;
-}
-
-.link.source, .link.target {
-  stroke-width: 2px;
-}
-
-.link.source {
-  !stroke: #d62728;
-}
-
-.link.source {
-}
-
-.link.target {
 }

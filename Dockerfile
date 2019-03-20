@@ -12,6 +12,7 @@ RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-de
     R -e "install.packages('shinyBS', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('readr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('stringi', repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages('stringr', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('reshape2', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \
     R -e "install.packages('data.table', repos='https://cran.rstudio.com/')" && \

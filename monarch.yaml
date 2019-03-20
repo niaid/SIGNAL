@@ -2,11 +2,19 @@ name: triage
  
 tech_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov 
 mgmt_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov
+monarch_team_id: 5c8946358e735a001c5e1855
+monarch_product_id: 5c8949c0197b90001c4b4a5a
  
 docker_build:
   variables:
     IMAGE_REPO: lsb-triage
     REGISTRY_USER: songj11
+docker_scan:
+  cve_whitelist:
+    - CVE-2018-12121
+    - CVE-2018-12122
+    - CVE-2018-12123
+    - CVE-2018-7159
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
@@ -14,3 +22,29 @@ webapp_scan:
      - Out-of-date Version (Bootstrap):
        - 'https://triage.niaidawsqa.net/' # Whitelissting temporarily
 approved_for_prod: true
+
+terraform:
+  modules:
+    - web-application
+  module_name: triage # legacy, not needed for new apps
+  variables:
+    cpu: 512
+    memory: 2048
+    container_port: 3838
+    desired_count: 1
+    command: /usr/local/bin/shiny_server.sh
+    alert_recipients: "[[${var.tech_email_addresses},${var.mgmt_email_addresses}]]"
+    healthcheck_timeout: 25
+    healthcheck_healthy_threshold: 2
+    healthcheck_unhealthy_threshold: 6
+  environments:
+    qa:
+      variables:
+        image: "[[${var.pre_prod_image_base}]]"
+    prod:
+      variables:
+        cpu: 128
+        image: "[[${var.prod_image_base}]]"
+        use_public_ssl_cert: true
+        url_to_monitor: "triage-pilot.niaid.nih.gov"
+        security_group_name: "external_elb"
