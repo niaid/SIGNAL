@@ -937,11 +937,11 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        N = ncol(TRIAGEhits)
+        # N = ncol(TRIAGEhits)
         # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
-        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "Pathway", "TRIAGEhit")]
-        TRIAGEhits.merge$ConfidenceCategory = TRIAGEhits[,N-2]
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                          #c(1, 3, 4, N-1, N)],
+        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
+        # TRIAGEhits.merge$ConfidenceCategory = TRIAGEhits[,N-2]
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes

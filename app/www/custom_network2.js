@@ -486,9 +486,9 @@ Shiny.addCustomMessageHandler("jsondata2",
         return '{}';
       }
       else if(nConn===1){
-        clickeR = '{"Node1": ["' + clicker.name + '"],' +
+        clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                  '"Node1": ["' + clicker.name + '"],' +
                   '"Parent1": ["' + clicker.parent.name + '"],' +
-                  '"Name1": ["' + clicker.key + '"],' +
                   '"Connections1": ["' + clicker.imports.length + '"],' +
                   '"Confidence": ["' + clicker.Confidence + '"]}'
         return clickeR;
@@ -498,28 +498,26 @@ Shiny.addCustomMessageHandler("jsondata2",
         for(conn in clickedData){
             clicker = clickedData[conn]
             if(conn < nConn-1){
-              console.log(true)
               nextClicker = clickedData[parseInt(conn)+1]
-              console.log(nextClicker)
-              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+              clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                        '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Name1": ["' + clicker.key + '"],' +
                         '"Connections1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
+                        '"Name2": ["' + nextClicker.key + '"],' +
                         '"Node2": ["' + nextClicker.name + '"],' +
                         '"Parent2": ["' + nextClicker.parent.name + '"],' +
-                        '"Name2": ["' + nextClicker.key + '"],' +
                         '"Connections2": ["' + nextClicker.imports.length + '"],' +
                         '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
                         '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
             }
             else{
-              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+              clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                        '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Name1": ["' + clicker.key + '"],' +
                         '"Connections1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
-                        '"Node2": ["NA"], "Parent2": ["NA"], "Name2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
+                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
             }
             clickeRs = clickeRs + clickeR
           }
