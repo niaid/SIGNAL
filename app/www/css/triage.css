@@ -116,3 +116,11 @@ path.arc {
 
 .link.target {
 }
+
+.pathButton {
+  cursor: pointer;
+}
+
+.resetButton {
+  cursor: pointer;
+}

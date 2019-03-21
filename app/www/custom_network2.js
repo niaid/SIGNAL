@@ -25,17 +25,20 @@ Shiny.addCustomMessageHandler("jsondata2",
     var clickedData = [],
         splines = [],
         childrenData = {},
-        childrenArray = [];
+        childrenArray = [],
+        nClicked = 0,
+        numbNovel = 0,
+        numbNoNovel = 0;
 
-    var novelColor = '#00238B',
-        color1 = '#46008B',
-        color2 = '#8B0000',
-        color3 = '#468B00',
-        color12 = '#8B0068',
-        color13 = '#008B57',
-        color23 = '#8B6800',
-        color123 = '#008B8B',
-        colorMap = [color1, color2, color3, novelColor, color12, color13, color23, color123],
+    var novelColor = "green",
+        color1 = "blue",
+        color2 = "red",
+        color3 = "saddlebrown",
+        color12 = "#d2d062",
+        color13 = "e18c38",
+        color23 = "#eda686",
+        color123 = "#534758",
+        colorMap = [color1, color2, color3, novelColor, color123, color12, color23, color13],
         windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
 
     var cluster = d3.layout.cluster()
@@ -71,7 +74,7 @@ Shiny.addCustomMessageHandler("jsondata2",
     var svg = svG.append("svg:g")
 
     var windowArea = svG.append("svg:g")
-      .attr("transform", "translate(640,5)")
+      .attr("transform", "translate(638,5)")
 
     windowArea.append("svg:rect")
       .attr("height", rectH)
@@ -83,11 +86,25 @@ Shiny.addCustomMessageHandler("jsondata2",
       .style("stroke-width", 2);
 
     var dubsMessage = svG.append("svg:g")
-      .attr("transform", "translate(640, 650)")
+      .attr("transform", "translate(690, 170)")
+      .attr("class", "resetButton");
+
+    dubsMessage.append("svg:rect")
+      .attr("height", 20)
+      .attr("width", 102)
+      .attr("rx", 10)
+      .attr("ry", 10)
+      .style("stroke", "black")
+      .style("fill", "none")
+      .style("stroke-width", 2);
 
     dubsMessage.append("svg:text")
-      .style("font-size", "12px")
-      .text('** double click to reset');
+      .attr("font-family", "Helvetica")
+      .style("text-anchor", "center")
+      .attr("dy", 15)
+      .attr("dx", 5)
+      .text('Click to reset')
+      .on("click", mousedbl);
 
     var windowText = windowArea.selectAll("text")
 
@@ -100,6 +117,32 @@ Shiny.addCustomMessageHandler("jsondata2",
         .attr("dy", function(d,i){return(20*i)})
         .attr("dx", 2)
         .text(function(d) { return d; });
+
+    var pathButton = svG.append("svg:g")
+      .attr("transform", "translate(715, 200)")
+      .attr("class", "pathButton")
+
+    pathButton.append("svg:rect")
+      .attr("height", 55)
+      .attr("width", 80)
+      .attr("rx", 10)
+      .attr("ry", 10)
+      .style("stroke", "black")
+      .style("fill", "none")
+      .style("stroke-width", 2);
+
+    pathButtonTxt = ["Highlight", "Clicked", "Pathways"]
+
+    pathButton.selectAll("text")
+      .data(pathButtonTxt)
+      .enter()
+        .append("svg:text")
+        .style("text-anchor", "center")
+        .attr("dx", 5)
+        .attr("dy", function(d, i){return 16*i + 16;})
+        .attr("font-family", "Helvetica")
+        .text(function(d){return d;})
+        .on("click", drawConnections);
 
     svg.append("svg:path")
       .attr("class", "arc")
@@ -173,8 +216,6 @@ Shiny.addCustomMessageHandler("jsondata2",
         splines = bundle(links),
         parents = findParents(df);
 
-    var numbNovel = 0;
-    var numbNoNovel = 0;
     for(i in df){
       if(df[i].parent.name === "Novel"){
         numbNovel ++;
@@ -184,7 +225,6 @@ Shiny.addCustomMessageHandler("jsondata2",
       }
     }
     var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;
-
     svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")");
 
     var colorMapping = function(df){
@@ -322,7 +362,8 @@ Shiny.addCustomMessageHandler("jsondata2",
           else{
             return d.source.color;
           }
-        });
+        })
+        .style("stroke-opacity", 0.05);
 
     var allNodes = svg.selectAll("g.node")
         .data(nodes.filter(function(n) { return !n.children; }))
@@ -350,24 +391,21 @@ Shiny.addCustomMessageHandler("jsondata2",
         .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
         .text(function(d) { return d.key; })
 
-    svg.on("dblclick", mousedbl);
+    var still = false;
 
-    d3.select("input[type=range]").on("change", function() {
-      line.tension(this.value / 100);
-      path.attr("d", function(d, i) { return line(splines[i]); });
-    });
+    svg.on("dblclick", mousedbl);
 
     d3.select(window)
       .on("mousemove", mousemove)
       .on("mouseup", mouseup);
 
     function mouse(e) {
-    return [e.pageX - rx, e.pageY - ry];
+      return [e.pageX - rx, e.pageY - ry];
     }
 
     function mousedown() {
-    m0 = mouse(d3.event);
-    d3.event.preventDefault();
+      m0 = mouse(d3.event);
+      d3.event.preventDefault();
     }
 
     function mousemove() {
@@ -402,82 +440,82 @@ Shiny.addCustomMessageHandler("jsondata2",
     }
 
     function mouseover(d) {
-      if(!d.clicked){
-        if(clickedData.length === 0 || childrenArray.indexOf(d.name) > -1){
-          svg.select("#node-" + d.key)
-              .style('font-weight', 'bold');
-          setvals(d, true, false)
+      if(!still){
+        if(!d.clicked){
+          if(clickedData.length === 0 || childrenArray.indexOf(d.name) > -1){
+            setvals(d, true, false)
+          }
+          if(clickedData.length === 0){
+            d3.selectAll(".vizText").remove()
+            paintWindow(d, 1)
+          }
+          else if(childrenArray.indexOf(d.name) > -1){
+            d3.selectAll(".vizText").remove()
+            paintWindow(d, 3);
+          }
         }
-        if(clickedData.length === 0){
-          d3.selectAll(".vizText").remove()
-          paintWindow(d, 1)
+        else{
+            setvals(d, true);
         }
-        else if(childrenArray.indexOf(d.name) > -1){
-          d3.selectAll(".vizText").remove()
-          paintWindow(d, 3);
-        }
-      }
-      else{
-          setvals(d, true)
-          svg.select("#node-" + d.key)
-              .style('font-weight', 'bold');
       }
     }
 
     function mouseout(d) {
-      var i = clickedData.length>1 ? clickedData.length-1 : 0;
-      if(!d.clicked){
-        setvals(d, false);
-        svg.select("#node-" + d.key)
-            .style('font-weight', 'normal');
-        if(clickedData.length>=1){
+      if(!still){
+        var i = clickedData.length>1 ? clickedData.length-1 : 0;
+        if(!d.clicked){
+          setvals(d, false);
+          if(clickedData.length>=1){
+            setvals(clickedData[i], true, false)
+          }
+        }
+        else if(clickedData.length === 1){
+          setvals(d, true, false)
           setvals(clickedData[i], true, false)
         }
-      }
-      else if(clickedData.length === 1){
-        setvals(d, true, false)
-        setvals(clickedData[i], true, false)
-      }
-      if(clickedData.length === 0){
-        clearVizText()
-      }
-      else{
-        d3.selectAll(".vizText").remove()
-        paintWindow(d, 2);
+        if(clickedData.length === 0){
+          clearVizText()
+        }
+        else{
+          d3.selectAll(".vizText").remove()
+          paintWindow(d, 2)
+        }
       }
     }
 
     function mouseclick(d){
-      d.clicked = !d.clicked && true;
+      if(!still){
+        d.clicked = !d.clicked && true;
 
-      clickedData.push(d)
+        clickedData.push(d)
 
-      if(d.clicked){
-        removelinks()
+        if(d.clicked){
+          removelinks()
 
-        setvals(d, true, false)
+          setvals(d, true, false)
 
-        d3.selectAll(".vizText").remove()
-        paintWindow(d, 1);
+          d3.selectAll(".vizText").remove()
+          paintWindow(d, 1);
 
-        updateChildren(d)
+          updateChildren(d)
 
-        childrenArray = childrenData[d.name][0]
+          childrenArray = childrenData[d.name][0]
+        }
+        else if(clickedData[clickedData.length-1].name === d.name){
+          setvals(d, true, false)
+        }
+        else{
+          clickedData.pop()
+
+          updateChildren(d, true)
+
+          setvals(d, false, false)
+        }
+
+        clickeRs = getClicker();
+
+        Shiny.setInputValue("clickedData", clickeRs);
       }
-      else if(clickedData[clickedData.length-1].name === d.name){
-        setvals(d, true, false)
-      }
-      else{
-        clickedData.pop()
-
-        updateChildren(d, true)
-
-        setvals(d, false, false)
-      }
-
-      clickeRs = getClicker();
-
-      Shiny.setInputValue("clickedData", clickeRs);
     }
 
     function getClicker(){
@@ -528,6 +566,11 @@ Shiny.addCustomMessageHandler("jsondata2",
     function mousedbl(){
       childrenData = {}
       childrenArray = []
+      still = false
+
+      svg.selectAll("path.link")
+          .style("stroke-opacity", 0.05)
+
       if(clickedData.length>0){
         for(var i in clickedData){
           setvals(clickedData[i], false, false)
@@ -537,6 +580,13 @@ Shiny.addCustomMessageHandler("jsondata2",
         }
         clickedData = []
       }
+
+      svg.selectAll(".node text")
+        .style("font-weight", "normal")
+        .style("opacity", 1)
+
+      svg.selectAll(".node circle").style('opacity', 1)
+
       svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
       rotate = shiftRotate;
       clearVizText()
@@ -594,24 +644,30 @@ Shiny.addCustomMessageHandler("jsondata2",
             return d3.select(this).attr("dx") == 8
           })
           .attr("dx", pop*val + pop)
+          .style("font-weight", "bold")
 
       svg.selectAll(".node.source text")
           .filter(function(){
             return d3.select(this).attr("dx") == -8
           })
           .attr("dx", -pop*val - pop)
+          .style("font-weight", "bold")
 
-      svg.selectAll(".node text")
+      svg.selectAll(".node")
           .filter(function(){
-            return d3.select(this).attr("dx") > 8 && !d.clicked
+            return d3.select(this).select(" text").attr("dx") > 8 && d3.select(this).attr("class") === "node";
           })
-          .attr("dx", pop*val + pop)
+          .selectAll(" text")
+          .attr("dx", 8)
+          .style("font-weight", "normal")
 
-      svg.selectAll(".node text")
+      svg.selectAll(".node")
           .filter(function(){
-            return d3.select(this).attr("dx") < -8 && !d.clicked
+            return d3.select(this).select(" text").attr("dx") < -8 && d3.select(this).attr("class") === "node";
           })
-          .attr("dx", -pop*val - pop)
+          .selectAll(" text")
+          .attr("dx", -8)
+          .style("font-weight", "normal")
     }
 
     function updateNodes(name, value) {
@@ -622,8 +678,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         nodeBold = value || lastclicked===d[name] ? 'bold' : 'normal';
 
         svg.select("#node-" + d[name].key)
-          .classed(name, value)
-          .style('font-weight', nodeBold);
+          .classed(name, value);
       };
     }
 
@@ -640,6 +695,100 @@ Shiny.addCustomMessageHandler("jsondata2",
           .classed('source', false)
           .style("stroke-opacity", 0.05)
           .each(updateNodes("target", false,));
+      }
+    }
+
+    function drawConnections(){
+      still = true;
+      nConn = clickedData.length
+      if(nConn === 0){
+        still = false
+        return;
+      }
+      else if(nConn === 1){
+        svg.selectAll("path.link")
+            .classed("source", false)
+            .style("stroke-opacity", 0.01)
+
+        svg.selectAll(".node text").style('opacity', 0.5)
+
+        svg.selectAll(".node circle").style('opacity', 0.5)
+
+        sourceName = clickedData[0].key
+
+        svg.selectAll("path.link.source-" + sourceName)
+            .classed("source", true)
+            .style("stroke-opacity", 1)
+
+        svg.selectAll(".node")
+            .filter(function(){
+              return d3.select(this).select(" text").attr("dx") != 8 &&
+                      d3.select(this).select(" text").attr("dx") != -8 &&
+                      d3.select(this).attr("class") !== "node";
+            })
+            .selectAll(" text")
+            .style('opacity', 1)
+            .style("font-weight", "bold")
+
+        svg.selectAll(".node")
+            .filter(function(){
+              return d3.select(this).select(" text").attr("dx") != 8 &&
+                      d3.select(this).select(" text").attr("dx") != -8 &&
+                      d3.select(this).attr("class") !== "node";
+            })
+            .selectAll(" circle")
+            .style("opacity", 1)
+
+      }
+      else{
+        svg.selectAll("path.link")
+            .classed("source", false)
+            .style("stroke-opacity", 0.01)
+
+        svg.selectAll(".node text")
+            .style("font-weight", "normal")
+            .style('opacity', 0.5)
+
+        svg.selectAll(".node circle").style('opacity', 0.5)
+
+        svg.selectAll(".node")
+            .filter(function(){
+              return d3.select(this).select(" text").attr("dx") < -8;
+            })
+            .selectAll(" text")
+            .attr("dx", -8)
+
+        svg.selectAll(".node")
+            .filter(function(){
+              return d3.select(this).select(" text").attr("dx") > 8;
+            })
+            .selectAll(" text")
+            .attr("dx", 8)
+
+        for(i in clickedData){
+          i = parseInt(i)
+          if(i != nConn-1){
+            sourceName = clickedData[i].key
+            targetName = clickedData[i+1].key
+            svg.select("path.link.source-" + sourceName + ".target-" + targetName)
+                .classed("source", true)
+                .style("stroke-opacity", 1)
+          }
+          svg.select("#node-" + clickedData[i].key + " text")
+              .attr("dx", function(d){
+                if(d3.select("#node-" + clickedData[i].key + " text").attr("dx") == -8){
+                  return -16;
+                }
+                else{
+                  return 16;
+                }
+              })
+              .style('font-weight', 'bold')
+              .style('opacity', 1);
+
+          svg.select("#node-" + clickedData[i].key + " circle")
+              .style("opacity", 1)
+        }
       }
     }
 

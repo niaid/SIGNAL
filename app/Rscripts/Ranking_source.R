@@ -68,16 +68,17 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   Edge.target <- merge(Edge.source, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "target", by.y = "GeneMappingID", all.x = TRUE)
   
   names(Edge.target)[names(Edge.target)=="GeneSymbol"] <- "target.ID"
+
   
   #Set column for pathway groupings and colors for pathways
-  colorMap = c("#46008B", #Pathway 1
-               "#8B0000", #Pathway 2
-               "#468B00", #Pathway 3
-               "#8B0068", # 1 & 2
-               "#8B6800", # 2 & 3
-               "#008B57", # 1 & 3
-               "#008B8B", # 1 & 2 & 3
-               "#00238B" #Novel
+  colorMap = c("blue", #Pathway 1
+               "red", #Pathway 2
+               "saddlebrown", #Pathway 3
+               "#a09d01", # 1 & 2
+               "#ce6702", # 2 & 3
+               "#6b5b3e", # 1 & 3
+               "#6d1c8e", # 1 & 2 & 3
+               "green" #Novel
   )
   
   NodeInfo$Group <- "Novel"
@@ -248,9 +249,11 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   SNE_output = create_nodes_and_edges(all_pathway_names)
   
   Scores_nodes_and_edges <<- SNE_output[[1]]
-  file.name = SNE_output[[2]]
   
-  write.csv(Scores_nodes_and_edges, file.name)
+  # scores nodes and edges filename
+  file.name.snae <<- SNE_output[[2]]
+  
+  fwrite(Scores_nodes_and_edges, file.name.snae)
   
   ############################################################################### Add visualization ##############################################################################
   
