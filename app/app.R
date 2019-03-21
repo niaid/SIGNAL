@@ -758,7 +758,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == "HighConf"]
 
           # 2) Expansion - [Network Analysis]
-    message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
+          message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
     
     
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
@@ -901,8 +901,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           Sys.sleep(5)
           session$reload()
         }
-        
-        
         
         #############################################################
         #            Calculation of Node properties

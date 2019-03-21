@@ -332,19 +332,23 @@ Shiny.addCustomMessageHandler("jsondata2",
         .attr("parentNode", function(d) { return d.parent.name;})
         .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; });
 
-    allNodes.append("svg:text")
-        .style("fill", function(d){ return d.color;})
-        .style("font-size", function(){
-          return (Math.min(1/Math.log10(df.length)*10, 14))
-        })
-        .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
-        .attr("dy", ".31em")
-        .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-        .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
-        .text(function(d) { return d.key; })
+    allNodes.append("svg:circle")
+        .attr("r", Math.min(1/Math.log10(df.length)*5, 4))
+        .style("fill", function(d) { return d.color; })
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
         .on("click", mouseclick);
+
+    allNodes.append("svg:text")
+        .style("fill", function(d){ return d.color;})
+        .style("font-size", function(){
+          return Math.min(1/Math.log10(df.length)*15, 14)
+        })
+        .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
+        .attr("dy", ".31em")
+        .attr("text-anchor", function(d) { return d.x < 180? "start" : "end"; })
+        .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
+        .text(function(d) { return d.key; })
 
     svg.on("dblclick", mousedbl);
 
@@ -370,7 +374,7 @@ Shiny.addCustomMessageHandler("jsondata2",
     if (m0) {
       var m1 = mouse(d3.event),
           dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
-          rotate1 = rotate ? rotate+dm : dm;
+          rotate1 = rotate ? rotate+dm : dm+shiftRotate;
 
       svg.style("-webkit-transform", "translateX(" + rx + "px)translateY(" + ry + "px)rotateZ(" + rotate1 + "deg)");
     }
@@ -381,12 +385,12 @@ Shiny.addCustomMessageHandler("jsondata2",
         var m1 = mouse(d3.event),
             dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
 
-        rotate += dm;
+        rotate = rotate ? rotate+dm : dm+shiftRotate;
         if (rotate > 360) rotate -= 360;
         else if (rotate < 0) rotate += 360;
         m0 = null;
 
-        div.style("-webkit-transform", null);
+        svg.style("-webkit-transform", null);
 
         svg
             .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
@@ -402,7 +406,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         if(clickedData.length === 0 || childrenArray.indexOf(d.name) > -1){
           svg.select("#node-" + d.key)
               .style('font-weight', 'bold');
-          setvals(d, true, false, pop=5)
+          setvals(d, true, false)
         }
         if(clickedData.length === 0){
           d3.selectAll(".vizText").remove()
@@ -414,7 +418,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         }
       }
       else{
-          setvals(d, true, pop=5)
+          setvals(d, true)
           svg.select("#node-" + d.key)
               .style('font-weight', 'bold');
       }
@@ -427,12 +431,12 @@ Shiny.addCustomMessageHandler("jsondata2",
         svg.select("#node-" + d.key)
             .style('font-weight', 'normal');
         if(clickedData.length>=1){
-          setvals(clickedData[i], true, false, pop=5)
+          setvals(clickedData[i], true, false)
         }
       }
       else if(clickedData.length === 1){
-        setvals(d, true, false, pop=5)
-        setvals(clickedData[i], true, false, pop=5)
+        setvals(d, true, false)
+        setvals(clickedData[i], true, false)
       }
       if(clickedData.length === 0){
         clearVizText()
@@ -451,7 +455,7 @@ Shiny.addCustomMessageHandler("jsondata2",
       if(d.clicked){
         removelinks()
 
-        setvals(d, true, false, pop=5)
+        setvals(d, true, false)
 
         d3.selectAll(".vizText").remove()
         paintWindow(d, 1);
@@ -482,9 +486,9 @@ Shiny.addCustomMessageHandler("jsondata2",
         return '{}';
       }
       else if(nConn===1){
-        clickeR = '{"Node1": ["' + clicker.name + '"],' +
+        clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                  '"Node1": ["' + clicker.name + '"],' +
                   '"Parent1": ["' + clicker.parent.name + '"],' +
-                  '"Name1": ["' + clicker.key + '"],' +
                   '"Connections1": ["' + clicker.imports.length + '"],' +
                   '"Confidence": ["' + clicker.Confidence + '"]}'
         return clickeR;
@@ -494,28 +498,26 @@ Shiny.addCustomMessageHandler("jsondata2",
         for(conn in clickedData){
             clicker = clickedData[conn]
             if(conn < nConn-1){
-              console.log(true)
               nextClicker = clickedData[parseInt(conn)+1]
-              console.log(nextClicker)
-              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+              clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                        '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Name1": ["' + clicker.key + '"],' +
                         '"Connections1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
+                        '"Name2": ["' + nextClicker.key + '"],' +
                         '"Node2": ["' + nextClicker.name + '"],' +
                         '"Parent2": ["' + nextClicker.parent.name + '"],' +
-                        '"Name2": ["' + nextClicker.key + '"],' +
                         '"Connections2": ["' + nextClicker.imports.length + '"],' +
                         '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
                         '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
             }
             else{
-              clickeR = '{"Node1": ["' + clicker.name + '"],' +
+              clickeR = '{"Name1": ["' + clicker.key + '"],' +
+                        '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Name1": ["' + clicker.key + '"],' +
                         '"Connections1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
-                        '"Node2": ["NA"], "Parent2": ["NA"], "Name2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
+                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
             }
             clickeRs = clickeRs + clickeR
           }
@@ -535,6 +537,8 @@ Shiny.addCustomMessageHandler("jsondata2",
         }
         clickedData = []
       }
+      svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
+      rotate = shiftRotate;
       clearVizText()
 
       Shiny.setInputValue("clickedData", '{}');
@@ -568,7 +572,7 @@ Shiny.addCustomMessageHandler("jsondata2",
       }
     }
 
-    function setvals(d, val, block=true, pop=0){
+    function setvals(d, val, block=true, pop=8){
       if(block){
         if(svg.selectAll("path.link.target-" + d.key).classed("target") === val){
           return;
@@ -584,9 +588,33 @@ Shiny.addCustomMessageHandler("jsondata2",
           .classed("source", val)
           .style("stroke-opacity", val*.95 + .05)
           .each(updateNodes("source", val, pop));
+
+      svg.selectAll(".node.source text")
+          .filter(function(){
+            return d3.select(this).attr("dx") == 8
+          })
+          .attr("dx", pop*val + pop)
+
+      svg.selectAll(".node.source text")
+          .filter(function(){
+            return d3.select(this).attr("dx") == -8
+          })
+          .attr("dx", -pop*val - pop)
+
+      svg.selectAll(".node text")
+          .filter(function(){
+            return d3.select(this).attr("dx") > 8 && !d.clicked
+          })
+          .attr("dx", pop*val + pop)
+
+      svg.selectAll(".node text")
+          .filter(function(){
+            return d3.select(this).attr("dx") < -8 && !d.clicked
+          })
+          .attr("dx", -pop*val - pop)
     }
 
-    function updateNodes(name, value, pop=0) {
+    function updateNodes(name, value) {
       return function(d) {
         if (value) this.parentNode.appendChild(this);
 
@@ -595,9 +623,7 @@ Shiny.addCustomMessageHandler("jsondata2",
 
         svg.select("#node-" + d[name].key)
           .classed(name, value)
-          .style('font-weight', nodeBold)
-          .transition(50)
-          .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + pop*value) + ")"; });
+          .style('font-weight', nodeBold);
       };
     }
 
