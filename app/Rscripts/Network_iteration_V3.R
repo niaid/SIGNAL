@@ -126,7 +126,7 @@ Temp.Articulation <- V(SubGraph)$name[articulation.points(SubGraph)]
 Articulation <- rep(0, length(V(SubGraph)$name))
 Articulation[match(Temp.Articulation,(V(SubGraph)$name))] <- 1
 
-gNames2 <- V(SubGraph)$name
+try(gNames2 <- V(SubGraph)$name, silent = FALSE)
 
 ScreenHit <- rep("No", length(gNames2))
 ScreenHit[match(gNames, gNames2)] <- "Yes"

@@ -36,42 +36,6 @@ library(htmltools)
 library(stringr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
-### TO RUN LOCALLY ###
-# Assign the home_string for folder where TRIAGE has been downloaded to
-# home_string = '/Users/kylewebb/Documents/Work/NIAID'
-# Sys.setenv(HOME = home_string)
-# setwd('~')
-
-### Package check and installation (for local development)
-# L = c('shiny', 'shinyjs', 'shinyBS', 'readr', 'dplyr', 'stringi', 'DT', 'data.table',
-#       'igraph', 'edgebundleR', 'shinyAce', 'networkD3', 'visNetwork',
-#       'AnnotationDbi', 'reshape2', 'ggplot2', 'tidyr', 'gridExtra', 'crosstalk', 
-#       'htmltools', 'stringr', 'org.Hs.eg.db', 'org.Mm.eg.db', 'mailR', 'rJava')
-# 
-# package.check <- lapply(L, FUN = function(x) {
-#   if (!require(x, character.only = TRUE)) {
-#     if(x != 'org.Hs.eg.db' & x != 'org.Mm.eg.db'){
-#       install.packages(x, dependencies = TRUE)
-#       library(x, character.only = TRUE)
-#     }
-#     else{
-#       if("BiocManager" %in% installed.packages()){
-#         BiocManager::install(x, version = "3.8")
-#       }
-#       else{
-#         install.packages("BiocManager")
-#         BiocManager::install(x, version = "3.8")
-#       }
-#     }
-#   }
-# })
-
-### Errors with rJava ###
-# If running a mac and having trouble loading rJava - follow the steps on this site:
-# https://zhiyzuo.github.io/installation-rJava/
-# If running a pc and having trouble loading rJava:
-# https://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/
-
 #setting
 #override scientific notation to avoid numeric mis assignments
 options(scipen = 999)
@@ -312,9 +276,9 @@ options(shiny.maxRequestSize = 3*1024^2)
 
         if (is.null(inFile))
           return(NULL)
-
-        data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
         
+        data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
+
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$GeneSymbol)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
@@ -526,7 +490,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>Please enter 'Med-conf Cutoff Value'!</font><h3>")))
           req(input$cutoff_valueM)
         }
-
+ 
         # Once cutoff-type selected and two cutoff values entered
         # Remove duplicate EntrezID rows based on the cutoff values
         if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
@@ -794,7 +758,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           myOrignalGenes <- siRNA.Score$GeneSymbol[siRNA.Score[[kName1]] == "HighConf"]
 
           # 2) Expansion - [Network Analysis]
-    message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
+          message("*", paste0(scriptDir, "Network_iteration_V3.R"), "**")
     
     
           source(paste0(scriptDir, "Network_iteration_V3.R"), local = TRUE)
@@ -938,8 +902,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           session$reload()
         }
         
-        
-        
         #############################################################
         #            Calculation of Node properties
         #############################################################
@@ -964,13 +926,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
         }
         
-        
-        
         GraphEdgesHitNumber <- data.table(source,target)
         GraphEdgesHitNumber$weights = GraphEdgesHitNames$weights
         GraphEdgesHitNumber$datasource = GraphEdgesHitNames$datasource
-        
-        
         
         GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
         
@@ -978,22 +936,22 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        # N = ncol(TRIAGEhits)
+        N = ncol(TRIAGEhits)
         # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
-        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
-        # TRIAGEhits.merge$ConfidenceCategory = TRIAGEhits[,N-2]
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
+
+        #GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 2, 4, N-1, N)],
+                                                        
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
-        #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
-        
-        ############# EDGE INFO and NODE INFO are sent to GLOBAL ENVIRONMENT to be used by RANKING
+        ################    
+        # Now getting a data frame for the edges and a data frame for the nodes
+        ################ EDGE INFO and NODE INFO are sent to GLOBAL ENVIRONMENT to be used by RANKING
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
         
         #colnames(NodeInfo)[4] = 'Confidence'
-        
         
         ######################################
         
