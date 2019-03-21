@@ -1,0 +1,6 @@
+"","Node1","Parent1","Name1","Connections1","Confidence","Node2","Parent2","Name2","Connections2","Weight","Source"
+"1","Tyrosine metabolism.GOT1","Tyrosine metabolism","GOT1","26","High","Novel.GAD1","Novel","GAD1","3","800","database"
+"2","Novel.GAD1","Novel","GAD1","3","High","Tyrosine metabolism.ALDH3A1","Tyrosine metabolism","ALDH3A1","6","900","database"
+"3","Tyrosine metabolism.ALDH3A1","Tyrosine metabolism","ALDH3A1","6","High","Novel.SMOX","Novel","SMOX","4","900","database"
+"4","Novel.SMOX","Novel","SMOX","4","High","Tyrosine metabolism.AOC3","Tyrosine metabolism","AOC3","3","900","database"
+"5","Tyrosine metabolism.AOC3","Tyrosine metabolism","AOC3","3","High",NA,NA,NA,NA,NA,NA
