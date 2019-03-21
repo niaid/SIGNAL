@@ -42,6 +42,30 @@ Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 # Sys.setenv(HOME = home_string)
 # setwd('~')
 
+### Package check and installation (for local development)
+# L = c('shiny', 'shinyjs', 'shinyBS', 'readr', 'dplyr', 'stringi', 'DT', 'data.table',
+#       'igraph', 'edgebundleR', 'shinyAce', 'networkD3', 'visNetwork',
+#       'AnnotationDbi', 'reshape2', 'ggplot2', 'tidyr', 'gridExtra', 'crosstalk', 
+#       'htmltools', 'stringr', 'org.Hs.eg.db', 'org.Mm.eg.db', 'mailR', 'rJava')
+# 
+# package.check <- lapply(L, FUN = function(x) {
+#   if (!require(x, character.only = TRUE)) {
+#     if(x != 'org.Hs.eg.db' & x != 'org.Mm.eg.db'){
+#       install.packages(x, dependencies = TRUE)
+#       library(x, character.only = TRUE)
+#     }
+#     else{
+#       if("BiocManager" %in% installed.packages()){
+#         BiocManager::install(x, version = "3.8")
+#       }
+#       else{
+#         install.packages("BiocManager")
+#         BiocManager::install(x, version = "3.8")
+#       }
+#     }
+#   }
+# })
+
 ### Errors with rJava ###
 # If running a mac and having trouble loading rJava - follow the steps on this site:
 # https://zhiyzuo.github.io/installation-rJava/
@@ -1020,17 +1044,17 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         
         #Aggregate
-        EdgePathways_stacked_Sum <- EdgePathways_stacked %>% 
+        EdgePathways_stacked_Sum <<- EdgePathways_stacked %>% 
           group_by(source) %>% summarise(Pathway = toString(Pathway))
         
         ##Add counts to pathways (number of genes in list that are part of each pathway)
         EdgePathways_stacked_Sum$Pathway.counts <- NA
         
         for (i in 1:length(EdgePathways_stacked_Sum$Pathway)) {
-          temp.string <- unlist(strsplit(EdgePathways_stacked_Sum$Pathway[i], ", "))
+          temp.string <<- unlist(strsplit(EdgePathways_stacked_Sum$Pathway[i], ", "))
           for (j in 1:length(temp.string)) {
-            name.j <- temp.string[j]
-            count.j <- length(grep(name.j, temp.string, fixed = T))
+            name.j <<- temp.string[j]
+            count.j <<- length(grep(name.j, temp.string, fixed = T))
             out <- paste0(name.j, " (", count.j, ")")
             EdgePathways_stacked_Sum$Pathway.counts[i] <-  ifelse(j == 1, out, paste(out, EdgePathways_stacked_Sum$Pathway.counts[i], sep = ", ")) 
           }
@@ -1129,8 +1153,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         TRIAGE.cond.output.name <<- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
         Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
         
-        write.csv(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
-        write.csv(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
+        fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
+        fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
         # write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
@@ -1424,24 +1448,29 @@ options(shiny.maxRequestSize = 3*1024^2)
             Generate_NetworkGraph(selectedRows, organism, G)
             
             # Writing fully generated network files for download
-            write.csv(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
-            write.csv(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+            fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
+            fwrite(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
             
             
             print(paste0("Network Generation Time: ", Sys.time() - startB))
             
-            
+            # if downloads tab is clicked, all output files will get re-written
             observe({
               if(input$inTabset == 'downloads'){
                 if(length(input$clickedData)>0){
                   clicker <<- data.frame(jsonlite::fromJSON(input$clickedData))
                   clicker = apply(clicker, 2, unlist)
                   #print(clicker)
-                  write.csv(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  fwrite(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
                 }
                 else{
-                  write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  fwrite(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
                 }
+                fwrite(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
+                fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
+                fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
+                fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
+                fwrite(Scores_nodes_and_edges, file.name.snae)
               }
             })
             

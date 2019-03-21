@@ -72,7 +72,7 @@ orderedL.names <- function(uni.names){
       }
       if(c.13){
         w.13 = w.names[which(w.names == paste0(uni.names[1], ' & ', uni.names[3]))]
-        n.uni.names = append(n.uni.names, w.13, after=0)
+        n.uni.names = append(n.uni.names, w.13)
       }
     }
   }
@@ -81,7 +81,7 @@ orderedL.names <- function(uni.names){
   }
   if(any(double.check)){
     dd.c = which(double.check)
-    n.uni.names = append(n.uni.names, names(double.check)[dd.c])
+    n.uni.names = append(n.uni.names, names(double.check)[dd.c], after=0)
   }
   n.uni.names = append(n.uni.names, "Novel")
   return(n.uni.names)
