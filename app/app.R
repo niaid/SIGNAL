@@ -276,9 +276,9 @@ options(shiny.maxRequestSize = 3*1024^2)
 
         if (is.null(inFile))
           return(NULL)
-
-        data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
         
+        data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
+
         # # Check for duplicated GeneSymbols
         # if(anyDuplicated(data$GeneSymbol)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
@@ -490,7 +490,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           showModal(modalDialog(title="User Input Errors:", HTML("<h3><font color=red>Please enter 'Med-conf Cutoff Value'!</font><h3>")))
           req(input$cutoff_valueM)
         }
-
+ 
         # Once cutoff-type selected and two cutoff values entered
         # Remove duplicate EntrezID rows based on the cutoff values
         if((as.numeric(input$cutoff_valueH) - as.numeric(input$cutoff_valueM)) > 0){
@@ -928,13 +928,9 @@ options(shiny.maxRequestSize = 3*1024^2)
           target[which(GraphEdgesHitNames$to == tempGenes[i])] <- i-1
         }
         
-        
-        
         GraphEdgesHitNumber <- data.table(source,target)
         GraphEdgesHitNumber$weights = GraphEdgesHitNames$weights
         GraphEdgesHitNumber$datasource = GraphEdgesHitNames$datasource
-        
-        
         
         GraphNodesHit <- data.frame(GeneMappingID = rep(0:(length(tempGenes)-1)), EntrezID = tempGenes)
         
@@ -944,18 +940,20 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         N = ncol(TRIAGEhits)
         # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
+
+        #GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 2, 4, N-1, N)],
+                                                        
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
-        #############**************************************************################    # Now getting a data frame for the edges and a data frame for the nodes
-        
-        ############# EDGE INFO and NODE INFO are sent to GLOBAL ENVIRONMENT to be used by RANKING
+        ################    
+        # Now getting a data frame for the edges and a data frame for the nodes
+        ################ EDGE INFO and NODE INFO are sent to GLOBAL ENVIRONMENT to be used by RANKING
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
         
         #colnames(NodeInfo)[4] = 'Confidence'
-        
         
         ######################################
         
