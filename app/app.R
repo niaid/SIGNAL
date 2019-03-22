@@ -535,12 +535,12 @@ options(shiny.maxRequestSize = 3*1024^2)
           outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
         }
 
-        # To keep a copy of html files for iframe to access
-        if('SHINY_SERVER_VERSION' %in% env_names){
-          wwwDir <<- '/srv/shiny-server/www/'
-        }else{
-          wwwDir <<- "~/TRIAGE/app/www/"
-        }        
+        # # To keep a copy of html files for iframe to access
+        # if('SHINY_SERVER_VERSION' %in% env_names){
+        #   wwwDir <<- '/srv/shiny-server/www/'
+        # }else{
+        #   wwwDir <<- "~/TRIAGE/app/www/"
+        # }        
         # Get organism name from user input
         organism <<- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
@@ -1217,14 +1217,14 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         output$triageHits <- renderDataTable({
           dat <- datatable(TRIAGEoutput.condensed, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
-                                                                                    , columnDefs = list(list(width = '200px'
-                                                                                                             , length = '400px'
-                                                                                                             , targets = c(4,5,6)
-                                                                                                             ,render = JS(
-                                                                                                               "function(data, type, row, meta) {"
-                                                                                                               ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
-                                                                                                               ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
-                                                                                                               ,"}"))))) 
+                          , columnDefs = list(list(width = '200px'
+                                                   , length = '400px'
+                                                   , targets = c(4,5,6)
+                                                   ,render = JS(
+                                                     "function(data, type, row, meta) {"
+                                                     ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                     ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                     ,"}"))))) 
           return(dat)
         })
         
