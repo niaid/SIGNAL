@@ -771,9 +771,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           siRNA.Score[[nName1]][siRNA.Score$EntrezID %in% gNames2] <- "Yes"
           # siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
           siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] %in% c("MedConf", "HighConf")] <- "HighConf"
-
-          
-          
           
           #if(iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) {
           if((iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) 
@@ -1402,7 +1399,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
             
-            
+            # Need to catch error to allow reload the app
             Generate_NetworkGraph(selectedRows, organism, G)
             
             # Writing fully generated network files for download
