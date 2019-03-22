@@ -936,12 +936,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        N = ncol(TRIAGEhits)
-        # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
+        TRIAGEhit.merge = TRIAGEhits[, c("GeneSymbol", "EntrezID", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
 
-        #GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 3, 4, N-1, N)],
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits[, c(1, 2, 4, N-1, N)],
-                                                        
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhit.merge,
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         ################    
