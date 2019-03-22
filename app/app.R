@@ -1325,7 +1325,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           output$geneHitsByIteration <- renderPlot({
             geneHitsToPlot.melt <- melt(geneHitsToPlot, id.vars = "Iteration")
             
-            ggplot(data = geneHitsToPlot.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
+            ggplot(data = geneHitsToPlot.melt, aes(x = as.integer(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
               scale_colour_discrete("") + scale_shape_manual("") + 
               #annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/2, ymax=numTotal) + 
