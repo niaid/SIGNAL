@@ -36,6 +36,42 @@ library(htmltools)
 library(stringr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
+### TO RUN LOCALLY ###
+# Assign the home_string for folder where TRIAGE has been downloaded to
+# home_string = '/Users/kylewebb/Documents/Work/NIAID'
+# Sys.setenv(HOME = home_string)
+# setwd('~')
+
+### Package check and installation (for local development)
+# L = c('shiny', 'shinyjs', 'shinyBS', 'readr', 'dplyr', 'stringi', 'DT', 'data.table',
+#       'igraph', 'edgebundleR', 'shinyAce', 'networkD3', 'visNetwork',
+#       'AnnotationDbi', 'reshape2', 'ggplot2', 'tidyr', 'gridExtra', 'crosstalk', 
+#       'htmltools', 'stringr', 'org.Hs.eg.db', 'org.Mm.eg.db', 'mailR', 'rJava')
+# 
+# package.check <- lapply(L, FUN = function(x) {
+#   if (!require(x, character.only = TRUE)) {
+#     if(x != 'org.Hs.eg.db' & x != 'org.Mm.eg.db'){
+#       install.packages(x, dependencies = TRUE)
+#       library(x, character.only = TRUE)
+#     }
+#     else{
+#       if("BiocManager" %in% installed.packages()){
+#         BiocManager::install(x, version = "3.8")
+#       }
+#       else{
+#         install.packages("BiocManager")
+#         BiocManager::install(x, version = "3.8")
+#       }
+#     }
+#   }
+# })
+
+### Errors with rJava ###
+# If running a mac and having trouble loading rJava - follow the steps on this site:
+# https://zhiyzuo.github.io/installation-rJava/
+# If running a pc and having trouble loading rJava:
+# https://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/
+
 #setting
 #override scientific notation to avoid numeric mis assignments
 options(scipen = 999)
