@@ -36,6 +36,42 @@ library(htmltools)
 library(stringr)
 Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
+### TO RUN LOCALLY ###
+# Assign the home_string for folder where TRIAGE has been downloaded to
+# home_string = '/Users/kylewebb/Documents/Work/NIAID'
+# Sys.setenv(HOME = home_string)
+# setwd('~')
+
+### Package check and installation (for local development)
+# L = c('shiny', 'shinyjs', 'shinyBS', 'readr', 'dplyr', 'stringi', 'DT', 'data.table',
+#       'igraph', 'edgebundleR', 'shinyAce', 'networkD3', 'visNetwork',
+#       'AnnotationDbi', 'reshape2', 'ggplot2', 'tidyr', 'gridExtra', 'crosstalk', 
+#       'htmltools', 'stringr', 'org.Hs.eg.db', 'org.Mm.eg.db', 'mailR', 'rJava')
+# 
+# package.check <- lapply(L, FUN = function(x) {
+#   if (!require(x, character.only = TRUE)) {
+#     if(x != 'org.Hs.eg.db' & x != 'org.Mm.eg.db'){
+#       install.packages(x, dependencies = TRUE)
+#       library(x, character.only = TRUE)
+#     }
+#     else{
+#       if("BiocManager" %in% installed.packages()){
+#         BiocManager::install(x, version = "3.8")
+#       }
+#       else{
+#         install.packages("BiocManager")
+#         BiocManager::install(x, version = "3.8")
+#       }
+#     }
+#   }
+# })
+
+### Errors with rJava ###
+# If running a mac and having trouble loading rJava - follow the steps on this site:
+# https://zhiyzuo.github.io/installation-rJava/
+# If running a pc and having trouble loading rJava:
+# https://www.r-statistics.com/2012/08/how-to-load-the-rjava-package-after-the-error-java_home-cannot-be-determined-from-the-registry/
+
 #setting
 #override scientific notation to avoid numeric mis assignments
 options(scipen = 999)
@@ -465,7 +501,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
 
       # reloads the app
-      observeEvent(input$refresh, {   
+      observeEvent(input$refresh, { 
         session$reload()
       })
       
@@ -729,8 +765,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         }
 
         # Perform iterative TRIAGE analysis
-        while (counter == TRUE) {
-
+        
+        while (counter) {
+          
           ## Show progress
           # Increment the progress bar, and update the detail text.
           progress$inc(1/(iteration*3))
@@ -933,9 +970,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        TRIAGEhit.merge = TRIAGEhits[, c("GeneSymbol", "EntrezID", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
-
-        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhit.merge,
+        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
+        GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
         ################    
@@ -1406,51 +1442,69 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             print(paste0("Network Generation Time: ", Sys.time() - startB))
             
+            # reactive statement for listing output files
+            downloadOut <- reactive({
+              outputFiles = list.files(path = './')
+              out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+              
+              if(length(outputFiles) > 0){
+                for(i in outputFiles){
+                  out <- paste(out, i, sep = "<br>")
+                }
+              }
+              
+              out <- paste0(out, "<br><br>")
+              return(out)
+            })
+            
+            clicker <- reactive({
+              dat = data.frame(jsonlite::fromJSON(input$clickedData))  
+              return(dat)
+            })
+            
             # if downloads tab is clicked, all output files will get re-written
             observe({
               if(input$inTabset == 'downloads'){
-                if(length(input$clickedData)>0){
-                  clicker <<- data.frame(jsonlite::fromJSON(input$clickedData))
-                  clicker = apply(clicker, 2, unlist)
-                  #print(clicker)
-                  fwrite(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                if(length(input$clickedData) > 0){
+                  if(nrow(clicker()) > 0){
+                    n.clicker = apply(clicker(), 2, unlist)
+                    write.csv(n.clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  }
+                  else{
+                    write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  }
                 }
                 else{
-                  fwrite(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
                 }
                 fwrite(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
                 fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
                 fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
                 fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
                 fwrite(Scores_nodes_and_edges, file.name.snae)
+                
+                ## Update the 'Download' tab
+                output$downloadFiles <- renderUI({
+                  updateTabsetPanel(session, "inTabset", selected = "downloads")
+                  HTML(downloadOut())
+                })
               }
             })
             
             
-            observeEvent(input$clickedData, {
-              
-              clicker <- data.frame(jsonlite::fromJSON(input$clickedData))
-              
+            
+            observeEvent(input$clickedData, {      
               output$ClickedDataTable <- renderDataTable({
-                if(nrow(clicker)==0){
-                  clicker=NULL
-                }
-                dat <- datatable(data.frame(clicker), rownames = TRUE)
+                # if(nrow(clicker())==0){
+                #   clicker$dat=NULL
+                # }
+                dat <- datatable(data.frame(clicker()), rownames = TRUE)
                 return(dat)
               })
               
             })
             
-            clicked.path.data <- reactive({
-              observeEvent(input$clickedData, {
-                return(data.frame(jsonlite::fromJSON(input$clickedData)))
-              })
-            })
-            
-            
-            
-            
-            
+    
             progress1$inc(1)
             head(E(G))
             
@@ -1480,19 +1534,28 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
           
       message("Outside NetworkGraph")
-    
+      
+      ## reactive statement for output files to be printed on download tab
+      downloadOut <- reactive({
+        outputFiles = list.files(path = './')
+        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+        
+        if(length(outputFiles) > 0){
+          for(i in outputFiles){
+            out <- paste(out, i, sep = "<br>")
+          }
+        }
+        
+        out <- paste0(out, "<br><br>")
+        return(out)
+      })
+      
       ## Create the 'Download' tab
       output$downloadFiles <- renderUI({
         updateTabsetPanel(session, "inTabset", selected = "downloads")
-
-        outputFiles <- list.files(path = './')
-        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
-
-        for(i in 1:length(outputFiles)){
-          out <- paste(out, outputFiles[i], sep = "<br>")
-        }
-        out <- paste0(out, "<br><br>")
-        HTML(out)
+        
+        #outputFiles <- list.files(path = './')
+        HTML(downloadOut())
       })
 
       ## Download all output data
