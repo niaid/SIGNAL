@@ -501,7 +501,7 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
 
       # reloads the app
-      observeEvent(input$refresh, {   
+      observeEvent(input$refresh, { 
         session$reload()
       })
       
@@ -765,8 +765,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         }
 
         # Perform iterative TRIAGE analysis
-        while (counter == TRUE) {
-
+        
+        while (counter) {
+          
           ## Show progress
           # Increment the progress bar, and update the detail text.
           progress$inc(1/(iteration*3))
@@ -978,10 +979,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        # N = ncol(TRIAGEhits)
-        # merge(GraphNodesHit, TRIAGEhits[, c("EntrezID", "GeneSymbol", "TRIAGEhit")],
         TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
-        # TRIAGEhits.merge$ConfidenceCategory = TRIAGEhits[,N-2]
         GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
@@ -1454,51 +1452,69 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             print(paste0("Network Generation Time: ", Sys.time() - startB))
             
+            # reactive statement for listing output files
+            downloadOut <- reactive({
+              outputFiles = list.files(path = './')
+              out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+              
+              if(length(outputFiles) > 0){
+                for(i in outputFiles){
+                  out <- paste(out, i, sep = "<br>")
+                }
+              }
+              
+              out <- paste0(out, "<br><br>")
+              return(out)
+            })
+            
+            clicker <- reactive({
+              dat = data.frame(jsonlite::fromJSON(input$clickedData))  
+              return(dat)
+            })
+            
             # if downloads tab is clicked, all output files will get re-written
             observe({
               if(input$inTabset == 'downloads'){
-                if(length(input$clickedData)>0){
-                  clicker <<- data.frame(jsonlite::fromJSON(input$clickedData))
-                  clicker = apply(clicker, 2, unlist)
-                  #print(clicker)
-                  fwrite(clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                if(length(input$clickedData) > 0){
+                  if(nrow(clicker()) > 0){
+                    n.clicker = apply(clicker(), 2, unlist)
+                    write.csv(n.clicker, file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  }
+                  else{
+                    write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  }
                 }
                 else{
-                  fwrite(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
+                  write.csv(data.frame('Clicked'=NA), file = paste0(inputFilePrefix, "_", "Clicked_Pathways.csv"))
                 }
                 fwrite(rbindlist(json_1df), file = paste0(inputFilePrefix, "_", "First_Degree_Network.csv"))
                 fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
                 fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
                 fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
                 fwrite(Scores_nodes_and_edges, file.name.snae)
+                
+                ## Update the 'Download' tab
+                output$downloadFiles <- renderUI({
+                  updateTabsetPanel(session, "inTabset", selected = "downloads")
+                  HTML(downloadOut())
+                })
               }
             })
             
             
-            observeEvent(input$clickedData, {
-              
-              clicker <- data.frame(jsonlite::fromJSON(input$clickedData))
-              
+            
+            observeEvent(input$clickedData, {      
               output$ClickedDataTable <- renderDataTable({
-                if(nrow(clicker)==0){
-                  clicker=NULL
-                }
-                dat <- datatable(data.frame(clicker), rownames = TRUE)
+                # if(nrow(clicker())==0){
+                #   clicker$dat=NULL
+                # }
+                dat <- datatable(data.frame(clicker()), rownames = TRUE)
                 return(dat)
               })
               
             })
             
-            clicked.path.data <- reactive({
-              observeEvent(input$clickedData, {
-                return(data.frame(jsonlite::fromJSON(input$clickedData)))
-              })
-            })
-            
-            
-            
-            
-            
+    
             progress1$inc(1)
             head(E(G))
             
@@ -1528,19 +1544,28 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
           
       message("Outside NetworkGraph")
-    
+      
+      ## reactive statement for output files to be printed on download tab
+      downloadOut <- reactive({
+        outputFiles = list.files(path = './')
+        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+        
+        if(length(outputFiles) > 0){
+          for(i in outputFiles){
+            out <- paste(out, i, sep = "<br>")
+          }
+        }
+        
+        out <- paste0(out, "<br><br>")
+        return(out)
+      })
+      
       ## Create the 'Download' tab
       output$downloadFiles <- renderUI({
         updateTabsetPanel(session, "inTabset", selected = "downloads")
-
-        outputFiles <- list.files(path = './')
-        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
-
-        for(i in 1:length(outputFiles)){
-          out <- paste(out, outputFiles[i], sep = "<br>")
-        }
-        out <- paste0(out, "<br><br>")
-        HTML(out)
+        
+        #outputFiles <- list.files(path = './')
+        HTML(downloadOut())
       })
 
       ## Download all output data
