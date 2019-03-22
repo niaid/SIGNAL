@@ -48,7 +48,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   path3_hits.matrix <- matrix(path3_hits$EntrezID)
   
   
-  #######################################                                            # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
+  #######################################                                            
+  # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID
   #Get Matrix of genes for each pathway in KEGG
   path1_pathway.genes.matrix <- matrix(path1_pathway.genes$GeneSymbol)
   
@@ -56,7 +57,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$GeneSymbol)
   
-  TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      # Created a matrix of all the genes that are "hits"
+  TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      
+  # Created a matrix of all the genes that are "hits"
   
   #Add GeneSymbols to Edge dataframe                                              
   Edge.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "GeneSymbol")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)
@@ -131,24 +133,28 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   }
   
   #Merge Pathway, and TRIAGEhits to NodeInfo
-  Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
+  Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      
+                            #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
                             TRIAGEhits[, c("GeneSymbol", "EntrezID", "ConfidenceCategory", "Pathway")], 
                             by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
   
   
-  #Aggregate the edges to be summarised to each genemap ID                                            #pulling together all genes that interactect with a specifc gene and putting them in one row seprated by comma
+  #Aggregate the edges to be summarised to each genemap ID                                            
+  #pulling together all genes that interactect with a specifc gene and putting them in one row seprated by comma
   Edge_source_summary <- aggregate(target.ID ~ source.ID, data = Edge.target, paste, collapse = ", ")
   Edge_target_summary <- aggregate(source.ID ~ target.ID, data = Edge.target, paste, collapse = ", ")
   
   
-  #Align column names and stack data frames                                                         #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
+  #Align column names and stack data frames                                                         
+  #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
   colnames(Edge_target_summary) <- c("source.ID", "target.ID")
   Edge_summary_stacked <- rbind(Edge_source_summary, Edge_target_summary)
   
   #Aggregate stacked data to get unique values
   Edge_summary <- aggregate(target.ID ~ source.ID, data = Edge_summary_stacked, paste, collapse = ", ")
   
-  #Update Names                                                                                     #Now a dataframe is being created where each gene selected by TRIAGE (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
+  #Update Names                                                                                     
+  #Now a dataframe is being created where each gene selected by TRIAGE (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
   colnames(Edge_summary) <- c("GeneSymbol", "Ntwrk.all")
   
   #Merge with scores 
@@ -256,7 +262,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #       Creating Node and Edge info for 1st and 2nd degree Networks
   ###############################################################################
   
-  #Set up dataframe for IDs                                                      #now creating a name in the format of groupNumber.geneSymbol
+  #Set up dataframe for IDs                                                      
+  #now creating a name in the format of groupNumber.geneSymbol
   names(NodeInfo)[names(NodeInfo)== "GeneSymbol"] <- "key"
   names(NodeInfo)[names(NodeInfo)== "ConfidenceCategory"] = 'Confidence'
   
@@ -265,7 +272,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #Move ID column first
   NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Group', 'Confidence', 'Pathway', 'Color')]
   
-  #Set up rel file                                                              #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
+  #Set up rel file                                                              
+  #The Hirarchical edge bundle package needs to dataframes, a NodeInfor with information about the nodes and a "rel" file about the relationships to be highilighted.
   rel.source <- merge(EdgeInfo, NodeInfo[, c("GeneMappingID", "ID", "Group")], by.x = "source", by.y = "GeneMappingID", all.x = TRUE)      #To create the rel file the "EdgeInfo" file is combined with teh NodeInfo information
   names(rel.source)[names(rel.source)=="ID"] <- "source.ID"
   names(rel.source)[names(rel.source)=="Group"] <- "Group.source"
