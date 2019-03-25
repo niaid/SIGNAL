@@ -92,15 +92,15 @@ orderL <- function(L, dn){
   L.names = gsub("\\..*", "", names(L))
   check = sapply(dn, function(s){grepl(' & ', s)})
   if(!any(check)){
-    return(L)
+    ref = c(dn, "Novel")
   }
   else{
     ref = orderedL.names(dn)
-    ord.vect = as.vector(unlist(sapply(ref, function(s){which(L.names == s)})))
-    l = L[ord.vect]
-    names(l) = names(L)[ord.vect]
-    return(l)
   }
+  ord.vect = as.vector(unlist(sapply(ref, function(s){which(L.names == s)})))
+  l = L[ord.vect]
+  names(l) = names(L)[ord.vect]
+  return(l)
 }
 
 
