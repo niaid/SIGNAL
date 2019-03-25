@@ -573,12 +573,13 @@ options(shiny.maxRequestSize = 3*1024^2)
           outputDir <- "~/TRIAGE/app/inputOutputs/TRIAGEoutputFiles/"
         }
 
-        # To keep a copy of html files for iframe to access
+        # # To keep a copy of html files for iframe to access
         if('SHINY_SERVER_VERSION' %in% env_names){
           wwwDir <<- '/srv/shiny-server/www/'
         }else{
           wwwDir <<- "~/TRIAGE/app/www/"
-        }        
+        }
+        
         # Get organism name from user input
         organism <<- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
@@ -810,9 +811,6 @@ options(shiny.maxRequestSize = 3*1024^2)
           siRNA.Score[[nName1]][siRNA.Score$EntrezID %in% gNames2] <- "Yes"
           # siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] > 0] <- 1
           siRNA.Score[[nName2]][siRNA.Score$EntrezID %in% gNames2 & siRNA.Score[[kName1]] %in% c("MedConf", "HighConf")] <- "HighConf"
-
-          
-          
           
           #if(iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) {
           if((iteration != 1 && identical(siRNA.Score[[nName2]], siRNA.Score[[paste0("Network.class.iteration", iteration-1)]])) 
@@ -1275,14 +1273,14 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         output$triageHits <- renderDataTable({
           dat <- datatable(TRIAGEoutput.condensed, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F
-                                                                                    , columnDefs = list(list(width = '200px'
-                                                                                                             , length = '400px'
-                                                                                                             , targets = c(4,5,6)
-                                                                                                             ,render = JS(
-                                                                                                               "function(data, type, row, meta) {"
-                                                                                                               ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
-                                                                                                               ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
-                                                                                                               ,"}"))))) 
+                          , columnDefs = list(list(width = '200px'
+                                                   , length = '400px'
+                                                   , targets = c(4,5,6)
+                                                   ,render = JS(
+                                                     "function(data, type, row, meta) {"
+                                                     ,"return type === 'display' && typeof data === 'string' && data.length > 30 ?"
+                                                     ,"'<span title=\"' + data + '\">' + data.substr(0, 25) + '...</span>' : data;"
+                                                     ,"}"))))) 
           return(dat)
         })
         
@@ -1383,7 +1381,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           # Create plots showing the numbers of gene hits by iteration
           output$geneHitsByIteration <- renderPlot({
             geneHitsToPlot.melt <<- melt(geneHitsToPlot(), id.vars = "Iteration")
-            ggplot(data = geneHitsToPlot.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
+            ggplot(data = geneHitsToPlot.melt, aes(x = as.integer(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
               scale_colour_discrete("") + scale_shape_manual("") + 
               #annotation_custom(tableGrob(geneHitsToPlot, rows=NULL), xmin=2, xmax=iterationNum, ymin=numTotal/2, ymax=numTotal) + 
@@ -1486,11 +1484,11 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             message(selectedRows)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
-            # source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
+            #source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
             
-            
+            # Need to catch error to allow reload the app
             Generate_NetworkGraph(selectedRows, organism, G)
             
             # Writing fully generated network files for download
