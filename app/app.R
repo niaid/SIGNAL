@@ -572,11 +572,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         }
 
         # # To keep a copy of html files for iframe to access
-        # if('SHINY_SERVER_VERSION' %in% env_names){
-        #   wwwDir <<- '/srv/shiny-server/www/'
-        # }else{
-        #   wwwDir <<- "~/TRIAGE/app/www/"
-        # }        
+        if('SHINY_SERVER_VERSION' %in% env_names){
+          wwwDir <<- '/srv/shiny-server/www/'
+        }else{
+          wwwDir <<- "~/TRIAGE/app/www/"
+        }
+        
         # Get organism name from user input
         organism <<- input$organism
         organismAbbr <- ifelse(grepl("human", tolower(organism)), 'hsa', 'mmu')
@@ -1428,7 +1429,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             
             message(selectedRows)
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
-            # source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
+            #source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
             
