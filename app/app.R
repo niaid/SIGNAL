@@ -208,6 +208,8 @@ options(shiny.maxRequestSize = 3*1024^2)
                                  tabPanel(title="Graph: Gene Hits By Iteration", value="geneHitsByIteration",
                                           dataTableOutput("geneHitsTableByIteration"),
                                           plotOutput("geneHitsByIteration")),
+                                 tabPanel(title="High Confidence Hits not in TRIAGE Hits", value="nonTRIAGEhits",
+                                          dataTableOutput("nonTRIAGEhitsTable")),
                                  tabPanel(title = "Pathway Enrichments", value = "pathwayEnrich.cond",
                                           dataTableOutput("pathwayEnrich.cond"))
                      )
@@ -892,6 +894,14 @@ options(shiny.maxRequestSize = 3*1024^2)
           mutate(TRIAGEhit = ifelse(get(FinalIterationNetworkColumn, envir = as.environment(TRIAGEoutput)) == "HighConf", 
                                     "Yes",
                                     ""))
+        
+        # Table shows the high confidence hits not included by the end of the triage analysis
+        # output$nonTRIAGEhitsTable <- renderDataTable({
+        #   non.triage.dat <- datatable(filter(TRIAGEoutput.condensed, ConfidenceCategory == "HighConf" & TRIAGEhit == ""), options = list(paging = FALSE, searching = FALSE, rownames = FALSE))
+        #   return (non.triage.dat)
+        # })
+        
+
         ################
         # Generate Matrices for TRIAGE Hits, high conf hits, med conf hits
         #Get filtered TRIAGEhits                                           # This is where I put together what is considered a "hit" by TRIAGE (IAM). Any gene that had a score of 1 in the last network analysis step
@@ -1097,6 +1107,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         #Merge with scores 
         TRIAGEoutput <- merge(TRIAGEoutput, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
         
+        # output table where high confidence genes are not in the final iteration of the TRIAGE analysis
+        output$nonTRIAGEhitsTable <- renderDataTable({
+          non.triage.dat <- filter(TRIAGEoutput, ConfidenceCategory=="HighConf" & TRIAGEhit=='')
+          non.triage.dat$TRIAGEhit = "No"
+          # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+          non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
+          return(non.triage.dat)
+        })
+        
         ####################
         ### Create Condensed Output File
         TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
@@ -1267,46 +1286,83 @@ options(shiny.maxRequestSize = 3*1024^2)
           return(dat)
         })
         
+        geneHitsToPlot <- reactive({
+          EnrichColumns.index <- NULL
+          TRIAGErenamed <- TRIAGEoutput
+          
+          
+          for (i in 1:iterationNum){
+            pathColumn <- which(colnames(TRIAGErenamed) == paste0("KEGG.class.iteration", i))
+            netColumn <- which(colnames(TRIAGErenamed) == paste0("Network.class.iteration", i))
+            colnames(TRIAGErenamed)[pathColumn] <- paste0("PathwayEnrichment", i)
+            colnames(TRIAGErenamed)[netColumn] <- paste0("NetworkEnrichment", i)
+            EnrichColumns.index <- c(EnrichColumns.index, pathColumn, netColumn)
+          }
+          
+          TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
+          Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
+          
+          
+          totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
+          colnames(totalRow) <- colnames(TRIAGEiterations)
+          hitsDataFrame <<- data.frame(matrix(0, length(Iteration.index), 4))
+          colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
+          
+          for (l in 1:length(Iteration.index)){
+            totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
+            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
+            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+            totalRow[1, Iteration.index[l]] <- totalHits
+            hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
+          }
+          return(hitsDataFrame)
+        })
+        
+        TRIAGEiterations <- reactive({
+          EnrichColumns.index <- NULL
+          TRIAGErenamed <- TRIAGEoutput
+          
+          
+          for (i in 1:iterationNum){
+            pathColumn <- which(colnames(TRIAGErenamed) == paste0("KEGG.class.iteration", i))
+            netColumn <- which(colnames(TRIAGErenamed) == paste0("Network.class.iteration", i))
+            colnames(TRIAGErenamed)[pathColumn] <- paste0("PathwayEnrichment", i)
+            colnames(TRIAGErenamed)[netColumn] <- paste0("NetworkEnrichment", i)
+            EnrichColumns.index <- c(EnrichColumns.index, pathColumn, netColumn)
+          }
+          
+          TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
+          Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
+          
+          
+          totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
+          colnames(totalRow) <- colnames(TRIAGEiterations)
+          hitsDataFrame <<- data.frame(matrix(0, length(Iteration.index), 4))
+          colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
+          
+          for (l in 1:length(Iteration.index)){
+            totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
+            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
+            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+            totalRow[1, Iteration.index[l]] <- totalHits
+            hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
+          }
+          totalRow[1,1] <- "Total"
+          TRIAGEiterations <- rbind(totalRow, TRIAGEiterations)
+          return(TRIAGEiterations)
+        })
+        
         output$geneList <- renderDataTable({
-            EnrichColumns.index <- NULL
-            TRIAGErenamed <- TRIAGEoutput
-            
-             
-            for (i in 1:iterationNum){
-              pathColumn <- which(colnames(TRIAGErenamed) == paste0("KEGG.class.iteration", i))
-              netColumn <- which(colnames(TRIAGErenamed) == paste0("Network.class.iteration", i))
-              colnames(TRIAGErenamed)[pathColumn] <- paste0("PathwayEnrichment", i)
-              colnames(TRIAGErenamed)[netColumn] <- paste0("NetworkEnrichment", i)
-              EnrichColumns.index <- c(EnrichColumns.index, pathColumn, netColumn)
-            }
-            
-            TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
-            Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
             
             
-            totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
-            colnames(totalRow) <- colnames(TRIAGEiterations)
-            hitsDataFrame <<- data.frame(matrix(0, length(Iteration.index), 4))
-            colnames(hitsDataFrame) <- c('Iteration', 'Total', 'High-conf', 'Med-conf')
-            
-            for (l in 1:length(Iteration.index)){
-              totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
-              totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
-              totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
-              totalRow[1, Iteration.index[l]] <- totalHits
-              hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
-            }
-            
-            totalRow[1,1] <- "Total"
-            TRIAGEiterations <- rbind(totalRow, TRIAGEiterations)
             
             # View the dataframe 
-            geneHitsToPlot <<- data.frame(hitsDataFrame)
+            #geneHitsToPlot <<- data.frame(hitsDataFrame)
             
             # Highlight the 'Total' row using formatStyle()
-            dat <- datatable(TRIAGEiterations, rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F, 
+            dat <- datatable(TRIAGEiterations(), rownames = FALSE, options = list(paging=T, autoWidth = F, scrollX = F, 
                                                                                 columnDefs = list(list(width = '200px', length = '400px',
-                                                                                                         targets = c((length(TRIAGEiterations)-2), (length(TRIAGEiterations)-1)),
+                                                                                                         targets = c((length(TRIAGEiterations())-2), (length(TRIAGEiterations())-1)),
                                                                                                          render = JS(
                                                                                                            "function(data, type, row, meta) {",
                                                                                                            "return type === 'display' && typeof data === 'string' && data.length > 30 ?",
@@ -1320,14 +1376,13 @@ options(shiny.maxRequestSize = 3*1024^2)
           # Show table of gene hits by iterations 
           # It is used to generate the plot below
           output$geneHitsTableByIteration <- renderDataTable({
-            dat1 <- datatable(geneHitsToPlot, options = list(paging = FALSE, searching = FALSE, rownames = FALSE))
+            dat1 <- datatable(geneHitsToPlot(), options = list(paging = FALSE, searching = FALSE, rownames = FALSE))
             return (dat1)
           })
           
           # Create plots showing the numbers of gene hits by iteration
           output$geneHitsByIteration <- renderPlot({
-            geneHitsToPlot.melt <- melt(geneHitsToPlot, id.vars = "Iteration")
-            
+            geneHitsToPlot.melt <<- melt(geneHitsToPlot(), id.vars = "Iteration")
             ggplot(data = geneHitsToPlot.melt, aes(x = as.numeric(Iteration), y = as.numeric(value), group = variable, color = variable)) +
               geom_line() + geom_point() + labs(x = "Enrichment Iteration", y = "Number of Gene Hits") + theme_light() +
               scale_colour_discrete("") + scale_shape_manual("") + 
