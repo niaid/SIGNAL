@@ -683,10 +683,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Create user-specific directory using system time
         userDir <- format(Sys.time(),"%Y%m%d%H%M%S%ms")
-        
         outDir <<- paste0(outputDir, userDir)
-        dir.create(outDir)
-        
+        dir.create(outDir, showWarnings = TRUE, recursive = TRUE, mode = "0777")
         setwd(outDir)
         
         # Set the output file name
