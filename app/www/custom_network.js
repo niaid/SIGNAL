@@ -20,6 +20,8 @@ Shiny.addCustomMessageHandler("jsondata1",
       m0,
       rotate = 0,
       headSpace = 100,
+      columnSpace = 250,
+      niaidBannerY = 170,
       rectW = w-640,
       rectH = w-650;
 
@@ -42,7 +44,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         color23 = "#ce6702",
         color123 = "#6d1c8e",
         colorMap = [color1, color2, color3, novelColor, color123, color12, color23, color13],
-        windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
+        windowFields = ['Gene Name:', ' ', 'Interactions:', 'Confidence:'];
 
     // network assignments cluster, bundle, and line
     var cluster = d3.layout.cluster()
@@ -76,6 +78,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       .attr("transform", "translate(5,5)")
 
     var svg = svG.append("svg:g")
+      .attr("class", "networkGraph")
 
     var windowArea = svG.append("svg:g")
       .attr("transform", "translate(638,5)")
@@ -151,7 +154,7 @@ Shiny.addCustomMessageHandler("jsondata1",
     svg.append("svg:path")
       .attr("class", "arc")
       .attr("d", d3.svg.arc().outerRadius(ry - 120).innerRadius(0).startAngle(0).endAngle(2 * Math.PI))
-      .on("mousedown", mousedown);
+      //.on("mousedown", mousedown);
 
     // find all names of parentNames
     function findParents(classes){
@@ -234,7 +237,7 @@ Shiny.addCustomMessageHandler("jsondata1",
 
     // Rotating the network graph to center around hit gene families
     var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;
-    svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")");
+    svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
 
     // Attributing colors to nodes as well as assignment of colored legend text
     var colorMapping = function(df){
@@ -410,16 +413,17 @@ Shiny.addCustomMessageHandler("jsondata1",
     var still = false;
 
     // resets clicked selections on double click
-    svg.on("dblclick", mousedbl);
-
-    // when the mouse is held down and moved, the network will rotate
-    d3.select(window)
+    // and when the mouse is held down and moved, the network will rotate
+    svg.on("dblclick", mousedbl)
       .on("mousemove", mousemove)
+      .on("mousedown", mousedown)
       .on("mouseup", mouseup);
 
     // returns the pixel coordinates of the mouse
     function mouse(e) {
-      return [e.pageX - rx, e.pageY - ry];
+      mouseX = e.pageX - rx - columnSpace;
+      mouseY = e.pageY - ry - headSpace - niaidBannerY;
+      return [mouseX, mouseY];
     }
 
     //
@@ -450,8 +454,7 @@ Shiny.addCustomMessageHandler("jsondata1",
 
         svg.style("-webkit-transform", null);
 
-        svg
-            .attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
+        svg.attr("transform", "translate(" + rx + "," + ry + ")rotate(" + rotate + ")")
           .selectAll("g.node text")
             .attr("dx", function(d) { return (d.x + rotate) % 360 < 180 ? 8 : -8; })
             .attr("text-anchor", function(d) { return (d.x + rotate) % 360 < 180 ? "start" : "end"; })
@@ -548,7 +551,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         clickeR = '{"Name1": ["' + clicker.key + '"],' +
                   '"Node1": ["' + clicker.name + '"],' +
                   '"Parent1": ["' + clicker.parent.name + '"],' +
-                  '"Connections1": ["' + clicker.imports.length + '"],' +
+                  '"Interactions1": ["' + clicker.imports.length + '"],' +
                   '"Confidence": ["' + clicker.Confidence + '"]}'
         return clickeR;
       }
@@ -561,12 +564,12 @@ Shiny.addCustomMessageHandler("jsondata1",
               clickeR = '{"Name1": ["' + clicker.key + '"],' +
                         '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Interactions1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
                         '"Name2": ["' + nextClicker.key + '"],' +
                         '"Node2": ["' + nextClicker.name + '"],' +
                         '"Parent2": ["' + nextClicker.parent.name + '"],' +
-                        '"Connections2": ["' + nextClicker.imports.length + '"],' +
+                        '"Interactions2": ["' + nextClicker.imports.length + '"],' +
                         '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
                         '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
             }
@@ -574,9 +577,9 @@ Shiny.addCustomMessageHandler("jsondata1",
               clickeR = '{"Name1": ["' + clicker.key + '"],' +
                         '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Interactions1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
-                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
+                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Interactions2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
             }
             clickeRs = clickeRs + clickeR
           }
@@ -618,7 +621,7 @@ Shiny.addCustomMessageHandler("jsondata1",
     function clearVizText(){
       d3.selectAll(".vizText").remove()
       windowFields = ['Gene Name:', ' ',
-                      'Connections:',
+                      'Interactions:',
                       'Confidence:']
       windowText.data(windowFields)
         .enter()
@@ -825,7 +828,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       if(option === 1){
         windowFields = ['Gene Name: ',
                         d.key,
-                        'Connections: ' + d.datasource.length,
+                        'Interactions: ' + d.datasource.length,
                         'Confidence: ' + d.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = d.color
@@ -856,7 +859,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         n = clickedData[clickedData.length-1]
         windowFields = ['Gene Name: ',
                         n.key,
-                        'Connections: ' + n.datasource.length,
+                        'Interactions: ' + n.datasource.length,
                         'Confidence: ' + n.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = n.color;
@@ -889,7 +892,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         cInd = childrenArray.indexOf(d.name)
         windowFields = ['Linked Gene: ', d.key,
                         'Reference Gene: ', n.key,
-                        'Connections: ' + d.weights.length,
+                        'Interactions: ' + d.weights.length,
                         'Score: ' + n.weights[cInd],
                         'Source: ' + n.datasource[cInd]];
         var linkedColor = d.color;

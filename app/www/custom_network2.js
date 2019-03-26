@@ -19,6 +19,8 @@ Shiny.addCustomMessageHandler("jsondata2",
       m0,
       rotate = 0,
       headSpace = 100,
+      columnSpace = 250,
+      niaidBannerY = 170,
       rectW = w-640,
       rectH = w-650;
 
@@ -39,7 +41,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         color23 = "#eda686",
         color123 = "#534758",
         colorMap = [color1, color2, color3, novelColor, color123, color12, color23, color13],
-        windowFields = ['Gene Name:', ' ', 'Connections:', 'Confidence:'];
+        windowFields = ['Gene Name:', ' ', 'Interactions:', 'Confidence:'];
 
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
@@ -400,7 +402,9 @@ Shiny.addCustomMessageHandler("jsondata2",
       .on("mouseup", mouseup);
 
     function mouse(e) {
-      return [e.pageX - rx, e.pageY - ry];
+      mouseX = e.pageX - rx - columnSpace;
+      mouseY = e.pageY - ry - headSpace - niaidBannerY;
+      return [mouseX, mouseY];
     }
 
     function mousedown() {
@@ -527,7 +531,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         clickeR = '{"Name1": ["' + clicker.key + '"],' +
                   '"Node1": ["' + clicker.name + '"],' +
                   '"Parent1": ["' + clicker.parent.name + '"],' +
-                  '"Connections1": ["' + clicker.imports.length + '"],' +
+                  '"Interactions1": ["' + clicker.imports.length + '"],' +
                   '"Confidence": ["' + clicker.Confidence + '"]}'
         return clickeR;
       }
@@ -540,12 +544,12 @@ Shiny.addCustomMessageHandler("jsondata2",
               clickeR = '{"Name1": ["' + clicker.key + '"],' +
                         '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Interactions1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
                         '"Name2": ["' + nextClicker.key + '"],' +
                         '"Node2": ["' + nextClicker.name + '"],' +
                         '"Parent2": ["' + nextClicker.parent.name + '"],' +
-                        '"Connections2": ["' + nextClicker.imports.length + '"],' +
+                        '"Interactions2": ["' + nextClicker.imports.length + '"],' +
                         '"Weight": ["' + clicker.weights[clicker.imports.indexOf(nextClicker.name)] + '"],' +
                         '"Source": ["' + clicker.datasource[clicker.imports.indexOf(nextClicker.name)] + '"]},'
             }
@@ -553,9 +557,9 @@ Shiny.addCustomMessageHandler("jsondata2",
               clickeR = '{"Name1": ["' + clicker.key + '"],' +
                         '"Node1": ["' + clicker.name + '"],' +
                         '"Parent1": ["' + clicker.parent.name + '"],' +
-                        '"Connections1": ["' + clicker.imports.length + '"],' +
+                        '"Interactions1": ["' + clicker.imports.length + '"],' +
                         '"Confidence": ["' + clicker.Confidence + '"],' +
-                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Connections2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
+                        '"Name2": ["NA"], "Node2": ["NA"], "Parent2": ["NA"], "Interactions2": ["NA"], "Weight": ["NA"], "Source": ["NA"]}]'
             }
             clickeRs = clickeRs + clickeR
           }
@@ -597,7 +601,7 @@ Shiny.addCustomMessageHandler("jsondata2",
     function clearVizText(){
       d3.selectAll(".vizText").remove()
       windowFields = ['Gene Name:', ' ',
-                      'Connections:',
+                      'Interactions:',
                       'Confidence:']
       windowText.data(windowFields)
         .enter()
@@ -804,7 +808,7 @@ Shiny.addCustomMessageHandler("jsondata2",
       if(option === 1){
         windowFields = ['Gene Name: ',
                         d.key,
-                        'Connections: ' + d.datasource.length,
+                        'Interactions: ' + d.datasource.length,
                         'Confidence: ' + d.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = d.color
@@ -835,7 +839,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         n = clickedData[clickedData.length-1]
         windowFields = ['Gene Name: ',
                         n.key,
-                        'Connections: ' + n.datasource.length,
+                        'Interactions: ' + n.datasource.length,
                         'Confidence: ' + n.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = n.color;
@@ -868,7 +872,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         cInd = childrenArray.indexOf(d.name)
         windowFields = ['Linked Gene: ', d.key,
                         'Reference Gene: ', n.key,
-                        'Connections: ' + d.weights.length,
+                        'Interactions: ' + d.weights.length,
                         'Score: ' + n.weights[cInd],
                         'Source: ' + n.datasource[cInd]];
         var linkedColor = d.color;
