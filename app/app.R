@@ -96,9 +96,6 @@ options(shiny.maxRequestSize = 3*1024^2)
     # Define UI for application
     ui <- fluidPage(
       
-      # Show a footer using the header style
-      headerPanel(includeHTML("header.html")),
-      
       # Capture user access information
       tags$head(
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
@@ -110,6 +107,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         tags$script(src="custom_network2.js")
       ),
 
+      # Show a header using the header style
+      headerPanel(includeHTML("header.html")),
+      
       # style
       theme = "./css/triage.css",
 
@@ -1161,6 +1161,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
+        fwrite(nonTRIAGEhitsTable, file = Enrichment.cond.output.name)
         # write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
