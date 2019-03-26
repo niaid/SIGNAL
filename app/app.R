@@ -1154,7 +1154,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
           output$enrichedPathways <- renderDataTable({
             options = list(autoWidth = TRUE, scrollX = TRUE,
-                           columnDefs = list(list(width = '200px', targets = c(4,5))))
+                           columnDefs = list(width = '200px', targets = "HitGeneNames"))
 
             # Used to add hyperlink to KEGG pathway
             fontBlue <- function(val) {
@@ -1176,15 +1176,15 @@ options(shiny.maxRequestSize = 3*1024^2)
               #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
               # Create a form for each datatable row
               sprintf('<script>function extLink() {
-                         return confirm("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
+                         confirm("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
                        }</script>                        
-                       <form target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway">
+                       <form target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway" target="_blank">
                        <input type="hidden" name="map" value="%s0%s">
                        <input type="hidden" name="unclassified" value="%s">
                        <input type="hidden" name="s_sample" value="color">
                        <input type="hidden" name="mode" value="color">
                        <input type="hidden" name="reference" value="white">
-                       <input type="submit" onclick="extLink()" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
+                       <input type="submit" onclick="return extLink();" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
             }
             
 
@@ -1223,7 +1223,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                   myRedGene <- paste(myRedGene, fontRed(myGenes[j]), sep = ",")
                   myRedGeneID <- as.character(siRNA.Score$EntrezID[which(siRNA.Score$GeneSymbol == myGenes[j])])
                   myRedGeneLabel <- capture.output(cat(myRedGeneID, "\t#ddccff,red\t#ddccff,red"))
-                  myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, "\n")
+                  myRedGeneLabels <- paste(myRedGeneLabels, myRedGeneLabel, sep="\n")
                   myRedGeneIDs <- capture.output(cat(myRedGeneIDs, myRedGeneLabel))
                 }
               }
@@ -1235,7 +1235,9 @@ options(shiny.maxRequestSize = 3*1024^2)
               myGeneLabels <- paste(mapperHeader, stri_replace_all_fixed(myBlueGeneLabels, " ", ""), "\n", stri_replace_all_fixed(myRedGeneLabels, " ", ""), sep = "")
               pathEnrich[i,][1] <- link2KEGGmapper(organismAbbr, pathwayID, myGeneLabels, pathwayName)
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
-              myGene <- paste(myBlueGene, myRedGene, sep = "")
+              #myGene <- paste(myBlueGene, myRedGene, sep = "")
+              myRedGene <- sub('.', '', myRedGene)
+              myGene <- paste(myBlueGene, myRedGene, sep = "<br>")
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
