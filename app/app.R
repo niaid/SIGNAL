@@ -891,12 +891,6 @@ options(shiny.maxRequestSize = 3*1024^2)
                                     "Yes",
                                     ""))
         
-        # Table shows the high confidence hits not included by the end of the triage analysis
-        # output$nonTRIAGEhitsTable <- renderDataTable({
-        #   non.triage.dat <- datatable(filter(TRIAGEoutput.condensed, ConfidenceCategory == "HighConf" & TRIAGEhit == ""), options = list(paging = FALSE, searching = FALSE, rownames = FALSE))
-        #   return (non.triage.dat)
-        # })
-        
 
         ################
         # Generate Matrices for TRIAGE Hits, high conf hits, med conf hits
@@ -1103,12 +1097,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         #Merge with scores 
         TRIAGEoutput <- merge(TRIAGEoutput, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
         
-        # output table where high confidence genes are not in the final iteration of the TRIAGE analysis
+        # table where high confidence genes are not in the final iteration of the TRIAGE analysis
+        non.triage.dat <- filter(TRIAGEoutput, ConfidenceCategory=="HighConf" & TRIAGEhit=='')
+        non.triage.dat$TRIAGEhit = "No"
+        # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+        non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
+        
+        
+        # output non.triage.dat table
         output$nonTRIAGEhitsTable <- renderDataTable({
-          non.triage.dat <- filter(TRIAGEoutput, ConfidenceCategory=="HighConf" & TRIAGEhit=='')
-          non.triage.dat$TRIAGEhit = "No"
-          # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
-          non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
           return(non.triage.dat)
         })
         
@@ -1161,7 +1158,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
-        fwrite(nonTRIAGEhitsTable, file = Enrichment.cond.output.name)
+        fwrite(non.triage.dat, file = paste0(inputFilePrefix, "_", "nonTRIAGEhits.csv"))
         # write.csv(triage.Out, file = outputFileName, row.names = F)
 
       ######################
@@ -1539,6 +1536,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                 fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
                 fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
                 fwrite(Scores_nodes_and_edges, file.name.snae)
+                fwrite(non.triage.dat, file = paste0(inputFilePrefix, "_", "nonTRIAGEhits.csv"))
                 
                 ## Update the 'Download' tab
                 output$downloadFiles <- renderUI({
