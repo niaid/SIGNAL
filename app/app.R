@@ -1169,7 +1169,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
           output$enrichedPathways <- renderDataTable({
             options = list(autoWidth = TRUE, scrollX = TRUE,
-                           columnDefs = list(width = '200px', targets = "HitGeneNames"))
+                           columnDefs = list(width = "100%", targets = "HitGeneNames"))
 
             # Used to add hyperlink to KEGG pathway
             fontBlue <- function(val) {
@@ -1190,16 +1190,13 @@ options(shiny.maxRequestSize = 3*1024^2)
               # Check the data submitted by the form using http post method
               #sprintf('<form target="_blank" enctype="multipart/form-data" method="post" action="http://localhost/cgi-bin/display_form_data.cgi">
               # Create a form for each datatable row
-              sprintf('<script>function extLink() {
-                         confirm("You are leaving the NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.");
-                       }</script>                        
-                       <form target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway" target="_blank">
+              sprintf('<form onsubmit="return confirm(\'You are going to a non-NIH website! This external link provides additional information that is consistent with the intended purpose of this site. NIH cannot attest to the accuracy of a non-federal site. Linking to a non-federal site does not constitute an endoresment by NIH or any of its employees of the sponsors or the information and products presented on the site. You will be subject to the destination site privacy policy when you follow the link.\');" target="_blank" enctype="multipart/form-data" method="post" action="https://www.kegg.jp/kegg-bin/mcolor_pathway" target="_blank">
                        <input type="hidden" name="map" value="%s0%s">
                        <input type="hidden" name="unclassified" value="%s">
                        <input type="hidden" name="s_sample" value="color">
                        <input type="hidden" name="mode" value="color">
                        <input type="hidden" name="reference" value="white">
-                       <input type="submit" onclick="return extLink();" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
+                       <input type="submit" style="font-face: \'Comic Sans MS\'; font-size: larger; color: teal; background-color: powderblue; border: 0 none;"value="%s"></form>', organismAbbr, pathwayID, myGeneLabels, pathwayName)
             }
             
 
