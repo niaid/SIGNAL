@@ -344,7 +344,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           showModal(modalDialog(
             title=HTML("<h3><font color=#ff0000>Input file format error!</font></h3>"),
             HTML("Your input file does not contain a required column named 'EntrezID' or 'GeneSymbol'. <br>Please fix your input file and try again!"),
-            easyClose = TRUE
+            easyClose = FALSE
           ))
           Sys.sleep(5)
           session$reload()
@@ -370,7 +370,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             showModal(modalDialog(
               title=HTML("<h3><font color=#ff0000>Organism - Gene Set MISMATCH!</font></h3>"),
               HTML("The organism you selected and the organism from which the input data generated do not match. Please select the correct organism or a different input file, then try again"),
-              easyClose = TRUE
+              easyClose = FALSE
             ))
           }
 
@@ -421,7 +421,7 @@ options(shiny.maxRequestSize = 3*1024^2)
             showModal(modalDialog(
               title=HTML("<h3><font color=#ff0000>Organism - Gene Set MISMATCH!</font></h3>"),
               HTML("The organism you selected and the organism from which the input data were generated do not match. Please select the correct organism or a different input file, then try again"),
-              easyClose = TRUE
+              easyClose = FALSE
             ))
           }
 
@@ -636,7 +636,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           
           if(length(all.G)==0){
             showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
-                                  easyClose = TRUE))
+                                  easyClose = FALSE))
             Sys.sleep(5)
             session$reload()
           }
@@ -934,7 +934,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         if(length(E(SubGraph))==0 | length(V(SubGraph))==0){
           showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
-                                easyClose = TRUE))
+                                easyClose = FALSE))
           Sys.sleep(5)
           session$reload()
         }
