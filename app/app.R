@@ -1249,7 +1249,11 @@ options(shiny.maxRequestSize = 3*1024^2)
               # Display the original hits(BLUE) first, followed by the hits picked up by TRIAGE (RED)
               #myGene <- paste(myBlueGene, myRedGene, sep = "")
               myRedGene <- sub('.', '', myRedGene)
+  
+              # Remove <br> if no blue genes are associated with the pathway
               myGene <- paste(myBlueGene, myRedGene, sep = "<br>")
+              myGene <- sub('^<br>', '<', myGene)
+  
               myGene <- substring(myGene, 2)
               pathEnrich[i,7] <- myGene
             }
