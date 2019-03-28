@@ -411,7 +411,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   # Check to make sure the generated graph is full
   if(length(E(g))==0 | length(V(g))==0){
     showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
-                          easyClose = TRUE))
+                          easyClose = FALSE))
     Sys.sleep(5)
     session$reload()
   }
