@@ -221,7 +221,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                      div(style="display:inline-block",uiOutput("link2Graph")),
                      dataTableOutput("myNetworkGraph")
             ),
-            tabPanel(title = "PathNet", value = "graphViews",
+            tabPanel(title = "Network Graph", value = "graphViews",
                 htmlOutput("spacer4"),
                 tabsetPanel(id = 'igraphViews',
                       # Display in igraph
@@ -235,7 +235,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                                #htmlOutput("graphLegend2"),
                                htmlOutput("graphView2i", width = "100%", height = "700px")
                       ),
-                      tabPanel(title = "PathNet Table", value = "PathNetTable",
+                      tabPanel(title = "Network Table", value = "PathNetTable",
                                HTML("<div id='PathNetTable'></div>"),
                                dataTableOutput("PathNetTable")
                       ),
@@ -1039,34 +1039,63 @@ options(shiny.maxRequestSize = 3*1024^2)
           group_by(source) %>% summarise(Pathway = toString(Pathway))
         
         ##Add counts to pathways (number of genes in list that are part of each pathway)
-        EdgePathways_stacked_Sum$Pathway.counts <- NA
+        # EdgePathways_stacked_Sum$Pathway.counts <- NA
+        # 
+        # for (i in 1:length(EdgePathways_stacked_Sum$Pathway)) {
+        #   temp.string <<- unlist(strsplit(EdgePathways_stacked_Sum$Pathway[i], ", "))
+        #   for (j in 1:length(temp.string)) {
+        #     name.j <<- temp.string[j]
+        #     count.j <<- length(grep(name.j, temp.string, fixed = T))
+        #     out <- paste0(name.j, " (", count.j, ")")
+        #     EdgePathways_stacked_Sum$Pathway.counts[i] <-  ifelse(j == 1, out, paste(out, EdgePathways_stacked_Sum$Pathway.counts[i], sep = ", ")) 
+        #   }
+        # }
+        # 
+        # 
+        # 
+        # 
+        # ########Remove Duplicates of Pathway names
+        # 
+        # EdgePathways_stacked_Sum$NetworkGenePathways <- sapply(strsplit(EdgePathways_stacked_Sum$Pathway.counts, ", ", fixed = TRUE), function(x) 
+        #   paste(unique(x), collapse = ", "))
+        # 
+        # ###########Order from pathway with highest number of genes to lowest
+        # for (k in 1:length(EdgePathways_stacked_Sum$Pathway)) {
+        #   pathway.string <- unlist(strsplit(EdgePathways_stacked_Sum$NetworkGenePathways[k], ", "))
+        #   pathway.values <- as.numeric(gsub("[\\(\\)]", "", regmatches(pathway.string, gregexpr("\\(.*?\\)", pathway.string))))
+        #   names(pathway.values) <- order(pathway.values, decreasing = T)
+        #   EdgePathways_stacked_Sum$NetworkGenePathways[k] <- paste(pathway.string[as.numeric(names(pathway.values))], collapse = ", ")
+        # }
         
-        for (i in 1:length(EdgePathways_stacked_Sum$Pathway)) {
-          temp.string <<- unlist(strsplit(EdgePathways_stacked_Sum$Pathway[i], ", "))
-          for (j in 1:length(temp.string)) {
-            name.j <<- temp.string[j]
-            count.j <<- length(grep(name.j, temp.string, fixed = T))
-            out <- paste0(name.j, " (", count.j, ")")
-            EdgePathways_stacked_Sum$Pathway.counts[i] <-  ifelse(j == 1, out, paste(out, EdgePathways_stacked_Sum$Pathway.counts[i], sep = ", ")) 
-          }
+        writing.pathways <- function(edge.df){
+          edge.df$Pathway.counts <- NA
+          L = sapply(edge.df$Pathway, strsplit, ", ")
+          names(L) = edge.df$source
+          tab = lapply(L, table)
+          tab = lapply(tab, sort, decreasing=T)
+          
+          l.pathway.counts = lapply(tab, function(x){
+            pathway.counts = c()
+            for(i in 1:length(x)){
+              x.name = names(x)[i]
+              pathway.counts = append(pathway.counts, paste0(x.name, " (", as.numeric(x[i]), ")"))
+            }
+            return(pathway.counts)
+          })
+          
+          l.pathway.cond = lapply(l.pathway.counts, paste0, collapse=', ')
+          source.name = names(l.pathway.cond)
+          network.paths = as.vector(unlist(l.pathway.cond))
+          
+          edge.df = data.frame("source" = source.name, "NetworkGenePathways" = network.paths)
+          return(edge.df)
         }
         
-        ########Remove Duplicates of Pathway names
-        
-        EdgePathways_stacked_Sum$NetworkGenePathways <- sapply(strsplit(EdgePathways_stacked_Sum$Pathway.counts, ", ", fixed = TRUE), function(x) 
-          paste(unique(x), collapse = ", "))
-        
-        ###########Order from pathway with highest number of genes to lowest
-        for (k in 1:length(EdgePathways_stacked_Sum$Pathway)) {
-          pathway.string <- unlist(strsplit(EdgePathways_stacked_Sum$NetworkGenePathways[k], ", "))
-          pathway.values <- as.numeric(gsub("[\\(\\)]", "", regmatches(pathway.string, gregexpr("\\(.*?\\)", pathway.string))))
-          names(pathway.values) <- order(pathway.values, decreasing = T)
-          EdgePathways_stacked_Sum$NetworkGenePathways[k] <- paste(pathway.string[as.numeric(names(pathway.values))], collapse = ", ")
-        }
+        EdgePathways_stacked_SumandValue = writing.pathways(EdgePathways_stacked_Sum)
         
         
         #######Add in entrezID for source genemappings
-        EdgePathways_stacked_EntrezID <- merge(Scores_and_nodes[, c("GeneMappingID", "EntrezID")], EdgePathways_stacked_Sum,
+        EdgePathways_stacked_EntrezID <- merge(Scores_and_nodes[, c("GeneMappingID", "EntrezID")], EdgePathways_stacked_SumandValue,
                                                by.x = "GeneMappingID", by.y = "source",
                                                all.y = T)
         
@@ -1548,7 +1577,6 @@ options(shiny.maxRequestSize = 3*1024^2)
             })
             
             
-            
             observeEvent(input$clickedData, {      
               output$ClickedDataTable <- renderDataTable({
                 # if(nrow(clicker())==0){
@@ -1564,9 +1592,9 @@ options(shiny.maxRequestSize = 3*1024^2)
             progress1$inc(1)
             head(E(G))
             
-            #############
-            ## PathNet ##
-            #############
+            ###########################################
+            ## PathNet / Network Graph Visualization ##
+            ###########################################
             
             # Remove existing html file in www folder
             Sys.chmod(wwwDir, mode = "0777")

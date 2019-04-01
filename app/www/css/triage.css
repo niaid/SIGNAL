@@ -93,7 +93,15 @@ path.arc {
   font-size: 10px;
 }
 
+.node2 {
+  font-size: 10px;
+}
+
 .node:hover {
+  cursor: crosshair;
+}
+
+.node2:hover {
   cursor: crosshair;
 }
 
@@ -123,4 +131,28 @@ path.arc {
 
 .resetButton {
   cursor: pointer;
+}
+
+.revert {
+  cursor: pointer;
+}
+
+.slidersvg{
+}
+
+input.tension{
+  position: relative;  bottom: 475px; left: 700px;
+  width: 100px;
+}
+input.textSize{
+  position: relative; bottom: 400px; left: 700px;
+  width: 100px;
+}
+input.nodeSize{
+  position: relative; bottom: 325px; left: 700px;
+  width: 100px;
+}
+input.wTextSize{
+  position: relative; bottom: 250px; left: 700px;
+  width: 100px;
 }
