@@ -6,7 +6,7 @@ Shiny.addCustomMessageHandler("jsondata1",
 
     json_data.forEach(function(d){
       d = {name: d.name[0], imports: d.imports, weights: d.weights,
-            datasource: d.datasource, Confidence: d.Confidence[0], color: d.Color[0]};
+            datasource: d.datasource, Confidence: d.Confidence[0], order: d.order[0], color: d.Color[0]};
       df.push(d)
     })
 
@@ -23,16 +23,13 @@ Shiny.addCustomMessageHandler("jsondata1",
       columnSpace = 250,
       niaidBannerY = 170,
       rectW = w-640,
-      rectH = w-650;
+      rectH = w-650,
+      splines = [];
 
     // empty variables to be populated later
-    var clickedData = [],
-        splines = [],
+    let clickedData = [],
         childrenData = {},
-        childrenArray = [],
-        nClicked = 0,
-        numbNovel = 0,
-        numbNoNovel = 0;
+        childrenArray = [];
 
     // colors for visualization and colormapping to unique node parent names
     var novelColor = "green",
@@ -49,17 +46,14 @@ Shiny.addCustomMessageHandler("jsondata1",
     // network assignments cluster, bundle, and line
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
+      .sort(function(a, b) { return d3.ascending(a.order, b.order)})
+
     var bundle = d3.layout.bundle();
     var line = d3.svg.line.radial()
       .interpolate("bundle")
       .tension(.85)
       .radius(function(d) { return d.y; })
       .angle(function(d) { return d.x / 180 * Math.PI; });
-
-    // removes the network div once another network is chosen in shiny
-    if(d3.select("#graphView1")[0][0].children.length === 1){
-      d3.select("#graphView1")[0][0].children[0].remove()
-    }
 
     // main div and svg elements for the network, legend, window, and double click message
     var div = d3.select("#graphView1")
@@ -77,8 +71,109 @@ Shiny.addCustomMessageHandler("jsondata1",
     var legend = svG.append("svg:g")
       .attr("transform", "translate(5,5)")
 
+    //slider for tension
+    div.append('input')
+      .attr("type", "range")
+      .attr("class", "tension")
+      .attr("min", 0)
+      .attr("max", 100)
+      .on("change", function() {
+        line.tension(this.value / 100);
+        path.attr("d", function(d, i) { return line(splines[i]); });
+      });
+
+    //slider for text size
+    div.append('input')
+      .attr("type", "range")
+      .attr("class", "textSize")
+      .attr("min", 1)
+      .attr("max", 18)
+      .attr("step", 0.2)
+      .attr("value", Math.min(1/Math.log10(df.length)*15, 14))
+      .on("change", function() {
+        d3.selectAll(".node text").style("font-size", this.value);
+      });
+
+    //slider for node size
+    div.append('input')
+      .attr("type", "range")
+      .attr("class", "nodeSize")
+      .attr("min", 0.5)
+      .attr("max", 10)
+      .attr("step", 0.1)
+      .attr("value", Math.min(1/Math.log10(df.length)*5, 4))
+      .on("change", function() {
+        d3.selectAll(".node circle").style("r", this.value)
+      });
+
+    //slider for window and legend text size
+    div.append('input')
+      .attr("type", "range")
+      .attr("class", "wTextSize")
+      .attr("min", 1)
+      .attr("max", 24)
+      .attr("step", 1)
+      .attr("value", 14)
+      .on("change", function() {
+        legend.selectAll("text").attr("font-size", this.value)
+      });
+
+    sliderText = ['Tension', 'Text Size', 'Node Size', 'Legend Text']
+
+    var sliderSVG = svG.append("svg:g")
+      .attr("width", w)
+      .attr("height", 20)
+      .attr("class", "slidersvg")
+      .attr("transform", "translate(700,360)")
+
+    sliderSVG.selectAll("text")
+      .data(sliderText)
+      .enter()
+      .append("svg:text")
+      .attr("font-family", "Helvetica")
+      .attr("font-size", 14)
+      .attr("dy", function(d,i){return i*90})
+      .text(function(d){return d;});
+
+    // removes the network div once another network is chosen in shiny
+    if(d3.select("#graphView1")[0][0].children.length > 5){
+      while(d3.select("#graphView1")[0][0].children.length > 5){
+        d3.select("#graphView1")[0][0].children[0].remove()
+      }
+    }
+
+    // button for going back in clicked pathways
+    var revert = svG.append("svg:g")
+      .attr("class", "revert")
+      .attr("transform", "translate(700,265)")
+
+    revert.append("svg:rect")
+      .attr("height", 20)
+      .attr("width", 95)
+      .attr("rx", 10)
+      .attr("ry", 10)
+      .style("stroke", "black")
+      .style("fill", "none")
+      .style("stroke-width", 2);
+
+    revert.append("svg:text")
+      .attr("font-family", "Helvetica")
+      .style("text-anchor", "center")
+      .attr("dy", 15)
+      .attr("dx", 8)
+      .text('Revert Click')
+      .on("click", revertOne);
+
+    // setting up nodes , links, splines, and parents for references and visualizations
+    // of network graph
+    var nodes = cluster.nodes(root(df)),
+        links = imports(nodes),
+        splines = bundle(links),
+        parents = findParents(df);
+
     var svg = svG.append("svg:g")
       .attr("class", "networkGraph")
+      .attr("transform",  "translate(" + rx + "," + ry + ")")
 
     var windowArea = svG.append("svg:g")
       .attr("transform", "translate(638,5)")
@@ -93,7 +188,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       .style("stroke-width", 2);
 
     var dubsMessage = svG.append("svg:g")
-      .attr("transform", "translate(690, 170)")
+      .attr("transform", "translate(694, 170)")
       .attr("class", "resetButton");
 
     dubsMessage.append("svg:rect")
@@ -109,7 +204,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       .attr("font-family", "Helvetica")
       .style("text-anchor", "center")
       .attr("dy", 15)
-      .attr("dx", 7)
+      .attr("dx", 9)
       .text('Click to reset')
       .on("click", mousedbl);
 
@@ -121,6 +216,8 @@ Shiny.addCustomMessageHandler("jsondata1",
         .attr("class", "vizText")
         .style("fill", "black")
         .attr("transform", function(d) { return "translate(0,20)"; })
+        .attr("font-family", "Helvetica")
+        .attr("font-size", 14)
         .attr("dy", function(d,i){return(20*i)})
         .attr("dx", 2)
         .text(function(d) { return d; });
@@ -154,7 +251,6 @@ Shiny.addCustomMessageHandler("jsondata1",
     svg.append("svg:path")
       .attr("class", "arc")
       .attr("d", d3.svg.arc().outerRadius(ry - 120).innerRadius(0).startAngle(0).endAngle(2 * Math.PI))
-      //.on("mousedown", mousedown);
 
     // find all names of parentNames
     function findParents(classes){
@@ -217,27 +313,6 @@ Shiny.addCustomMessageHandler("jsondata1",
 
       return imports;
     }
-
-    // setting up nodes , links, splines, and parents for references and visualizations
-    // of network graph
-    var nodes = cluster.nodes(root(df)),
-        links = imports(nodes),
-        splines = bundle(links),
-        parents = findParents(df);
-
-    // counters for number of novel genes and non-novel genes
-    for(i in df){
-      if(df[i].parent.name === "Novel"){
-        numbNovel ++;
-      }
-      else{
-        numbNoNovel ++;
-      }
-    }
-
-    // Rotating the network graph to center around hit gene families
-    var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;
-    svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
 
     // Attributing colors to nodes as well as assignment of colored legend text
     var colorMapping = function(df){
@@ -402,11 +477,15 @@ Shiny.addCustomMessageHandler("jsondata1",
         .style("font-size", function(){
           return Math.min(1/Math.log10(df.length)*15, 14)
         })
+        .attr("font-family", "HelveticaNeue-Light")
         .attr("dx", function(d) { return d.x < 180 ? 8 : -8; })
         .attr("dy", ".31em")
         .attr("text-anchor", function(d) { return d.x < 180? "start" : "end"; })
         .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
         .text(function(d) { return d.key; })
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
+        .on("click", mouseclick);
 
     // still will become true when Highlight clicked pathways button is clicked.
     // Once true, mouseover, mouseout, and mouseclick will be ineffective
@@ -433,13 +512,13 @@ Shiny.addCustomMessageHandler("jsondata1",
     }
 
     function mousemove() {
-    if (m0) {
-      var m1 = mouse(d3.event),
-          dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
-          rotate1 = rotate ? rotate+dm : dm+shiftRotate;
+      if (m0) {
+        var m1 = mouse(d3.event),
+            dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
+            rotate1 = rotate ? rotate+dm : dm;
 
-      svg.style("-webkit-transform", "translateX(" + rx + "px)translateY(" + ry + "px)rotateZ(" + rotate1 + "deg)");
-    }
+        svg.style("-webkit-transform", "translateX(" + rx + "px)translateY(" + ry + "px)rotateZ(" + rotate1 + "deg)");
+      }
     }
 
     function mouseup() {
@@ -447,7 +526,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         var m1 = mouse(d3.event),
             dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
 
-        rotate = rotate ? rotate+dm : dm+shiftRotate;
+        rotate = rotate ? rotate+dm : dm;
         if (rotate > 360) rotate -= 360;
         else if (rotate < 0) rotate += 360;
         m0 = null;
@@ -522,7 +601,16 @@ Shiny.addCustomMessageHandler("jsondata1",
 
           updateChildren(d)
 
+          d3.selectAll(".node text").style("font-weight", "normal")
+
           childrenArray = childrenData[d.name][0]
+
+          d3.select("#node-" + d.key + " text").style("font-weight", "bold")
+
+          for(i in childrenArray){
+            childName = childrenArray[i].split(".")[1]
+            d3.select("#node-" + childName + " text").style("font-weight", "bold")
+          }
         }
         else if(clickedData[clickedData.length-1].name === d.name){
           setvals(d, true, false)
@@ -538,6 +626,64 @@ Shiny.addCustomMessageHandler("jsondata1",
         clickeRs = getClicker();
 
         Shiny.setInputValue("clickedData", clickeRs);
+      }
+    }
+
+    function mousedbl(){
+      childrenData = {}
+      childrenArray = []
+      still = false;
+      rotate = null;
+
+      svg.selectAll("path.link")
+          .style("stroke-opacity", 0.05)
+
+      if(clickedData.length>0){
+        for(var i in clickedData){
+          setvals(clickedData[i], false, false)
+          clickedData[i].clicked = false
+          svg.select("#node-" + clickedData[i].key)
+              .style('font-weight', 'normal');
+        }
+        clickedData = []
+      }
+
+      svg.selectAll(".node text")
+        .style("font-weight", "normal")
+        .style("opacity", 1)
+
+      svg.selectAll(".node circle").style('opacity', 1)
+
+      svg.attr("transform",  "translate(" + rx + "," + ry + ")")
+      clearVizText()
+
+      Shiny.setInputValue("clickedData", '{}');
+    }
+
+    function clearVizText(){
+      d3.selectAll(".vizText").remove()
+      windowFields = ['Gene Name:', ' ',
+                      'Interactions:',
+                      'Confidence:']
+      windowText.data(windowFields)
+        .enter()
+          .append("svg:text")
+          .attr("class", "vizText")
+          .style("fill", "black")
+          .attr("transform", function(d) { return "translate(0,20)"; })
+          .attr("dy", function(d,i){return(20*i)})
+          .attr("dx", 2)
+          .text(function(d) { return d; });
+    }
+
+    function updateChildren(d, remove=false){
+      childrenArray = []
+
+      if(!remove){
+        childrenData = {[d.name]: [d.imports]}
+      }
+      else{
+        delete childrenData[d.name]
       }
     }
 
@@ -584,65 +730,6 @@ Shiny.addCustomMessageHandler("jsondata1",
             clickeRs = clickeRs + clickeR
           }
         return clickeRs;
-      }
-    }
-
-    function mousedbl(){
-      childrenData = {}
-      childrenArray = []
-      still = false
-
-      svg.selectAll("path.link")
-          .style("stroke-opacity", 0.05)
-
-      if(clickedData.length>0){
-        for(var i in clickedData){
-          setvals(clickedData[i], false, false)
-          clickedData[i].clicked = false
-          svg.select("#node-" + clickedData[i].key)
-              .style('font-weight', 'normal');
-        }
-        clickedData = []
-      }
-
-      svg.selectAll(".node text")
-        .style("font-weight", "normal")
-        .style("opacity", 1)
-
-      svg.selectAll(".node circle").style('opacity', 1)
-
-      svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
-      rotate = shiftRotate;
-      clearVizText()
-
-      Shiny.setInputValue("clickedData", '{}');
-    }
-
-    function clearVizText(){
-      d3.selectAll(".vizText").remove()
-      windowFields = ['Gene Name:', ' ',
-                      'Interactions:',
-                      'Confidence:']
-      windowText.data(windowFields)
-        .enter()
-          .append("svg:text")
-          .attr("class", "vizText")
-          .style("fill", "black")
-          .attr("transform", function(d) { return "translate(0,20)"; })
-          .attr("dy", function(d,i){return(20*i)})
-          .attr("dx", 2)
-          .text(function(d) { return d; });
-    }
-
-
-    function updateChildren(d, remove=false){
-      childrenArray = []
-
-      if(!remove){
-        childrenData = {[d.name]: [d.imports]}
-      }
-      else{
-        delete childrenData[d.name]
       }
     }
 
@@ -699,7 +786,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         if (value) this.parentNode.appendChild(this);
 
         lastclicked = clickedData[clickedData.length-1];
-        nodeBold = value || lastclicked===d[name] ? 'bold' : 'normal';
+        //nodeBold = value || lastclicked===d[name] ? 'bold' : 'normal';
 
         svg.select("#node-" + d[name].key)
           .classed(name, value)
@@ -722,6 +809,35 @@ Shiny.addCustomMessageHandler("jsondata1",
       }
     }
 
+    // goes back one clicked node in the network display and shows all output for the previous node
+    function revertOne(){
+      if(still === false && clickedData.length > 0){
+        deleteGene = clickedData[clickedData.length-1]
+
+        setvals(deleteGene, false, false)
+        deleteGene.clicked = false
+
+        d3.selectAll(".node text")
+          .style("font-weight", "normal")
+
+        d3.selectAll("path.link")
+          .style("stroke-opacity", 0.05)
+
+        clickedData.pop()
+        geneRevert = clickedData[clickedData.length-1]
+
+        setvals(geneRevert, true, false)
+
+        clearVizText()
+
+        updateChildren(geneRevert)
+        childrenArray = childrenData[geneRevert.name][0]
+
+        paintWindow(geneRevert, 1)
+      }
+    }
+
+    // draws connections when the highlight clicked pathways button is pressed
     function drawConnections(){
       still = true;
       nConn = clickedData.length
@@ -841,6 +957,7 @@ Shiny.addCustomMessageHandler("jsondata1",
                 return textColor;
               }
             })
+            .attr("font-family", "Helvetica")
             .attr("transform", function(d) { return "translate(0,20)"; })
             .attr("dy", function(d, i){
               return i*20;
@@ -873,6 +990,7 @@ Shiny.addCustomMessageHandler("jsondata1",
                 return textColor;
               }
             })
+            .attr("font-family", "Helvetica")
             .attr("transform", function(d) { return "translate(0,20)"; })
             .attr("dy", function(d, i){
               return i*20;
@@ -909,6 +1027,7 @@ Shiny.addCustomMessageHandler("jsondata1",
                 return refColor;
               }
             })
+            .attr("font-family", "Helvetica")
             .attr("transform", function(d) { return "translate(0,20)"; })
             .attr("dy", function(d, i){
               return i*20;

@@ -9,6 +9,7 @@ change_form <- function(l, i, nodes){
              'weights' = l[[i]][,2],
              'datasource' = l[[i]][,3],
              'Confidence' = rep(node.info$Confidence, nrow(l[[i]])),
+             'order' = rep(i, nrow(l[[i]])),
              'Color' = rep(node.info$Color, nrow(l[[i]])))
              # 'Pathway' = rep(node.info$Pathway, nrow(l[[i]]))
 }
@@ -18,7 +19,9 @@ merge_lists <- function(l.1, l.2){
   keys = unique(c(names(l.1), names(l.2)))
   L = lapply(keys, function(key){
     l.1.col = l.1[key][[1]]
+    # if(!is.null(l.1.col)) l.1.col = arrange(l.1.col, imports)
     l.2.col = l.2[key][[1]]
+    # if(!is.null(l.2.col)) l.2.col = arrange(l.2.col, imports)
     check = any(is.null(l.1.col), is.null(l.2.col))
     if(!check){
       rbind(l.1.col, l.2.col)
@@ -97,14 +100,21 @@ orderL <- function(L, dn){
   else{
     ref = orderedL.names(dn)
   }
-  ord.vect = as.vector(unlist(sapply(ref, function(s){which(L.names == s)})))
+  if(length(ref) > 2){
+    med.ref = ceiling(median(1:(length(ref)-1)))
+    ref = ref[c(med.ref:length(ref), 1: (med.ref-1))]
+  }
+  ord.vect = as.vector(unlist(sapply(ref, function(s){
+      brokenUp = which(L.names == s)
+      match(sort(names(L[brokenUp])), names(L))
+  })))
   l = L[ord.vect]
   names(l) = names(L)[ord.vect]
   return(l)
 }
 
 
-config_df <- function(nodes, edges, dimNames){
+config_df <- function(nodes, edges, dimNames, onlyNovel = F){
   #fix values of confidence levels
   nodes$Confidence = conf.f(nodes$Confidence)
   
@@ -116,7 +126,11 @@ config_df <- function(nodes, edges, dimNames){
   group2 = lapply(split(edges, edges$imports), `[`, c(1,3:ncol(edges)))
   group2 = lapply(group2, setNames, c('imports', 'weights', 'datasource'))
   L = merge_lists(group1, group2)
-  L = orderL(L, dimNames)
+  
+  # orders pathways for 1st and 2nd degreee
+  if(!onlyNovel){
+    L = orderL(L, dimNames)
+  }
   
   # json list formation where each entry of the list is a dataframe of connections for a node
   df_L = list()

@@ -55,7 +55,29 @@
               cursor: pointer;
             }
 
-            .networkGraph{
+            .revert {
+              cursor: pointer;
+            }
+
+            input{
+              position: relative; bottom: 450px; left: 700px;
+            }
+
+            input.tension{
+              position: absolute;
+              width: 100px;
+            }
+            input.textSize{
+              position: absolute; bottom: 375px;
+              width: 100px;
+            }
+            input.nodeSize{
+              position: absolute; bottom: 300px;
+              width: 100px;
+            }
+            input.wTextSize{
+              position: absolute; bottom: 225px;
+              width: 100px;
             }
     </style>
     <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -65,13 +87,13 @@
   <body>
     <script>
       // input output from R console from variable json_1 defined in Ranking_source.R
-      // var json_data =
+      var json_data = [{"name":["Apoptosis - multiple species.BCL2","Apoptosis - multiple species.BCL2"],"imports":["Novel.PPP2R5C","Novel.GLI3"],"weights":[800,800],"datasource":["database","database"],"Confidence":["Medium","Medium"],"order":[1,1],"Color":["blue","blue"]},{"name":["Apoptosis - multiple species.CASP9","Apoptosis - multiple species.CASP9"],"imports":["Novel.APPL1","Novel.PARP4"],"weights":[900,800],"datasource":["database","database"],"Confidence":["Medium","Medium"],"order":[2,2],"Color":["blue","blue"]},{"name":["Novel.APPL1"],"imports":["Apoptosis - multiple species.CASP9"],"weights":[900],"datasource":["database"],"Confidence":["Medium"],"order":[3],"Color":["green"]},{"name":["Novel.GLI3"],"imports":["Apoptosis - multiple species.BCL2"],"weights":[800],"datasource":["database"],"Confidence":["Medium"],"order":[4],"Color":["green"]},{"name":["Novel.PARP4"],"imports":["Apoptosis - multiple species.CASP9"],"weights":[800],"datasource":["database"],"Confidence":["Medium"],"order":[5],"Color":["green"]},{"name":["Novel.PPP2R5C"],"imports":["Apoptosis - multiple species.BCL2"],"weights":[800],"datasource":["database"],"Confidence":["Medium"],"order":[6],"Color":["green"]},{"name":["Apoptosis - multiple species.BCL2","Apoptosis - multiple species.BCL2"],"imports":["Novel.PPP2R5C","Novel.GLI3"],"weights":[800,800],"datasource":["database","database"],"Confidence":["Medium","Medium"],"order":[7,7],"Color":["blue","blue"]},{"name":["Apoptosis - multiple species.CASP9","Apoptosis - multiple species.CASP9"],"imports":["Novel.APPL1","Novel.PARP4"],"weights":[900,800],"datasource":["database","database"],"Confidence":["Medium","Medium"],"order":[8,8],"Color":["blue","blue"]}]
 
       var df = []
 
       json_data.forEach(function(d){
         d = {name: d.name[0], imports: d.imports, weights: d.weights,
-              datasource: d.datasource, Confidence: d.Confidence[0], color: d.Color[0]};
+              datasource: d.datasource, Confidence: d.Confidence[0], order: d.order[0], color: d.Color[0]};
         df.push(d)
       });
 
@@ -99,9 +121,9 @@
           color2 = "red",
           color3 = "saddlebrown",
           color12 = "#a09d01",
-          color13 = "#ce6702",
-          color23 = "#6b5b3e",
-          color123 = "#62476d",
+          color13 = "#6b5b3e",
+          color23 = "#ce6702",
+          color123 = "#6d1c8e",
           colorMap = [color1, color2, color3, novelColor, color123, color12, color23, color13],
           windowFields = ['Gene Name:', ' ', 'Interactions:', 'Confidence:'];
 
@@ -128,8 +150,9 @@
       }*/
 
       var cluster = d3.layout.cluster()
-        .size([360, ry - 120]);
-        //.sort(function(a, b) { return d3.ascending(a.key, b.key); });
+        .size([360, ry - 120])
+        //.sort(function(a, b) { return d3.ascending(df.indexOf(a), df.indexOf(b)); });
+        .sort(function(a, b) { return d3.ascending(a.order, b.order)})
 
       var bundle = d3.layout.bundle();
 
@@ -156,11 +179,117 @@
       var legend = svG.append("svg:g")
         .attr("transform", "translate(5,5)")
 
+      //slider for tension
+      div.append('input')
+        .attr("type", "range")
+        .attr("class", "tension")
+        .attr("min", 0)
+        .attr("max", 100)
+        .on("change", function() {
+          line.tension(this.value / 100);
+          path.attr("d", function(d, i) { return line(splines[i]); });
+        });
+
+      //slider for text size
+      div.append('input')
+        .attr("type", "range")
+        .attr("class", "textSize")
+        .attr("min", 1)
+        .attr("max", 18)
+        .attr("step", 0.2)
+        .attr("value", Math.min(1/Math.log10(df.length)*15, 14))
+        .on("change", function() {
+          d3.selectAll(".node text").style("font-size", this.value);
+        });
+
+      //slider for node size
+      div.append('input')
+        .attr("type", "range")
+        .attr("class", "nodeSize")
+        .attr("min", 0.5)
+        .attr("max", 10)
+        .attr("step", 0.1)
+        .attr("value", Math.min(1/Math.log10(df.length)*5, 4))
+        .on("change", function() {
+          d3.selectAll(".node circle").style("r", this.value)
+        });
+
+      //slider for window and legend text size
+      div.append('input')
+        .attr("type", "range")
+        .attr("class", "wTextSize")
+        .attr("min", 1)
+        .attr("max", 24)
+        .attr("step", 1)
+        .attr("value", 14)
+        .on("change", function() {
+          legend.selectAll("text").attr("font-size", this.value)
+          //d3.selectAll(".vizText").attr("font-size", this.value)
+        });
+
+
+      sliderText = ['Tension', 'Text Size', 'Node Size', 'Legend Text']
+
+      var sliderSVG = svG.append("svg:g")
+        .attr("width", w)
+        .attr("height", 20)
+        .attr("class", "slidersvg")
+        .attr("transform", "translate(700," + (h - 435) + ")")
+
+      sliderSVG.selectAll("text")
+        .data(sliderText)
+        .enter()
+        .append("svg:text")
+        .attr("font-family", "Helvetica")
+        .attr("font-size", 14)
+        .attr("dy", function(d,i){return i*75})
+        .text(function(d){return d;});
+
+      // button for going back in clicked pathways
+      var revert = svG.append("svg:g")
+        .attr("class", "revert")
+        .attr("transform", "translate(685,265)")
+
+      revert.append("svg:rect")
+        .attr("height", 20)
+        .attr("width", 107)
+        .attr("rx", 10)
+        .attr("ry", 10)
+        .style("stroke", "black")
+        .style("fill", "none")
+        .style("stroke-width", 2);
+
+      revert.append("svg:text")
+        .attr("font-family", "Helvetica")
+        .style("text-anchor", "center")
+        .attr("dy", 15)
+        .attr("dx", 8)
+        .text('Revert Click')
+        .on("click", revertOne);
+
+      var nodes = cluster.nodes(root(df)),
+          links = imports(nodes),
+          splines = bundle(links),
+          parents = findParents(df);
+
+      /*var numbNovel = 0;
+      var numbNoNovel = 0;
+      for(i in df){
+        if(df[i].parent.name == "Novel"){
+          numbNovel ++;
+        }
+        else{
+          numbNoNovel ++;
+        }
+      }
+      var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;*/
+
       var svg = svG.append("svg:g")
         //.attr("x", rx)
         //.attr("y", ry)
         .attr("class", "networkGraph")
-        //.attr("transform", "translate(" + rx + "," + ry + ")rotate(-30)");
+        .attr("transform", "translate(" + rx + "," + ry + ")")
+        //rotate(" + shiftRotate + ")");
 
       var windowArea = svG.append("svg:g")
         .attr("transform", "translate(638,5)")
@@ -194,8 +323,11 @@
         .attr("dy", 15)
         .attr("dx", 5)
         .text('Click to reset')
+        .on("click", mousedbl);
 
-      d3.select(".resetButton").on("click", mousedbl);
+      //d3.select(".resetButton")
+
+      //d3.select('.revert')
 
       /*dubsMessage.append("svg:text")
         .style("font-size", "12px")
@@ -211,6 +343,7 @@
           .style("fill", "black")
           .attr("transform", function(d) { return "translate(0,20)"; })
           .attr("font-family", "Helvetica")
+          .attr("font-size", 14)
           .attr("dy", function(d,i){return(20*i)})
           .attr("dx", 2)
           .text(function(d) { return d; });
@@ -230,7 +363,8 @@
           .attr("dx", 5)
           .attr("dy", function(d, i){return 16*i + 16;})
           .attr("font-family", "Helvetica")
-          .text(function(d){return d;});
+          .text(function(d){return d;})
+          .on("click", drawConnections);
 
       pathButton.append("svg:rect")
         .attr("height", 55)
@@ -250,8 +384,6 @@
         .attr("font-family", "Helvetica")
         .text("Highlight Clicked Pathways")*/
 
-      d3.select('.pathButton').on("click", drawConnections)
-
       svg.append("svg:path")
         .attr("class", "arc")
         .attr("d", d3.svg.arc().outerRadius(ry - 120).innerRadius(0).startAngle(0).endAngle(2 * Math.PI))
@@ -265,8 +397,8 @@
       function findParents(classes){
         var map = {};
 
-        function find(data){
-          map[data.parent.name] = data.parent.name;
+        function find(f){
+          map[f.parent.name] = f.parent.name;
         }
 
         classes.forEach(function(d) {
@@ -283,10 +415,10 @@
       function root(classes) {
         var map = {};
 
-        function find(name, data) {
+        function find(name, f) {
           var node = map[name], i;
           if (!node) {
-            node = map[name] = data || {name: name, children: []};
+            node = map[name] = f || {name: name, children: []};
             if (name.length) {
               node.parent = find(name.substring(0, name.indexOf(".")));
               node.parent.children.push(node);
@@ -323,11 +455,6 @@
         return imports;
       }
 
-      var nodes = cluster.nodes(root(df)),
-          links = imports(nodes),
-          splines = bundle(links),
-          parents = findParents(df);
-
       /*else if(pathwayNames.length === 3){
         colorMapt = colorMap.slice(0,2)
         colorMapt.push(colorMap[3])
@@ -338,20 +465,15 @@
 
       daMaps.push(novelColor)*/
 
-      var numbNovel = 0;
-      var numbNoNovel = 0;
-      for(i in df){
-        if(df[i].parent.name == "Novel"){
+      // counters for number of novel genes and non-novel genes
+      /*for(i in df){
+        if(df[i].parent.name === "Novel"){
           numbNovel ++;
         }
         else{
           numbNoNovel ++;
         }
-      }
-      var shiftRotate = -(numbNoNovel)/(numbNovel + numbNoNovel) * 180;
-
-      svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
-
+      }*/
 
       var colorMapping = function(df){
         newCols = []
@@ -668,14 +790,16 @@
 
       lColors = getLegendColors();*/
 
-      /*var uniquePathways = function(df){
+      /*var uniqueParents = function(df){
         var lookup = {};
-        var result = [];
+        //var result = [];
 
         for (var i = 0; i<df.length; i++) {
           var name = df[i].parent.name;
-
-          if (!(name in lookup)) {
+          if(!(name in lookup)){
+            lookup[name] = name;
+          }
+          /*if (!(name in lookup)) {
             lookup[name] = 1;
             if(name === 'Novel'){
               result.push('Novel Genes');
@@ -684,10 +808,10 @@
           }
         }
 
-        result.sort();
-        result.push(result.splice(result.indexOf('Novel Genes'), 1)[0]);
+        //result.sort();
+        //result.push(result.splice(result.indexOf('Novel Genes'), 1)[0]);
 
-        return(result)
+        return(lookup)
       }*/
 
       legend.selectAll("text")
@@ -761,27 +885,20 @@
           .attr("text-anchor", function(d) { return d.x < 180? "start" : "end"; })
           .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
           .text(function(d) { return d.key; })
+          .on("mouseover", mouseover)
+          .on("mouseout", mouseout)
+          .on("click", mouseclick);
 
       var still = false;
 
-      svg.on("dblclick", mousedbl);
-
-      d3.select("input[type=range]").on("change", function() {
-        line.tension(this.value / 100);
-        path.attr("d", function(d, i) { return line(splines[i]); });
-      });
-
-      /*d3.select(window)
+      svg.on("dblclick", mousedbl)
         .on("mousemove", mousemove)
-        .on("mouseup", mouseup);*/
-
-      svg.on("mousemove", mousemove)
         .on("mousedown", mousedown)
         .on("mouseup", mouseup);
 
       function mouse(e) {
-        console.log(e.pageX - rx)
-        console.log(e.pageY - ry)
+        //console.log(e.pageX - rx)
+        //console.log(e.pageY - ry)
         return [e.pageX - rx, e.pageY - ry];
       }
 
@@ -795,7 +912,7 @@
           var m1 = mouse(d3.event),
               dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI,
               //rotate =+ dm;
-              rotate1 = rotate ? rotate+dm : dm+shiftRotate;
+              rotate1 = rotate ? rotate+dm : dm;
               //rotate = shiftRotate
               //rotate += dm
 
@@ -808,7 +925,7 @@
           var m1 = mouse(d3.event),
               dm = Math.atan2(cross(m0, m1), dot(m0, m1)) * 180 / Math.PI;
 
-          rotate = rotate ? rotate+dm : dm+shiftRotate;
+          rotate = rotate ? rotate+dm : dm;
           if (rotate > 360) rotate -= 360;
           else if (rotate < 0) rotate += 360;
           m0 = null;
@@ -893,7 +1010,17 @@
 
             updateChildren(d)
 
+            d3.selectAll(".node text").style("font-weight", "normal")
+
             childrenArray = childrenData[d.name][0]
+
+            d3.select("#node-" + d.key + " text").style("font-weight", "bold")
+
+            for(i in childrenArray){
+              childName = childrenArray[i].split(".")[1]
+              d3.select("#node-" + childName + " text").style("font-weight", "bold")
+            }
+
           }
           else if(clickedData[clickedData.length-1].name === d.name){
             setvals(d, true, false)
@@ -911,7 +1038,8 @@
       function mousedbl(){
         childrenData = {}
         childrenArray = []
-        still = false
+        still = false;
+        rotate = null;
 
         svg.selectAll("path.link")
             .style("stroke-opacity", 0.05)
@@ -932,8 +1060,7 @@
 
         svg.selectAll(".node circle").style('opacity', 1)
 
-        svg.attr("transform",  "translate(" + rx + "," + ry + ")rotate(" + shiftRotate + ")")
-        rotate = shiftRotate;
+        svg.attr("transform",  "translate(" + rx + "," + ry + ")")
         clearVizText()
       }
 
@@ -951,6 +1078,7 @@
             .attr("transform", function(d) { return "translate(0,20)"; })
             .attr("dy", function(d,i){return(20*i)})
             .attr("dx", 2)
+            //.attr("font-size", d3.select(".wTextSize").node().value)
             .text(function(d) { return d; });
       }
 
@@ -1154,6 +1282,34 @@
         }
       }
 
+      // goes back one clicked node in the network display and shows all output for the previous node
+      function revertOne(){
+        if(still === false && clickedData.length > 0){
+          deleteGene = clickedData[clickedData.length-1]
+
+          setvals(deleteGene, false, false)
+          deleteGene.clicked = false
+
+          d3.selectAll(".node text")
+            .style("font-weight", "normal")
+
+          d3.selectAll("path.link")
+            .style("stroke-opacity", 0.05)
+
+          clickedData.pop()
+          geneRevert = clickedData[clickedData.length-1]
+
+          setvals(geneRevert, true, false)
+
+          clearVizText()
+
+          updateChildren(geneRevert)
+          childrenArray = childrenData[geneRevert.name][0]
+
+          paintWindow(geneRevert, 1)
+        }
+      }
+
       function drawConnections(){
         still = true;
         nConn = clickedData.length
@@ -1299,6 +1455,7 @@
                   return 2;
                 }
               })
+              //.attr("font-size", d3.select(".wTextSize").node().value)
               .text(function(d){return d;});
         }
         else if(option === 2){
@@ -1320,6 +1477,7 @@
                   return textColor;
                 }
               })
+              .attr("font-family", "Helvetica")
               .attr("transform", function(d) { return "translate(0,20)"; })
               .attr("dy", function(d, i){
                 return i*20;
@@ -1332,7 +1490,7 @@
                   return 2;
                 }
               })
-              .attr("font-family", "Helvetica")
+              //.attr("font-size", d3.select(".wTextSize").node().value)
               .text(function(d){return d;});
         }
         else{
@@ -1357,6 +1515,7 @@
                   return refColor;
                 }
               })
+              .attr("font-family", "Helvetica")
               .attr("transform", function(d) { return "translate(0,20)"; })
               .attr("dy", function(d, i){
                 return i*20;
@@ -1364,7 +1523,7 @@
               .attr("dx", function(d, i){
                 return (i>3 || i % 2 ===0) ? 2 : 10;
               })
-              .attr("font-family", "Helvetica")
+              //.attr("font-size", d3.select(".wTextSize").node().value)
               .text(function(d){return d;});
         }
       }

@@ -360,6 +360,17 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   # sends json_2 to custom_network2.js file for second degree visualization
   session$sendCustomMessage(type="jsondata2",json_2)
   
+  # sources functions from config_jsons.R to build list for only Novel connections
+  # nodes_3 = filter(g22_vis$nodes, Group=="Novel")
+  # edges_3 = g22_vis$edges
+  # edges_3 = filter(edges_3, gsub("\\..*","",edges_3$from) == "Novel" & 
+  #                    gsub("\\..*","",edges_3$to) == "Novel")
+  # json_3df <<- config_df(nodes_3, edges_3, all_pathway_names, onlyNovel=T)
+  # json_3 <- jsonlite::toJSON(json_3df, 'columns')
+  
+  # sends json_2 to custom_network2.js file for second degree visualization
+  # session$sendCustomMessage(type="jsondata3",json_3)
+  
   PathNetName.output <<- paste0("PathNet_", inputFilePrefix, "_", t.file.name)
   
   return(TRUE)
