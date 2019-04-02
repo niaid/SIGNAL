@@ -1588,6 +1588,26 @@ options(shiny.maxRequestSize = 3*1024^2)
               
             })
             
+            ## reactive statement for output files to be printed on download tab
+            downloadOut <- reactive({
+              outputFiles = list.files(path = './')
+              # reordering files so that enrichment and TRIAGE hits files come first and second
+              enrich.spot = grep("TRIAGEenrichment", outputFiles)
+              hits.spot = grep("_TRIAGEhits", outputFiles)
+              outputFiles = c(outputFiles[c(enrich.spot, hits.spot)], outputFiles[-c(enrich.spot, hits.spot)])
+              
+              out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
+              
+              if(length(outputFiles) > 0){
+                for(i in outputFiles){
+                  out <- paste(out, i, sep = "<br>")
+                }
+              }
+              
+              out <- paste0(out, "<br><br>")
+              return(out)
+            })
+            
     
             progress1$inc(1)
             head(E(G))
@@ -1618,21 +1638,6 @@ options(shiny.maxRequestSize = 3*1024^2)
       })
           
       message("Outside NetworkGraph")
-      
-      ## reactive statement for output files to be printed on download tab
-      downloadOut <- reactive({
-        outputFiles = list.files(path = './')
-        out <- c("<br><b>All files from your TRIAGE analysis for download:</b><br>")
-        
-        if(length(outputFiles) > 0){
-          for(i in outputFiles){
-            out <- paste(out, i, sep = "<br>")
-          }
-        }
-        
-        out <- paste0(out, "<br><br>")
-        return(out)
-      })
       
       ## Create the 'Download' tab
       output$downloadFiles <- renderUI({
