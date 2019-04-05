@@ -347,7 +347,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         lColors = lColors.concat(ordColors.slice(novelInd+1));
       }
       else{
-        lColors = ordColors;
+        lColors = startingColors;
       }
       return lColors;
     }
