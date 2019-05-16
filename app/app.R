@@ -1128,15 +1128,17 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # table where high confidence genes are not in the final iteration of the TRIAGE analysis
         non.triage.dat <- filter(TRIAGEoutput, ConfidenceCategory=="HighConf" & TRIAGEhit=='')
-        non.triage.dat$TRIAGEhit = "No"
-        # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
-        non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
         
-        
-        # output non.triage.dat table
-        output$nonTRIAGEhitsTable <- renderDataTable({
-          return(non.triage.dat)
-        })
+        if(dim(non.triage.dat)[1]){
+          non.triage.dat$TRIAGEhit = "No"
+          # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+          non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
+          
+          # output non.triage.dat table
+          output$nonTRIAGEhitsTable <- renderDataTable({
+            return(non.triage.dat)
+          })
+        }
         
         ####################
         ### Create Condensed Output File
@@ -1187,8 +1189,11 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
-        fwrite(non.triage.dat, file = paste0(inputFilePrefix, "_", "nonTRIAGEhits.csv"))
-        # write.csv(triage.Out, file = outputFileName, row.names = F)
+        
+        if(dim(non.triage.dat)[1]){
+          fwrite(non.triage.dat, file = paste0(inputFilePrefix, "_", "nonTRIAGEhits.csv"))
+          # write.csv(triage.Out, file = outputFileName, row.names = F)
+        }
 
       ######################
       ## Switch to 'Enriched Pathways' tab and display partial results
