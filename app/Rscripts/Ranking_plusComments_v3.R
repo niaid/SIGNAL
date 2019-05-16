@@ -266,7 +266,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   Scores_nodes_and_edges <<- Scores_nodes_and_edges
   #message(TRIAGE.output, "**")
   #setwd(downloadDir)
-  #setwd('TRIAGEfilesToDownload')
+  setwd('TRIAGEfilesToDownload')
   write.csv(Scores_nodes_and_edges, RankingFileName.output)
   
   ############################################################################### Add visualization ##############################################################################
