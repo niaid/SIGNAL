@@ -15,8 +15,8 @@ docker_scan:
     - CVE-2018-12122
     - CVE-2018-12123
     - CVE-2018-7159
-    - CVE-2017-9801
-    - NODE-SECURITY-886
+    - CVE-2017-9801 #https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-9801
+    - NODE-SECURITY-886 #https://www.npmjs.com/advisories/886
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
