@@ -31,7 +31,7 @@ terraform:
   module_name: triage # legacy, not needed for new apps
   variables:
     cpu: 512
-    memory: 2048
+    memory: 4096
     container_port: 3838
     desired_count: 1
     command: /usr/local/bin/shiny_server.sh
