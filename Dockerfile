@@ -6,29 +6,31 @@ RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-de
     install_opts="-y --no-install-recommends" && \
     apt-get update && apt-get install $install_opts $build_deps && \
     R CMD javareconf && \
-    R -e "install.packages('dplyr', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('leaflet', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('shinyjs', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('shinyBS', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('readr', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('stringi', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('stringr', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('reshape2', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('DT', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('data.table', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('edgebundleR', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('igraph', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('shinyAce', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('rJava', repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('mailR', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('networkD3', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('visNetwork', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('ggplot2', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('tidyr', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('gridExtra', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('crosstalk', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e "install.packages('htmltools', dep=T, repos='https://cran.rstudio.com/')" && \
-    R -e 'source("https://bioconductor.org/biocLite.R"); biocLite("org.Hs.eg.db", ask=FALSE); biocLite("org.Mm.eg.db", ask=FALSE); biocLite("AnnotationDbi", ask=FALSE);' && \
+    R -e "install.packages('BiocManager')" && \
+    R -e "BiocManager::install()" && \
+    R -e "BiocManager::install('dplyr')" && \
+    R -e "BiocManager::install('leaflet')" && \
+    R -e "BiocManager::install('shinyjs')" && \
+    R -e "BiocManager::install('shinyBS')" && \
+    R -e "BiocManager::install('readr')" && \
+    R -e "BiocManager::install('stringi')" && \
+    R -e "BiocManager::install('stringr')" && \
+    R -e "BiocManager::install('reshape2')" && \
+    R -e "BiocManager::install('DT')" && \
+    R -e "BiocManager::install('data.table')" && \
+    R -e "BiocManager::install('edgebundleR')" && \
+    R -e "BiocManager::install('igraph')" && \
+    R -e "BiocManager::install('shinyAce')" && \
+    R -e "BiocManager::install('rJava')" && \
+    R -e "BiocManager::install('mailR')" && \
+    R -e "BiocManager::install('networkD3')" && \
+    R -e "BiocManager::install('visNetwork')" && \
+    R -e "BiocManager::install('ggplot2')" && \
+    R -e "BiocManager::install('tidyr')" && \
+    R -e "BiocManager::install('gridExtra')" && \
+    R -e "BiocManager::install('crosstalk')" && \
+    R -e "BiocManager::install('htmltools')" && \
+    R -e "BiocManager::install(c('org.Hs.eg.db', 'org.Mm.eg.db', 'AnnotationDbi'))" && \
     apt-get purge -y --auto-remove $build_deps && \
     apt-get install -y --no-install-recommends openjdk-8-jre && \ 
     rm -rf /var/lib/{apt,dpkg}
