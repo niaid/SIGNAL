@@ -17,6 +17,9 @@ docker_scan:
     - CVE-2018-7159
     - CVE-2017-9801 #https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-9801
     - NODE-SECURITY-886 #https://www.npmjs.com/advisories/886
+    - CVE-2019-13173 #https://www.npmjs.com/advisories/886
+    - NODE-SECURITY-1066 # https://www.npmjs.com/advisories/1066
+    - CVE-2019-10744 # https://www.npmjs.com/advisories/1065
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
@@ -49,4 +52,4 @@ terraform:
         image: "[[${var.prod_image_base}]]"
         use_public_ssl_cert: true
         url_to_monitor: "triage-pilot.niaid.nih.gov"
-        security_group_name: "external_elb"
+         security_group_name: "external_elb"
