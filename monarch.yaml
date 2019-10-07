@@ -16,6 +16,7 @@ docker_scan:
     - CVE-2019-11358  # Jquery Cross-site scripting (XSS) vulnerability
     - CVE-2018-12121
     - CVE-2018-12122
+    - CVE-2018-14040  # bootstrap.js Cross-Site Scripting (XSS) Vulnerability
     - CVE-2018-12123
     - CVE-2018-7159
     - CVE-2017-9801 #https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-9801
