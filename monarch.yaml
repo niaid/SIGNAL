@@ -17,6 +17,7 @@ docker_scan:
     - CVE-2018-12121
     - CVE-2018-12122
     - CVE-2018-14040  # bootstrap.js Cross-Site Scripting (XSS) Vulnerability
+    - CVE-2018-14042  # bootstrap.js Cross-Site Scripting (XSS) Vulnerability
     - CVE-2018-12123
     - CVE-2018-7159
     - CVE-2017-9801 #https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-9801
@@ -29,7 +30,9 @@ webapp_scan:
     NS_URL: 'https://triage.niaidawsqa.net/'
   whitelist:
      - Out-of-date Version (Bootstrap):
-       - 'https://triage.niaidawsqa.net/' # Whitelissting temporarily
+       - 'https://phasespace-explorer.niaidawsqa.net/' # Outdated version is hard-coded in the vendor package
+     - Out-of-date Version (jQuery):
+      - 'https://phasespace-explorer.niaidawsqa.net/' # Outdated version is hard-coded in the vendor package
 approved_for_prod: true
 
 terraform:
