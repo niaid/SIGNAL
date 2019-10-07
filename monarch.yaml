@@ -15,7 +15,6 @@ docker_scan:
     - NODE-SECURITY-1164 #https://www.npmjs.com/advisories/1164
     - CVE-2019-11358  # Jquery Cross-site scripting (XSS) vulnerability
     - CVE-2018-12121
-    - CVE-2018-12121
     - CVE-2018-12122
     - CVE-2018-12123
     - CVE-2018-7159
