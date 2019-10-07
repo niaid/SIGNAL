@@ -29,10 +29,10 @@ webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
   whitelist:
-    - Out-of-date Version (Bootstrap):
+     - Out-of-date Version (Bootstrap):
       - 'https://phasespace-explorer.niaidawsqa.net/' # Outdated version is hard-coded in the vendor package
-    - Out-of-date Version (jQuery):
-     - 'https://phasespace-explorer.niaidawsqa.net/' # Outdated version is hard-coded in the vendor package
+     - Out-of-date Version (jQuery):
+      - 'https://phasespace-explorer.niaidawsqa.net/' # Outdated version is hard-coded in the vendor package
 approved_for_prod: true
 
 terraform:
