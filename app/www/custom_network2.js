@@ -121,13 +121,16 @@ Shiny.addCustomMessageHandler("jsondata2",
       .attr("class", "slidersvg")
       .attr("transform", "translate(700,360)")
 
+    // sliderChange will depend on if the user's OS is Windows or not
+    sliderChange = navigator.userAgent.indexOf("Windows") != -1 ? [5, 102, 200, 295] : [0, 90, 180, 270]
+
     sliderSVG.selectAll("text")
       .data(sliderText)
       .enter()
       .append("svg:text")
       .attr("font-family", "Helvetica")
       .attr("font-size", 14)
-      .attr("dy", function(d,i){return i*90})
+      .attr("dy", function(d,i){return sliderChange[i]})
       .text(function(d){return d;});
 
     // removes the network div once another network is chosen in shiny
