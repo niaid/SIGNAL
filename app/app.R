@@ -215,7 +215,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                      )
             ),
             tabPanel(title = "Network", value = "myNetworkGraph",
-                     h4('Please select your (1-3) pathways for network graph analysis'), hr(),
+                     h4('"Select up to 3 pathways for network graph analysis'), hr(),
                      div(style="display:inline-block",textInput(inputId="mySelection", label="Your selected pathway IDs", value = 0.0)),
                      div(style="display:inline-block",uiOutput("submitGraph")),
                      div(style="display:inline-block",uiOutput("link2Graph")),

@@ -1,0 +1,2271 @@
+name,imports,weights,datasource,Confidence,order,Color
+Ribosome.MRPL1,Novel.MRPL50,900,database,Medium,1,red
+Ribosome.MRPL1,Novel.MRRF,900,database,Medium,1,red
+Ribosome.MRPL1,Novel.ILF3,454,experimental,Medium,1,red
+Ribosome.MRPL1,Novel.ATP6V1H,417,experimental,Medium,1,red
+Ribosome.MRPL19,Novel.MRRF,900,database,Medium,2,red
+Ribosome.MRPL19,Novel.MRPL50,953,experimental,Medium,2,red
+Ribosome.RPL10,RNA transport.EIF1AX,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.EIF3G,900,database,Medium,3,red
+Ribosome.RPL10,Novel.PPP2R2A,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.EIF3H,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.EIF4E,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.NCBP2,900,database,Medium,3,red
+Ribosome.RPL10,Novel.EXOSC3,900,database,Medium,3,red
+Ribosome.RPL10,Novel.MPHOSPH6,900,database,Medium,3,red
+Ribosome.RPL10,Novel.SEC61B,900,database,Medium,3,red
+Ribosome.RPL10,Novel.RPL39L,900,database,Medium,3,red
+Ribosome.RPL10,Novel.SECISBP2,900,database,Medium,3,red
+Ribosome.RPL10,Novel.SPCS3,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.EEF1A1,900,database,Medium,3,red
+Ribosome.RPL10,Novel.EXOSC9,900,database,Medium,3,red
+Ribosome.RPL10,Novel.EXOSC5,900,database,Medium,3,red
+Ribosome.RPL10,RNA transport.EIF3I,900,database,Medium,3,red
+Ribosome.RPL10,Novel.ETF1,900,database,Medium,3,red
+Ribosome.RPL10,Novel.SEC61A1,900,database,Medium,3,red
+Ribosome.RPL10A,RNA transport.EIF1AX,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.EIF3G,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.PPP2R2A,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.EIF3H,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.EIF4E,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.NCBP2,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.EXOSC3,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.MPHOSPH6,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.SEC61B,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.ACTA2,444,experimental,Medium,4,red
+Ribosome.RPL10A,Novel.RPL39L,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.SECISBP2,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.SPCS3,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.EEF1A1,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.EXOSC9,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.EXOSC5,900,database,Medium,4,red
+Ribosome.RPL10A,RNA transport.EIF3I,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.ETF1,900,database,Medium,4,red
+Ribosome.RPL10A,Novel.SEC61A1,900,database,Medium,4,red
+Ribosome.RPL17,RNA transport.EIF3G,900,database,Medium,5,red
+Ribosome.RPL17,Novel.PPP2R2A,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.EIF3H,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.EIF4E,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.NCBP2,900,database,Medium,5,red
+Ribosome.RPL17,Novel.EXOSC3,900,database,Medium,5,red
+Ribosome.RPL17,Novel.MPHOSPH6,900,database,Medium,5,red
+Ribosome.RPL17,Novel.SEC61B,900,database,Medium,5,red
+Ribosome.RPL17,Novel.ACTA2,442,experimental,Medium,5,red
+Ribosome.RPL17,Novel.RPL39L,900,database,Medium,5,red
+Ribosome.RPL17,Novel.SECISBP2,900,database,Medium,5,red
+Ribosome.RPL17,Novel.SPCS3,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.EEF1A1,900,database,Medium,5,red
+Ribosome.RPL17,Novel.EXOSC9,900,database,Medium,5,red
+Ribosome.RPL17,Novel.EXOSC5,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.EIF3I,900,database,Medium,5,red
+Ribosome.RPL17,Novel.ETF1,900,database,Medium,5,red
+Ribosome.RPL17,Novel.FBL,597,experimental,Medium,5,red
+Ribosome.RPL17,Novel.SEC61A1,900,database,Medium,5,red
+Ribosome.RPL17,RNA transport.EIF1AX,900,database,Medium,5,red
+Ribosome.RPL18,RNA transport.EIF3G,900,database,Medium,6,red
+Ribosome.RPL18,Novel.PPP2R2A,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.EIF3H,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.EIF4E,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.NCBP2,900,database,Medium,6,red
+Ribosome.RPL18,Novel.EXOSC3,900,database,Medium,6,red
+Ribosome.RPL18,Novel.MPHOSPH6,900,database,Medium,6,red
+Ribosome.RPL18,Novel.SEC61B,900,database,Medium,6,red
+Ribosome.RPL18,Novel.ACTA2,454,experimental,Medium,6,red
+Ribosome.RPL18,Novel.RPL39L,900,database,Medium,6,red
+Ribosome.RPL18,Novel.SECISBP2,900,database,Medium,6,red
+Ribosome.RPL18,Novel.SPCS3,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.EEF1A1,900,database,Medium,6,red
+Ribosome.RPL18,Novel.EXOSC9,900,database,Medium,6,red
+Ribosome.RPL18,Novel.EXOSC5,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.EIF3I,900,database,Medium,6,red
+Ribosome.RPL18,Novel.HNRNPU,417,experimental,Medium,6,red
+Ribosome.RPL18,Novel.ETF1,900,database,Medium,6,red
+Ribosome.RPL18,Novel.FBL,474,experimental,Medium,6,red
+Ribosome.RPL18,Novel.SEC61A1,900,database,Medium,6,red
+Ribosome.RPL18,RNA transport.EIF1AX,900,database,Medium,6,red
+Ribosome.RPL18,Novel.NOP56,474,experimental,Medium,6,red
+Ribosome.RPL18A,Novel.SEC61A1,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.EIF1AX,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.NOP56,774,experimental,Medium,7,red
+Ribosome.RPL18A,Novel.NOP58,774,experimental,Medium,7,red
+Ribosome.RPL18A,Novel.SF3B3,417,experimental,Medium,7,red
+Ribosome.RPL18A,RNA transport.EIF3G,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.PPP2R2A,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.EIF3H,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.EIF4E,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.NCBP2,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.EXOSC3,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.MPHOSPH6,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.SEC61B,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.RPL39L,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.SECISBP2,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.SPCS3,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.EEF1A1,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.EXOSC9,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.EXOSC5,900,database,Medium,7,red
+Ribosome.RPL18A,RNA transport.EIF3I,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.HNRNPU,503,experimental,Medium,7,red
+Ribosome.RPL18A,Novel.ETF1,900,database,Medium,7,red
+Ribosome.RPL18A,Novel.FBL,774,experimental,Medium,7,red
+Ribosome.RPL27A,RNA transport.EIF1AX,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.EIF3G,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.PPP2R2A,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.EIF3H,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.EIF4E,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.NCBP2,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.EXOSC3,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.MPHOSPH6,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.SEC61B,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.RPL39L,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.SECISBP2,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.SPCS3,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.EEF1A1,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.EXOSC9,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.EXOSC5,900,database,Medium,8,red
+Ribosome.RPL27A,RNA transport.EIF3I,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.ETF1,900,database,Medium,8,red
+Ribosome.RPL27A,Novel.SEC61A1,900,database,Medium,8,red
+Ribosome.RPL32,RNA transport.EIF3G,900,database,Medium,9,red
+Ribosome.RPL32,Novel.PPP2R2A,900,database,Medium,9,red
+Ribosome.RPL32,RNA transport.EIF3H,900,database,Medium,9,red
+Ribosome.RPL32,RNA transport.EIF4E,900,database,Medium,9,red
+Ribosome.RPL32,RNA transport.NCBP2,900,database,Medium,9,red
+Ribosome.RPL32,Novel.EXOSC3,900,database,Medium,9,red
+Ribosome.RPL32,Novel.MPHOSPH6,900,database,Medium,9,red
+Ribosome.RPL32,Novel.SEC61B,900,database,Medium,9,red
+Ribosome.RPL32,Novel.RPL39L,900,database,Medium,9,red
+Ribosome.RPL32,Novel.SECISBP2,900,database,Medium,9,red
+Ribosome.RPL32,Novel.SPCS3,900,database,Medium,9,red
+Ribosome.RPL32,RNA transport.EEF1A1,900,database,Medium,9,red
+Ribosome.RPL32,Novel.EXOSC9,900,database,Medium,9,red
+Ribosome.RPL32,Novel.EXOSC5,900,database,Medium,9,red
+Ribosome.RPL32,Novel.ILF3,496,experimental,Medium,9,red
+Ribosome.RPL32,RNA transport.EIF3I,900,database,Medium,9,red
+Ribosome.RPL32,Novel.ETF1,900,database,Medium,9,red
+Ribosome.RPL32,Novel.SEC61A1,900,database,Medium,9,red
+Ribosome.RPL32,RNA transport.EIF1AX,900,database,Medium,9,red
+Ribosome.RPL37,Novel.RPL39L,900,database,Medium,10,red
+Ribosome.RPL37,Novel.SECISBP2,900,database,Medium,10,red
+Ribosome.RPL37,Novel.SPCS3,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EEF1A1,900,database,Medium,10,red
+Ribosome.RPL37,Novel.EXOSC9,900,database,Medium,10,red
+Ribosome.RPL37,Novel.EXOSC5,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EIF3I,900,database,Medium,10,red
+Ribosome.RPL37,Novel.ETF1,900,database,Medium,10,red
+Ribosome.RPL37,Novel.SEC61A1,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EIF1AX,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EIF3G,900,database,Medium,10,red
+Ribosome.RPL37,Novel.PPP2R2A,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EIF3H,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.EIF4E,900,database,Medium,10,red
+Ribosome.RPL37,RNA transport.NCBP2,900,database,Medium,10,red
+Ribosome.RPL37,Novel.EXOSC3,900,database,Medium,10,red
+Ribosome.RPL37,Novel.MPHOSPH6,900,database,Medium,10,red
+Ribosome.RPL37,Novel.SEC61B,900,database,Medium,10,red
+Ribosome.RPL4,RNA transport.EIF1AX,900,database,Medium,11,red
+Ribosome.RPL4,Novel.NOP56,474,experimental,Medium,11,red
+Ribosome.RPL4,Novel.NOP58,469,experimental,Medium,11,red
+Ribosome.RPL4,RNA transport.EIF3G,900,database,Medium,11,red
+Ribosome.RPL4,Novel.PPP2R2A,900,database,Medium,11,red
+Ribosome.RPL4,RNA transport.EIF3H,900,database,Medium,11,red
+Ribosome.RPL4,RNA transport.EIF4E,900,database,Medium,11,red
+Ribosome.RPL4,RNA transport.NCBP2,900,database,Medium,11,red
+Ribosome.RPL4,Novel.RSL1D1,442,experimental,Medium,11,red
+Ribosome.RPL4,Novel.EXOSC3,900,database,Medium,11,red
+Ribosome.RPL4,Novel.MPHOSPH6,900,database,Medium,11,red
+Ribosome.RPL4,Novel.SEC61B,900,database,Medium,11,red
+Ribosome.RPL4,Novel.RPL39L,900,database,Medium,11,red
+Ribosome.RPL4,Novel.SECISBP2,900,database,Medium,11,red
+Ribosome.RPL4,Novel.SPCS3,900,database,Medium,11,red
+Ribosome.RPL4,RNA transport.EEF1A1,900,database,Medium,11,red
+Ribosome.RPL4,Novel.EXOSC9,900,database,Medium,11,red
+Ribosome.RPL4,Novel.EXOSC5,900,database,Medium,11,red
+Ribosome.RPL4,RNA transport.EIF3I,900,database,Medium,11,red
+Ribosome.RPL4,Novel.ETF1,900,database,Medium,11,red
+Ribosome.RPL4,Novel.FBL,596,experimental,Medium,11,red
+Ribosome.RPL4,Novel.SEC61A1,900,database,Medium,11,red
+Ribosome.RPL6,RNA transport.EEF1A1,900,database,Medium,12,red
+Ribosome.RPL6,Novel.EXOSC9,900,database,Medium,12,red
+Ribosome.RPL6,Novel.EXOSC5,900,database,Medium,12,red
+Ribosome.RPL6,RNA transport.EIF3I,900,database,Medium,12,red
+Ribosome.RPL6,Novel.ETF1,900,database,Medium,12,red
+Ribosome.RPL6,Novel.FBL,584,experimental,Medium,12,red
+Ribosome.RPL6,Novel.SEC61A1,900,database,Medium,12,red
+Ribosome.RPL6,RNA transport.EIF1AX,900,database,Medium,12,red
+Ribosome.RPL6,Novel.NOP56,584,experimental,Medium,12,red
+Ribosome.RPL6,Novel.NOP58,476,experimental,Medium,12,red
+Ribosome.RPL6,Novel.ALDH1B1,417,experimental,Medium,12,red
+Ribosome.RPL6,RNA transport.EIF3G,900,database,Medium,12,red
+Ribosome.RPL6,Novel.PPP2R2A,900,database,Medium,12,red
+Ribosome.RPL6,RNA transport.EIF3H,900,database,Medium,12,red
+Ribosome.RPL6,RNA transport.EIF4E,900,database,Medium,12,red
+Ribosome.RPL6,RNA transport.NCBP2,900,database,Medium,12,red
+Ribosome.RPL6,Novel.EXOSC3,900,database,Medium,12,red
+Ribosome.RPL6,Novel.MPHOSPH6,900,database,Medium,12,red
+Ribosome.RPL6,Novel.SEC61B,900,database,Medium,12,red
+Ribosome.RPL6,Novel.RPL39L,900,database,Medium,12,red
+Ribosome.RPL6,Novel.SECISBP2,900,database,Medium,12,red
+Ribosome.RPL6,Novel.SPCS3,900,database,Medium,12,red
+Ribosome.RPL7,RNA transport.EIF1AX,900,database,Medium,13,red
+Ribosome.RPL7,Novel.NOP56,471,experimental,Medium,13,red
+Ribosome.RPL7,Novel.NOP58,614,experimental,Medium,13,red
+Ribosome.RPL7,RNA transport.EIF3G,900,database,Medium,13,red
+Ribosome.RPL7,Novel.PPP2R2A,900,database,Medium,13,red
+Ribosome.RPL7,RNA transport.EIF3H,900,database,Medium,13,red
+Ribosome.RPL7,RNA transport.EIF4E,900,database,Medium,13,red
+Ribosome.RPL7,RNA transport.NCBP2,900,database,Medium,13,red
+Ribosome.RPL7,Novel.EXOSC3,900,database,Medium,13,red
+Ribosome.RPL7,Novel.MPHOSPH6,900,database,Medium,13,red
+Ribosome.RPL7,Novel.SEC61B,900,database,Medium,13,red
+Ribosome.RPL7,Novel.RPL39L,900,database,Medium,13,red
+Ribosome.RPL7,Novel.SECISBP2,900,database,Medium,13,red
+Ribosome.RPL7,Novel.SPCS3,900,database,Medium,13,red
+Ribosome.RPL7,RNA transport.EEF1A1,900,database,Medium,13,red
+Ribosome.RPL7,Novel.EXOSC9,900,database,Medium,13,red
+Ribosome.RPL7,Novel.EXOSC5,900,database,Medium,13,red
+Ribosome.RPL7,RNA transport.EIF3I,900,database,Medium,13,red
+Ribosome.RPL7,Novel.ETF1,900,database,Medium,13,red
+Ribosome.RPL7,Novel.FBL,595,experimental,Medium,13,red
+Ribosome.RPL7,Novel.SEC61A1,900,database,Medium,13,red
+Ribosome.RPL7A,RNA transport.EIF1AX,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.EIF3G,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.PPP2R2A,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.EIF3H,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.EIF4E,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.NCBP2,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.EXOSC3,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.MPHOSPH6,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.SEC61B,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.ACTA2,451,experimental,Medium,14,red
+Ribosome.RPL7A,Novel.RPL39L,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.SECISBP2,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.SPCS3,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.EEF1A1,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.EXOSC9,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.EXOSC5,900,database,Medium,14,red
+Ribosome.RPL7A,RNA transport.EIF3I,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.ETF1,900,database,Medium,14,red
+Ribosome.RPL7A,Novel.SEC61A1,900,database,Medium,14,red
+Ribosome.RPL9,RNA transport.EIF3I,900,database,Medium,15,red
+Ribosome.RPL9,Novel.ETF1,900,database,Medium,15,red
+Ribosome.RPL9,Novel.FBL,417,experimental,Medium,15,red
+Ribosome.RPL9,Novel.SEC61A1,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.EIF1AX,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.EIF3G,900,database,Medium,15,red
+Ribosome.RPL9,Novel.PPP2R2A,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.EIF3H,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.EIF4E,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.NCBP2,900,database,Medium,15,red
+Ribosome.RPL9,Novel.EXOSC3,900,database,Medium,15,red
+Ribosome.RPL9,Novel.MPHOSPH6,900,database,Medium,15,red
+Ribosome.RPL9,Novel.SEC61B,900,database,Medium,15,red
+Ribosome.RPL9,Novel.RPL39L,900,database,Medium,15,red
+Ribosome.RPL9,Novel.SECISBP2,900,database,Medium,15,red
+Ribosome.RPL9,Novel.SPCS3,900,database,Medium,15,red
+Ribosome.RPL9,RNA transport.EEF1A1,900,database,Medium,15,red
+Ribosome.RPL9,Novel.EXOSC9,900,database,Medium,15,red
+Ribosome.RPL9,Novel.EXOSC5,900,database,Medium,15,red
+Ribosome.RPLP0,RNA transport.EIF1AX,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.EIF3G,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.PPP2R2A,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.EIF3H,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.EIF4E,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.NCBP2,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.EXOSC3,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.MPHOSPH6,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.SEC61B,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.RPL39L,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.SECISBP2,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.SPCS3,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.RANBP2,417,experimental,Medium,16,red
+Ribosome.RPLP0,RNA transport.EEF1A1,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.EXOSC9,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.EXOSC5,900,database,Medium,16,red
+Ribosome.RPLP0,RNA transport.EIF3I,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.HNRNPU,493,experimental,Medium,16,red
+Ribosome.RPLP0,Novel.ETF1,900,database,Medium,16,red
+Ribosome.RPLP0,Novel.SEC61A1,900,database,Medium,16,red
+Ribosome.RPS10,RNA transport.EIF1AX,900,database,Medium,17,red
+Ribosome.RPS10,Novel.NOP56,900,database,Medium,17,red
+Ribosome.RPS10,Novel.NOP58,900,database,Medium,17,red
+Ribosome.RPS10,Novel.UTP14A,900,database,Medium,17,red
+Ribosome.RPS10,RNA transport.EIF3G,900,database,Medium,17,red
+Ribosome.RPS10,Novel.PPP2R2A,900,database,Medium,17,red
+Ribosome.RPS10,RNA transport.EIF3H,900,database,Medium,17,red
+Ribosome.RPS10,RNA transport.EIF4E,900,database,Medium,17,red
+Ribosome.RPS10,RNA transport.NCBP2,900,database,Medium,17,red
+Ribosome.RPS10,Novel.HEATR1,900,database,Medium,17,red
+Ribosome.RPS10,Novel.SEC61B,900,database,Medium,17,red
+Ribosome.RPS10,Novel.IMP4,900,database,Medium,17,red
+Ribosome.RPS10,Novel.TMED2,417,experimental,Medium,17,red
+Ribosome.RPS10,Novel.DDX49,900,database,Medium,17,red
+Ribosome.RPS10,Novel.RPL39L,900,database,Medium,17,red
+Ribosome.RPS10,Novel.SECISBP2,900,database,Medium,17,red
+Ribosome.RPS10,Novel.SPCS3,900,database,Medium,17,red
+Ribosome.RPS10,RNA transport.EEF1A1,900,database,Medium,17,red
+Ribosome.RPS10,Novel.PRPF3,429,experimental,Medium,17,red
+Ribosome.RPS10,RNA transport.EIF3I,900,database,Medium,17,red
+Ribosome.RPS10,Novel.ETF1,900,database,Medium,17,red
+Ribosome.RPS10,Novel.FBL,900,database,Medium,17,red
+Ribosome.RPS10,Novel.SEC61A1,900,database,Medium,17,red
+Ribosome.RPS15A,RNA transport.EIF3I,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.ETF1,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.FBL,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.SEC61A1,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.EIF1AX,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.NOP56,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.NOP58,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.DDX3X,483,experimental,Medium,18,red
+Ribosome.RPS15A,Novel.UTP14A,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.EIF3G,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.PPP2R2A,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.EIF3H,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.EIF4E,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.NCBP2,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.HEATR1,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.SEC61B,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.IMP4,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.ACTA2,454,experimental,Medium,18,red
+Ribosome.RPS15A,Novel.DIMT1,417,experimental,Medium,18,red
+Ribosome.RPS15A,Novel.DDX49,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.RPL39L,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.SECISBP2,900,database,Medium,18,red
+Ribosome.RPS15A,Novel.SPCS3,900,database,Medium,18,red
+Ribosome.RPS15A,RNA transport.EEF1A1,900,database,Medium,18,red
+Ribosome.RPS18,RNA transport.EIF3I,900,database,Medium,19,red
+Ribosome.RPS18,Novel.ETF1,900,database,Medium,19,red
+Ribosome.RPS18,Novel.FBL,900,database,Medium,19,red
+Ribosome.RPS18,Novel.SEC61A1,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.EIF1AX,900,database,Medium,19,red
+Ribosome.RPS18,Novel.NOP56,900,database,Medium,19,red
+Ribosome.RPS18,Novel.NOP58,900,database,Medium,19,red
+Ribosome.RPS18,Novel.UTP14A,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.EIF3G,900,database,Medium,19,red
+Ribosome.RPS18,Novel.PPP2R2A,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.EIF3H,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.EIF4E,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.NCBP2,900,database,Medium,19,red
+Ribosome.RPS18,Novel.ATP6V0A1,595,experimental,Medium,19,red
+Ribosome.RPS18,Novel.HEATR1,900,database,Medium,19,red
+Ribosome.RPS18,Novel.SEC61B,900,database,Medium,19,red
+Ribosome.RPS18,Novel.IMP4,900,database,Medium,19,red
+Ribosome.RPS18,Novel.DDX49,900,database,Medium,19,red
+Ribosome.RPS18,Novel.RPL39L,900,database,Medium,19,red
+Ribosome.RPS18,Novel.SECISBP2,900,database,Medium,19,red
+Ribosome.RPS18,Novel.SPCS3,900,database,Medium,19,red
+Ribosome.RPS18,RNA transport.EEF1A1,900,database,Medium,19,red
+Ribosome.RPS20,Novel.NOP58,900,database,Medium,20,red
+Ribosome.RPS20,Novel.UTP14A,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EIF3G,900,database,Medium,20,red
+Ribosome.RPS20,Novel.PPP2R2A,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EIF3H,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EIF4E,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.NCBP2,900,database,Medium,20,red
+Ribosome.RPS20,Novel.HEATR1,900,database,Medium,20,red
+Ribosome.RPS20,Novel.SEC61B,900,database,Medium,20,red
+Ribosome.RPS20,Novel.IMP4,900,database,Medium,20,red
+Ribosome.RPS20,Novel.COG4,503,experimental,Medium,20,red
+Ribosome.RPS20,Novel.PGRMC1,503,experimental,Medium,20,red
+Ribosome.RPS20,Novel.DDX49,900,database,Medium,20,red
+Ribosome.RPS20,Novel.MAP4,503,experimental,Medium,20,red
+Ribosome.RPS20,Novel.RPL39L,900,database,Medium,20,red
+Ribosome.RPS20,Novel.SECISBP2,900,database,Medium,20,red
+Ribosome.RPS20,Novel.SPCS3,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EEF1A1,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EIF3I,900,database,Medium,20,red
+Ribosome.RPS20,Novel.ETF1,900,database,Medium,20,red
+Ribosome.RPS20,Novel.FBL,900,database,Medium,20,red
+Ribosome.RPS20,Novel.SEC61A1,900,database,Medium,20,red
+Ribosome.RPS20,RNA transport.EIF1AX,900,database,Medium,20,red
+Ribosome.RPS20,Novel.NOP56,900,database,Medium,20,red
+Ribosome.RPS23,RNA transport.EIF1AX,900,database,Medium,21,red
+Ribosome.RPS23,Novel.NOP56,900,database,Medium,21,red
+Ribosome.RPS23,Novel.NOP58,900,database,Medium,21,red
+Ribosome.RPS23,Novel.UTP14A,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.EIF3G,900,database,Medium,21,red
+Ribosome.RPS23,Novel.PPP2R2A,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.EIF3H,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.EIF4E,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.NCBP2,900,database,Medium,21,red
+Ribosome.RPS23,Novel.HEATR1,900,database,Medium,21,red
+Ribosome.RPS23,Novel.SEC61B,900,database,Medium,21,red
+Ribosome.RPS23,Novel.IMP4,900,database,Medium,21,red
+Ribosome.RPS23,Novel.ACTA2,454,experimental,Medium,21,red
+Ribosome.RPS23,Novel.DDX49,900,database,Medium,21,red
+Ribosome.RPS23,Novel.RPL39L,900,database,Medium,21,red
+Ribosome.RPS23,Novel.SECISBP2,900,database,Medium,21,red
+Ribosome.RPS23,Novel.SPCS3,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.EEF1A1,900,database,Medium,21,red
+Ribosome.RPS23,RNA transport.EIF3I,900,database,Medium,21,red
+Ribosome.RPS23,Novel.ETF1,900,database,Medium,21,red
+Ribosome.RPS23,Novel.FBL,900,database,Medium,21,red
+Ribosome.RPS23,Novel.SEC61A1,900,database,Medium,21,red
+Ribosome.RPS27,RNA transport.EIF1AX,900,database,Medium,22,red
+Ribosome.RPS27,Novel.NOP56,900,database,Medium,22,red
+Ribosome.RPS27,Novel.NOP58,900,database,Medium,22,red
+Ribosome.RPS27,Novel.CLASP1,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.NUP107,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.NUP133,900,database,Medium,22,red
+Ribosome.RPS27,Novel.UTP14A,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.XPO1,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.EIF3G,900,database,Medium,22,red
+Ribosome.RPS27,Novel.PPP2R2A,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.EIF3H,900,database,Medium,22,red
+Ribosome.RPS27,Novel.CENPQ,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.EIF4E,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.NCBP2,900,database,Medium,22,red
+Ribosome.RPS27,Novel.CDC42,900,database,Medium,22,red
+Ribosome.RPS27,Novel.ZWILCH,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.NUP85,900,database,Medium,22,red
+Ribosome.RPS27,Novel.AHCTF1,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.NUP160,900,database,Medium,22,red
+Ribosome.RPS27,Novel.HEATR1,900,database,Medium,22,red
+Ribosome.RPS27,Novel.SEC61B,900,database,Medium,22,red
+Ribosome.RPS27,Novel.IMP4,900,database,Medium,22,red
+Ribosome.RPS27,Novel.ITGB3BP,900,database,Medium,22,red
+Ribosome.RPS27,Novel.DDX49,900,database,Medium,22,red
+Ribosome.RPS27,Novel.TAOK1,900,database,Medium,22,red
+Ribosome.RPS27,Novel.RPL39L,900,database,Medium,22,red
+Ribosome.RPS27,Novel.SECISBP2,900,database,Medium,22,red
+Ribosome.RPS27,Novel.SPCS3,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.RANBP2,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.EEF1A1,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.RANGAP1,900,database,Medium,22,red
+Ribosome.RPS27,RNA transport.EIF3I,900,database,Medium,22,red
+Ribosome.RPS27,Novel.ETF1,900,database,Medium,22,red
+Ribosome.RPS27,Novel.FBL,900,database,Medium,22,red
+Ribosome.RPS27,Novel.SEC61A1,900,database,Medium,22,red
+Ribosome.RPS4X,RNA transport.EIF1AX,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.NOP56,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.NOP58,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.UTP14A,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.EIF3G,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.PPP2R2A,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.EIF3H,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.EIF4E,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.NCBP2,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.HEATR1,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.SEC61B,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.IMP4,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.ACTA2,456,experimental,Medium,23,red
+Ribosome.RPS4X,Novel.DDX49,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.RPL39L,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.SECISBP2,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.SPCS3,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.EEF1A1,900,database,Medium,23,red
+Ribosome.RPS4X,RNA transport.EIF3I,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.ETF1,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.FBL,900,database,Medium,23,red
+Ribosome.RPS4X,Novel.SEC61A1,900,database,Medium,23,red
+Ribosome.RPS6,Novel.NOP56,900,database,Medium,24,red
+Ribosome.RPS6,Novel.NOP58,900,database,Medium,24,red
+Ribosome.RPS6,Novel.UTP14A,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EIF3G,900,database,Medium,24,red
+Ribosome.RPS6,Novel.PPP2R2A,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EIF3H,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EIF4E,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.NCBP2,900,database,Medium,24,red
+Ribosome.RPS6,Novel.EXOSC3,900,database,Medium,24,red
+Ribosome.RPS6,Novel.MPHOSPH6,900,database,Medium,24,red
+Ribosome.RPS6,Novel.HEATR1,900,database,Medium,24,red
+Ribosome.RPS6,Novel.SEC61B,900,database,Medium,24,red
+Ribosome.RPS6,Novel.IMP4,900,database,Medium,24,red
+Ribosome.RPS6,Novel.RPS6KB1,900,database,Medium,24,red
+Ribosome.RPS6,Novel.DDX49,900,database,Medium,24,red
+Ribosome.RPS6,Novel.RPL39L,900,database,Medium,24,red
+Ribosome.RPS6,Novel.SECISBP2,900,database,Medium,24,red
+Ribosome.RPS6,Novel.SPCS3,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EEF1A1,900,database,Medium,24,red
+Ribosome.RPS6,Novel.EXOSC9,900,database,Medium,24,red
+Ribosome.RPS6,Novel.EXOSC5,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EIF3I,900,database,Medium,24,red
+Ribosome.RPS6,Novel.ETF1,900,database,Medium,24,red
+Ribosome.RPS6,Novel.FBL,900,database,Medium,24,red
+Ribosome.RPS6,Novel.SEC61A1,900,database,Medium,24,red
+Ribosome.RPS6,RNA transport.EIF1AX,900,database,Medium,24,red
+Ribosome.RPS8,Novel.ETF1,900,database,Medium,25,red
+Ribosome.RPS8,Novel.FBL,900,database,Medium,25,red
+Ribosome.RPS8,Novel.SEC61A1,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EIF1AX,900,database,Medium,25,red
+Ribosome.RPS8,Novel.NOP56,900,database,Medium,25,red
+Ribosome.RPS8,Novel.NOP58,900,database,Medium,25,red
+Ribosome.RPS8,Novel.UTP14A,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EIF3G,900,database,Medium,25,red
+Ribosome.RPS8,Novel.PPP2R2A,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EIF3H,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EIF4E,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.NCBP2,900,database,Medium,25,red
+Ribosome.RPS8,Novel.HEATR1,900,database,Medium,25,red
+Ribosome.RPS8,Novel.SEC61B,900,database,Medium,25,red
+Ribosome.RPS8,Novel.IMP4,900,database,Medium,25,red
+Ribosome.RPS8,Novel.DDX49,900,database,Medium,25,red
+Ribosome.RPS8,Novel.DCAF1,503,experimental,Medium,25,red
+Ribosome.RPS8,Novel.RPL39L,900,database,Medium,25,red
+Ribosome.RPS8,Novel.SECISBP2,900,database,Medium,25,red
+Ribosome.RPS8,Novel.SPCS3,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EEF1A1,900,database,Medium,25,red
+Ribosome.RPS8,RNA transport.EIF3I,900,database,Medium,25,red
+Ribosome.RSL24D1,Novel.FBL,417,experimental,Medium,26,red
+Novel.ABCC2,RNA transport.EEF1A1,464,experimental,Medium,27,green
+Novel.ABLIM2,Novel.CDC42,800,database,Medium,28,green
+Novel.ABTB1,RNA transport.EEF1A1,439,experimental,Medium,29,green
+Novel.ACTA1,Novel.CDC42,900,database,Medium,30,green
+Novel.ACTA2,Ribosome.RPS15A,454,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPS23,454,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPL7A,451,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPS4X,456,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPL10A,444,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPL18,454,experimental,Medium,31,green
+Novel.ACTA2,Ribosome.RPL17,442,experimental,Medium,31,green
+Novel.ACTA2,Novel.SPTAN1,503,experimental,Medium,31,green
+Novel.AHCTF1,RNA transport.NUP160,900,database,Medium,32,green
+Novel.AHCTF1,Novel.TAOK1,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.RANBP2,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.RANGAP1,900,database,Medium,32,green
+Novel.AHCTF1,Ribosome.RPS27,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.NUP107,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.NUP133,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.XPO1,900,database,Medium,32,green
+Novel.AHCTF1,RNA transport.NUP85,900,database,Medium,32,green
+Novel.AHCTF1,Novel.CDC42,900,database,Medium,32,green
+Novel.AJUBA,Novel.POLR2J,900,database,Medium,33,green
+Novel.AKT1,Novel.RPS6KB1,900,database,High,34,green
+Novel.AKT1,Novel.RRAGB,900,database,High,34,green
+Novel.AKT1,Novel.PPP2R2A,800,database,High,34,green
+Novel.AKT1,Novel.MTOR,900,database,High,34,green
+Novel.ALDH1B1,Ribosome.RPL6,417,experimental,Medium,35,green
+Novel.AP2M1,Novel.DVL2,900,database,High,36,green
+Novel.ARAP1,Novel.ARF1,900,database,Medium,37,green
+Novel.ARAP1,Novel.CDC42,900,database,Medium,37,green
+Novel.ARF1,RNA transport.EIF2B1,417,experimental,High,38,green
+Novel.ARF1,Novel.LDHAL6B,417,experimental,High,38,green
+Novel.ARF1,Novel.CCT3,417,experimental,High,38,green
+Novel.ARF1,Novel.SPTAN1,900,database,High,38,green
+Novel.ARF1,Novel.RAB1B,900,database,High,38,green
+Novel.ARF1,Novel.SPTBN1,900,database,High,38,green
+Novel.ARF1,Novel.HIP1R,900,database,High,38,green
+Novel.ARF1,Novel.RAB6A,774,experimental,High,38,green
+Novel.ARF1,Novel.TMED10,900,database,High,38,green
+Novel.ARF1,Novel.RAB2A,417,experimental,High,38,green
+Novel.ARF1,Novel.TMED2,900,database,High,38,green
+Novel.ARF1,Novel.GOSR2,900,database,High,38,green
+Novel.ARF1,Novel.RAB6B,774,experimental,High,38,green
+Novel.ARF1,Novel.GBF1,900,database,High,38,green
+Novel.ARF1,Novel.CTSZ,900,database,High,38,green
+Novel.ARF1,Novel.KIF3C,900,database,High,38,green
+Novel.ARF1,Novel.KIFC2,900,database,High,38,green
+Novel.ARF1,Novel.ARAP1,900,database,High,38,green
+Novel.ARF1,Novel.TRIP11,900,database,High,38,green
+Novel.ARGLU1,Novel.CHERP,596,experimental,High,39,green
+Novel.ARGLU1,Novel.SF3A2,774,experimental,High,39,green
+Novel.ARHGAP32,Novel.CDC42,900,database,High,40,green
+Novel.ARHGAP36,Novel.CDC42,900,database,Medium,41,green
+Novel.ARHGAP9,Novel.CDC42,900,database,Medium,42,green
+Novel.ARHGEF12,Novel.CDC42,900,database,High,43,green
+Novel.ARHGEF19,Novel.CDC42,900,database,High,44,green
+Novel.ARHGEF2,Novel.CDC42,900,database,Medium,45,green
+Novel.ARPC1A,Novel.ARPC5,900,database,High,46,green
+Novel.ARPC1A,Novel.DVL2,900,database,High,46,green
+Novel.ARPC1A,Novel.CDC42,900,database,High,46,green
+Novel.ARPC5,Novel.DVL2,900,database,Medium,47,green
+Novel.ARPC5,RNA transport.EIF3H,488,experimental,Medium,47,green
+Novel.ARPC5,Novel.CTTN,900,database,Medium,47,green
+Novel.ARPC5,Novel.CDC42,900,database,Medium,47,green
+Novel.ARPC5,Novel.HIP1R,900,database,Medium,47,green
+Novel.ARPC5,Novel.ARPC1A,900,database,Medium,47,green
+Novel.ATG7,Novel.DCAF1,900,database,High,48,green
+Novel.ATP6V0A1,Ribosome.RPS18,595,experimental,High,49,green
+Novel.ATP6V0A1,Novel.ATP6V1H,900,database,High,49,green
+Novel.ATP6V1E2,Novel.ATP6V1H,900,database,Medium,50,green
+Novel.ATP6V1H,Ribosome.MRPL1,417,experimental,Medium,51,green
+Novel.ATP6V1H,Novel.CDC42,417,experimental,Medium,51,green
+Novel.ATP6V1H,Novel.ATP6V0A1,900,database,Medium,51,green
+Novel.ATP6V1H,Novel.ATP6V1E2,900,database,Medium,51,green
+Novel.ATP6V1H,Novel.LHPP,900,database,Medium,51,green
+Novel.BAHD1,Novel.HDAC1,900,database,High,52,green
+Novel.BCL9,Novel.HDAC1,900,database,High,53,green
+Novel.BRPF1,Novel.HDAC1,900,database,Medium,54,green
+Novel.BTRC,Novel.RELA,900,database,Medium,55,green
+Novel.BTRC,Novel.HNRNPU,415,experimental,Medium,55,green
+Novel.BTRC,Novel.HDAC1,900,database,Medium,55,green
+Novel.CACNG1,Novel.PPP2R2A,800,database,High,56,green
+Novel.CCNT1,RNA transport.NCBP2,900,database,High,57,green
+Novel.CCNT1,Novel.POLR2J,900,database,High,57,green
+Novel.CCNT1,Novel.TGFBR2,540,database,High,57,green
+Novel.CCT3,Novel.NOP56,900,database,Medium,58,green
+Novel.CCT3,Novel.PPP2R2A,608,experimental,Medium,58,green
+Novel.CCT3,Novel.ARF1,417,experimental,Medium,58,green
+Novel.CD34,RNA transport.NUP62,720,database,Medium,59,green
+Novel.CD4,Novel.DVL2,900,database,High,60,green
+Novel.CDA,RNA transport.XPO1,417,experimental,Medium,61,green
+Novel.CDA,Novel.TIMM8A,417,experimental,Medium,61,green
+Novel.CDC42,RNA transport.NUP85,900,database,Medium,62,green
+Novel.CDC42,RNA transport.NUP160,900,database,Medium,62,green
+Novel.CDC42,Novel.ARPC1A,900,database,Medium,62,green
+Novel.CDC42,Novel.ZWILCH,900,database,Medium,62,green
+Novel.CDC42,Novel.AHCTF1,900,database,Medium,62,green
+Novel.CDC42,Novel.ARPC5,900,database,Medium,62,green
+Novel.CDC42,Novel.ACTA1,900,database,Medium,62,green
+Novel.CDC42,Novel.EGFR,900,database,Medium,62,green
+Novel.CDC42,Novel.ITGB3BP,900,database,Medium,62,green
+Novel.CDC42,Novel.RAP1B,900,database,Medium,62,green
+Novel.CDC42,Novel.PAK2,900,database,Medium,62,green
+Novel.CDC42,Novel.EPS8,900,database,Medium,62,green
+Novel.CDC42,Novel.RPS6KB1,900,database,Medium,62,green
+Novel.CDC42,Novel.EGF,900,database,Medium,62,green
+Novel.CDC42,Novel.GNG2,900,database,Medium,62,green
+Novel.CDC42,Novel.LCP2,900,database,Medium,62,green
+Novel.CDC42,Novel.CXCR4,900,database,Medium,62,green
+Novel.CDC42,Novel.TIAM1,900,database,Medium,62,green
+Novel.CDC42,Novel.MEF2C,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGEF2,900,database,Medium,62,green
+Novel.CDC42,Novel.TAOK1,900,database,Medium,62,green
+Novel.CDC42,Novel.ABLIM2,800,database,Medium,62,green
+Novel.CDC42,Novel.ARAP1,900,database,Medium,62,green
+Novel.CDC42,Novel.TIAM2,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGEF19,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGAP36,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGAP32,900,database,Medium,62,green
+Novel.CDC42,Novel.STARD13,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGAP9,900,database,Medium,62,green
+Novel.CDC42,RNA transport.RANBP2,900,database,Medium,62,green
+Novel.CDC42,RNA transport.RANGAP1,900,database,Medium,62,green
+Novel.CDC42,Ribosome.RPS27,900,database,Medium,62,green
+Novel.CDC42,RNA transport.NUP107,900,database,Medium,62,green
+Novel.CDC42,RNA transport.NUP133,900,database,Medium,62,green
+Novel.CDC42,RNA transport.XPO1,900,database,Medium,62,green
+Novel.CDC42,Novel.ATP6V1H,417,experimental,Medium,62,green
+Novel.CDC42,Novel.CLASP1,900,database,Medium,62,green
+Novel.CDC42,Novel.MTOR,900,database,Medium,62,green
+Novel.CDC42,Novel.ARHGEF12,900,database,Medium,62,green
+Novel.CDC42,Novel.CTTN,900,database,Medium,62,green
+Novel.CDC42,Novel.RAB1B,417,experimental,Medium,62,green
+Novel.CDC42,Novel.CENPQ,900,database,Medium,62,green
+Novel.CDC42,Novel.PARD6B,800,database,Medium,62,green
+Novel.CDK13,Novel.PRPF3,503,experimental,Medium,63,green
+Novel.CENPQ,RNA transport.NUP85,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.NUP160,900,database,Medium,64,green
+Novel.CENPQ,Novel.CDC42,900,database,Medium,64,green
+Novel.CENPQ,Novel.TAOK1,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.RANBP2,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.RANGAP1,900,database,Medium,64,green
+Novel.CENPQ,Ribosome.RPS27,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.NUP107,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.NUP133,900,database,Medium,64,green
+Novel.CENPQ,RNA transport.XPO1,900,database,Medium,64,green
+Novel.CHERP,Novel.HNRNPF,900,database,Medium,65,green
+Novel.CHERP,Novel.PABPN1,900,database,Medium,65,green
+Novel.CHERP,Novel.SLU7,900,database,Medium,65,green
+Novel.CHERP,Novel.PPWD1,900,database,Medium,65,green
+Novel.CHERP,RNA transport.NCBP2,900,database,Medium,65,green
+Novel.CHERP,Novel.PRPF3,900,database,Medium,65,green
+Novel.CHERP,Novel.RBM22,900,database,Medium,65,green
+Novel.CHERP,Novel.SF3A2,900,database,Medium,65,green
+Novel.CHERP,Novel.HNRNPU,900,database,Medium,65,green
+Novel.CHERP,Novel.SNRPA1,900,database,Medium,65,green
+Novel.CHERP,Novel.SF3B3,900,database,Medium,65,green
+Novel.CHERP,Novel.PRPF40A,900,database,Medium,65,green
+Novel.CHERP,Novel.LSM3,900,database,Medium,65,green
+Novel.CHERP,Novel.LSM2,900,database,Medium,65,green
+Novel.CHERP,Novel.SNRPB,900,database,Medium,65,green
+Novel.CHERP,Novel.SF3A1,900,database,Medium,65,green
+Novel.CHERP,Novel.SUGP1,900,database,Medium,65,green
+Novel.CHERP,Novel.ELAVL1,900,database,Medium,65,green
+Novel.CHERP,Novel.POLR2J,900,database,Medium,65,green
+Novel.CHERP,Novel.ARGLU1,596,experimental,Medium,65,green
+Novel.CLASP1,RNA transport.NUP107,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.NUP133,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.XPO1,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.NUP85,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.NUP160,900,database,Medium,66,green
+Novel.CLASP1,Novel.CDC42,900,database,Medium,66,green
+Novel.CLASP1,Novel.TAOK1,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.RANBP2,900,database,Medium,66,green
+Novel.CLASP1,RNA transport.RANGAP1,900,database,Medium,66,green
+Novel.CLASP1,Ribosome.RPS27,900,database,Medium,66,green
+Novel.COG4,Ribosome.RPS20,503,experimental,High,67,green
+Novel.COPS4,Novel.POLR2J,900,database,Medium,68,green
+Novel.COPS7B,Novel.POLR2J,900,database,Medium,69,green
+Novel.COPS8,Novel.POLR2J,900,database,Medium,70,green
+Novel.CSNK1G2,Novel.DVL2,900,database,Medium,71,green
+Novel.CSNK2A2,Novel.DVL2,900,database,Medium,72,green
+Novel.CSNK2A2,RNA transport.EIF3H,774,experimental,Medium,72,green
+Novel.CSNK2A2,Novel.MAP1LC3A,595,experimental,Medium,72,green
+Novel.CTDP1,RNA transport.NCBP2,900,database,High,73,green
+Novel.CTDP1,Novel.POLR2J,900,database,High,73,green
+Novel.CTSZ,Novel.ARF1,900,database,Medium,74,green
+Novel.CTTN,Novel.CDC42,900,database,Medium,75,green
+Novel.CTTN,Novel.ARPC5,900,database,Medium,75,green
+Novel.CTTN,Novel.DVL2,900,database,Medium,75,green
+Novel.CXCR4,Novel.CDC42,900,database,High,76,green
+Novel.CYCS,Novel.PPP2R2A,900,database,Medium,77,green
+Novel.DCAF1,Ribosome.RPS8,503,experimental,High,78,green
+Novel.DCAF1,Novel.ATG7,900,database,High,78,green
+Novel.DDX3X,RNA transport.NUP133,503,experimental,High,79,green
+Novel.DDX3X,Ribosome.RPS15A,483,experimental,High,79,green
+Novel.DDX49,Ribosome.RPS15A,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS18,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS8,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS23,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS10,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS27,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS4X,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS6,900,database,Medium,80,green
+Novel.DDX49,Ribosome.RPS20,900,database,Medium,80,green
+Novel.DDX49,Novel.FBL,900,database,Medium,80,green
+Novel.DDX49,Novel.NOP56,900,database,Medium,80,green
+Novel.DDX49,Novel.NOP58,900,database,Medium,80,green
+Novel.DDX49,Novel.UTP14A,900,database,Medium,80,green
+Novel.DDX49,Novel.HEATR1,900,database,Medium,80,green
+Novel.DDX49,Novel.IMP4,900,database,Medium,80,green
+Novel.DIMT1,Ribosome.RPS15A,417,experimental,High,81,green
+Novel.DVL2,RNA transport.SENP2,800,database,Medium,82,green
+Novel.DVL2,Novel.PSMA7,900,database,Medium,82,green
+Novel.DVL2,Novel.PSME2,900,database,Medium,82,green
+Novel.DVL2,Novel.PSMB7,900,database,Medium,82,green
+Novel.DVL2,Novel.PSMB2,900,database,Medium,82,green
+Novel.DVL2,Novel.CTTN,900,database,Medium,82,green
+Novel.DVL2,Novel.HIP1R,900,database,Medium,82,green
+Novel.DVL2,Novel.ARPC1A,900,database,Medium,82,green
+Novel.DVL2,Novel.ARPC5,900,database,Medium,82,green
+Novel.DVL2,Novel.EGFR,900,database,Medium,82,green
+Novel.DVL2,Novel.CD4,900,database,Medium,82,green
+Novel.DVL2,Novel.GAPVD1,900,database,Medium,82,green
+Novel.DVL2,Novel.AP2M1,900,database,Medium,82,green
+Novel.DVL2,Novel.SH3GL3,900,database,Medium,82,green
+Novel.DVL2,Novel.EGF,900,database,Medium,82,green
+Novel.DVL2,Novel.CSNK2A2,900,database,Medium,82,green
+Novel.DVL2,Novel.CSNK1G2,900,database,Medium,82,green
+Novel.EGF,Novel.DVL2,900,database,High,83,green
+Novel.EGF,Novel.PPP2R2A,900,database,High,83,green
+Novel.EGF,Novel.MTOR,900,database,High,83,green
+Novel.EGF,Novel.CDC42,900,database,High,83,green
+Novel.EGFR,Novel.FGF2,800,database,High,84,green
+Novel.EGFR,Novel.DVL2,900,database,High,84,green
+Novel.EGFR,Novel.PPP2R2A,900,database,High,84,green
+Novel.EGFR,Novel.MTOR,900,database,High,84,green
+Novel.EGFR,Novel.CDC42,900,database,High,84,green
+Novel.EGR2,Novel.POLR2J,900,database,Medium,85,green
+Novel.ELAVL1,RNA transport.NCBP2,900,database,Medium,86,green
+Novel.ELAVL1,Novel.POLR2J,900,database,Medium,86,green
+Novel.ELAVL1,Novel.CHERP,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SLU7,900,database,Medium,86,green
+Novel.ELAVL1,RNA transport.XPO1,900,database,Medium,86,green
+Novel.ELAVL1,Novel.PRPF3,900,database,Medium,86,green
+Novel.ELAVL1,Novel.RBM22,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SF3A2,900,database,Medium,86,green
+Novel.ELAVL1,Novel.HNRNPU,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SNRPA1,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SF3B3,900,database,Medium,86,green
+Novel.ELAVL1,Novel.PRPF40A,900,database,Medium,86,green
+Novel.ELAVL1,Novel.LSM3,900,database,Medium,86,green
+Novel.ELAVL1,Novel.LSM2,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SNRPB,900,database,Medium,86,green
+Novel.ELAVL1,Novel.SF3A1,900,database,Medium,86,green
+Novel.ENTPD3,Novel.POLR2J,900,database,Medium,87,green
+Novel.EP300,Novel.HDAC1,900,database,Medium,88,green
+Novel.EP300,Novel.GCK,900,database,Medium,88,green
+Novel.EP300,Novel.USP7,900,database,Medium,88,green
+Novel.EP300,Novel.POLR2J,900,database,Medium,88,green
+Novel.EP300,Novel.SPEN,900,database,Medium,88,green
+Novel.EPS8,Novel.CDC42,900,database,High,89,green
+Novel.ERC2,RNA transport.EIF1AX,800,experimental,Medium,90,green
+Novel.ERCC3,RNA transport.NCBP2,900,database,High,91,green
+Novel.ERCC3,Novel.USP7,900,database,High,91,green
+Novel.ERCC3,Novel.TWISTNB,900,database,High,91,green
+Novel.ERCC3,Novel.POLR2J,900,database,High,91,green
+Novel.ERCC3,Novel.TGFBR2,540,database,High,91,green
+Novel.ERCC3,Novel.ZNRD1,900,database,High,91,green
+Novel.ETF1,Ribosome.RPL18A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS23,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL4,900,database,High,92,green
+Novel.ETF1,Ribosome.RPLP0,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL7,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL10,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL27A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS10,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS27,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL7A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS4X,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL10A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS6,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS20,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL18,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL17,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL32,900,database,High,92,green
+Novel.ETF1,RNA transport.NCBP2,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL37,900,database,High,92,green
+Novel.ETF1,Novel.PPP2R2A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL6,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS15A,900,database,High,92,green
+Novel.ETF1,Ribosome.RPL9,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS18,900,database,High,92,green
+Novel.ETF1,Ribosome.RPS8,900,database,High,92,green
+Novel.EXOSC3,Ribosome.RPL37,900,database,High,93,green
+Novel.EXOSC3,Novel.HEATR1,900,database,High,93,green
+Novel.EXOSC3,Novel.IMP4,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL6,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL9,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL18A,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL4,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPLP0,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL7,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL10,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL27A,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL7A,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL10A,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPS6,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL18,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL17,900,database,High,93,green
+Novel.EXOSC3,Ribosome.RPL32,900,database,High,93,green
+Novel.EXOSC3,Novel.FBL,900,database,High,93,green
+Novel.EXOSC3,Novel.NOP56,900,database,High,93,green
+Novel.EXOSC3,Novel.NOP58,900,database,High,93,green
+Novel.EXOSC3,Novel.UTP14A,900,database,High,93,green
+Novel.EXOSC5,Ribosome.RPL9,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL18A,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL4,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPLP0,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL7,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL10,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL27A,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL7A,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL10A,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPS6,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL18,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL17,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL32,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL37,900,database,High,94,green
+Novel.EXOSC5,Novel.FBL,900,database,High,94,green
+Novel.EXOSC5,Novel.NOP56,900,database,High,94,green
+Novel.EXOSC5,Novel.NOP58,900,database,High,94,green
+Novel.EXOSC5,Novel.UTP14A,900,database,High,94,green
+Novel.EXOSC5,Novel.HEATR1,900,database,High,94,green
+Novel.EXOSC5,Novel.IMP4,900,database,High,94,green
+Novel.EXOSC5,Ribosome.RPL6,900,database,High,94,green
+Novel.EXOSC9,Ribosome.RPL9,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL18A,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL4,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPLP0,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL7,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL10,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL27A,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL7A,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL10A,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPS6,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL18,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL17,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL32,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL37,900,database,Medium,95,green
+Novel.EXOSC9,Novel.FBL,900,database,Medium,95,green
+Novel.EXOSC9,Novel.NOP56,900,database,Medium,95,green
+Novel.EXOSC9,Novel.NOP58,900,database,Medium,95,green
+Novel.EXOSC9,Novel.UTP14A,900,database,Medium,95,green
+Novel.EXOSC9,Novel.HEATR1,900,database,Medium,95,green
+Novel.EXOSC9,Novel.IMP4,900,database,Medium,95,green
+Novel.EXOSC9,Ribosome.RPL6,900,database,Medium,95,green
+Novel.FBL,Ribosome.RPL18A,774,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPS23,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPL4,596,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPL7,595,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPS10,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPS27,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPS4X,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPS6,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPS20,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPL18,474,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPL17,597,experimental,Medium,96,green
+Novel.FBL,Ribosome.RSL24D1,417,experimental,Medium,96,green
+Novel.FBL,Novel.NOP56,900,database,Medium,96,green
+Novel.FBL,Novel.NOP58,900,database,Medium,96,green
+Novel.FBL,Novel.UTP14A,900,database,Medium,96,green
+Novel.FBL,Novel.RSL1D1,774,experimental,Medium,96,green
+Novel.FBL,Novel.EXOSC3,900,database,Medium,96,green
+Novel.FBL,Novel.MPHOSPH6,900,database,Medium,96,green
+Novel.FBL,Novel.HEATR1,900,database,Medium,96,green
+Novel.FBL,Novel.IMP4,900,database,Medium,96,green
+Novel.FBL,Novel.DDX49,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPL6,584,experimental,Medium,96,green
+Novel.FBL,RNA transport.EEF1A1,474,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPS15A,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPL9,417,experimental,Medium,96,green
+Novel.FBL,Ribosome.RPS18,900,database,Medium,96,green
+Novel.FBL,Ribosome.RPS8,900,database,Medium,96,green
+Novel.FBL,Novel.EXOSC9,900,database,Medium,96,green
+Novel.FBL,Novel.EXOSC5,900,database,Medium,96,green
+Novel.FBL,Novel.PRPF3,439,experimental,Medium,96,green
+Novel.FBXW11,Novel.RELA,900,database,High,97,green
+Novel.FGF2,RNA transport.NCBP2,900,database,Medium,98,green
+Novel.FGF2,Novel.POLR2J,900,database,Medium,98,green
+Novel.FGF2,Novel.EGFR,800,database,Medium,98,green
+Novel.FGF2,Novel.FLT1,800,database,Medium,98,green
+Novel.FGF2,Novel.PDGFRA,800,database,Medium,98,green
+Novel.FGF2,Novel.MYO18A,900,database,Medium,98,green
+Novel.FLII,RNA transport.EIF1AX,503,experimental,High,99,green
+Novel.FLNC,RNA transport.NUP133,774,experimental,Medium,100,green
+Novel.FLT1,Novel.FGF2,800,database,Medium,101,green
+Novel.GAPVD1,Novel.DVL2,900,database,High,102,green
+Novel.GBF1,Novel.ARF1,900,database,Medium,103,green
+Novel.GCK,RNA transport.NUP107,900,database,High,104,green
+Novel.GCK,RNA transport.NUP133,900,database,High,104,green
+Novel.GCK,RNA transport.NUP153,900,database,High,104,green
+Novel.GCK,RNA transport.NUP155,900,database,High,104,green
+Novel.GCK,RNA transport.NUP85,900,database,High,104,green
+Novel.GCK,RNA transport.NUP160,900,database,High,104,green
+Novel.GCK,RNA transport.NUP88,900,database,High,104,green
+Novel.GCK,RNA transport.NUP62,900,database,High,104,green
+Novel.GCK,RNA transport.NUP54,900,database,High,104,green
+Novel.GCK,Novel.EP300,900,database,High,104,green
+Novel.GCK,RNA transport.RANBP2,900,database,High,104,green
+Novel.GLE1,RNA transport.RANBP2,540,database,Medium,105,green
+Novel.GLE1,RNA transport.NUP107,651,experimental,Medium,105,green
+Novel.GLE1,RNA transport.NUP153,734,experimental,Medium,105,green
+Novel.GNG2,Novel.CDC42,900,database,Medium,106,green
+Novel.GORASP2,RNA transport.EEF1A1,503,experimental,Medium,107,green
+Novel.GOSR2,Novel.ARF1,900,database,High,108,green
+Novel.GRB2,Novel.RPS6KB1,900,database,Medium,109,green
+Novel.HDAC1,RNA transport.NUP153,900,database,Medium,110,green
+Novel.HDAC1,RNA transport.XPO1,900,database,Medium,110,green
+Novel.HDAC1,RNA transport.NUP62,900,database,Medium,110,green
+Novel.HDAC1,Novel.POLR3A,417,experimental,Medium,110,green
+Novel.HDAC1,Novel.BTRC,900,database,Medium,110,green
+Novel.HDAC1,Novel.KAT2A,900,database,Medium,110,green
+Novel.HDAC1,Novel.RELA,628,experimental,Medium,110,green
+Novel.HDAC1,Novel.SUV39H1,900,database,Medium,110,green
+Novel.HDAC1,Novel.TAF6L,720,database,Medium,110,green
+Novel.HDAC1,Novel.PHF12,900,database,Medium,110,green
+Novel.HDAC1,Novel.TFDP2,900,database,Medium,110,green
+Novel.HDAC1,Novel.NCOR2,900,database,Medium,110,green
+Novel.HDAC1,Novel.EP300,900,database,Medium,110,green
+Novel.HDAC1,Novel.HDAC7,900,database,Medium,110,green
+Novel.HDAC1,Novel.MAML1,900,database,Medium,110,green
+Novel.HDAC1,Novel.BCL9,900,database,Medium,110,green
+Novel.HDAC1,Novel.HDAC10,900,database,Medium,110,green
+Novel.HDAC1,Novel.BRPF1,900,database,Medium,110,green
+Novel.HDAC1,Novel.BAHD1,900,database,Medium,110,green
+Novel.HDAC1,Novel.TGIF2,900,database,Medium,110,green
+Novel.HDAC1,RNA transport.RANBP2,900,database,Medium,110,green
+Novel.HDAC1,RNA transport.RANGAP1,900,database,Medium,110,green
+Novel.HDAC10,Novel.HDAC1,900,database,Medium,111,green
+Novel.HDAC7,Novel.HDAC1,900,database,Medium,112,green
+Novel.HEATR1,Novel.IMP4,900,database,High,113,green
+Novel.HEATR1,Novel.DDX49,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS15A,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS18,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS8,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS23,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS10,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS27,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS4X,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS6,900,database,High,113,green
+Novel.HEATR1,Ribosome.RPS20,900,database,High,113,green
+Novel.HEATR1,Novel.EXOSC9,900,database,High,113,green
+Novel.HEATR1,Novel.EXOSC5,900,database,High,113,green
+Novel.HEATR1,Novel.FBL,900,database,High,113,green
+Novel.HEATR1,Novel.NOP56,900,database,High,113,green
+Novel.HEATR1,Novel.NOP58,900,database,High,113,green
+Novel.HEATR1,Novel.UTP14A,900,database,High,113,green
+Novel.HEATR1,Novel.EXOSC3,900,database,High,113,green
+Novel.HEATR1,Novel.MPHOSPH6,900,database,High,113,green
+Novel.HEATR5A,RNA transport.NUP62,503,experimental,Medium,114,green
+Novel.HIP1R,Novel.ARPC5,900,database,High,115,green
+Novel.HIP1R,Novel.DVL2,900,database,High,115,green
+Novel.HIP1R,Novel.ARF1,900,database,High,115,green
+Novel.HNRNPF,Novel.SLU7,900,database,High,116,green
+Novel.HNRNPF,RNA transport.RANBP2,707,experimental,High,116,green
+Novel.HNRNPF,RNA transport.NCBP2,900,database,High,116,green
+Novel.HNRNPF,Novel.PRPF3,900,database,High,116,green
+Novel.HNRNPF,Novel.RBM22,900,database,High,116,green
+Novel.HNRNPF,Novel.SF3A2,900,database,High,116,green
+Novel.HNRNPF,Novel.HNRNPU,900,database,High,116,green
+Novel.HNRNPF,Novel.SNRPA1,900,database,High,116,green
+Novel.HNRNPF,Novel.SF3B3,900,database,High,116,green
+Novel.HNRNPF,Novel.PRPF40A,900,database,High,116,green
+Novel.HNRNPF,Novel.LSM3,900,database,High,116,green
+Novel.HNRNPF,Novel.LSM2,900,database,High,116,green
+Novel.HNRNPF,Novel.SNRPB,900,database,High,116,green
+Novel.HNRNPF,Novel.USP7,417,experimental,High,116,green
+Novel.HNRNPF,Novel.SF3A1,900,database,High,116,green
+Novel.HNRNPF,Novel.POLR2J,900,database,High,116,green
+Novel.HNRNPF,Novel.CHERP,900,database,High,116,green
+Novel.HNRNPU,Ribosome.RPL18A,503,experimental,Medium,117,green
+Novel.HNRNPU,Ribosome.RPLP0,493,experimental,Medium,117,green
+Novel.HNRNPU,Ribosome.RPL18,417,experimental,Medium,117,green
+Novel.HNRNPU,RNA transport.NCBP2,900,database,Medium,117,green
+Novel.HNRNPU,Novel.SNRPA1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.NOP58,483,experimental,Medium,117,green
+Novel.HNRNPU,Novel.UTP14A,481,experimental,Medium,117,green
+Novel.HNRNPU,Novel.TRA2A,466,experimental,Medium,117,green
+Novel.HNRNPU,Novel.SF3B3,900,database,Medium,117,green
+Novel.HNRNPU,Novel.PRPF40A,900,database,Medium,117,green
+Novel.HNRNPU,Novel.LSM3,900,database,Medium,117,green
+Novel.HNRNPU,Novel.LSM2,900,database,Medium,117,green
+Novel.HNRNPU,Novel.TRIM55,466,experimental,Medium,117,green
+Novel.HNRNPU,Novel.SNRPB,900,database,Medium,117,green
+Novel.HNRNPU,Novel.BTRC,415,experimental,Medium,117,green
+Novel.HNRNPU,Novel.SF3A1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.SUGP1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.ELAVL1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.POLR2J,900,database,Medium,117,green
+Novel.HNRNPU,Novel.RSL1D1,456,experimental,Medium,117,green
+Novel.HNRNPU,Novel.CHERP,900,database,Medium,117,green
+Novel.HNRNPU,Novel.HNRNPF,900,database,Medium,117,green
+Novel.HNRNPU,Novel.PABPN1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.SLU7,900,database,Medium,117,green
+Novel.HNRNPU,Novel.S100A9,493,experimental,Medium,117,green
+Novel.HNRNPU,Novel.PGRMC1,424,experimental,Medium,117,green
+Novel.HNRNPU,Novel.RAB2A,417,experimental,Medium,117,green
+Novel.HNRNPU,Novel.LAPTM4A,503,experimental,Medium,117,green
+Novel.HNRNPU,Novel.IGF2BP1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.PDHA2,503,experimental,Medium,117,green
+Novel.HNRNPU,Novel.PPWD1,900,database,Medium,117,green
+Novel.HNRNPU,Novel.PRPF3,900,database,Medium,117,green
+Novel.HNRNPU,Novel.RBM22,900,database,Medium,117,green
+Novel.HNRNPU,Novel.SF3A2,900,database,Medium,117,green
+Novel.HOXB1,Novel.POLR2J,900,database,Medium,118,green
+Novel.HRH2,Novel.SF3A2,774,experimental,Medium,119,green
+Novel.HSPA4,RNA transport.NUP107,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP133,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP153,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP155,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP85,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP160,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP88,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP62,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.NUP54,900,database,Medium,120,green
+Novel.HSPA4,RNA transport.RANBP2,900,database,Medium,120,green
+Novel.HTATSF1,Novel.SF3A2,774,experimental,High,121,green
+Novel.HUWE1,RNA transport.RANGAP1,774,experimental,High,122,green
+Novel.ICE2,RNA transport.NCBP2,900,database,Medium,123,green
+Novel.ICE2,Novel.POLR2J,900,database,Medium,123,green
+Novel.IDH1,Novel.MDH2,503,experimental,High,124,green
+Novel.IGF2BP1,Novel.HNRNPU,900,database,Medium,125,green
+Novel.ILF3,Ribosome.MRPL1,454,experimental,Medium,126,green
+Novel.ILF3,Ribosome.RPL32,496,experimental,Medium,126,green
+Novel.ILF3,Novel.SF3A2,774,experimental,Medium,126,green
+Novel.ILF3,Novel.LSM3,417,experimental,Medium,126,green
+Novel.ILF3,Novel.LSM2,456,experimental,Medium,126,green
+Novel.ILF3,Novel.PC,442,experimental,Medium,126,green
+Novel.IMP4,Novel.DDX49,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS15A,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS18,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS8,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS23,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS10,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS27,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS4X,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS6,900,database,Medium,127,green
+Novel.IMP4,Ribosome.RPS20,900,database,Medium,127,green
+Novel.IMP4,Novel.EXOSC9,900,database,Medium,127,green
+Novel.IMP4,Novel.EXOSC5,900,database,Medium,127,green
+Novel.IMP4,Novel.FBL,900,database,Medium,127,green
+Novel.IMP4,Novel.NOP56,900,database,Medium,127,green
+Novel.IMP4,Novel.NOP58,900,database,Medium,127,green
+Novel.IMP4,Novel.UTP14A,900,database,Medium,127,green
+Novel.IMP4,Novel.EXOSC3,900,database,Medium,127,green
+Novel.IMP4,Novel.MPHOSPH6,900,database,Medium,127,green
+Novel.IMP4,Novel.HEATR1,900,database,Medium,127,green
+Novel.INTS11,RNA transport.NCBP2,900,database,Medium,128,green
+Novel.INTS11,Novel.POLR2J,900,database,Medium,128,green
+Novel.INTS7,RNA transport.NCBP2,900,database,High,129,green
+Novel.INTS7,Novel.POLR2J,900,database,High,129,green
+Novel.ITGB3BP,Novel.TAOK1,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.RANBP2,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.RANGAP1,900,database,Medium,130,green
+Novel.ITGB3BP,Ribosome.RPS27,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.NUP107,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.NUP133,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.XPO1,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.NUP85,900,database,Medium,130,green
+Novel.ITGB3BP,RNA transport.NUP160,900,database,Medium,130,green
+Novel.ITGB3BP,Novel.CDC42,900,database,Medium,130,green
+Novel.KAT2A,Novel.HDAC1,900,database,High,131,green
+Novel.KBTBD7,RNA transport.NUP155,620,experimental,High,132,green
+Novel.KIF3C,Novel.ARF1,900,database,High,133,green
+Novel.KIFC2,Novel.ARF1,900,database,Medium,134,green
+Novel.KLHDC10,Novel.USP7,774,experimental,Medium,135,green
+Novel.LAPTM4A,Novel.HNRNPU,503,experimental,Medium,136,green
+Novel.LCP2,Novel.CDC42,900,database,High,137,green
+Novel.LDHAL6B,Novel.ARF1,417,experimental,Medium,138,green
+Novel.LHPP,Novel.ATP6V1H,900,database,Medium,139,green
+Novel.LSM2,RNA transport.NCBP2,900,database,Medium,140,green
+Novel.LSM2,Novel.SNRPB,900,database,Medium,140,green
+Novel.LSM2,Novel.SF3A1,900,database,Medium,140,green
+Novel.LSM2,Novel.SUGP1,900,database,Medium,140,green
+Novel.LSM2,Novel.ELAVL1,900,database,Medium,140,green
+Novel.LSM2,Novel.POLR2J,900,database,Medium,140,green
+Novel.LSM2,Novel.CHERP,900,database,Medium,140,green
+Novel.LSM2,Novel.HNRNPF,900,database,Medium,140,green
+Novel.LSM2,Novel.PABPN1,900,database,Medium,140,green
+Novel.LSM2,Novel.SLU7,900,database,Medium,140,green
+Novel.LSM2,Novel.PPWD1,900,database,Medium,140,green
+Novel.LSM2,Novel.TRIM56,774,experimental,Medium,140,green
+Novel.LSM2,RNA transport.CLNS1A,604,experimental,Medium,140,green
+Novel.LSM2,Novel.PRPF3,900,database,Medium,140,green
+Novel.LSM2,Novel.ILF3,456,experimental,Medium,140,green
+Novel.LSM2,Novel.RBM22,900,database,Medium,140,green
+Novel.LSM2,Novel.SF3A2,900,database,Medium,140,green
+Novel.LSM2,Novel.HNRNPU,900,database,Medium,140,green
+Novel.LSM2,Novel.SNRPA1,900,database,Medium,140,green
+Novel.LSM2,Novel.SF3B3,900,database,Medium,140,green
+Novel.LSM2,Novel.PRPF40A,900,database,Medium,140,green
+Novel.LSM2,Novel.LSM3,900,database,Medium,140,green
+Novel.LSM3,RNA transport.NCBP2,900,database,High,141,green
+Novel.LSM3,Novel.LSM2,900,database,High,141,green
+Novel.LSM3,Novel.SNRPB,900,database,High,141,green
+Novel.LSM3,Novel.SF3A1,900,database,High,141,green
+Novel.LSM3,Novel.SUGP1,900,database,High,141,green
+Novel.LSM3,Novel.ELAVL1,900,database,High,141,green
+Novel.LSM3,Novel.POLR2J,900,database,High,141,green
+Novel.LSM3,Novel.CHERP,900,database,High,141,green
+Novel.LSM3,Novel.HNRNPF,900,database,High,141,green
+Novel.LSM3,Novel.PABPN1,900,database,High,141,green
+Novel.LSM3,Novel.MAP4,417,experimental,High,141,green
+Novel.LSM3,RNA transport.CLNS1A,627,experimental,High,141,green
+Novel.LSM3,Novel.PRPF3,900,database,High,141,green
+Novel.LSM3,Novel.ILF3,417,experimental,High,141,green
+Novel.LSM3,Novel.RBM22,900,database,High,141,green
+Novel.LSM3,Novel.SF3A2,900,database,High,141,green
+Novel.LSM3,Novel.HNRNPU,900,database,High,141,green
+Novel.LSM3,Novel.SNRPA1,900,database,High,141,green
+Novel.LSM3,Novel.SF3B3,900,database,High,141,green
+Novel.LSM3,Novel.PRPF40A,900,database,High,141,green
+Novel.LUZP4,RNA transport.RANBP2,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP107,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP133,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP153,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NCBP2,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.THOC2,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP155,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP85,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP160,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP88,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP62,900,database,Medium,142,green
+Novel.LUZP4,RNA transport.NUP54,900,database,Medium,142,green
+Novel.LUZP4,Novel.SLU7,900,database,Medium,142,green
+Novel.LYPLA2,RNA transport.EIF2B1,417,experimental,Medium,143,green
+Novel.MAML1,Novel.HDAC1,900,database,Medium,144,green
+Novel.MAML1,Novel.SPEN,900,database,Medium,144,green
+Novel.MAN2A1,Novel.STX5,900,database,Medium,145,green
+Novel.MAP1LC3A,Novel.CSNK2A2,595,experimental,Medium,146,green
+Novel.MAP1LC3A,Novel.RBM22,595,experimental,Medium,146,green
+Novel.MAP4,Ribosome.RPS20,503,experimental,High,147,green
+Novel.MAP4,Novel.LSM3,417,experimental,High,147,green
+Novel.MDH1,Novel.MDH2,900,database,Medium,148,green
+Novel.MDH2,RNA transport.CLNS1A,503,experimental,Medium,149,green
+Novel.MDH2,Novel.MDH1,900,database,Medium,149,green
+Novel.MDH2,Novel.IDH1,503,experimental,Medium,149,green
+Novel.MEF2C,Novel.CDC42,900,database,Medium,150,green
+Novel.MKRN2,RNA transport.PAIP1,774,experimental,High,151,green
+Novel.MPHOSPH6,Ribosome.RPL37,900,database,High,152,green
+Novel.MPHOSPH6,Novel.HEATR1,900,database,High,152,green
+Novel.MPHOSPH6,Novel.IMP4,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL6,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL9,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL18A,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL4,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPLP0,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL7,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL10,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL27A,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL7A,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL10A,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPS6,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL18,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL17,900,database,High,152,green
+Novel.MPHOSPH6,Ribosome.RPL32,900,database,High,152,green
+Novel.MPHOSPH6,Novel.PRPF3,503,experimental,High,152,green
+Novel.MPHOSPH6,Novel.FBL,900,database,High,152,green
+Novel.MPHOSPH6,Novel.NOP56,900,database,High,152,green
+Novel.MPHOSPH6,Novel.NOP58,900,database,High,152,green
+Novel.MPHOSPH6,Novel.UTP14A,900,database,High,152,green
+Novel.MRPL50,Ribosome.MRPL19,953,experimental,Medium,153,green
+Novel.MRPL50,Ribosome.MRPL1,900,database,Medium,153,green
+Novel.MRRF,Ribosome.MRPL1,900,database,Medium,154,green
+Novel.MRRF,Ribosome.MRPL19,900,database,Medium,154,green
+Novel.MTOR,RNA transport.EIF4E,900,database,Medium,155,green
+Novel.MTOR,RNA transport.EIF4EBP2,800,database,Medium,155,green
+Novel.MTOR,Novel.RELA,900,database,Medium,155,green
+Novel.MTOR,Novel.CDC42,900,database,Medium,155,green
+Novel.MTOR,Novel.AKT1,900,database,Medium,155,green
+Novel.MTOR,Novel.EGFR,900,database,Medium,155,green
+Novel.MTOR,Novel.RPS6KB1,900,database,Medium,155,green
+Novel.MTOR,Novel.EGF,900,database,Medium,155,green
+Novel.MTOR,Novel.RRAGB,900,database,Medium,155,green
+Novel.MYL1,RNA transport.NUP107,503,experimental,Medium,156,green
+Novel.MYO18A,Novel.FGF2,900,database,Medium,157,green
+Novel.NCOR2,Novel.HDAC1,900,database,High,158,green
+Novel.NOP56,Ribosome.RPS20,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPL18,474,experimental,Medium,159,green
+Novel.NOP56,Novel.NOP58,900,database,Medium,159,green
+Novel.NOP56,Novel.UTP14A,900,database,Medium,159,green
+Novel.NOP56,Novel.SSB,417,experimental,Medium,159,green
+Novel.NOP56,Novel.RSL1D1,774,experimental,Medium,159,green
+Novel.NOP56,Novel.EXOSC3,900,database,Medium,159,green
+Novel.NOP56,Novel.MPHOSPH6,900,database,Medium,159,green
+Novel.NOP56,Novel.HEATR1,900,database,Medium,159,green
+Novel.NOP56,Novel.IMP4,900,database,Medium,159,green
+Novel.NOP56,Novel.DDX49,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPL6,584,experimental,Medium,159,green
+Novel.NOP56,RNA transport.EEF1A1,474,experimental,Medium,159,green
+Novel.NOP56,Ribosome.RPS15A,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPS18,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPS8,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPL18A,774,experimental,Medium,159,green
+Novel.NOP56,Ribosome.RPS23,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPL4,474,experimental,Medium,159,green
+Novel.NOP56,Ribosome.RPL7,471,experimental,Medium,159,green
+Novel.NOP56,Ribosome.RPS10,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPS27,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPS4X,900,database,Medium,159,green
+Novel.NOP56,Ribosome.RPS6,900,database,Medium,159,green
+Novel.NOP56,Novel.EXOSC9,900,database,Medium,159,green
+Novel.NOP56,Novel.EXOSC5,900,database,Medium,159,green
+Novel.NOP56,Novel.FBL,900,database,Medium,159,green
+Novel.NOP56,Novel.CCT3,900,database,Medium,159,green
+Novel.NOP58,Novel.UTP14A,900,database,Medium,160,green
+Novel.NOP58,Novel.RSL1D1,774,experimental,Medium,160,green
+Novel.NOP58,Novel.EXOSC3,900,database,Medium,160,green
+Novel.NOP58,Novel.MPHOSPH6,900,database,Medium,160,green
+Novel.NOP58,Novel.HEATR1,900,database,Medium,160,green
+Novel.NOP58,Novel.IMP4,900,database,Medium,160,green
+Novel.NOP58,Novel.DDX49,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPL6,476,experimental,Medium,160,green
+Novel.NOP58,Ribosome.RPS15A,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS18,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS8,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPL18A,774,experimental,Medium,160,green
+Novel.NOP58,Ribosome.RPS23,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPL4,469,experimental,Medium,160,green
+Novel.NOP58,Ribosome.RPL7,614,experimental,Medium,160,green
+Novel.NOP58,Ribosome.RPS10,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS27,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS4X,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS6,900,database,Medium,160,green
+Novel.NOP58,Ribosome.RPS20,900,database,Medium,160,green
+Novel.NOP58,Novel.EXOSC9,900,database,Medium,160,green
+Novel.NOP58,Novel.EXOSC5,900,database,Medium,160,green
+Novel.NOP58,Novel.PRPF3,437,experimental,Medium,160,green
+Novel.NOP58,Novel.HNRNPU,483,experimental,Medium,160,green
+Novel.NOP58,Novel.FBL,900,database,Medium,160,green
+Novel.NOP58,Novel.NOP56,900,database,Medium,160,green
+Novel.NUMA1,RNA transport.EIF3I,417,experimental,Medium,161,green
+Novel.NUMA1,RNA transport.EIF3H,774,experimental,Medium,161,green
+Novel.PABPN1,Novel.SLU7,900,database,Medium,162,green
+Novel.PABPN1,RNA transport.NCBP2,900,database,Medium,162,green
+Novel.PABPN1,RNA transport.THOC2,900,database,Medium,162,green
+Novel.PABPN1,Novel.PRPF3,900,database,Medium,162,green
+Novel.PABPN1,Novel.RBM22,900,database,Medium,162,green
+Novel.PABPN1,Novel.SF3A2,900,database,Medium,162,green
+Novel.PABPN1,Novel.HNRNPU,900,database,Medium,162,green
+Novel.PABPN1,Novel.SNRPA1,900,database,Medium,162,green
+Novel.PABPN1,Novel.SF3B3,900,database,Medium,162,green
+Novel.PABPN1,Novel.PRPF40A,900,database,Medium,162,green
+Novel.PABPN1,Novel.LSM3,900,database,Medium,162,green
+Novel.PABPN1,Novel.LSM2,900,database,Medium,162,green
+Novel.PABPN1,Novel.SNRPB,900,database,Medium,162,green
+Novel.PABPN1,Novel.SF3A1,900,database,Medium,162,green
+Novel.PABPN1,Novel.POLR2J,900,database,Medium,162,green
+Novel.PABPN1,Novel.CHERP,900,database,Medium,162,green
+Novel.PAK2,Novel.CDC42,900,database,Medium,163,green
+Novel.PARD6B,Novel.CDC42,800,database,Medium,164,green
+Novel.PC,Novel.ILF3,442,experimental,Medium,165,green
+Novel.PDGFRA,Novel.FGF2,800,database,Medium,166,green
+Novel.PDHA2,Novel.HNRNPU,503,experimental,Medium,167,green
+Novel.PDIA6,RNA transport.CLNS1A,503,experimental,High,168,green
+Novel.PGRMC1,Ribosome.RPS20,503,experimental,Medium,169,green
+Novel.PGRMC1,Novel.HNRNPU,424,experimental,Medium,169,green
+Novel.PHF12,Novel.HDAC1,900,database,High,170,green
+Novel.POLDIP3,RNA transport.RANBP2,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP107,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP133,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP153,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NCBP2,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.THOC2,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP155,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP85,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP160,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP88,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP62,900,database,Medium,171,green
+Novel.POLDIP3,RNA transport.NUP54,900,database,Medium,171,green
+Novel.POLDIP3,Novel.SLU7,900,database,Medium,171,green
+Novel.POLDIP3,Novel.RPS6KB1,900,database,Medium,171,green
+Novel.POLR2J,RNA transport.NCBP2,900,database,Medium,172,green
+Novel.POLR2J,Novel.CHERP,900,database,Medium,172,green
+Novel.POLR2J,Novel.HNRNPF,900,database,Medium,172,green
+Novel.POLR2J,Novel.PABPN1,900,database,Medium,172,green
+Novel.POLR2J,Novel.SLU7,900,database,Medium,172,green
+Novel.POLR2J,Novel.EGR2,900,database,Medium,172,green
+Novel.POLR2J,Novel.ERCC3,900,database,Medium,172,green
+Novel.POLR2J,Novel.EP300,900,database,Medium,172,green
+Novel.POLR2J,Novel.FGF2,900,database,Medium,172,green
+Novel.POLR2J,Novel.CCNT1,900,database,Medium,172,green
+Novel.POLR2J,Novel.COPS4,900,database,Medium,172,green
+Novel.POLR2J,Novel.COPS8,900,database,Medium,172,green
+Novel.POLR2J,Novel.INTS7,900,database,Medium,172,green
+Novel.POLR2J,Novel.INTS11,900,database,Medium,172,green
+Novel.POLR2J,Novel.CTDP1,900,database,Medium,172,green
+Novel.POLR2J,Novel.COPS7B,900,database,Medium,172,green
+Novel.POLR2J,Novel.PPWD1,900,database,Medium,172,green
+Novel.POLR2J,Novel.ICE2,900,database,Medium,172,green
+Novel.POLR2J,Novel.AJUBA,900,database,Medium,172,green
+Novel.POLR2J,Novel.ENTPD3,900,database,Medium,172,green
+Novel.POLR2J,Novel.HOXB1,900,database,Medium,172,green
+Novel.POLR2J,Novel.PRPF3,900,database,Medium,172,green
+Novel.POLR2J,Novel.RBM22,900,database,Medium,172,green
+Novel.POLR2J,Novel.SF3A2,900,database,Medium,172,green
+Novel.POLR2J,Novel.HNRNPU,900,database,Medium,172,green
+Novel.POLR2J,Novel.SNRPA1,900,database,Medium,172,green
+Novel.POLR2J,Novel.SF3B3,900,database,Medium,172,green
+Novel.POLR2J,Novel.PRPF40A,900,database,Medium,172,green
+Novel.POLR2J,Novel.LSM3,900,database,Medium,172,green
+Novel.POLR2J,Novel.LSM2,900,database,Medium,172,green
+Novel.POLR2J,Novel.SNRPB,900,database,Medium,172,green
+Novel.POLR2J,Novel.USP7,900,database,Medium,172,green
+Novel.POLR2J,Novel.SF3A1,900,database,Medium,172,green
+Novel.POLR2J,Novel.SUGP1,900,database,Medium,172,green
+Novel.POLR2J,Novel.ELAVL1,900,database,Medium,172,green
+Novel.POLR3A,Novel.SSB,900,database,High,173,green
+Novel.POLR3A,Novel.HDAC1,417,experimental,High,173,green
+Novel.PPIB,RNA transport.RANGAP1,503,experimental,High,174,green
+Novel.PPP2R2A,RNA transport.NCBP2,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL37,900,database,High,175,green
+Novel.PPP2R2A,Novel.RELA,800,database,High,175,green
+Novel.PPP2R2A,Novel.AKT1,800,database,High,175,green
+Novel.PPP2R2A,Novel.TGFBR2,900,database,High,175,green
+Novel.PPP2R2A,Novel.EGFR,900,database,High,175,green
+Novel.PPP2R2A,Novel.RPS6KB1,900,database,High,175,green
+Novel.PPP2R2A,Novel.EGF,900,database,High,175,green
+Novel.PPP2R2A,Novel.CACNG1,800,database,High,175,green
+Novel.PPP2R2A,Novel.TNNI3,800,database,High,175,green
+Novel.PPP2R2A,Novel.RPL39L,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL6,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS15A,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL9,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS18,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS8,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL18A,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS23,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL4,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPLP0,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL7,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL10,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL27A,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS10,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS27,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL7A,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS4X,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL10A,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS6,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPS20,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL18,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL17,900,database,High,175,green
+Novel.PPP2R2A,Ribosome.RPL32,900,database,High,175,green
+Novel.PPP2R2A,Novel.ETF1,900,database,High,175,green
+Novel.PPP2R2A,Novel.CCT3,608,experimental,High,175,green
+Novel.PPP2R2A,Novel.CYCS,900,database,High,175,green
+Novel.PPWD1,RNA transport.NCBP2,900,database,Medium,176,green
+Novel.PPWD1,Novel.RBM22,900,database,Medium,176,green
+Novel.PPWD1,Novel.SF3A2,900,database,Medium,176,green
+Novel.PPWD1,Novel.HNRNPU,900,database,Medium,176,green
+Novel.PPWD1,Novel.SNRPA1,900,database,Medium,176,green
+Novel.PPWD1,Novel.SF3B3,900,database,Medium,176,green
+Novel.PPWD1,Novel.LSM2,900,database,Medium,176,green
+Novel.PPWD1,Novel.SNRPB,900,database,Medium,176,green
+Novel.PPWD1,Novel.SF3A1,900,database,Medium,176,green
+Novel.PPWD1,Novel.POLR2J,900,database,Medium,176,green
+Novel.PPWD1,Novel.CHERP,900,database,Medium,176,green
+Novel.PPWD1,Novel.SLU7,900,database,Medium,176,green
+Novel.PRPF3,Ribosome.RPS10,429,experimental,Medium,177,green
+Novel.PRPF3,RNA transport.NCBP2,900,database,Medium,177,green
+Novel.PRPF3,Novel.RBM22,900,database,Medium,177,green
+Novel.PRPF3,Novel.SF3A2,900,database,Medium,177,green
+Novel.PRPF3,Novel.HNRNPU,900,database,Medium,177,green
+Novel.PRPF3,Novel.FBL,439,experimental,Medium,177,green
+Novel.PRPF3,Novel.SNRPA1,900,database,Medium,177,green
+Novel.PRPF3,Novel.NOP58,437,experimental,Medium,177,green
+Novel.PRPF3,Novel.SF3B3,900,database,Medium,177,green
+Novel.PRPF3,Novel.PRPF40A,900,database,Medium,177,green
+Novel.PRPF3,Novel.LSM3,900,database,Medium,177,green
+Novel.PRPF3,Novel.LSM2,900,database,Medium,177,green
+Novel.PRPF3,Novel.SNRPB,900,database,Medium,177,green
+Novel.PRPF3,Novel.SF3A1,900,database,Medium,177,green
+Novel.PRPF3,Novel.SUGP1,900,database,Medium,177,green
+Novel.PRPF3,Novel.ELAVL1,900,database,Medium,177,green
+Novel.PRPF3,Novel.POLR2J,900,database,Medium,177,green
+Novel.PRPF3,Novel.MPHOSPH6,503,experimental,Medium,177,green
+Novel.PRPF3,Novel.CHERP,900,database,Medium,177,green
+Novel.PRPF3,Novel.HNRNPF,900,database,Medium,177,green
+Novel.PRPF3,Novel.PABPN1,900,database,Medium,177,green
+Novel.PRPF3,Novel.SLU7,597,experimental,Medium,177,green
+Novel.PRPF3,Novel.CDK13,503,experimental,Medium,177,green
+Novel.PRPF40A,RNA transport.NCBP2,900,database,Medium,178,green
+Novel.PRPF40A,Novel.LSM3,900,database,Medium,178,green
+Novel.PRPF40A,Novel.LSM2,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SNRPB,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SF3A1,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SUGP1,900,database,Medium,178,green
+Novel.PRPF40A,Novel.ELAVL1,900,database,Medium,178,green
+Novel.PRPF40A,Novel.POLR2J,900,database,Medium,178,green
+Novel.PRPF40A,Novel.CHERP,900,database,Medium,178,green
+Novel.PRPF40A,Novel.HNRNPF,900,database,Medium,178,green
+Novel.PRPF40A,Novel.PABPN1,900,database,Medium,178,green
+Novel.PRPF40A,Novel.RBMX2,606,experimental,Medium,178,green
+Novel.PRPF40A,Novel.PRPF3,900,database,Medium,178,green
+Novel.PRPF40A,Novel.RBM22,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SF3A2,900,database,Medium,178,green
+Novel.PRPF40A,Novel.HNRNPU,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SNRPA1,900,database,Medium,178,green
+Novel.PRPF40A,Novel.SF3B3,900,database,Medium,178,green
+Novel.PSMA7,Novel.RELA,900,database,Medium,179,green
+Novel.PSMA7,Novel.DVL2,900,database,Medium,179,green
+Novel.PSMB2,Novel.RELA,900,database,Medium,180,green
+Novel.PSMB2,Novel.DVL2,900,database,Medium,180,green
+Novel.PSMB7,Novel.RELA,900,database,Medium,181,green
+Novel.PSMB7,Novel.DVL2,900,database,Medium,181,green
+Novel.PSME2,Novel.RELA,900,database,High,182,green
+Novel.PSME2,Novel.DVL2,900,database,High,182,green
+Novel.PTEN,Novel.USP7,900,database,Medium,183,green
+Novel.RAB1B,Novel.CDC42,417,experimental,High,184,green
+Novel.RAB1B,Novel.ARF1,900,database,High,184,green
+Novel.RAB2A,RNA transport.EEF1A1,417,experimental,High,185,green
+Novel.RAB2A,Novel.ARF1,417,experimental,High,185,green
+Novel.RAB2A,Novel.HNRNPU,417,experimental,High,185,green
+Novel.RAB6A,Novel.ARF1,774,experimental,High,186,green
+Novel.RAB6B,Novel.ARF1,774,experimental,Medium,187,green
+Novel.RANBP1,RNA transport.RANBP2,900,database,High,188,green
+Novel.RANBP1,RNA transport.RANGAP1,900,database,High,188,green
+Novel.RANBP1,RNA transport.XPO1,878,experimental,High,188,green
+Novel.RAP1B,Novel.CDC42,900,database,High,189,green
+Novel.RBM22,RNA transport.NCBP2,900,database,Medium,190,green
+Novel.RBM22,Novel.SF3A2,900,database,Medium,190,green
+Novel.RBM22,Novel.HNRNPU,900,database,Medium,190,green
+Novel.RBM22,Novel.SNRPA1,900,database,Medium,190,green
+Novel.RBM22,Novel.SF3B3,900,database,Medium,190,green
+Novel.RBM22,Novel.PRPF40A,900,database,Medium,190,green
+Novel.RBM22,Novel.LSM3,900,database,Medium,190,green
+Novel.RBM22,Novel.LSM2,900,database,Medium,190,green
+Novel.RBM22,Novel.SNRPB,900,database,Medium,190,green
+Novel.RBM22,Novel.MAP1LC3A,595,experimental,Medium,190,green
+Novel.RBM22,Novel.SF3A1,900,database,Medium,190,green
+Novel.RBM22,Novel.SUGP1,900,database,Medium,190,green
+Novel.RBM22,Novel.ELAVL1,900,database,Medium,190,green
+Novel.RBM22,Novel.POLR2J,900,database,Medium,190,green
+Novel.RBM22,Novel.CHERP,900,database,Medium,190,green
+Novel.RBM22,Novel.HNRNPF,900,database,Medium,190,green
+Novel.RBM22,Novel.PABPN1,900,database,Medium,190,green
+Novel.RBM22,Novel.SLU7,900,database,Medium,190,green
+Novel.RBM22,Novel.PPWD1,900,database,Medium,190,green
+Novel.RBM22,Novel.PRPF3,900,database,Medium,190,green
+Novel.RBMX2,Novel.PRPF40A,606,experimental,Medium,191,green
+Novel.RCC1,RNA transport.RANBP2,774,experimental,Medium,192,green
+Novel.RCC1,RNA transport.NUP107,636,experimental,Medium,192,green
+Novel.RCC1,RNA transport.NUP153,704,experimental,Medium,192,green
+Novel.RCC1,RNA transport.XPO1,417,experimental,Medium,192,green
+Novel.RELA,RNA transport.XPO1,900,database,High,193,green
+Novel.RELA,Novel.PSMA7,900,database,High,193,green
+Novel.RELA,Novel.HDAC1,628,experimental,High,193,green
+Novel.RELA,Novel.PSME2,900,database,High,193,green
+Novel.RELA,Novel.PSMB7,900,database,High,193,green
+Novel.RELA,Novel.PSMB2,900,database,High,193,green
+Novel.RELA,Novel.FBXW11,900,database,High,193,green
+Novel.RELA,Novel.PPP2R2A,800,database,High,193,green
+Novel.RELA,Novel.BTRC,900,database,High,193,green
+Novel.RELA,Novel.UBE2D1,900,database,High,193,green
+Novel.RELA,Novel.MTOR,900,database,High,193,green
+Novel.RPA2,Novel.USP7,900,database,Medium,194,green
+Novel.RPL39L,Ribosome.RPL6,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EEF1A1,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS15A,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL9,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS18,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EIF3I,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS8,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL18A,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS23,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL4,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPLP0,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL7,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL10,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL27A,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS10,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS27,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL7A,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS4X,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL10A,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EIF1AX,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS6,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPS20,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL18,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL17,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL32,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EIF3G,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EIF3H,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.EIF4E,900,database,Medium,195,green
+Novel.RPL39L,RNA transport.NCBP2,900,database,Medium,195,green
+Novel.RPL39L,Ribosome.RPL37,900,database,Medium,195,green
+Novel.RPL39L,Novel.PPP2R2A,900,database,Medium,195,green
+Novel.RPS6KB1,Novel.RRAGB,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.POLDIP3,900,database,Medium,196,green
+Novel.RPS6KB1,Ribosome.RPS6,900,database,Medium,196,green
+Novel.RPS6KB1,RNA transport.EIF4E,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.GRB2,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.PPP2R2A,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.MTOR,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.CDC42,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.AKT1,900,database,Medium,196,green
+Novel.RPS6KB1,Novel.TGFBR2,900,database,Medium,196,green
+Novel.RRAGB,RNA transport.EIF4E,900,database,High,197,green
+Novel.RRAGB,Novel.MTOR,900,database,High,197,green
+Novel.RRAGB,Novel.AKT1,900,database,High,197,green
+Novel.RRAGB,Novel.RPS6KB1,900,database,High,197,green
+Novel.RSL1D1,Ribosome.RPL4,442,experimental,High,198,green
+Novel.RSL1D1,Novel.HNRNPU,456,experimental,High,198,green
+Novel.RSL1D1,Novel.FBL,774,experimental,High,198,green
+Novel.RSL1D1,Novel.NOP56,774,experimental,High,198,green
+Novel.RSL1D1,Novel.NOP58,774,experimental,High,198,green
+Novel.S100A6,RNA transport.CLNS1A,503,experimental,Medium,199,green
+Novel.S100A9,Novel.HNRNPU,493,experimental,Medium,200,green
+Novel.SEC61A1,Ribosome.RPS23,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL4,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPLP0,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL7,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL10,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL27A,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS10,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS27,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL7A,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS4X,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL10A,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS6,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS20,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL18,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL17,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL32,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL37,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL6,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS15A,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL9,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS18,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPS8,900,database,Medium,201,green
+Novel.SEC61A1,Ribosome.RPL18A,900,database,Medium,201,green
+Novel.SEC61B,Ribosome.RPL37,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL6,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS15A,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL9,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS18,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS8,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL18A,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS23,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL4,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPLP0,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL7,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL10,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL27A,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS10,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS27,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL7A,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS4X,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL10A,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS6,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPS20,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL18,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL17,900,database,Medium,202,green
+Novel.SEC61B,Ribosome.RPL32,900,database,Medium,202,green
+Novel.SECISBP2,Ribosome.RPL6,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS15A,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL9,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS18,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS8,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL18A,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS23,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL4,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPLP0,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL7,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL10,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL27A,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS10,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS27,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL7A,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS4X,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL10A,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS6,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPS20,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL18,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL17,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL32,900,database,Medium,203,green
+Novel.SECISBP2,Ribosome.RPL37,900,database,Medium,203,green
+Novel.SF3A1,RNA transport.NCBP2,900,database,Medium,204,green
+Novel.SF3A1,Novel.SUGP1,900,database,Medium,204,green
+Novel.SF3A1,Novel.ELAVL1,900,database,Medium,204,green
+Novel.SF3A1,Novel.POLR2J,900,database,Medium,204,green
+Novel.SF3A1,Novel.CHERP,900,database,Medium,204,green
+Novel.SF3A1,Novel.HNRNPF,900,database,Medium,204,green
+Novel.SF3A1,Novel.PABPN1,900,database,Medium,204,green
+Novel.SF3A1,Novel.SLU7,900,database,Medium,204,green
+Novel.SF3A1,Novel.PPWD1,900,database,Medium,204,green
+Novel.SF3A1,Novel.PRPF3,900,database,Medium,204,green
+Novel.SF3A1,Novel.RBM22,900,database,Medium,204,green
+Novel.SF3A1,Novel.SF3A2,900,database,Medium,204,green
+Novel.SF3A1,Novel.HNRNPU,900,database,Medium,204,green
+Novel.SF3A1,Novel.SNRPA1,900,database,Medium,204,green
+Novel.SF3A1,Novel.SF3B3,900,database,Medium,204,green
+Novel.SF3A1,Novel.PRPF40A,900,database,Medium,204,green
+Novel.SF3A1,Novel.LSM3,900,database,Medium,204,green
+Novel.SF3A1,Novel.LSM2,900,database,Medium,204,green
+Novel.SF3A1,Novel.SNRPB,900,database,Medium,204,green
+Novel.SF3A2,RNA transport.NCBP2,900,database,Medium,205,green
+Novel.SF3A2,Novel.HNRNPU,900,database,Medium,205,green
+Novel.SF3A2,Novel.SNRPA1,900,database,Medium,205,green
+Novel.SF3A2,Novel.SF3B3,900,database,Medium,205,green
+Novel.SF3A2,Novel.PRPF40A,900,database,Medium,205,green
+Novel.SF3A2,Novel.LSM3,900,database,Medium,205,green
+Novel.SF3A2,Novel.LSM2,900,database,Medium,205,green
+Novel.SF3A2,Novel.SNRPB,900,database,Medium,205,green
+Novel.SF3A2,Novel.SF3A1,900,database,Medium,205,green
+Novel.SF3A2,Novel.SUGP1,900,database,Medium,205,green
+Novel.SF3A2,Novel.ELAVL1,900,database,Medium,205,green
+Novel.SF3A2,Novel.POLR2J,900,database,Medium,205,green
+Novel.SF3A2,Novel.ARGLU1,774,experimental,Medium,205,green
+Novel.SF3A2,Novel.CHERP,900,database,Medium,205,green
+Novel.SF3A2,Novel.HRH2,774,experimental,Medium,205,green
+Novel.SF3A2,Novel.HNRNPF,900,database,Medium,205,green
+Novel.SF3A2,Novel.PABPN1,900,database,Medium,205,green
+Novel.SF3A2,Novel.SLU7,900,database,Medium,205,green
+Novel.SF3A2,Novel.HTATSF1,774,experimental,Medium,205,green
+Novel.SF3A2,Novel.PPWD1,900,database,Medium,205,green
+Novel.SF3A2,Novel.PRPF3,900,database,Medium,205,green
+Novel.SF3A2,Novel.ILF3,774,experimental,Medium,205,green
+Novel.SF3A2,Novel.RBM22,900,database,Medium,205,green
+Novel.SF3B3,RNA transport.NCBP2,900,database,Medium,206,green
+Novel.SF3B3,Novel.PRPF40A,900,database,Medium,206,green
+Novel.SF3B3,Novel.LSM3,900,database,Medium,206,green
+Novel.SF3B3,Novel.LSM2,900,database,Medium,206,green
+Novel.SF3B3,Novel.TRIM55,439,experimental,Medium,206,green
+Novel.SF3B3,Novel.SNRPB,900,database,Medium,206,green
+Novel.SF3B3,Novel.SF3A1,900,database,Medium,206,green
+Novel.SF3B3,Novel.SUGP1,900,database,Medium,206,green
+Novel.SF3B3,Novel.ELAVL1,900,database,Medium,206,green
+Novel.SF3B3,Novel.POLR2J,900,database,Medium,206,green
+Novel.SF3B3,Novel.CHERP,900,database,Medium,206,green
+Novel.SF3B3,Novel.HNRNPF,900,database,Medium,206,green
+Novel.SF3B3,Novel.PABPN1,900,database,Medium,206,green
+Novel.SF3B3,Novel.SLU7,900,database,Medium,206,green
+Novel.SF3B3,Novel.PPWD1,900,database,Medium,206,green
+Novel.SF3B3,Ribosome.RPL18A,417,experimental,Medium,206,green
+Novel.SF3B3,Novel.PRPF3,900,database,Medium,206,green
+Novel.SF3B3,Novel.RBM22,900,database,Medium,206,green
+Novel.SF3B3,Novel.SF3A2,900,database,Medium,206,green
+Novel.SF3B3,Novel.HNRNPU,900,database,Medium,206,green
+Novel.SF3B3,Novel.SNRPA1,900,database,Medium,206,green
+Novel.SF3B3,Novel.UTP14A,451,experimental,Medium,206,green
+Novel.SF3B3,Novel.SPTAN1,417,experimental,Medium,206,green
+Novel.SF3B3,Novel.TRA2A,437,experimental,Medium,206,green
+Novel.SH3GL3,Novel.DVL2,900,database,Medium,207,green
+Novel.SLU7,RNA transport.NUP54,900,database,Medium,208,green
+Novel.SLU7,Novel.PPWD1,900,database,Medium,208,green
+Novel.SLU7,Novel.POLDIP3,900,database,Medium,208,green
+Novel.SLU7,Novel.LUZP4,900,database,Medium,208,green
+Novel.SLU7,RNA transport.RANBP2,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP107,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP133,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP153,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NCBP2,900,database,Medium,208,green
+Novel.SLU7,RNA transport.THOC2,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP155,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP85,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP160,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP88,900,database,Medium,208,green
+Novel.SLU7,RNA transport.NUP62,900,database,Medium,208,green
+Novel.SLU7,Novel.PRPF3,597,experimental,Medium,208,green
+Novel.SLU7,Novel.RBM22,900,database,Medium,208,green
+Novel.SLU7,Novel.SF3A2,900,database,Medium,208,green
+Novel.SLU7,Novel.HNRNPU,900,database,Medium,208,green
+Novel.SLU7,Novel.SNRPA1,900,database,Medium,208,green
+Novel.SLU7,Novel.SF3B3,900,database,Medium,208,green
+Novel.SLU7,Novel.LSM2,900,database,Medium,208,green
+Novel.SLU7,Novel.SNRPB,900,database,Medium,208,green
+Novel.SLU7,Novel.SF3A1,900,database,Medium,208,green
+Novel.SLU7,Novel.SUGP1,900,database,Medium,208,green
+Novel.SLU7,Novel.ELAVL1,900,database,Medium,208,green
+Novel.SLU7,Novel.POLR2J,900,database,Medium,208,green
+Novel.SLU7,Novel.CHERP,900,database,Medium,208,green
+Novel.SLU7,Novel.HNRNPF,900,database,Medium,208,green
+Novel.SLU7,Novel.PABPN1,900,database,Medium,208,green
+Novel.SNRPA1,RNA transport.NCBP2,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SF3B3,900,database,Medium,209,green
+Novel.SNRPA1,Novel.PRPF40A,900,database,Medium,209,green
+Novel.SNRPA1,Novel.LSM3,900,database,Medium,209,green
+Novel.SNRPA1,Novel.LSM2,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SNRPB,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SF3A1,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SUGP1,900,database,Medium,209,green
+Novel.SNRPA1,Novel.ELAVL1,900,database,Medium,209,green
+Novel.SNRPA1,Novel.POLR2J,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SSB,417,experimental,Medium,209,green
+Novel.SNRPA1,Novel.CHERP,900,database,Medium,209,green
+Novel.SNRPA1,Novel.HNRNPF,900,database,Medium,209,green
+Novel.SNRPA1,Novel.PABPN1,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SLU7,900,database,Medium,209,green
+Novel.SNRPA1,Novel.PPWD1,900,database,Medium,209,green
+Novel.SNRPA1,Novel.PRPF3,900,database,Medium,209,green
+Novel.SNRPA1,Novel.RBM22,900,database,Medium,209,green
+Novel.SNRPA1,Novel.SF3A2,900,database,Medium,209,green
+Novel.SNRPA1,Novel.HNRNPU,900,database,Medium,209,green
+Novel.SNRPB,RNA transport.NCBP2,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP155,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP85,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP160,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP88,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP62,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP54,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.GEMIN2,900,database,Medium,210,green
+Novel.SNRPB,Novel.SF3A1,900,database,Medium,210,green
+Novel.SNRPB,Novel.SUGP1,900,database,Medium,210,green
+Novel.SNRPB,Novel.ELAVL1,900,database,Medium,210,green
+Novel.SNRPB,Novel.POLR2J,900,database,Medium,210,green
+Novel.SNRPB,Novel.CHERP,900,database,Medium,210,green
+Novel.SNRPB,Novel.HNRNPF,900,database,Medium,210,green
+Novel.SNRPB,Novel.PABPN1,900,database,Medium,210,green
+Novel.SNRPB,Novel.SLU7,900,database,Medium,210,green
+Novel.SNRPB,Novel.PPWD1,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.RANBP2,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP107,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP133,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.NUP153,900,database,Medium,210,green
+Novel.SNRPB,RNA transport.CLNS1A,900,database,Medium,210,green
+Novel.SNRPB,Novel.PRPF3,900,database,Medium,210,green
+Novel.SNRPB,Novel.RBM22,900,database,Medium,210,green
+Novel.SNRPB,Novel.SF3A2,900,database,Medium,210,green
+Novel.SNRPB,Novel.HNRNPU,900,database,Medium,210,green
+Novel.SNRPB,Novel.SNRPA1,900,database,Medium,210,green
+Novel.SNRPB,Novel.SF3B3,900,database,Medium,210,green
+Novel.SNRPB,Novel.PRPF40A,900,database,Medium,210,green
+Novel.SNRPB,Novel.LSM3,900,database,Medium,210,green
+Novel.SNRPB,Novel.LSM2,900,database,Medium,210,green
+Novel.SPCS3,Ribosome.RPL6,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS15A,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL9,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS18,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS8,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL18A,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS23,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL4,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPLP0,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL7,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL10,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL27A,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS10,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS27,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL7A,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS4X,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL10A,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS6,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPS20,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL18,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL17,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL32,900,database,High,211,green
+Novel.SPCS3,Ribosome.RPL37,900,database,High,211,green
+Novel.SPEN,RNA transport.NUP54,503,experimental,Medium,212,green
+Novel.SPEN,Novel.EP300,900,database,Medium,212,green
+Novel.SPEN,Novel.MAML1,900,database,Medium,212,green
+Novel.SPEN,RNA transport.NUP107,800,experimental,Medium,212,green
+Novel.SPTAN1,Novel.SF3B3,417,experimental,High,213,green
+Novel.SPTAN1,Novel.ACTA2,503,experimental,High,213,green
+Novel.SPTAN1,Novel.ARF1,900,database,High,213,green
+Novel.SPTBN1,Novel.TGFBR2,900,database,High,214,green
+Novel.SPTBN1,Novel.ARF1,900,database,High,214,green
+Novel.SSB,RNA transport.EEF1A1,417,experimental,High,215,green
+Novel.SSB,Novel.NOP56,417,experimental,High,215,green
+Novel.SSB,Novel.SNRPA1,417,experimental,High,215,green
+Novel.SSB,Novel.POLR3A,900,database,High,215,green
+Novel.STARD13,Novel.CDC42,900,database,Medium,216,green
+Novel.STX5,RNA transport.NUP160,605,experimental,High,217,green
+Novel.STX5,Novel.MAN2A1,900,database,High,217,green
+Novel.SUGP1,RNA transport.NCBP2,900,database,Medium,218,green
+Novel.SUGP1,Novel.POLR2J,900,database,Medium,218,green
+Novel.SUGP1,Novel.CHERP,900,database,Medium,218,green
+Novel.SUGP1,Novel.SLU7,900,database,Medium,218,green
+Novel.SUGP1,Novel.PRPF3,900,database,Medium,218,green
+Novel.SUGP1,Novel.RBM22,900,database,Medium,218,green
+Novel.SUGP1,Novel.SF3A2,900,database,Medium,218,green
+Novel.SUGP1,Novel.HNRNPU,900,database,Medium,218,green
+Novel.SUGP1,Novel.SNRPA1,900,database,Medium,218,green
+Novel.SUGP1,Novel.SF3B3,900,database,Medium,218,green
+Novel.SUGP1,Novel.PRPF40A,900,database,Medium,218,green
+Novel.SUGP1,Novel.LSM3,900,database,Medium,218,green
+Novel.SUGP1,Novel.LSM2,900,database,Medium,218,green
+Novel.SUGP1,Novel.SNRPB,900,database,Medium,218,green
+Novel.SUGP1,Novel.SF3A1,900,database,Medium,218,green
+Novel.SUV39H1,Novel.HDAC1,900,database,Medium,219,green
+Novel.TAF6L,Novel.HDAC1,720,database,Medium,220,green
+Novel.TAOK1,RNA transport.RANBP2,900,database,High,221,green
+Novel.TAOK1,RNA transport.RANGAP1,900,database,High,221,green
+Novel.TAOK1,Ribosome.RPS27,900,database,High,221,green
+Novel.TAOK1,RNA transport.NUP107,900,database,High,221,green
+Novel.TAOK1,RNA transport.NUP133,900,database,High,221,green
+Novel.TAOK1,RNA transport.XPO1,900,database,High,221,green
+Novel.TAOK1,RNA transport.NUP85,900,database,High,221,green
+Novel.TAOK1,RNA transport.NUP160,900,database,High,221,green
+Novel.TAOK1,Novel.CLASP1,900,database,High,221,green
+Novel.TAOK1,Novel.CENPQ,900,database,High,221,green
+Novel.TAOK1,Novel.CDC42,900,database,High,221,green
+Novel.TAOK1,Novel.ZWILCH,900,database,High,221,green
+Novel.TAOK1,Novel.AHCTF1,900,database,High,221,green
+Novel.TAOK1,Novel.ITGB3BP,900,database,High,221,green
+Novel.TFDP2,Novel.HDAC1,900,database,High,222,green
+Novel.TGFBR2,Novel.ERCC3,540,database,Medium,223,green
+Novel.TGFBR2,Novel.RPS6KB1,900,database,Medium,223,green
+Novel.TGFBR2,Novel.CCNT1,540,database,Medium,223,green
+Novel.TGFBR2,RNA transport.XPO1,900,database,Medium,223,green
+Novel.TGFBR2,Novel.PPP2R2A,900,database,Medium,223,green
+Novel.TGFBR2,Novel.SPTBN1,900,database,Medium,223,green
+Novel.TGIF2,Novel.HDAC1,900,database,Medium,224,green
+Novel.TIAM1,Novel.CDC42,900,database,Medium,225,green
+Novel.TIAM2,Novel.CDC42,900,database,High,226,green
+Novel.TIMM8A,Novel.CDA,417,experimental,High,227,green
+Novel.TMED10,Novel.ARF1,900,database,Medium,228,green
+Novel.TMED2,RNA transport.EIF3I,417,experimental,High,229,green
+Novel.TMED2,Ribosome.RPS10,417,experimental,High,229,green
+Novel.TMED2,Novel.ARF1,900,database,High,229,green
+Novel.TNNI3,Novel.PPP2R2A,800,database,Medium,230,green
+Novel.TOMM40L,RNA transport.NUP62,540,database,Medium,231,green
+Novel.TRA2A,Novel.SF3B3,437,experimental,Medium,232,green
+Novel.TRA2A,Novel.HNRNPU,466,experimental,Medium,232,green
+Novel.TRIM55,RNA transport.RANBP2,503,experimental,High,233,green
+Novel.TRIM55,Novel.HNRNPU,466,experimental,High,233,green
+Novel.TRIM55,Novel.SF3B3,439,experimental,High,233,green
+Novel.TRIM56,Novel.LSM2,774,experimental,Medium,234,green
+Novel.TRIP11,Novel.ARF1,900,database,Medium,235,green
+Novel.TWISTNB,Novel.ERCC3,900,database,Medium,236,green
+Novel.UBE2D1,Novel.RELA,900,database,Medium,237,green
+Novel.UBXN1,RNA transport.CLNS1A,432,experimental,Medium,238,green
+Novel.USP7,RNA transport.THOC2,417,experimental,Medium,239,green
+Novel.USP7,Novel.RPA2,900,database,Medium,239,green
+Novel.USP7,Novel.POLR2J,900,database,Medium,239,green
+Novel.USP7,Novel.HNRNPF,417,experimental,Medium,239,green
+Novel.USP7,Novel.PTEN,900,database,Medium,239,green
+Novel.USP7,Novel.ERCC3,900,database,Medium,239,green
+Novel.USP7,Novel.EP300,900,database,Medium,239,green
+Novel.USP7,Novel.KLHDC10,774,experimental,Medium,239,green
+Novel.USP7,Novel.VPS53,503,experimental,Medium,239,green
+Novel.UTP14A,Novel.SF3B3,451,experimental,Medium,240,green
+Novel.UTP14A,Novel.EXOSC3,900,database,Medium,240,green
+Novel.UTP14A,Novel.MPHOSPH6,900,database,Medium,240,green
+Novel.UTP14A,Novel.HEATR1,900,database,Medium,240,green
+Novel.UTP14A,Novel.IMP4,900,database,Medium,240,green
+Novel.UTP14A,Novel.DDX49,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS15A,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS18,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS8,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS23,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS10,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS27,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS4X,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS6,900,database,Medium,240,green
+Novel.UTP14A,Ribosome.RPS20,900,database,Medium,240,green
+Novel.UTP14A,Novel.EXOSC9,900,database,Medium,240,green
+Novel.UTP14A,Novel.EXOSC5,900,database,Medium,240,green
+Novel.UTP14A,Novel.HNRNPU,481,experimental,Medium,240,green
+Novel.UTP14A,Novel.FBL,900,database,Medium,240,green
+Novel.UTP14A,Novel.NOP56,900,database,Medium,240,green
+Novel.UTP14A,Novel.NOP58,900,database,Medium,240,green
+Novel.VPS53,RNA transport.THOC2,774,experimental,High,241,green
+Novel.VPS53,Novel.USP7,503,experimental,High,241,green
+Novel.WWOX,RNA transport.NUP133,774,experimental,Medium,242,green
+Novel.ZNRD1,Novel.ERCC3,900,database,High,243,green
+Novel.ZWILCH,RNA transport.NUP85,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.NUP160,900,database,Medium,244,green
+Novel.ZWILCH,Novel.TAOK1,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.RANBP2,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.RANGAP1,900,database,Medium,244,green
+Novel.ZWILCH,Ribosome.RPS27,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.NUP107,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.NUP133,900,database,Medium,244,green
+Novel.ZWILCH,RNA transport.XPO1,900,database,Medium,244,green
+Novel.ZWILCH,Novel.CDC42,900,database,Medium,244,green
+RNA transport.CLNS1A,Novel.LSM3,627,experimental,High,245,blue
+RNA transport.CLNS1A,Novel.LSM2,604,experimental,High,245,blue
+RNA transport.CLNS1A,Novel.SNRPB,900,database,High,245,blue
+RNA transport.CLNS1A,Novel.MDH2,503,experimental,High,245,blue
+RNA transport.CLNS1A,Novel.UBXN1,432,experimental,High,245,blue
+RNA transport.CLNS1A,Novel.PDIA6,503,experimental,High,245,blue
+RNA transport.CLNS1A,Novel.S100A6,503,experimental,High,245,blue
+RNA transport.EEF1A1,Ribosome.RPS15A,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL9,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS18,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS8,900,database,Medium,246,blue
+RNA transport.EEF1A1,Novel.FBL,474,experimental,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL18A,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS23,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL4,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPLP0,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL7,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL10,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL27A,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS10,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS27,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL7A,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS4X,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL10A,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS6,900,database,Medium,246,blue
+RNA transport.EEF1A1,Novel.NOP56,474,experimental,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPS20,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL18,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL17,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL32,900,database,Medium,246,blue
+RNA transport.EEF1A1,Novel.SSB,417,experimental,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL37,900,database,Medium,246,blue
+RNA transport.EEF1A1,Novel.ABCC2,464,experimental,Medium,246,blue
+RNA transport.EEF1A1,Novel.GORASP2,503,experimental,Medium,246,blue
+RNA transport.EEF1A1,Novel.ABTB1,439,experimental,Medium,246,blue
+RNA transport.EEF1A1,Novel.RAB2A,417,experimental,Medium,246,blue
+RNA transport.EEF1A1,Novel.RPL39L,900,database,Medium,246,blue
+RNA transport.EEF1A1,Ribosome.RPL6,900,database,Medium,246,blue
+RNA transport.EIF1AX,Ribosome.RPS6,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS20,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL18,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL17,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL32,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL37,900,database,Medium,247,blue
+RNA transport.EIF1AX,Novel.FLII,503,experimental,Medium,247,blue
+RNA transport.EIF1AX,Novel.ERC2,800,experimental,Medium,247,blue
+RNA transport.EIF1AX,Novel.RPL39L,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL6,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS15A,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL9,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS18,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS8,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL18A,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS23,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL4,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPLP0,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL7,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL10,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL27A,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS10,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS27,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL7A,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPS4X,900,database,Medium,247,blue
+RNA transport.EIF1AX,Ribosome.RPL10A,900,database,Medium,247,blue
+RNA transport.EIF2B1,Novel.LYPLA2,417,experimental,Medium,248,blue
+RNA transport.EIF2B1,Novel.ARF1,417,experimental,Medium,248,blue
+RNA transport.EIF3G,Ribosome.RPL37,900,database,Medium,249,blue
+RNA transport.EIF3G,Novel.RPL39L,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL6,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS15A,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL9,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS18,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS8,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL18A,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS23,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL4,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPLP0,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL7,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL10,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL27A,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS10,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS27,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL7A,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS4X,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL10A,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS6,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPS20,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL18,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL17,900,database,Medium,249,blue
+RNA transport.EIF3G,Ribosome.RPL32,900,database,Medium,249,blue
+RNA transport.EIF3H,Novel.ARPC5,488,experimental,High,250,blue
+RNA transport.EIF3H,Novel.CSNK2A2,774,experimental,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL37,900,database,High,250,blue
+RNA transport.EIF3H,Novel.NUMA1,774,experimental,High,250,blue
+RNA transport.EIF3H,Novel.RPL39L,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL6,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS15A,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL9,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS18,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS8,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL18A,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS23,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL4,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPLP0,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL7,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL10,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL27A,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS10,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS27,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL7A,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS4X,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL10A,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS6,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPS20,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL18,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL17,900,database,High,250,blue
+RNA transport.EIF3H,Ribosome.RPL32,900,database,High,250,blue
+RNA transport.EIF3I,Ribosome.RPS8,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL18A,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS23,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL4,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPLP0,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL7,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL10,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL27A,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS10,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS27,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL7A,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS4X,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL10A,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS6,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS20,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL18,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL17,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL32,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL37,900,database,Medium,251,blue
+RNA transport.EIF3I,Novel.NUMA1,417,experimental,Medium,251,blue
+RNA transport.EIF3I,Novel.TMED2,417,experimental,Medium,251,blue
+RNA transport.EIF3I,Novel.RPL39L,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL6,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS15A,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPL9,900,database,Medium,251,blue
+RNA transport.EIF3I,Ribosome.RPS18,900,database,Medium,251,blue
+RNA transport.EIF4E,Novel.RPS6KB1,900,database,Medium,252,blue
+RNA transport.EIF4E,Novel.RRAGB,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL37,900,database,Medium,252,blue
+RNA transport.EIF4E,Novel.RPL39L,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL6,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS15A,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL9,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS18,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS8,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL18A,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS23,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL4,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPLP0,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL7,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL10,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL27A,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS10,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS27,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL7A,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS4X,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL10A,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS6,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPS20,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL18,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL17,900,database,Medium,252,blue
+RNA transport.EIF4E,Ribosome.RPL32,900,database,Medium,252,blue
+RNA transport.EIF4E,Novel.MTOR,900,database,Medium,252,blue
+RNA transport.EIF4EBP2,Novel.MTOR,800,database,Medium,253,blue
+RNA transport.GEMIN2,Novel.SNRPB,900,database,High,254,blue
+RNA transport.NCBP2,Novel.CHERP,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.HNRNPF,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.PABPN1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SLU7,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.ERCC3,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.FGF2,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL37,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.CCNT1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.INTS7,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.INTS11,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.CTDP1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.PPWD1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.POLDIP3,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.ICE2,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.RPL39L,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.LUZP4,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL6,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS15A,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL9,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.PRPF3,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.RBM22,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS18,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SF3A2,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS8,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.HNRNPU,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.ETF1,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL18A,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS23,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL4,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPLP0,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL7,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL10,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL27A,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS10,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS27,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL7A,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS4X,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL10A,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS6,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPS20,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL18,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL17,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SNRPA1,900,database,Medium,255,blue
+RNA transport.NCBP2,Ribosome.RPL32,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SF3B3,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.PRPF40A,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.LSM3,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.LSM2,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SNRPB,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.PPP2R2A,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SF3A1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.SUGP1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.ELAVL1,900,database,Medium,255,blue
+RNA transport.NCBP2,Novel.POLR2J,900,database,Medium,255,blue
+RNA transport.NUP107,Novel.SNRPB,900,database,High,256,blue
+RNA transport.NUP107,Novel.CENPQ,900,database,High,256,blue
+RNA transport.NUP107,Novel.CDC42,900,database,High,256,blue
+RNA transport.NUP107,Novel.ZWILCH,900,database,High,256,blue
+RNA transport.NUP107,Novel.AHCTF1,900,database,High,256,blue
+RNA transport.NUP107,Novel.SPEN,800,experimental,High,256,blue
+RNA transport.NUP107,Novel.SLU7,900,database,High,256,blue
+RNA transport.NUP107,Novel.ITGB3BP,900,database,High,256,blue
+RNA transport.NUP107,Novel.MYL1,503,experimental,High,256,blue
+RNA transport.NUP107,Novel.GLE1,651,experimental,High,256,blue
+RNA transport.NUP107,Novel.RCC1,636,experimental,High,256,blue
+RNA transport.NUP107,Novel.TAOK1,900,database,High,256,blue
+RNA transport.NUP107,Novel.POLDIP3,900,database,High,256,blue
+RNA transport.NUP107,Novel.LUZP4,900,database,High,256,blue
+RNA transport.NUP107,Ribosome.RPS27,900,database,High,256,blue
+RNA transport.NUP107,Novel.CLASP1,900,database,High,256,blue
+RNA transport.NUP107,Novel.HSPA4,900,database,High,256,blue
+RNA transport.NUP107,Novel.GCK,900,database,High,256,blue
+RNA transport.NUP133,Novel.SNRPB,900,database,High,257,blue
+RNA transport.NUP133,Novel.CENPQ,900,database,High,257,blue
+RNA transport.NUP133,Novel.CDC42,900,database,High,257,blue
+RNA transport.NUP133,Novel.ZWILCH,900,database,High,257,blue
+RNA transport.NUP133,Novel.AHCTF1,900,database,High,257,blue
+RNA transport.NUP133,Novel.SLU7,900,database,High,257,blue
+RNA transport.NUP133,Novel.ITGB3BP,900,database,High,257,blue
+RNA transport.NUP133,Novel.FLNC,774,experimental,High,257,blue
+RNA transport.NUP133,Novel.WWOX,774,experimental,High,257,blue
+RNA transport.NUP133,Novel.TAOK1,900,database,High,257,blue
+RNA transport.NUP133,Novel.POLDIP3,900,database,High,257,blue
+RNA transport.NUP133,Novel.LUZP4,900,database,High,257,blue
+RNA transport.NUP133,Ribosome.RPS27,900,database,High,257,blue
+RNA transport.NUP133,Novel.CLASP1,900,database,High,257,blue
+RNA transport.NUP133,Novel.HSPA4,900,database,High,257,blue
+RNA transport.NUP133,Novel.GCK,900,database,High,257,blue
+RNA transport.NUP133,Novel.DDX3X,503,experimental,High,257,blue
+RNA transport.NUP153,Novel.SNRPB,900,database,High,258,blue
+RNA transport.NUP153,Novel.SLU7,900,database,High,258,blue
+RNA transport.NUP153,Novel.GLE1,734,experimental,High,258,blue
+RNA transport.NUP153,Novel.RCC1,704,experimental,High,258,blue
+RNA transport.NUP153,Novel.POLDIP3,900,database,High,258,blue
+RNA transport.NUP153,Novel.LUZP4,900,database,High,258,blue
+RNA transport.NUP153,Novel.HDAC1,900,database,High,258,blue
+RNA transport.NUP153,Novel.HSPA4,900,database,High,258,blue
+RNA transport.NUP153,Novel.GCK,900,database,High,258,blue
+RNA transport.NUP155,Novel.SLU7,900,database,High,259,blue
+RNA transport.NUP155,Novel.KBTBD7,620,experimental,High,259,blue
+RNA transport.NUP155,Novel.POLDIP3,900,database,High,259,blue
+RNA transport.NUP155,Novel.LUZP4,900,database,High,259,blue
+RNA transport.NUP155,Novel.HSPA4,900,database,High,259,blue
+RNA transport.NUP155,Novel.GCK,900,database,High,259,blue
+RNA transport.NUP155,Novel.SNRPB,900,database,High,259,blue
+RNA transport.NUP160,Novel.SLU7,900,database,High,260,blue
+RNA transport.NUP160,Novel.ITGB3BP,900,database,High,260,blue
+RNA transport.NUP160,Novel.TAOK1,900,database,High,260,blue
+RNA transport.NUP160,Novel.POLDIP3,900,database,High,260,blue
+RNA transport.NUP160,Novel.LUZP4,900,database,High,260,blue
+RNA transport.NUP160,Ribosome.RPS27,900,database,High,260,blue
+RNA transport.NUP160,Novel.CLASP1,900,database,High,260,blue
+RNA transport.NUP160,Novel.HSPA4,900,database,High,260,blue
+RNA transport.NUP160,Novel.GCK,900,database,High,260,blue
+RNA transport.NUP160,Novel.SNRPB,900,database,High,260,blue
+RNA transport.NUP160,Novel.CENPQ,900,database,High,260,blue
+RNA transport.NUP160,Novel.CDC42,900,database,High,260,blue
+RNA transport.NUP160,Novel.ZWILCH,900,database,High,260,blue
+RNA transport.NUP160,Novel.STX5,605,experimental,High,260,blue
+RNA transport.NUP160,Novel.AHCTF1,900,database,High,260,blue
+RNA transport.NUP54,Novel.POLDIP3,900,database,Medium,261,blue
+RNA transport.NUP54,Novel.LUZP4,900,database,Medium,261,blue
+RNA transport.NUP54,Novel.HSPA4,900,database,Medium,261,blue
+RNA transport.NUP54,Novel.GCK,900,database,Medium,261,blue
+RNA transport.NUP54,Novel.SNRPB,900,database,Medium,261,blue
+RNA transport.NUP54,Novel.SPEN,503,experimental,Medium,261,blue
+RNA transport.NUP54,Novel.SLU7,900,database,Medium,261,blue
+RNA transport.NUP62,Novel.SLU7,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.POLDIP3,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.HEATR5A,503,experimental,Medium,262,blue
+RNA transport.NUP62,Novel.TOMM40L,540,database,Medium,262,blue
+RNA transport.NUP62,Novel.LUZP4,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.CD34,720,database,Medium,262,blue
+RNA transport.NUP62,Novel.HDAC1,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.HSPA4,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.GCK,900,database,Medium,262,blue
+RNA transport.NUP62,Novel.SNRPB,900,database,Medium,262,blue
+RNA transport.NUP85,Novel.AHCTF1,900,database,High,263,blue
+RNA transport.NUP85,Novel.SLU7,900,database,High,263,blue
+RNA transport.NUP85,Novel.ITGB3BP,900,database,High,263,blue
+RNA transport.NUP85,Novel.TAOK1,900,database,High,263,blue
+RNA transport.NUP85,Novel.POLDIP3,900,database,High,263,blue
+RNA transport.NUP85,Novel.LUZP4,900,database,High,263,blue
+RNA transport.NUP85,Ribosome.RPS27,900,database,High,263,blue
+RNA transport.NUP85,Novel.CLASP1,900,database,High,263,blue
+RNA transport.NUP85,Novel.HSPA4,900,database,High,263,blue
+RNA transport.NUP85,Novel.GCK,900,database,High,263,blue
+RNA transport.NUP85,Novel.SNRPB,900,database,High,263,blue
+RNA transport.NUP85,Novel.CENPQ,900,database,High,263,blue
+RNA transport.NUP85,Novel.CDC42,900,database,High,263,blue
+RNA transport.NUP85,Novel.ZWILCH,900,database,High,263,blue
+RNA transport.NUP88,Novel.SLU7,900,database,Medium,264,blue
+RNA transport.NUP88,Novel.POLDIP3,900,database,Medium,264,blue
+RNA transport.NUP88,Novel.LUZP4,900,database,Medium,264,blue
+RNA transport.NUP88,Novel.HSPA4,900,database,Medium,264,blue
+RNA transport.NUP88,Novel.GCK,900,database,Medium,264,blue
+RNA transport.NUP88,Novel.SNRPB,900,database,Medium,264,blue
+RNA transport.PAIP1,Novel.MKRN2,774,experimental,Medium,265,blue
+RNA transport.RANBP2,Ribosome.RPLP0,417,experimental,High,266,blue
+RNA transport.RANBP2,Ribosome.RPS27,900,database,High,266,blue
+RNA transport.RANBP2,Novel.HDAC1,900,database,High,266,blue
+RNA transport.RANBP2,Novel.CLASP1,900,database,High,266,blue
+RNA transport.RANBP2,Novel.HSPA4,900,database,High,266,blue
+RNA transport.RANBP2,Novel.GCK,900,database,High,266,blue
+RNA transport.RANBP2,Novel.TRIM55,503,experimental,High,266,blue
+RNA transport.RANBP2,Novel.SNRPB,900,database,High,266,blue
+RNA transport.RANBP2,Novel.CENPQ,900,database,High,266,blue
+RNA transport.RANBP2,Novel.CDC42,900,database,High,266,blue
+RNA transport.RANBP2,Novel.ZWILCH,900,database,High,266,blue
+RNA transport.RANBP2,Novel.AHCTF1,900,database,High,266,blue
+RNA transport.RANBP2,Novel.HNRNPF,707,experimental,High,266,blue
+RNA transport.RANBP2,Novel.SLU7,900,database,High,266,blue
+RNA transport.RANBP2,Novel.ITGB3BP,900,database,High,266,blue
+RNA transport.RANBP2,Novel.RANBP1,900,database,High,266,blue
+RNA transport.RANBP2,Novel.GLE1,540,database,High,266,blue
+RNA transport.RANBP2,Novel.RCC1,774,experimental,High,266,blue
+RNA transport.RANBP2,Novel.TAOK1,900,database,High,266,blue
+RNA transport.RANBP2,Novel.POLDIP3,900,database,High,266,blue
+RNA transport.RANBP2,Novel.LUZP4,900,database,High,266,blue
+RNA transport.RANGAP1,Ribosome.RPS27,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.HDAC1,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.CLASP1,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.CENPQ,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.CDC42,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.ZWILCH,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.AHCTF1,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.ITGB3BP,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.HUWE1,774,experimental,Medium,267,blue
+RNA transport.RANGAP1,Novel.PPIB,503,experimental,Medium,267,blue
+RNA transport.RANGAP1,Novel.RANBP1,900,database,Medium,267,blue
+RNA transport.RANGAP1,Novel.TAOK1,900,database,Medium,267,blue
+RNA transport.SENP2,Novel.DVL2,800,database,Medium,268,blue
+RNA transport.THOC2,Novel.PABPN1,900,database,High,269,blue
+RNA transport.THOC2,Novel.SLU7,900,database,High,269,blue
+RNA transport.THOC2,Novel.POLDIP3,900,database,High,269,blue
+RNA transport.THOC2,Novel.LUZP4,900,database,High,269,blue
+RNA transport.THOC2,Novel.VPS53,774,experimental,High,269,blue
+RNA transport.THOC2,Novel.USP7,417,experimental,High,269,blue
+RNA transport.XPO1,Novel.ELAVL1,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.CENPQ,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.RELA,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.CDC42,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.TGFBR2,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.ZWILCH,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.AHCTF1,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.ITGB3BP,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.RANBP1,878,experimental,Medium,270,blue
+RNA transport.XPO1,Novel.RCC1,417,experimental,Medium,270,blue
+RNA transport.XPO1,Novel.CDA,417,experimental,Medium,270,blue
+RNA transport.XPO1,Novel.TAOK1,900,database,Medium,270,blue
+RNA transport.XPO1,Ribosome.RPS27,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.HDAC1,900,database,Medium,270,blue
+RNA transport.XPO1,Novel.CLASP1,900,database,Medium,270,blue
