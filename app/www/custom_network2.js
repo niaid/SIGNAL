@@ -38,7 +38,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         color23 = "#ce6702",
         color123 = "#6d1c8e",
         colorMap = [color1, color2, color3, novelColor, color123, color12, color23, color13],
-        windowFields = ['Gene Name:', ' ', 'Interactions:', 'Confidence:'];
+        windowFields = ['Gene Name:', ' ', 'Interactions:', 'Screen Input:'];
 
     var cluster = d3.layout.cluster()
       .size([360, ry - 120])
@@ -121,13 +121,16 @@ Shiny.addCustomMessageHandler("jsondata2",
       .attr("class", "slidersvg")
       .attr("transform", "translate(700,360)")
 
+    // sliderChange will depend on if the user's OS is Windows or not
+    sliderChange = navigator.userAgent.indexOf("Windows") != -1 ? [5, 102, 200, 295] : [0, 90, 180, 270]
+
     sliderSVG.selectAll("text")
       .data(sliderText)
       .enter()
       .append("svg:text")
       .attr("font-family", "Helvetica")
       .attr("font-size", 14)
-      .attr("dy", function(d,i){return i*90})
+      .attr("dy", function(d,i){return sliderChange[i]})
       .text(function(d){return d;});
 
     // removes the network div once another network is chosen in shiny
@@ -260,7 +263,11 @@ Shiny.addCustomMessageHandler("jsondata2",
       })
 
       arr = Object.keys(map);
-      arr.push(arr.splice(arr.indexOf("Novel"), 1)[0]);
+      arr.splice(arr.indexOf("Novel"), 1);
+      for(var i=0;i<arr.length;i++){
+        arr[i]=arr[i] + " (TRIAGE hits)";
+      }
+      arr.push("Novel")
 
       return arr;
     }
@@ -370,7 +377,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         }
       }
       if(!check){
-        pns[pns.length-1] = "Novel Genes"
+        pns[pns.length-1] = "Additional TRIAGE hits"
       }
       else{
         for(s in ordColors){
@@ -389,7 +396,7 @@ Shiny.addCustomMessageHandler("jsondata2",
               pathways.push(nS)
               break;
             case novelColor:
-              nS = "Novel Genes";
+              nS = "Additional TRIAGE hits";
               pathways.push(nS)
               break;
             case color12:
@@ -649,7 +656,7 @@ Shiny.addCustomMessageHandler("jsondata2",
       d3.selectAll(".vizText").remove()
       windowFields = ['Gene Name:', ' ',
                       'Interactions:',
-                      'Confidence:']
+                      'Screen Input:']
       windowText.data(windowFields)
         .enter()
           .append("svg:text")
@@ -819,6 +826,10 @@ Shiny.addCustomMessageHandler("jsondata2",
         childrenArray2 = childrenData2[geneRevert.name][0]
 
         paintWindow(geneRevert, 1)
+
+        clickeRs = getClicker();
+
+        Shiny.setInputValue("clickedData", clickeRs);
       }
     }
 
@@ -929,7 +940,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         windowFields = ['Gene Name: ',
                         d.key,
                         'Interactions: ' + d.datasource.length,
-                        'Confidence: ' + d.Confidence]
+                        'Screen Input: ' + d.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = d.color
         windowText.data(windowFields)
@@ -961,7 +972,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         windowFields = ['Gene Name: ',
                         n.key,
                         'Interactions: ' + n.datasource.length,
-                        'Confidence: ' + n.Confidence]
+                        'Screen Input: ' + n.Confidence]
         windowFields = [].concat.apply([], windowFields);
         var textColor = n.color;
         var windowL = windowFields.length;
@@ -995,7 +1006,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         windowFields = ['Linked Gene: ', d.key,
                         'Reference Gene: ', n.key,
                         'Interactions: ' + d.weights.length,
-                        'Score: ' + n.weights[cInd],
+                        'Interaction Score: ' + n.weights[cInd],
                         'Source: ' + n.datasource[cInd]];
         var linkedColor = d.color;
         var refColor = n.color;

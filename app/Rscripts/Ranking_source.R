@@ -167,9 +167,20 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   }
   
   # organizing column order
-  Scores_nodes_and_edges <- Scores_nodes_and_edges[, c("EntrezID", "GeneSymbol", "GeneMappingID", "ConfidenceCategory"
+  # Scores_nodes_and_edges <- Scores_nodes_and_edges[, c("EntrezID", "GeneSymbol", "GeneMappingID", "ConfidenceCategory"
+  #                                                      , "Group", "Pathway"
+  #                                                      , "Allnet.count", "Ntwrk.all")]
+  
+  Scores_nodes_and_edges <- Scores_nodes_and_edges[, c("EntrezID", "GeneSymbol", "ConfidenceCategory"
                                                        , "Group", "Pathway"
                                                        , "Allnet.count", "Ntwrk.all")]
+  
+  # renaming some of these columns...
+  Scores_nodes_and_edges = Scores_nodes_and_edges %>% 
+    rename("ConfidenceCategory" = "InputCategory",
+           "Pathway" = "TRIAGEpathways",
+           "Allnet.count" = "Total.Network.Hits",
+           "Ntwrk.all" = "All.Network.Hits")
   
   # creating vector for all pathway names for gene hits in multiple pathways
   
@@ -209,7 +220,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
       
       for (k in 1:length(group.list)) {
         temp.name <- group.list[k]
-        out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["Ntwrk.all"]], value = F, fixed = F)
+        out <- grep(paste0("\\b", temp.name, "\\b"), Scores_nodes_and_edges[["All.Network.Hits"]], value = F, fixed = F)
         all.out = append(all.out, out)
         Scores_nodes_and_edges[out, temp.hits] <- paste(temp.name, Scores_nodes_and_edges[out, temp.hits], sep = ", ")
       }
@@ -225,21 +236,25 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
       Scores_nodes_and_edges[, c(temp.hits, temp.counts)] = Scores_nodes_and_edges[, c(temp.counts, temp.hits)]
       # renaming columns for pathway names
       N = ncol(Scores_nodes_and_edges)
-      sne.col.hits = paste0('Ntwrk.', i)
-      sne.col.counts = paste0('NtwrkCount.', i)
+      sne.col.hits = paste0('Network.', i, '.Hits')
+      sne.col.counts = paste0('Total.Network.', i)
       colnames(Scores_nodes_and_edges)[c(N-1, N)] = c(sne.col.counts, sne.col.hits)
       
     }
     
+    # Group names that are "Novel" will be renamed to "Additional TRIAGE hits"
+    Scores_nodes_and_edges = Scores_nodes_and_edges %>% 
+      mutate(Group = ifelse(Group == 'Novel', 'Additional TRIAGE hits', Group))
+    
     #here a counter is added for how many "hits" that are in the selected groups it's shown to interact with.
-    sumcols = grep("NtwrkCount", colnames(Scores_nodes_and_edges))
+    sumcols = grep("Total.Network.", colnames(Scores_nodes_and_edges))
     
     if(n != 1){
-      Scores_nodes_and_edges$Total_Path_Hits.net.count = rowSums(Scores_nodes_and_edges[,sumcols])  
+      Scores_nodes_and_edges$Total.Network.Selected.Pathways = rowSums(Scores_nodes_and_edges[,sumcols])  
     }
     
     ### write file
-    file.name = paste0("TRIAGEsort_" , inputFilePrefix, "_", t.file.name, ".csv")
+    file.name = paste0(inputFilePrefix, "_TRIAGEnetwork_", t.file.name, ".csv")
     
     ret.list = list(Scores_nodes_and_edges, file.name)
     

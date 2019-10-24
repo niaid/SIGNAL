@@ -236,13 +236,16 @@
         .attr("class", "slidersvg")
         .attr("transform", "translate(700," + (h - 435) + ")")
 
+      // sliderChange will depend on if the user's OS is Windows or not
+      sliderChange = navigator.userAgent.indexOf("Windows") != -1 ? [5, 102, 200, 295] : [0, 90, 180, 270]
+
       sliderSVG.selectAll("text")
         .data(sliderText)
         .enter()
         .append("svg:text")
         .attr("font-family", "Helvetica")
         .attr("font-size", 14)
-        .attr("dy", function(d,i){return i*75})
+        .attr("dy", function(d,i){return sliderChange[i]})
         .text(function(d){return d;});
 
       // button for going back in clicked pathways
@@ -406,7 +409,11 @@
         })
 
         arr = Object.keys(map);
-        arr.push(arr.splice(arr.indexOf("Novel"), 1)[0]);
+        arr.splice(arr.indexOf("Novel"), 1);
+        for(var i=0;i<arr.length;i++){
+          arr[i]=arr[i] + " (TRIAGE hits)";
+        }
+        arr.push("Novel")
 
         return arr;
       }
