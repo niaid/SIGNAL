@@ -377,7 +377,7 @@ Shiny.addCustomMessageHandler("jsondata2",
         }
       }
       if(!check){
-        pns[pns.length-1] = "Novel Genes"
+        pns[pns.length-1] = "Additional TRIAGE hits"
       }
       else{
         for(s in ordColors){
@@ -396,7 +396,7 @@ Shiny.addCustomMessageHandler("jsondata2",
               pathways.push(nS)
               break;
             case novelColor:
-              nS = "Novel Genes";
+              nS = "Additional TRIAGE hits";
               pathways.push(nS)
               break;
             case color12:
@@ -826,6 +826,10 @@ Shiny.addCustomMessageHandler("jsondata2",
         childrenArray2 = childrenData2[geneRevert.name][0]
 
         paintWindow(geneRevert, 1)
+
+        clickeRs = getClicker();
+
+        Shiny.setInputValue("clickedData", clickeRs);
       }
     }
 
