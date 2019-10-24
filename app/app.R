@@ -143,7 +143,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           ),
           selectInput(inputId = "network",
                       label = "Select Interactions for Network Analysis:",
-                      choices = c("Experimental & Database", "Advanced Options")
+                      choices = c("STRING: Experimental & Database", "Advanced Options")
           ),
           conditionalPanel(condition = "input.network == 'Advanced Options'",
                            checkboxGroupInput(inputId ="STRING_interaction_sources", 
@@ -173,11 +173,11 @@ options(shiny.maxRequestSize = 3*1024^2)
           ),
           # cutoff values depending the cutoff method chosen
           uiOutput("cutoffTypes"),
-          # textInput("cutoff_valueH", "High-conf Cutoff Value", placeholder = "High-conf cutoff"),
-          textInput("cutoff_valueH", "High-conf Cutoff Value"),
+          # textInput("cutoff_valueH", "High Confidence Cutoff Value", placeholder = "High-conf cutoff"),
+          textInput("cutoff_valueH", "High Confidence Cutoff Value"),
           bsPopover("cutoff_valueH", "High confidence cutoff value:", "Please enter a value for high confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           # textInput("cutoff_valueM", "Med-conf Cutoff Value", placeholder = "Med-conf cutoff"),
-          textInput("cutoff_valueM", "Med-conf Cutoff Value"),
+          textInput("cutoff_valueM", "Medium Confidence Cutoff Value"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           checkboxInput("includeBackground", "Add genome background"),
           bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
@@ -208,7 +208,7 @@ options(shiny.maxRequestSize = 3*1024^2)
                                  tabPanel(title="Graph: Gene Hits By Iteration", value="geneHitsByIteration",
                                           dataTableOutput("geneHitsTableByIteration"),
                                           plotOutput("geneHitsByIteration")),
-                                 tabPanel(title="High Confidence Hits not in TRIAGE Hits", value="nonTRIAGEhits",
+                                 tabPanel(title="High Confidence Hits Not Selected by TRIAGE", value="nonTRIAGEhits",
                                           dataTableOutput("nonTRIAGEhitsTable")),
                                  tabPanel(title = "Pathway Enrichments", value = "pathwayEnrich.cond",
                                           dataTableOutput("pathwayEnrich.cond"))
@@ -610,7 +610,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         dir_begin <<- ifelse('SHINY_SERVER_VERSION' %in% env_names, "/srv/shiny-server/data/Networks/String.", "~/TRIAGE/app/data/Networks/String.")
         
-        if(input_netowrk == "Experimental & Database"){
+        if(input_netowrk == "STRING: Experimental & Database"){
           
           # loads igraph for experimental and database source selections
           load(paste0(dir_begin, tolower(organism), ".exp_and_data", conf.level, ".Rdata"))
@@ -725,12 +725,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         #Depending on the differnce between the high conf cutoff and the mid conf cutoff assign criteria based on "greater than" or "less than"
         if((cutoffHigh - cutoffMed) > 0){
           siRNA.Score <- siRNA.Score %>%
-            mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) >= cutoffHigh, "HighConf",
+            mutate(InputCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) >= cutoffHigh, "HighConf",
                                                ifelse(get(cutoffType, as.environment(siRNA.Score)) >= cutoffMed & get(cutoffType, as.environment(siRNA.Score)) < cutoffHigh,"MedConf",
                                                       "LowConf")))
         }else{
           siRNA.Score <- siRNA.Score %>%
-            mutate(ConfidenceCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) <= cutoffHigh, "HighConf",
+            mutate(InputCategory = ifelse(get(cutoffType, as.environment(siRNA.Score)) <= cutoffHigh, "HighConf",
                                                ifelse(get(cutoffType, as.environment(siRNA.Score)) <= cutoffMed & get(cutoffType, as.environment(siRNA.Score)) > cutoffHigh,"MedConf",
                                                       "LowConf")))
         }
@@ -739,19 +739,19 @@ options(shiny.maxRequestSize = 3*1024^2)
         includeBackground <- input$includeBackground
         
         if(includeBackground){
-          df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, ConfidenceCategory = rep("Background", nrow(df_backgroundGenes)))
+          df_background <- data.frame(EntrezID = df_backgroundGenes$EntrezID, GeneSymbol=df_backgroundGenes$GeneSymbol, InputCategory = rep("Background", nrow(df_backgroundGenes)))
           # combined input data and background data
           myList <- list(siRNA.Score, df_background)
           siRNA.Score <- rbindlist(myList, fill = TRUE)
         }
 
         cutoffType <<- input$cutoff_type
-        proxyScore <- "ConfidenceCategory"
+        proxyScore <- "InputCategory"
         iteration <- 1
         counter <- TRUE
 
         # Get a copy of the original list of high-confidence genes
-        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score$ConfidenceCategory == "HighConf"]
+        originalHits <- siRNA.Score$GeneSymbol[siRNA.Score$InputCategory == "HighConf"]
 
         # Check to see if the genes from the input file match the genes from the pathwayData
         # No match in case the input genes are from Mouse, but the genes from the pathwayData are from Human
@@ -901,12 +901,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Get filtered TRIAGE High/Med Conf
         TRIAGEhits.highConf <- filter(TRIAGEoutput, TRIAGEhit == "Yes" 
-                                      & ConfidenceCategory == "HighConf")
+                                      & InputCategory == "HighConf")
         TRIAGEhits.highConf.matrix <- matrix(TRIAGEhits.highConf$EntrezID)
         TRIAGEhits.highConf.matrix.GS <- matrix(TRIAGEhits.highConf$GeneSymbol)
         
         TRIAGEhits.medConf <- filter(TRIAGEoutput, TRIAGEhit == "Yes" 
-                                     & ConfidenceCategory == "MedConf")
+                                     & InputCategory == "MedConf")
         TRIAGEhits.medConf.matrix <- matrix(TRIAGEhits.medConf$EntrezID)
         TRIAGEhits.medConf.matrix.GS <- matrix(TRIAGEhits.medConf$GeneSymbol)
         
@@ -973,7 +973,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###############################################################################
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
-        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "ConfidenceCategory", "Pathway", "TRIAGEhit")]
+        TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "InputCategory", "Pathway", "TRIAGEhit")]
         GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
@@ -1127,12 +1127,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         TRIAGEoutput <- merge(TRIAGEoutput, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
         
         # table where high confidence genes are not in the final iteration of the TRIAGE analysis
-        non.triage.dat <- filter(TRIAGEoutput, ConfidenceCategory=="HighConf" & TRIAGEhit=='')
+        non.triage.dat <- filter(TRIAGEoutput, InputCategory=="HighConf" & TRIAGEhit=='')
         
         if(dim(non.triage.dat)[1]){
           non.triage.dat$TRIAGEhit = "No"
-          # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
-          non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit")]
+          # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "InputCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+          non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "InputCategory", "TRIAGEhit")]
           
           # output non.triage.dat table
           output$nonTRIAGEhitsTable <- renderDataTable({
@@ -1142,7 +1142,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         ####################
         ### Create Condensed Output File
-        TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "ConfidenceCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
+        TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "InputCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
 
         ########################
         ######## Pathway Output
@@ -1151,8 +1151,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         
         #Genrate columns with high confidence and med confidence (based on input) genes of each pathway.
-        FinalEnrichment.df$HighScoreGenes <- NA
-        FinalEnrichment.df$HighScoreGenesNames <- NA
+        FinalEnrichment.df$HighScoreHitGenes <- NA
+        FinalEnrichment.df$HighScoreHitGenesNames <- NA
         FinalEnrichment.df$MedScoreGenesNames <- NA
         
         for (i in 1:length(FinalEnrichment.df$Genes)) {
@@ -1160,8 +1160,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           out.HC <- paste(intersect(temp.path.string, TRIAGEhits.highConf.matrix.GS),collapse = ", ")
           out.HC.count <- length(intersect(temp.path.string, TRIAGEhits.highConf.matrix.GS))
           out.MC <- paste(intersect(temp.path.string, TRIAGEhits.medConf.matrix.GS),collapse = ", ")
-          FinalEnrichment.df$HighScoreGenes[i] <- out.HC.count
-          FinalEnrichment.df$HighScoreGenesNames[i] <- out.HC
+          FinalEnrichment.df$HighScoreHitGenes[i] <- out.HC.count
+          FinalEnrichment.df$HighScoreHitGenesNames[i] <- out.HC
           FinalEnrichment.df$MedScoreGenesNames[i] <- out.MC
         }
         
@@ -1172,12 +1172,12 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         for (i in 1:length(FinalEnrichment.df$Pathway)) {
           GeneHitGeneRatio <- FinalEnrichment.df$HitGenes[i] / FinalEnrichment.df$Genes[i]
-          HighConfHitGeneRation <-  FinalEnrichment.df$HighScoreGenes[i] / FinalEnrichment.df$HitGenes[i]
+          HighConfHitGeneRation <-  FinalEnrichment.df$HighScoreHitGenes[i] / FinalEnrichment.df$HitGenes[i]
           FinalEnrichment.df$EnrichScore[i] <- round(((GeneHitGeneRatio + HighConfHitGeneRation) / 2), 3)
         }
         
         
-        FinalEnrichment.condensed <- FinalEnrichment.df[, c("Pathway", "pVal", "pValFDR", "pValBonferroni", "Genes", "HitGenes", "HighScoreGenes", "HighScoreGenesNames", "MedScoreGenesNames", "EnrichScore")]
+        FinalEnrichment.condensed <- FinalEnrichment.df[, c("Pathway", "pVal", "pValFDR", "pValBonferroni", "Genes", "HitGenes", "HighScoreHitGenes", "HighScoreHitGenesNames", "MedScoreGenesNames", "EnrichScore")]
         ############# Write files to new Directory
         downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
         dir.create(downloadDir)
@@ -1185,7 +1185,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         setwd('TRIAGEfilesToDownload')
         
         TRIAGE.cond.output.name <<- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
-        Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
+        Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "HighConfHits_notSelected.csv")
         
         fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
@@ -1331,7 +1331,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           
           TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
-          Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
+          Iteration.index <- c(which(colnames(TRIAGEiterations) == "InputCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
           
           
           totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
@@ -1341,8 +1341,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           
           for (l in 1:length(Iteration.index)){
             totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
-            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
-            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$InputCategory == "HighConf"))
+            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$InputCategory == "MedConf"))
             totalRow[1, Iteration.index[l]] <- totalHits
             hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
           }
@@ -1363,7 +1363,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           }
           
           TRIAGEiterations <- TRIAGErenamed[, c(1:(min(EnrichColumns.index)-2), EnrichColumns.index, (max(EnrichColumns.index)+1):length(TRIAGEoutput))]
-          Iteration.index <- c(which(colnames(TRIAGEiterations) == "ConfidenceCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
+          Iteration.index <- c(which(colnames(TRIAGEiterations) == "InputCategory"), grep('NetworkEnrichment', names(TRIAGEiterations)))
           
           
           totalRow <- data.frame(matrix(NA,1,length(TRIAGEiterations)))
@@ -1373,8 +1373,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           
           for (l in 1:length(Iteration.index)){
             totalHits <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf"))
-            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "HighConf"))
-            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$ConfidenceCategory == "MedConf"))
+            totalHighConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$InputCategory == "HighConf"))
+            totalMedConf <- length(which(TRIAGEiterations[Iteration.index[l]] == "HighConf" & TRIAGEiterations$InputCategory == "MedConf"))
             totalRow[1, Iteration.index[l]] <- totalHits
             hitsDataFrame[l, ] <- c(l - 1, totalHits, totalHighConf, totalMedConf)
           }

@@ -12,6 +12,7 @@ docker_build:
     REGISTRY_USER: songj11
 docker_scan:
   cve_whitelist:
+    - NODE-SECURITY-1184 #https://www.npmjs.com/advisories/1164
     - NODE-SECURITY-1164 #https://www.npmjs.com/advisories/1164
     - CVE-2019-11358  # Jquery Cross-site scripting (XSS) vulnerability
     - CVE-2018-12121
