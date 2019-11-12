@@ -974,7 +974,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
         TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "InputCategory", "Pathway", "TRIAGEhit")]
-View(TRIAGEhits)
         GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
@@ -984,7 +983,6 @@ View(TRIAGEhits)
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
-  View(NodeInfo)
         
         #colnames(NodeInfo)[4] = 'Confidence'
         
@@ -1007,8 +1005,6 @@ View(TRIAGEhits)
         ###################
         ######Create Data frame with Pathway interactome
         #Convert Target values to pathways
-View(EdgeInfo)
-View(Scores_and_nodes)
 
         EdgeInfo.TargetPathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
                                          by.x = "target", by.y = "GeneMappingID", all.x = T)

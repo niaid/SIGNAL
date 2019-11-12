@@ -284,7 +284,6 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   NodeInfo$ID <- paste(NodeInfo$Group, NodeInfo$key, sep = ".")
   
   #Move ID column first
-View(NodeInfo)
   NodeInfo = NodeInfo[,c('ID', 'GeneMappingID', 'key', 'Group', 'Confidence', 'Pathway', 'Color')]
   
   #Set up rel file                                                              
@@ -320,7 +319,6 @@ View(NodeInfo)
   
   # labeling columns and adding weights and datasources for each network edge
   rel1 <- rel1.target[, c("source.ID", "target.ID")]
-View(rel1)
   names(rel1)[names(rel1)=="source.ID"] <- "V1"
   names(rel1)[names(rel1)=="target.ID"] <- "V2"
   rel1$weights = rel1.target$weights
@@ -336,13 +334,11 @@ View(rel1)
   rel1.V1.matrix <- as.matrix((unique(rel1$V1)))
   rel1.V2.matrix <- as.matrix((unique(rel1$V2)))
   rel1.genes.matrix <- as.matrix(unique(rbind(rel1.V1.matrix, rel1.V2.matrix)))
- View(rel1.genes.matrix)
  
   NodeInfo2 <<- NodeInfo
   NodeInfo1 <<- filter(NodeInfo, Group != "Novel" | ID %in% rel1.genes.matrix)
   
   #Generate the igraphs
-View(NodeInfo1)
   g <<- graph.data.frame(rel1, directed=T, vertices=NodeInfo1)
   g2 <<- graph.data.frame(rel2, directed=T, vertices=NodeInfo2)
   
