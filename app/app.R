@@ -317,15 +317,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         data <- read.csv(inFile$datapath, stringsAsFactors = FALSE, header=TRUE)
 
-        # # Check for duplicated GeneSymbols
-        # if(anyDuplicated(data$GeneSymbol)){
-        #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
-        # }        
-        # 
-        # # Check for duplicated GeneSymbols
+        # Check for duplicated GeneSymbols
+        if(anyDuplicated(data$GeneSymbol)){
+          showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated GeneSymbols were found! <br><br>Please remove the duplicates in the GeneSymobl column and then reload your input file. <br><br>Alternatively, remove the GeneSymbol column from your input file and TRIAGE will map the EntrezID to unique GeneSymbols.</font><h4>")))
+        }
+
+        # # Check for duplicated EntrezID
         # if(anyDuplicated(data$EntrezID)){
         #   showModal(modalDialog(title="User Input Errors", HTML("<h4><font color=red>Duplicated EntrezIDs were found! <br><br>Please remove the duplicates and reload your input file.</font><h4>")))
-        # } 
+        # }
         
         ## Complete list of all protein-encoding genes in human genome
         ## ftp://ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt
@@ -974,6 +974,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         #                 Add back GeneSymbol and Hit Designation to output
         ###############################################################################
         TRIAGEhits.merge = TRIAGEhits[, c("EntrezID", "GeneSymbol", "InputCategory", "Pathway", "TRIAGEhit")]
+View(TRIAGEhits)
         GraphNodesHit <-  merge(GraphNodesHit, TRIAGEhits.merge,                                                  
                                by.x = "EntrezID", by.y = "EntrezID", all.x = T)
         
@@ -983,6 +984,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         EdgeInfo <<- GraphEdgesHitNumber
         NodeInfo <<- GraphNodesHit
+  View(NodeInfo)
         
         #colnames(NodeInfo)[4] = 'Confidence'
         
@@ -1005,8 +1007,15 @@ options(shiny.maxRequestSize = 3*1024^2)
         ###################
         ######Create Data frame with Pathway interactome
         #Convert Target values to pathways
+View(EdgeInfo)
+View(Scores_and_nodes)
+
         EdgeInfo.TargetPathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
                                          by.x = "target", by.y = "GeneMappingID", all.x = T)
+      
+        #EdgeInfo.TargetPathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
+        #                                 # by.x = "target", by.y = "GeneMappingID",  allow.cartesian=TRUE)
+        
         #Remove NAs
         EdgeInfo.TargetPathways <- na.omit(EdgeInfo.TargetPathways)
         
@@ -1014,11 +1023,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         EdgeInfo.TargetPathways_Sum <- EdgeInfo.TargetPathways %>% 
           group_by(source) %>% summarise(Pathway = toString(Pathway))
         
-        
-        
         #Convert Source values to pathways
         EdgeInfo.SourcePathways <- merge(EdgeInfo, Scores_and_nodes[, c("GeneMappingID", "Pathway")],
                                          by.x = "source", by.y = "GeneMappingID", all.x = T)
+        
         #Remove NAs
         EdgeInfo.SourcePathways <- na.omit(EdgeInfo.SourcePathways)
         
