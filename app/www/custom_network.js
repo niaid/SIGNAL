@@ -360,7 +360,7 @@ Shiny.addCustomMessageHandler("jsondata1",
         lColors = lColors.concat(ordColors.slice(novelInd+1));
       }
       else{
-        lColors = startingColors;
+        lColors = ordColors;
       }
       return lColors;
     }
@@ -384,7 +384,9 @@ Shiny.addCustomMessageHandler("jsondata1",
         }
       }
       if(!check){
-        pns[pns.length-1] = "Additional TRIAGE hits"
+        pns.splice(pns.indexOf('Novel'), 1 );
+        pns.sort()
+        pns[pns.length] = "Additional TRIAGE hits"
       }
       else{
         for(s in ordColors){

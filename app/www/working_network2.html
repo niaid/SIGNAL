@@ -360,7 +360,9 @@
           }
         }
         if(!check){
-          pns[pns.length-1] = "Novel Genes"
+          pns.splice(pns.indexOf('Novel'), 1 );
+          pns.sort()
+          pns[pns.length] = "Additional TRIAGE hits"
         }
         else{
           for(s in ordColors){
@@ -379,7 +381,7 @@
                 pathways.push(nS)
                 break;
               case novelColor:
-                nS = "Novel Genes";
+                nS = "Additional TRIAGE hits";
                 pathways.push(nS)
                 break;
               case color12:
