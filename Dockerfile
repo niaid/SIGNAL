@@ -1,7 +1,7 @@
 FROM platform-docker.artifactory.niaid.nih.gov/shiny1-ubuntu18.04:latest 
  
 USER root
-
+RUN cd /opt/shiny-server && ./bin/npm update
 RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-dev libcurl4-openssl-dev" && \
     install_opts="-y --no-install-recommends" && \
     apt-get update && apt-get install $install_opts $build_deps && \
