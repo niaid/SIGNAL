@@ -20,8 +20,8 @@ library(data.table)
 library(igraph)
 library(edgebundleR)
 library(shinyAce)
-library(mailR)
 library(rJava)
+#library(mailR)
 library(networkD3)
 library(visNetwork)
 library(org.Hs.eg.db)
@@ -195,7 +195,8 @@ options(shiny.maxRequestSize = 3*1024^2)
             ),
             tabPanel(title = "Enriched Pathways", value = "enrichedPathways",
                      htmlOutput("spacer2"),
-                     dataTableOutput("enrichedPathways")
+                     dataTableOutput("enrichedPathways"),
+                     htmlOutput("notes")
             ),
             tabPanel(title = "Gene Hits", value = "triageHits",
                      htmlOutput("spacer3"),
@@ -296,7 +297,9 @@ options(shiny.maxRequestSize = 3*1024^2)
       output$spacer7 <- renderUI({
         HTML("<BR>")
       })    
-      
+      output$notes <- renderUI({
+        HTML("<BR>* <font color=blue>Input High Confidence Hits</font> <BR>* <font color=red>Input Medium Confidence Hits</font><BR>")
+      })  
       # Global environmental variables
       envs <- Sys.getenv()
       env_names <- names(envs)
@@ -865,7 +868,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         write.csv(triage.Out, file = outputFileName, row.names = F)
         final_enriched_pathway_file <- paste0(pathway.type, "_TRIAGE_enrichment_final", ".csv")
         write.csv(pathEnrich, file = final_enriched_pathway_file, row.names = F)
-
+        
         # Pass the pathway list to build networkGraph
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
 
@@ -1132,7 +1135,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # table where high confidence genes are not in the final iteration of the TRIAGE analysis
         non.triage.dat <- filter(TRIAGEoutput, InputCategory=="HighConf" & TRIAGEhit=='')
-        
+     
         if(dim(non.triage.dat)[1]){
           non.triage.dat$TRIAGEhit = "No"
           # non.triage.dat <- non.triage.dat[,c("EntrezID", "GeneSymbol", "InputCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
@@ -1148,6 +1151,10 @@ options(shiny.maxRequestSize = 3*1024^2)
         ### Create Condensed Output File
         TRIAGEoutput.condensed <<- TRIAGEoutput[TRIAGEoutput$TRIAGEhit == "Yes", c("EntrezID", "GeneSymbol", "InputCategory", "TRIAGEhit", "Pathway", "InteractingGenes", "NetworkGenePathways")]
 
+        ## Change the column name from 'HitGenes' to 'TRIAGEhits'
+        names(TRIAGEoutput.condensed)[names(TRIAGEoutput.condensed) == "TRIAGEhit"] <- "TRIAGEhits"
+        
+        
         ########################
         ######## Pathway Output
         #########################
@@ -1171,7 +1178,6 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         
         ########### Generate Enrichment Score
-        
         FinalEnrichment.df$EnrichScore <- NA
         
         for (i in 1:length(FinalEnrichment.df$Pathway)) {
@@ -1180,8 +1186,11 @@ options(shiny.maxRequestSize = 3*1024^2)
           FinalEnrichment.df$EnrichScore[i] <- round(((GeneHitGeneRatio + HighConfHitGeneRation) / 2), 3)
         }
         
-        
         FinalEnrichment.condensed <- FinalEnrichment.df[, c("Pathway", "pVal", "pValFDR", "pValBonferroni", "Genes", "HitGenes", "HighScoreHitGenes", "HighScoreHitGenesNames", "MedScoreGenesNames", "EnrichScore")]
+        
+        ## Change the 'HitGenes' to 'TRIAGEhits'
+        names(FinalEnrichment.condensed)[names(FinalEnrichment.condensed) == "HitGenes"] <- "TRIAGEhits"
+        
         ############# Write files to new Directory
         downloadDir <- paste0(outDir, "/", "TRIAGEfilesToDownload")
         dir.create(downloadDir)
@@ -1200,6 +1209,11 @@ options(shiny.maxRequestSize = 3*1024^2)
         }
 
       ######################
+      ## Change 'HitGenes' to 'TRIAGEhits' in the display table under 'Enriched Pathways' tab
+      names(pathEnrich)[names(pathEnrich) == "HitGenes"] <- "TRIAGEhits*" 
+        
+        
+        
       ## Switch to 'Enriched Pathways' tab and display partial results
       observe({
         if(completed) {
@@ -1296,8 +1310,8 @@ options(shiny.maxRequestSize = 3*1024^2)
               pathEnrich[i,7] <- myGene
             }
             #View(pathEnrich)
-            # Chang column name from 'Genes' to 'TotalGenes'
-            colnames(pathEnrich)[which(names(pathEnrich) == "Genes")] <- "TotalGenes"
+            # Chang column name from 'Genes' to 'PathwayGenes'
+            colnames(pathEnrich)[which(names(pathEnrich) == "Genes")] <- "PathwayGenes"
             return(pathEnrich)
             completed2 <- TRUE
           }, escape = FALSE)
@@ -1454,7 +1468,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         message("Inside NetworkGraph")
         updateTabsetPanel(session, "inTabset", selected = "myNetworkGraph")
 
-        colnames(sigPathways) <- c("Pathways", "TotalGenes", "HitGenes")
+        colnames(sigPathways) <- c("Pathways", "PathwayGenes", "TRIAGEhits")
 
         shinyInput <- function(FUN,id,num,...) {
           inputs <- character(num)
