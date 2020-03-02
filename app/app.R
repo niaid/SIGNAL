@@ -180,7 +180,8 @@ options(shiny.maxRequestSize = 3*1024^2)
           textInput("cutoff_valueM", "Medium Confidence Cutoff Value"),
           bsPopover("cutoff_valueM", "Medium confidence cutoff value:", "Please enter a value for medium confience cutoff, use \"-\" sign for negative value", placement = "bottom", trigger = "hover", options = NULL),
           checkboxInput("includeBackground", "Add genome background"),
-          bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          actionButton("goButton", "Analyze my data",
+          bsPopover("includeBackground", "To include known coding genes that are not on your input gene list as background", placement = "bottom", trigger = "hover", options = NULL),          
+          actionButton("goButton", "Analyze my data",
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
           actionButton("refresh", "Reset", icon("undo"),
                        style="padding:4px; font-size:120%; color: #fff; background-color: rgb(1, 81, 154); border-color: #2e6da4"),
@@ -871,7 +872,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Pass the pathway list to build networkGraph
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
-
+cat(file=stderr(), dim(sigPathways), "appR875!\n")
+        
         completed <- TRUE
      
       ###################################
@@ -1036,7 +1038,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         
         ########## Combine data frames
-        #Align column names and stack data frames                                                         #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
+        #Align column names and stack data frames                                                         
+        #The analysis assumed directionality of interactions, but we're ignoring it here, so combining the "target" and Source" to one dataframe.
         colnames(EdgeInfo.SourcePathways_Sum) <- c("source", "Pathway")
         EdgePathways_stacked <- rbind(EdgeInfo.TargetPathways_Sum, EdgeInfo.SourcePathways_Sum)
         
@@ -1092,6 +1095,7 @@ options(shiny.maxRequestSize = 3*1024^2)
           
           l.pathway.cond = lapply(l.pathway.counts, paste0, collapse=', ')
           source.name = names(l.pathway.cond)
+
           network.paths = as.vector(unlist(l.pathway.cond))
           
           edge.df = data.frame("source" = source.name, "NetworkGenePathways" = network.paths)
@@ -1100,6 +1104,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         EdgePathways_stacked_SumandValue = writing.pathways(EdgePathways_stacked_Sum)
         
+cat(file=stderr(), dim(sigPathways), "appR1106!\n")
         
         #######Add in entrezID for source genemappings
         EdgePathways_stacked_EntrezID <- merge(Scores_and_nodes[, c("GeneMappingID", "EntrezID")], EdgePathways_stacked_SumandValue,
@@ -1198,7 +1203,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         setwd('TRIAGEfilesToDownload')
         
         TRIAGE.cond.output.name <<- paste0(inputFilePrefix, "_", "TRIAGEhits.csv")
-        Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "HighConfHits_notSelected.csv")
+        Enrichment.cond.output.name <- paste0(inputFilePrefix, "_", "TRIAGEenrichment.csv")
         
         fwrite(TRIAGEoutput.condensed, file = TRIAGE.cond.output.name)
         fwrite(FinalEnrichment.condensed, file = Enrichment.cond.output.name)
@@ -1210,7 +1215,7 @@ options(shiny.maxRequestSize = 3*1024^2)
 
       ######################
       ## Change 'HitGenes' to 'TRIAGEhits' in the display table under 'Enriched Pathways' tab
-      names(pathEnrich)[names(pathEnrich) == "HitGenes"] <- "TRIAGEhits*" 
+      names(pathEnrich)[names(pathEnrich) == "HitGenes"] <- "TRIAGEhits" 
         
         
         
@@ -1465,10 +1470,10 @@ options(shiny.maxRequestSize = 3*1024^2)
       # Create the 'Network Graph' tab
       ################################    
       output$myNetworkGraph <- renderUI({
-        message("Inside NetworkGraph")
+        
         updateTabsetPanel(session, "inTabset", selected = "myNetworkGraph")
 
-        colnames(sigPathways) <- c("Pathways", "PathwayGenes", "TRIAGEhits")
+        colnames(sigPathways) <- c("Pathway", "PathwayGenes", "TRIAGEhits")
 
         shinyInput <- function(FUN,id,num,...) {
           inputs <- character(num)
@@ -1534,13 +1539,20 @@ options(shiny.maxRequestSize = 3*1024^2)
             progress1$set(message = "Generating network graph....", value = 0.3)
             
             message(selectedRows)
+            message("Inside NetworkGraph2")
+            
             source(paste0(scriptDir, "config_jsons.R"), local = TRUE)
             #source(paste0(scriptDir, "Ranking_plusComments_v3.R"), local = TRUE)
             source(paste0(scriptDir, "Ranking_source.R"), local = TRUE)
             progress1$inc(1/2)
             
             # Need to catch error to allow reload the app
+            
+cat(file=stderr(), "before Generate_NetworkGraph!\n")
+
             Generate_NetworkGraph(selectedRows, organism, G)
+            
+            cat(file=stderr(), "after Generate_NetworkGraph!\n")
             
             # Writing fully generated network files for download
             fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))

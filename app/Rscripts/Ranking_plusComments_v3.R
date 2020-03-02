@@ -19,6 +19,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   #############################################################
   #Set directories
   
+  cat(file=stderr(), "inside Rnaking_plusComments_v3\n")
+  
   TRIAGE.input <- dataDir                                             
   
   TRIAGEhits <- TRIAGEoutput.condensed                                      
@@ -28,10 +30,8 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   pathwayFile <- pathwayData      
   
   
-  
-  #Get Matrix of genes for each pathway in KEGG                    # Putting the list of gene EntrezID for each pathway of interest into a matrix
-  
-  
+  #Get Matrix of genes for each pathway in KEGG                    
+  # Putting the list of gene EntrezID for each pathway of interest into a matrix
   
   path1_name <<- sigPathways$Pathway[as.numeric(selectedRows[1])]     
   #message(path1_name)
