@@ -19,8 +19,6 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
 
   path1_pathway.genes <- filter(pathwayFile, PathwayName == path1_name)
   path1_pathway.genes.matrix <- matrix(path1_pathway.genes$EntrezID)
-  cat(file=stderr(), "Inside Generate_NetworkGraph function25!\n")
-  
   
   path2_name <<- sigPathways$Pathway[as.numeric(selectedRows[2])]   
   path2_pathway.genes <- filter(pathwayFile, PathwayName == path2_name)
@@ -30,17 +28,13 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   path3_name <<- sigPathways$Pathway[as.numeric(selectedRows[3])]    
   path3_pathway.genes <- filter(pathwayFile, PathwayName == path3_name)
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$EntrezID)
-  cat(file=stderr(), "Inside Generate_NetworkGraph function36!\n")
-  
+
   
   path12_name = paste0(path1_name, ' & ', path2_name)
   path13_name = paste0(path1_name, ' & ', path3_name)
   path23_name = paste0(path2_name, ' & ', path3_name)
   path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
-  cat(file=stderr(), "Inside Generate_NetworkGraph function43!\n")
-  
-  cat(file=stderr(), "Inside Generate_NetworkGraph40!\n")
-  
+
   # filtering pathway hits which are in the TRIAGE hits data
   path1_hits <- filter(TRIAGEhits, EntrezID %in% path1_pathway.genes.matrix)
   path1_hits.matrix <- matrix(path1_hits$EntrezID)
@@ -50,8 +44,6 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   path3_hits <- filter(TRIAGEhits, EntrezID %in% path3_pathway.genes.matrix)
   path3_hits.matrix <- matrix(path3_hits$EntrezID)
-  
-  cat(file=stderr(), "Inside Generate_NetworkGraph52!\n")
   
   #######################################                                            
   # redoing the pathway gene matrices to be of the gene symbol instead of the Entrez ID

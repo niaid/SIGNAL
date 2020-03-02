@@ -872,8 +872,7 @@ options(shiny.maxRequestSize = 3*1024^2)
         
         # Pass the pathway list to build networkGraph
         sigPathways <<- pathEnrich[,c("Pathway", "Genes", "HitGenes")]
-cat(file=stderr(), dim(sigPathways), "appR875!\n")
-        
+
         completed <- TRUE
      
       ###################################
@@ -1104,7 +1103,6 @@ cat(file=stderr(), dim(sigPathways), "appR875!\n")
         
         EdgePathways_stacked_SumandValue = writing.pathways(EdgePathways_stacked_Sum)
         
-cat(file=stderr(), dim(sigPathways), "appR1106!\n")
         
         #######Add in entrezID for source genemappings
         EdgePathways_stacked_EntrezID <- merge(Scores_and_nodes[, c("GeneMappingID", "EntrezID")], EdgePathways_stacked_SumandValue,
@@ -1548,11 +1546,7 @@ cat(file=stderr(), dim(sigPathways), "appR1106!\n")
             
             # Need to catch error to allow reload the app
             
-cat(file=stderr(), "before Generate_NetworkGraph!\n")
-
             Generate_NetworkGraph(selectedRows, organism, G)
-            
-            cat(file=stderr(), "after Generate_NetworkGraph!\n")
             
             # Writing fully generated network files for download
             fwrite(rbindlist(json_2df), file = paste0(inputFilePrefix, "_", "Second_Degree_Network.csv"))
