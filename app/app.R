@@ -38,7 +38,7 @@ Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 ### TO RUN LOCALLY ###
 # Assign the home_string for folder where TRIAGE has been downloaded to
-# home_string = '/Users/kylewebb/Documents/Work/NIAID'
+# home_string = '/Users/username/TRIAGE-folder'
 # Sys.setenv(HOME = home_string)
 # setwd('~')
 
@@ -101,8 +101,8 @@ options(shiny.maxRequestSize = 3*1024^2)
         tags$title("TRIAGE - Throughput Ranking by Iterative Analysis of Genomic Enrichment"),
         tags$script(src="getIP.js"),
         # sources below are for d3 network graph layout and interaction
-        tags$script(src="https://mbostock.github.io/d3/talk/20111116/d3/d3.js"),
-        tags$script(src="https://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js"),
+        tags$script(src="mbostock_d3.js"),  # original file: https://mbostock.github.io/d3/talk/20111116/d3/d3.js
+        tags$script(src="mbostock_d3_layout.js"),  # original file: https://mbostock.github.io/d3/talk/20111116/d3/d3.layout.js
         tags$script(src="custom_network.js"),
         tags$script(src="custom_network2.js")
       ),
@@ -622,58 +622,64 @@ options(shiny.maxRequestSize = 3*1024^2)
           
         }
         else if(input_netowrk == "Advanced Options"){
-          files2load = paste0(dir_begin, tolower(organism), ".", network_InteractionSources, conf.level, ".Rdata")
-          vars2load = paste0("String.", tolower(organism), ".", network_InteractionSources, conf.level)
+          files2load <<- paste0(dir_begin, tolower(organism), ".", network_InteractionSources, conf.level, ".Rdata")
+          vars2load <<- paste0("String.", tolower(organism), ".", network_InteractionSources, conf.level)
           for (i in 1:length(files2load)) assign(gsub(".*/","",files2load[i]), load(files2load[i]))
           all.G = list()
           for(i in 1:length(vars2load)) all.G[[i]] = get(vars2load[i])
-          empty.G.check = which(sapply(sapply(sapply(all.G, edge.attributes), names), is.null))
+          empty_func <- function(x) length(unlist(x)) == 0L
+          empty.G.check = sapply(all.G, edge.attributes) %>% lapply(`[`, 'datasource') %>%
+            lapply(empty_func) %>% unlist() %>% which()
           count.G.check = which(sapply(all.G, vcount) <= 0)
           all.checks = union(count.G.check, empty.G.check)
           
           datasources = sapply(strsplit(vars2load, '[,.]'), '[[', 3)
           
-          if(length(all.checks)>0){
-            all.G <- all.G[-union(count.G.check, empty.G.check)]
-            datasources = datasources[-union(count.G.check, empty.G.check)]
-          }
-          
-          if(length(all.G)==0){
-            showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
-                                  easyClose = FALSE))
-            Sys.sleep(5)
-            session$reload()
-          }
-          else if(length(all.G)==1){
-            G <- all.G[[1]]
+          # check if the selected was experimental and database or only one of them
+          if(length(match(datasources, c("experimental", "database"))) == 2){
+            load(paste0(dir_begin, tolower(organism), ".exp_and_data", conf.level, ".Rdata"))
+            G <- get(paste0("String.", tolower(organism), ".exp_and_data", conf.level))
           }
           else{
-            
-            for(j in 1:length(all.G)){
-              names(edge.attributes(all.G[[j]])) = paste0(names(edge.attributes(all.G[[j]])), '_', datasources[j])
+            if(length(all.checks)>0){
+              all.G = all.G[-all.checks]
+              datasources = datasources[-all.checks]
             }
-            
-            temp = all.G[[1]]
-            
-            for(i in 2:length(all.G)){
-              temp = graph.union(temp, all.G[[i]])
+            if(length(all.G)==0){
+              showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+                                    easyClose = FALSE))
+              Sys.sleep(3)
+              session$reload()
+            } else if(length(all.G)==1){
+              G <- all.G[[1]]
+            } else{
+              
+              for(j in 1:length(all.G)){
+                names(edge.attributes(all.G[[j]])) = paste0(names(edge.attributes(all.G[[j]])), '_', datasources[j])
+              }
+              
+              temp = all.G[[1]]
+              
+              for(i in 2:length(all.G)){
+                temp = graph.union(temp, all.G[[i]])
+              }
+              G <<- temp
+              
+              cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
+              weight_df = list()
+              for(i in 1:length(cols)){
+                weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
+                weight_df[[i]][is.na(weight_df[[i]])] = 0
+              }
+              weight_df = data.frame(weight_df)
+              weight_df = apply(weight_df, 2, as.integer)
+              E(G)$weights = rowMax(weight_df)
+              indx <- max.col(weight_df, ties.method='first')
+              cols = edge_attr_names(G)[grep("^datasource_", edge_attr_names(G))]
+              E(G)$datasource = datasources[indx]
+              message(vertex_attr_names(G))
+              message(edge_attr_names(G))
             }
-            G <<- temp
-           
-            cols = edge_attr_names(G)[grep("^weights_",edge_attr_names(G))]
-            weight_df = list()
-            for(i in 1:length(cols)){
-              weight_df[[i]] = eval(parse(text=paste0('E(G)$', cols[i])))
-              weight_df[[i]][is.na(weight_df[[i]])] = 0
-            }
-            weight_df = data.frame(weight_df)
-            weight_df = apply(weight_df, 2, as.integer)
-            E(G)$weights = rowMax(weight_df)
-            indx <- max.col(weight_df, ties.method='first')
-            cols = edge_attr_names(G)[grep("^datasource_", edge_attr_names(G))]
-            E(G)$datasource = datasources[indx]
-            message(vertex_attr_names(G))
-            message(edge_attr_names(G))
           }
         }
         #Selected_STRINGnetwork.igraph <- G
@@ -937,9 +943,9 @@ options(shiny.maxRequestSize = 3*1024^2)
         SubGraph <<- Graph
         
         if(length(E(SubGraph))==0 | length(V(SubGraph))==0){
-          showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Criteria produced empty network. Session will restart.</font><h3>"),
+          showModal(modalDialog(title="Warning:", HTML("<h3><font color=red>Subgraph produced empty network due to low number of hit genes. Session will restart.</font><h3>"),
                                 easyClose = FALSE))
-          Sys.sleep(5)
+          Sys.sleep(3)
           session$reload()
         }
         
