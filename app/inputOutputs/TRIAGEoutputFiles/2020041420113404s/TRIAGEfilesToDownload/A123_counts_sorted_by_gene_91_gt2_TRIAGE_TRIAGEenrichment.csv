@@ -1,8 +1,0 @@
-Pathway,pVal,pValFDR,pValBonferroni,Genes,TRIAGEhits,HighScoreHitGenes,HighScoreHitGenesNames,MedScoreGenesNames,EnrichScore
-Cell adhesion molecules (CAMs),0,0,0,158,5,4,"Gm11127, H2-K1, H2-L, H2-Q7",Cldn16,0.416
-Phagosome,0,0,0,169,5,5,"Gm11127, H2-K1, H2-L, H2-Q7, Clec7a","",0.515
-Antigen processing and presentation,0,0,0,81,5,5,"Gm11127, B2m, H2-K1, H2-L, H2-Q7","",0.531
-Type I diabetes mellitus,0,0,0,60,4,4,"Gm11127, H2-K1, H2-L, H2-Q7","",0.533
-Endocytosis,0,0.001,0.003,261,5,4,"Gm11127, H2-K1, H2-L, H2-Q7",Cyth1,0.41
-Cellular senescence,0,0.002,0.014,176,4,4,"Gm11127, H2-K1, H2-L, H2-Q7","",0.511
-Hematopoietic cell lineage,0.006,0.22,1,90,2,2,"Gp5, Il9r","",0.511
