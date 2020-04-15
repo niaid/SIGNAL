@@ -80,7 +80,7 @@ if(length(hit.Genes.Network) <= 0){
     title=HTML("<h3><font color=#ff0000>Error with cutoff values!</font></h3>"),
     HTML("No hit gene found! Please try changing your Interaction Sources or Confidence to ensure a set of genes will be selected!<br>
          Session will restart."),
-    easyClose = FALSEE
+    easyClose = FALSE
   ))
   Sys.sleep(5)
   session$reload()

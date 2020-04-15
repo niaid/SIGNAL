@@ -1,0 +1,11 @@
+EntrezID,GeneSymbol,InputCategory,TRIAGEhits,Pathway,InteractingGenes,NetworkGenePathways
+12010,B2m,HighConf,Yes,Antigen processing and presentation,"H2-K1, H2-Q7, Gm11127","Antigen processing and presentation (3), Cell adhesion molecules (CAMs) (3), Cellular senescence (3), Endocytosis (3), Phagosome (3), Type I diabetes mellitus (3)"
+114141,Cldn16,MedConf,Yes,Cell adhesion molecules (CAMs),,
+56644,Clec7a,HighConf,Yes,Phagosome,,
+19157,Cyth1,MedConf,Yes,Endocytosis,,
+100529082,Gm11127,HighConf,Yes,"Cell adhesion molecules (CAMs), Phagosome, Antigen processing and presentation, Type I diabetes mellitus, Endocytosis, Cellular senescence","B2m, H2-K1, H2-Q7","Antigen processing and presentation (3), Cell adhesion molecules (CAMs) (2), Cellular senescence (2), Endocytosis (2), Phagosome (2), Type I diabetes mellitus (2)"
+14729,Gp5,HighConf,Yes,Hematopoietic cell lineage,,
+14972,H2-K1,HighConf,Yes,"Cell adhesion molecules (CAMs), Phagosome, Antigen processing and presentation, Type I diabetes mellitus, Endocytosis, Cellular senescence","H2-Q7, Gm11127, B2m","Antigen processing and presentation (3), Cell adhesion molecules (CAMs) (2), Cellular senescence (2), Endocytosis (2), Phagosome (2), Type I diabetes mellitus (2)"
+14980,H2-L,HighConf,Yes,"Cell adhesion molecules (CAMs), Phagosome, Antigen processing and presentation, Type I diabetes mellitus, Endocytosis, Cellular senescence",,
+15018,H2-Q7,HighConf,Yes,"Cell adhesion molecules (CAMs), Phagosome, Antigen processing and presentation, Type I diabetes mellitus, Endocytosis, Cellular senescence","Gm11127, B2m, H2-K1","Antigen processing and presentation (3), Cell adhesion molecules (CAMs) (2), Cellular senescence (2), Endocytosis (2), Phagosome (2), Type I diabetes mellitus (2)"
+16199,Il9r,HighConf,Yes,Hematopoietic cell lineage,,
