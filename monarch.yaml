@@ -26,14 +26,24 @@ docker_scan:
     - CVE-2019-13173 #https://www.npmjs.com/advisories/886
     - NODE-SECURITY-1066 #https://www.npmjs.com/advisories/1066
     - CVE-2019-10744 #https://www.npmjs.com/advisories/1065
+    - CVE-2020-13434 # fixed in 3.22.0-1ubuntu0.4
+    - CVE-2020-13630 # fixed in 3.22.0-1ubuntu0.4
+    - CVE-2020-13632 # fixed in 3.22.0-1ubuntu0.4
+    - CVE-2020-7662  # DOS attack vulnerability; shoulb be fixed in base image 
+    - CVE-2020-25692 # https://people.canonical.com/~ubuntu-security/cve/2020/CVE-2020-25692
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
   whitelist:
      - Out-of-date Version (Bootstrap):
-       - 'https://triage.niaidawsqa.net/' 
+       - 'https://triage.niaidawsqa.net/shared/bootstrap/js/bootstrap.min.js' 
      - Out-of-date Version (jQuery):
        - 'https://triage.niaidawsqa.net/' 
+     - Weak Ciphers Enabled:
+       - 'https://triage.niaidawsqa.net/'
+     - HTTP Strict Transport Security (HSTS) Policy Not Enabled:
+       - 'https://triage.niaidawsqa.net/'
+
 approved_for_prod: true
 
 terraform:
@@ -43,9 +53,9 @@ terraform:
   variables:
     cpu: 512
     memory: 4096
-    container_port: 3838
+    container_port: 8080 
     desired_count: 1
-    command: /usr/local/bin/shiny_server.sh
+    command: /run.sh
     alert_recipients: "[[${var.tech_email_addresses},${var.mgmt_email_addresses}]]"
     healthcheck_timeout: 25
     healthcheck_healthy_threshold: 2

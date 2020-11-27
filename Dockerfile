@@ -1,10 +1,10 @@
-FROM platform-docker.artifactory.niaid.nih.gov/shiny1-ubuntu18.04:latest 
+FROM platform-docker.artifactory.niaid.nih.gov/shiny1-nginx-ubuntu18.04:latest 
  
 USER root
-RUN cd /opt/shiny-server && ./bin/npm update
-RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-dev libcurl4-openssl-dev" && \
+RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-dev libcurl4-openssl-dev git" && \
     install_opts="-y --no-install-recommends" && \
     apt-get update && apt-get install $install_opts $build_deps && \
+    cd /opt/shiny-server && ./bin/npm uninstall npm -g && \
     R CMD javareconf && \
     R -e "install.packages('BiocManager')" && \
     R -e "BiocManager::install()" && \
@@ -13,6 +13,7 @@ RUN build_deps="r-base-dev openjdk-8-jdk libudunits2-dev libcairo2-dev libssl-de
     R -e "BiocManager::install('shinyjs')" && \
     R -e "BiocManager::install('shinyBS')" && \
     R -e "BiocManager::install('readr')" && \
+    R -e "BiocManager::install('readxl')" && \
     R -e "BiocManager::install('stringi')" && \
     R -e "BiocManager::install('stringr')" && \
     R -e "BiocManager::install('reshape2')" && \
