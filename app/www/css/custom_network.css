@@ -1,0 +1,44 @@
+path.arc {
+          cursor: move;
+          fill: #fff;
+        }
+
+        .node {
+          font-size: 10px;
+          !font-weight: normal;
+        }
+
+        .node:hover {
+          !fill: #1f77b4;
+          cursor: crosshair;
+        }
+
+        .link {
+          fill: none;
+          !stroke: #1f77b4;
+          stroke-opacity: .1;
+          pointer-events: none;
+        }
+
+        .link.source, .link.target {
+          !stroke-opacity: 1;
+          stroke-width: 2px;
+        }
+
+        .node.target {
+          !fill: #d62728 !important;
+          !font-weight: bold;
+        }
+
+        .link.source {
+          !stroke: #d62728;
+        }
+
+        .node.source {
+          !fill: #2ca02c;
+          !font-weight: bold;
+        }
+
+        .link.target {
+          !stroke: #2ca02c;
+        }
