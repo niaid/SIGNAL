@@ -43,7 +43,7 @@ conf.f <- function(x){
 }
 
 # Sorts the unique pathway names in the order of 
-# Pathway 13, Pathway 1, Pathway 12, Pathway 2, Pathway 23, Pathway 3, Pathway 123, Additional TRIAGE hits
+# Pathway 13, Pathway 1, Pathway 12, Pathway 2, Pathway 23, Pathway 3, Pathway 123, Additional SIGNAL hits
 orderedL.names <- function(uni.names){
   check = sapply(uni.names, function(s){grepl(' & ', s)})
   noAnds = which(sapply(uni.names, function(s){!grepl(' & ', s)}))

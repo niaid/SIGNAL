@@ -12,8 +12,8 @@ library('igraph')
 library('data.table')
 
 #Working Directories
-DatabaseWD <- "/My Documents/Update_Oct2018/CSVfiles/"
-ConversionWD <- "/My Documents/Update_Oct2018/IDconversionFiles/"
+DatabaseWD <- "~/Documents/TRIAGE/NetworkAnalysis/Update_Oct2018/CSVfiles/"
+ConversionWD <- "~/Documents/IAM/STRINGnet/IDconversionFiles/"
 
 #get .txt file
 setwd(DatabaseWD)
@@ -112,6 +112,7 @@ create_igraph <- function(key, type, level){
   cols = paste('entrez', c(1,2), sep='')
   i_graph = graph.data.frame(d = val[, ..cols], directed = FALSE)
   E(i_graph)$weights = val[,get(key)]
+  E(i_graph)$datasource = key
   return(i_graph)
 }
 
@@ -129,7 +130,7 @@ create_special_igraphs <- function(str1, str2){
 #setwd('/My Documents/Update_Oct2018/StringIgraphs/')
 
 # to write into TRIAGE...
-setwd("h:\\My Documents\\TRIAGE\\app\\data\\Networks")
+setwd("/Users/sakatz/TRIAGE_old2/app/data/Networks")
 
 key = c('coexpression', 'cooccurence', 'database', 'experimental', 'fusion', 'neighborhood', 'textmining')
 

@@ -1,24 +1,24 @@
-# TRIAGE
-(**T**hroughput **R**anking by **I**terative **A**nalysis of **G**enomic **E**nrichment)
+# SIGNAL
+(**S**election by **I**terative pathway **G**roup and **N**etwork **A**nalysis **L**ooping)
 
 
-The Throughput Ranking by Iterative Analysis of Genomic Enrichment (TRIAGE) platform is designed to facilitate robust hit selection from high-throughput studies. 
+The Selection by Iterartive pathway Group and Network Analysis Looping (SIGNAL) platform is designed to facilitate robust hit selection from high-throughput studies. 
 
-TRIAGE integrates analysis from protein to protein predicted interactions and statistical enrichments of known gene sets to correct for the false positive and false negative error rates that are associated with normalization methods that require arbitrary cutoffs. By utilizing data sorted into low, medium, and high confidence tiers the TRIAGE platform integrates the experimental readout of the analyzed study with curated knowledge of biological networks and interactions. 
+SIGNAL integrates analysis from protein to protein predicted interactions and statistical enrichments of known gene sets to correct for the false positive and false negative error rates that are associated with normalization methods that require arbitrary cutoffs. By utilizing data sorted into low, medium, and high confidence tiers the SIGNAL platform integrates the experimental readout of the analyzed study with curated knowledge of biological networks and interactions. 
 
-TRIAGE is best utilized as tool for selecting candidates from high-throughput studies to be further validated by rigorous low throughput follow up studies. The analysis outputs and platform features are designed to guide prediction, analysis, and hypothesis generation from large-scale datasets that can then be tested in targeted follow up assays.
+SIGNAL is best utilized as tool for selecting candidates from high-throughput studies to be further validated by rigorous low throughput follow up studies. The analysis outputs and platform features are designed to guide prediction, analysis, and hypothesis generation from large-scale datasets that can then be tested in targeted follow up assays.
 
-TRIAGE is available as publicly facing website, as an R shiny app that can be run locally, and as a standalone R function.
+SIGNAL is available as publicly facing website, as an R shiny app that can be run locally, and as a standalone R function.
 
 
 
 ## Getting Started
 
-TRIAGE is available on the Internet through our [development site](https://triage.niaidawsqa.net) or/and [production site](https://triage.niaid.nih.gov/). TRIAGE can also be downloaded and run as a standalone application. The instructions below will get you a copy of TRIAGE up and running on your local machine. 
+SIGNAL is available on the Internet through our [development site](https://signal.niaidawsqa.net) or/and [production site](https://signal.niaid.nih.gov/). SIGNAL can also be downloaded and run as a standalone application. The instructions below will get you a copy of SIGNAL up and running on your local machine. 
 
 ### Prerequisites
 
-To run TRIAGE on your local machine, R and Rstudio should be installed and running on your machine. Instructions are available for [R installation](https://cran.r-project.org/bin/) and for [RStudio installation](https://www.rstudio.com/products/rstudio/download/). In addition, several R packages are also required for TRIAGE to work on your local machine. 
+To run SIGNAL on your local machine, R and Rstudio should be installed and running on your machine. Instructions are available for [R installation](https://cran.r-project.org/bin/) and for [RStudio installation](https://www.rstudio.com/products/rstudio/download/). In addition, several R packages are also required for SIGNAL to work on your local machine. 
 
 ```
 # To install required R packages from R commandline
@@ -53,52 +53,52 @@ Sys.setenv(R_ZIPCMD="/usr/bin/zip")
 
 ### Installing
 
-Before installing TRIAGE, you need to install *git*, if not installed already, by following [these instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03). After installing *git*, you can install TRIAGE on your local machine in your home directory or anywhere under your home directory:
+Before installing SIGNAL, you need to install *git*, if not installed already, by following [these instructions](https://gist.github.com/derhuerst/1b15ff4652a867391f03). After installing *git*, you can install SIGNAL on your local machine in your home directory or anywhere under your home directory:
 
 ```
 # For developmental version
-$git clone https://github.niaid.nih.gov/Signaling-Systems-Unit/TRIAGE.git
+$git clone https://github.niaid.nih.gov/Signaling-Systems-Unit/SIGNAL.git
 
 # Or for production version
-$git clone https://github.com/niaid/TRIAGE
+$git clone https://github.com/niaid/SIGNAL
 ```
 
-After this, you should see a TRIAGE directory which contains all required files and data to run TRIAGE on your local machine.
+After this, you should see a SIGNAL directory which contains all required files and data to run SIGNAL on your local machine.
 
-## Running TRIAGE
+## Running SIGNAL
 
-To run TRIAGE on your local machine, start RStudio first, open 'app.R' file in RStudio from your TRIAGE directory, and then click 'Run App' button to start TRIAGE. You should see TRIAGE running in your default web browser.
+To run SIGNAL on your local machine, start RStudio first, open 'app.R' file in RStudio from your SIGNAL directory, and then click 'Run App' button to start SIGNAL. You should see SIGNAL running in your default web browser.
 
-![TRIAGE Screenshot1](./app/www/images/StartAnalysis_page.png)
+![SIGNAL Screenshot1](./app/www/images/StartAnalysis_page.png)
 
 ### Running Tests
 
-A sample input file (`LPS_sample_dataset.csv`) can be used to test TRIAGE. The sample file is a part of TRIAGE package and can be found in the TRIAGE directory:
+A sample input file (`LPS_sample_dataset.csv`) can be used to test SIGNAL. The sample file is a part of SIGNAL package and can be found in the SIGNAL directory:
 
 ```
 # Sample input file
-TRIAGE/app/www/SampleDatasets/LPS_sample_dataset.csv
+SIGNAL/app/www/SampleDatasets/LPS_sample_dataset.csv
 ```
 
-![TRIAGE Screenshot1](./app/www/images/TRIAGEhits_map.png)
-![TRIAGE Screenshot1](./app/www/images/KEGGPathway_map.png)
-![TRIAGE Screenshot1](./app/www/images/NetworkGraph_map.png)
+![SIGNAL Screenshot1](./app/www/images/SIGNALhits_map.png)
+![SIGNAL Screenshot1](./app/www/images/KEGGPathway_map.png)
+![SIGNAL Screenshot1](./app/www/images/NetworkGraph_map.png)
 
 ### User Guide
 
-A detailed user guide is available on website and in the TRIAGE directory:
+A detailed user guide is available on website and in the SIGNAL directory:
 
 ```
 # Detailed User Guide
-TRIAGE/app/www/TRIAGE_userguide_V4.csv
+SIGNAL/app/www/SIGNAL_userguide_V4.csv
 ```
 
 
-### TRIAGE as an adaptable R function:
+### SIGNAL as an adaptable R function:
 
-To make TRIAGE an adaptable framework for iterative analysis with different datasets and databases beyond the databases and settings used on this platform, a R script version of a standalone TRIAGE function can be downloaded. The TRIAGE function relies on calling two separate analysis function, a pathway enrichment function and a network analysis function. The master TRIAGE function applies the pathway and network function iteratively, and the results are tested for when the analysis converges on a single set.
+To make SIGNAL an adaptable framework for iterative analysis with different datasets and databases beyond the databases and settings used on this platform, a R script version of a standalone SIGNAL function can be downloaded. The SIGNAL function relies on calling two separate analysis function, a pathway enrichment function and a network analysis function. The master SIGNAL function applies the pathway and network function iteratively, and the results are tested for when the analysis converges on a single set.
 
-The list of input variables that can be selectively assigned in the adaptable TRIAGE function in R and their required formats are:
+The list of input variables that can be selectively assigned in the adaptable SIGNAL function in R and their required formats are:
 
 screen.datafame: A data frame of the screen. 
 
@@ -121,19 +121,19 @@ stat.test: Name of the statistical test to be used for measuring enrichment conf
 test.cutoff: A numeric value which a less than value in stat.test will be considered a significant enrichment.
 network.igraph: an igraph of the network to be used for network analysis (network igraph must use the same ID type as screen.dataframe)
 
-The user provided variables are then used to apply the iterative function as in the previous paragraph. The adaptable version of TRIAGE broadens the possibility for its application beyond the use of the specific databases and settings it was designed in. 
+The user provided variables are then used to apply the iterative function as in the previous paragraph. The adaptable version of SIGNAL broadens the possibility for its application beyond the use of the specific databases and settings it was designed in. 
 
-The TRIAGE function provides an output in the format of a R script list that contains three data frames: 
-1.	The input data frame with an appended 'TRIAGE.hit' column. 
+The SIGNAL function provides an output in the format of a R script list that contains three data frames: 
+1.	The input data frame with an appended 'SIGNAL.hit' column. 
 2.	A data frame of high confidence and medium confidence designation at each iteration of the analysis. 
-3.	A data frame of final TRIAGE enrichments from the provided enrichment data frame.
+3.	A data frame of final SIGNAL enrichments from the provided enrichment data frame.
 
-The TRIAGE function can be downloaded from the app
+The SIGNAL function can be downloaded from the app
 
 
 ```
-# TRIAGE as standalon R function
-TRIAGE/app/www/RscriptsDownload/TRIAGE_R_function.R
+# SIGNAL as standalon R function
+SIGNAL/app/www/RscriptsDownload/SIGNAL_R_function.R
 ```
 
 
@@ -143,7 +143,7 @@ The R code used to generate the analysis and figures for our [manuscript](https:
 
 ```
 #  Manuscript R code
-TRIAGE/manuscript/Rcode/
+SIGNAL/manuscript/Rcode/
 ```
 
 ## Authors
@@ -153,7 +153,7 @@ TRIAGE/manuscript/Rcode/
 **Kyle Webb,**
 **Nicolas Lounsbury,**
 **Iain Fraser**
-Contact us at triage-team@nih.gov
+Contact us at signal-team@nih.gov
 
 
 ## Acknowledgments

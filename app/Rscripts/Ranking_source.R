@@ -1,6 +1,6 @@
 ###################################################
 ## Setting up Network Analysis, jsons, and outputting
-## TRIAGE hits
+## SIGNAL hits
 ###################################################
 # Kyle Webb, Sam Katz
 # March 8, 2019
@@ -9,8 +9,8 @@
 Generate_NetworkGraph <- function(selectedRows, organism, G){
   #############################################################
 
-  # TRIAGE hit data 
-  TRIAGEhits <- TRIAGEoutput.condensed                                      
+  # SIGNAL hit data 
+  SIGNALhits <- SIGNALoutput.condensed                                      
 
   #Get pathway file and pathway names (along with intersections)
   pathwayFile <- pathwayData    
@@ -35,14 +35,14 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   path23_name = paste0(path2_name, ' & ', path3_name)
   path123_name = paste0(path1_name, ' & ', path2_name, ' & ', path3_name)
 
-  # filtering pathway hits which are in the TRIAGE hits data
-  path1_hits <- filter(TRIAGEhits, EntrezID %in% path1_pathway.genes.matrix)
+  # filtering pathway hits which are in the SIGNAL hits data
+  path1_hits <- filter(SIGNALhits, EntrezID %in% path1_pathway.genes.matrix)
   path1_hits.matrix <- matrix(path1_hits$EntrezID)
   
-  path2_hits <- filter(TRIAGEhits, EntrezID %in% path2_pathway.genes.matrix)
+  path2_hits <- filter(SIGNALhits, EntrezID %in% path2_pathway.genes.matrix)
   path2_hits.matrix <- matrix(path2_hits$EntrezID)
   
-  path3_hits <- filter(TRIAGEhits, EntrezID %in% path3_pathway.genes.matrix)
+  path3_hits <- filter(SIGNALhits, EntrezID %in% path3_pathway.genes.matrix)
   path3_hits.matrix <- matrix(path3_hits$EntrezID)
   
   #######################################                                            
@@ -54,7 +54,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   path3_pathway.genes.matrix <- matrix(path3_pathway.genes$GeneSymbol)
   
-  TRIAGEhits.matrix <- matrix(TRIAGEhits$EntrezID)                      
+  SIGNALhits.matrix <- matrix(SIGNALhits$EntrezID)                      
   # Created a matrix of all the genes that are "hits"
   cat(file=stderr(), "Inside Generate_NetworkGraph64!\n")
   
@@ -130,10 +130,10 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     extra_path_names = append(extra_path_names, path123_name)
   }
   
-  #Merge Pathway, and TRIAGEhits to NodeInfo
+  #Merge Pathway, and SIGNALhits to NodeInfo
   Scores_and_nodes <- merge(NodeInfo[, c("GeneMappingID", "GeneSymbol", "Group")],                      
                             #Pairing up the "Node Info" with the gene info (such as gene symbol and groupings)
-                            TRIAGEhits[, c("GeneSymbol", "EntrezID", "InputCategory", "Pathway")], 
+                            SIGNALhits[, c("GeneSymbol", "EntrezID", "InputCategory", "Pathway")], 
                             by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
   
   
@@ -152,13 +152,13 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   Edge_summary <- aggregate(target.ID ~ source.ID, data = Edge_summary_stacked, paste, collapse = ", ")
   
   #Update Names                                                                                     
-  #Now a dataframe is being created where each gene selected by TRIAGE (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
+  #Now a dataframe is being created where each gene selected by SIGNAL (or part of the highlighted groups) has a list "Ntwrk.all" that lists all other genes from TRAIGE that it is predicted to interact with.
   colnames(Edge_summary) <- c("GeneSymbol", "Ntwrk.all")
   
   #Merge with scores 
   Scores_nodes_and_edges <- merge(Scores_and_nodes, Edge_summary, by.x = "GeneSymbol", by.y = "GeneSymbol", all.x = T)
   
-  # Create column in Scores_nodes_and_edges with counts for intersecting pathways                                               #Here a counter is added, this counts for each gene how many genes (within the TRIAGE set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
+  # Create column in Scores_nodes_and_edges with counts for intersecting pathways                                               #Here a counter is added, this counts for each gene how many genes (within the SIGNAL set) are predicted to have interactions with it, (this allows to then list your hits based on how many interactions it has with other hits)
   for (i in 1:length(Scores_nodes_and_edges$Ntwrk.all)) {
     Scores_nodes_and_edges$Allnet.count[i] <- ifelse(is.na(Scores_nodes_and_edges$Ntwrk.all[i]) == T, 0, 
                                                      length(unlist(strsplit(Scores_nodes_and_edges$Ntwrk.all[i], ", "))))
@@ -175,7 +175,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
   
   # renaming some of these columns...
   Scores_nodes_and_edges = Scores_nodes_and_edges %>% 
-    rename("Pathway" = "TRIAGEpathways",
+    rename("Pathway" = "SIGNALpathways",
            "Allnet.count" = "Total.Network.Hits",
            "Ntwrk.all" = "All.Network.Hits")
   
@@ -206,7 +206,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     for(j in 1:n){
       
       i = pn[j]
-      hit.genes <- filter(Scores_nodes_and_edges, Group == i & EntrezID %in% TRIAGEhits.matrix)
+      hit.genes <- filter(Scores_nodes_and_edges, Group == i & EntrezID %in% SIGNALhits.matrix)
       hit.genes.matrix <- matrix(hit.genes$GeneSymbol)  
       temp.hits = 'hits'
       temp.counts = 'counts'
@@ -239,9 +239,9 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
       
     }
     
-    # Group names that are "Novel" will be renamed to "Additional TRIAGE hits"
+    # Group names that are "Novel" will be renamed to "Additional SIGNAL hits"
     Scores_nodes_and_edges = Scores_nodes_and_edges %>% 
-      mutate(Group = ifelse(Group == 'Novel', 'Additional TRIAGE hits', Group))
+      mutate(Group = ifelse(Group == 'Novel', 'Additional SIGNAL hits', Group))
     
     #here a counter is added for how many "hits" that are in the selected groups it's shown to interact with.
     sumcols = grep("Total.Network.", colnames(Scores_nodes_and_edges))
@@ -251,7 +251,7 @@ Generate_NetworkGraph <- function(selectedRows, organism, G){
     }
     
     ### write file
-    file.name = paste0(inputFilePrefix, "_TRIAGEnetwork_", t.file.name, ".csv")
+    file.name = paste0(inputFilePrefix, "_SIGNALnetwork_", t.file.name, ".csv")
     
     ret.list = list(Scores_nodes_and_edges, file.name)
     

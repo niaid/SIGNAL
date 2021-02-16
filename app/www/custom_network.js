@@ -270,7 +270,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       arr = Object.keys(map);
       arr.splice(arr.indexOf("Novel"), 1);
       for(var i=0;i<arr.length;i++){
-        arr[i]=arr[i] + " (TRIAGE hits)";
+        arr[i]=arr[i] + " (SIGNAL hits)";
       }
       arr.push("Novel")
 
@@ -386,7 +386,7 @@ Shiny.addCustomMessageHandler("jsondata1",
       if(!check){
         pns.splice(pns.indexOf('Novel'), 1 );
         pns.sort()
-        pns[pns.length] = "Additional TRIAGE hits"
+        pns[pns.length] = "Additional SIGNAL hits"
       }
       else{
         for(s in ordColors){
@@ -405,7 +405,7 @@ Shiny.addCustomMessageHandler("jsondata1",
               pathways.push(nS)
               break;
             case novelColor:
-              nS = "Additional TRIAGE hits";
+              nS = "Additional SIGNAL hits";
               pathways.push(nS)
               break;
             case color12:
