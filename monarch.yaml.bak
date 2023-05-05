@@ -1,0 +1,88 @@
+version: 1
+name: triage
+ 
+tech_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov 
+mgmt_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov
+fed_owner_email_address: jian.song@nih.gov
+monarch_team_id: 5c8946358e735a001c5e1855
+monarch_product_id: 5c8949c0197b90001c4b4a5a
+ 
+docker_build:
+  variables:
+    IMAGE_REPO: lsb-triage
+    REGISTRY_USER: songj11
+
+webapp_scan:
+  variables:
+    NS_URL: 'https://triage.niaidawsqa.net/'
+
+waivers:
+  - vulnerability: CVE-2021-44532
+    reason: 'Node.js in the base image needs to be updated'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2021-44533
+    reason: 'Node.js in the base image needs to be updated'
+    expiration: 2022-12-28
+    type: container_image    
+  - vulnerability: CVE-2021-44531
+    reason: 'Node.js in the base image needs to be updated'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2022-23308
+    reason: 'libxml2 in the base image needs to be updated'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2022-21824
+    reason: 'Node.js in the base image needs to be updated'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2021-3807
+    reason: 'ansi-regex is vulnerable to Inefficient Regular Expression Complexity'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2022-24785
+    reason: 'Moment.js is a JavaScript date library. This problem is patched in 2.29.2'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2022-1650 
+    reason: 'Exposure of Sensitive Information to an Unauthorized Actor in GitHub repository eventsource/eventsource prior to v2.0.2'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: CVE-2022-33987 
+    reason: 'The got package before 12.1.0 for Node.js allows a redirect to a UNIX socket.'
+    expiration: 2022-12-28
+    type: container_image
+  - vulnerability: Compliance
+    reason: 'Not sure what is the issue'
+    expiration: 2022-12-28
+    type: container_image
+
+approved_for_prod: true
+
+terraform:
+  modules:
+    - web-application
+  module_name: triage # legacy, not needed for new apps
+  variables:
+    cpu: 512
+    memory: 4096
+    container_port: 8080 
+    desired_count: 1
+    command: /run.sh
+    alert_recipients: "[[${var.tech_email_addresses},${var.mgmt_email_addresses}]]"
+    healthcheck_timeout: 25
+    healthcheck_healthy_threshold: 2
+    healthcheck_unhealthy_threshold: 6
+  environments:
+    qa:
+      variables:
+        image: "[[${var.pre_prod_image_base}]]"
+#         url_to_monitor: "triage.niaidawsqa.net"
+    prod:
+      variables:
+        cpu: 128
+        image: "[[${var.prod_image_base}]]"
+        use_public_ssl_cert: true
+        url_to_monitor: "triage-pilot.niaid.nih.gov"
+        security_group_name: "external_elb"

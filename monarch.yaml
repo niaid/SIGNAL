@@ -3,6 +3,7 @@ name: triage
  
 tech_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov 
 mgmt_email_addresses: jian.song@nih.gov,samuel.katz@nih.gov
+fed_owner_email_address: jian.song@nih.gov
 monarch_team_id: 5c8946358e735a001c5e1855
 monarch_product_id: 5c8949c0197b90001c4b4a5a
  
@@ -10,39 +11,10 @@ docker_build:
   variables:
     IMAGE_REPO: lsb-triage
     REGISTRY_USER: songj11
-docker_scan:
-  cve_whitelist:
-    - NODE-SECURITY-1184 #https://www.npmjs.com/advisories/1164
-    - NODE-SECURITY-1164 #https://www.npmjs.com/advisories/1164
-    - CVE-2019-11358  # Jquery Cross-site scripting (XSS) vulnerability
-    - CVE-2018-12121
-    - CVE-2018-12122
-    - CVE-2018-14040  # bootstrap.js Cross-Site Scripting (XSS) Vulnerability
-    - CVE-2018-14042  # bootstrap.js Cross-Site Scripting (XSS) Vulnerability
-    - CVE-2018-12123
-    - CVE-2018-7159
-    - CVE-2017-9801 #https://web.nvd.nist.gov/view/vuln/detail?vulnId=CVE-2017-9801
-    - NODE-SECURITY-886 #https://www.npmjs.com/advisories/886
-    - CVE-2019-13173 #https://www.npmjs.com/advisories/886
-    - NODE-SECURITY-1066 #https://www.npmjs.com/advisories/1066
-    - CVE-2019-10744 #https://www.npmjs.com/advisories/1065
-    - CVE-2020-13434 # fixed in 3.22.0-1ubuntu0.4
-    - CVE-2020-13630 # fixed in 3.22.0-1ubuntu0.4
-    - CVE-2020-13632 # fixed in 3.22.0-1ubuntu0.4
-    - CVE-2020-7662  # DOS attack vulnerability; shoulb be fixed in base image 
-    - CVE-2020-25692 # https://people.canonical.com/~ubuntu-security/cve/2020/CVE-2020-25692
+
 webapp_scan:
   variables:
     NS_URL: 'https://triage.niaidawsqa.net/'
-  whitelist:
-     - Out-of-date Version (Bootstrap):
-       - 'https://triage.niaidawsqa.net/shared/bootstrap/js/bootstrap.min.js' 
-     - Out-of-date Version (jQuery):
-       - 'https://triage.niaidawsqa.net/' 
-     - Weak Ciphers Enabled:
-       - 'https://triage.niaidawsqa.net/'
-     - HTTP Strict Transport Security (HSTS) Policy Not Enabled:
-       - 'https://triage.niaidawsqa.net/'
 
 approved_for_prod: true
 
@@ -64,6 +36,7 @@ terraform:
     qa:
       variables:
         image: "[[${var.pre_prod_image_base}]]"
+#         url_to_monitor: "triage.niaidawsqa.net"
     prod:
       variables:
         cpu: 128
